@@ -7,13 +7,13 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 
 private const val IMPLEMENTATION = "implementation"
-internal fun DependencyHandlerScope.implementation(dependency: Provider<MinimalExternalModuleDependency>){
-    IMPLEMENTATION(dependency)
+internal fun DependencyHandlerScope.implementation(dependencyNotation: Provider<MinimalExternalModuleDependency>){
+    IMPLEMENTATION(dependencyNotation)
 }
 
-const val DEBUG_IMPLEMENTATION = "debugImplementation"
-internal fun DependencyHandlerScope.debugImplementation(dependency: String){
-    DEBUG_IMPLEMENTATION(dependency)
+private const val DEBUG_IMPLEMENTATION = "debugImplementation"
+internal fun DependencyHandlerScope.debugImplementation(dependencyNotation: String){
+    DEBUG_IMPLEMENTATION(dependencyNotation)
 }
 
 /**

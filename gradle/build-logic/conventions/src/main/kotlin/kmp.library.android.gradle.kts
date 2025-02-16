@@ -4,9 +4,9 @@ import kaiyrzhan.de.empath.gradle.jvmTarget
 import kaiyrzhan.de.empath.gradle.kmpConfig
 import kaiyrzhan.de.empath.gradle.libs
 
-plugins.applyIfNeeded(libs.plugins.jetbrains.kotlin.multiplatform.get().pluginId)
 plugins.applyIfNeeded(libs.plugins.android.library.get().pluginId)
 plugins.applyIfNeeded("kmp.library.base")
+plugins.apply("android.base")
 
 kmpConfig {
     androidTarget {
@@ -30,4 +30,3 @@ androidConfig {
     }
 }
 
-plugins.apply("android.base")

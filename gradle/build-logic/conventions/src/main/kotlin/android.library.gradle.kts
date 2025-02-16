@@ -5,7 +5,6 @@ import kaiyrzhan.de.empath.gradle.jvmTarget
 import kaiyrzhan.de.empath.gradle.kotlinJvmCompilerOptions
 import kaiyrzhan.de.empath.gradle.libs
 
-
 plugins.apply("android.base")
 if (plugins.hasPlugin(libs.plugins.jetbrains.kotlin.multiplatform.get().pluginId)) {
     plugins.applyIfNeeded(libs.plugins.jetbrains.kotlin.android.get().pluginId)

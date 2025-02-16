@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
-    id("kmp.library.all")
+    id("kmp.library.all") //Don't use plugin jetbrains-compose.all
     alias(libs.plugins.jetbrains.compose.multiplatform)
     alias(libs.plugins.jetbrains.compose.compiler)
 }
