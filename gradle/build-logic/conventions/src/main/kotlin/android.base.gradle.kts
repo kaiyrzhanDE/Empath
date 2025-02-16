@@ -1,6 +1,8 @@
 import kaiyrzhan.de.empath.gradle.androidConfig
 import kaiyrzhan.de.empath.gradle.config.requestedAndroidAbis
 import kaiyrzhan.de.empath.gradle.javaVersion
+import kaiyrzhan.de.empath.gradle.jvmTarget
+import kaiyrzhan.de.empath.gradle.kotlinJvmCompilerOptions
 import kaiyrzhan.de.empath.gradle.libs
 
 androidConfig {
@@ -26,4 +28,8 @@ androidConfig {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }
+}
+
+kotlinJvmCompilerOptions {
+    jvmTarget.set(libs.jvmTarget())
 }

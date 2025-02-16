@@ -3,11 +3,12 @@ import kaiyrzhan.de.empath.gradle.applyIfNeeded
 import kaiyrzhan.de.empath.gradle.composeExtension
 import kaiyrzhan.de.empath.gradle.debugImplementation
 import kaiyrzhan.de.empath.gradle.kmpConfig
+import kaiyrzhan.de.empath.gradle.libs
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
 
-plugins.applyIfNeeded("jetbrains-compose.base")
-plugins.apply("jetpack-compose.base")
+plugins.applyIfNeeded(libs.plugins.convention.jetbrains.compose.base.get().pluginId)
+plugins.apply(libs.plugins.convention.jetpack.compose.base.get().pluginId)
 
 kmpConfig {
     androidConfig {

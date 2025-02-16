@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("android.base")
-    id("jetpack-compose.base")
+    alias(libs.plugins.convention.android.base)
+    alias(libs.plugins.convention.jetpack.compose.base)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -31,4 +32,5 @@ dependencies {
     implementation(projects.composeApp)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
+    implementation(libs.androidx.core)
 }

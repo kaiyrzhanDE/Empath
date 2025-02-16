@@ -69,6 +69,21 @@ gradleplugins-compose = { module = "org.jetbrains.compose:compose-gradle-plugin"
 gradleplugins-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
+convention-android-base = { id = "android.base", version = "unspecified" }
+convention-android-library = { id = "android.library", version = "unspecified" }
+convention-jetpack-compose-base = { id = "jetpack-compose.base", version = "unspecified" }
+convention-jetbrains-compose-base = { id = "jetbrains-compose.base", version = "unspecified" }
+convention-jetbrains-compose-desktop = { id = "jetbrains-compose.desktop", version = "unspecified" }
+convention-jetbrains-compose-android = { id = "jetbrains-compose.android", version = "unspecified" }
+convention-jetbrains-compose-ios = { id = "jetbrains-compose.ios", version = "unspecified" }
+convention-jetbrains-compose-all = { id = "jetbrains-compose.all", version = "unspecified" }
+
+convention-kmp-library-all = { id = "kmp.library.all", version = "unspecified" }
+convention-kmp-library-base = { id = "kmp.library.base", version = "unspecified" }
+convention-kmp-library-android = { id = "kmp.library.android", version = "unspecified" }
+convention-kmp-library-desktop = { id = "kmp.library.desktop", version = "unspecified" }
+convention-kmp-library-ios = { id = "kmp.library.ios", version = "unspecified" }
+
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 

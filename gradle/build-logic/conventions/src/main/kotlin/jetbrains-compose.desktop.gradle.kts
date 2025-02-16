@@ -1,8 +1,9 @@
 import kaiyrzhan.de.empath.gradle.applyIfNeeded
 import kaiyrzhan.de.empath.gradle.composeExtension
 import kaiyrzhan.de.empath.gradle.kmpConfig
+import kaiyrzhan.de.empath.gradle.libs
 
-plugins.applyIfNeeded("jetbrains-compose.base")
+plugins.applyIfNeeded(libs.plugins.convention.jetbrains.compose.base.get().pluginId)
 
 kmpConfig {
     sourceSets {

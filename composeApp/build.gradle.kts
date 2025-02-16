@@ -1,6 +1,6 @@
 plugins {
-    id("kmp.library.all")
-    id("jetbrains-compose.all")
+    alias(libs.plugins.convention.kmp.library.all)
+    alias(libs.plugins.convention.jetbrains.compose.all)
 }
 
 kotlin {

@@ -1,5 +1,6 @@
 import kaiyrzhan.de.empath.gradle.applyIfNeeded
+import kaiyrzhan.de.empath.gradle.libs
 
-plugins.applyIfNeeded("kmp.library.desktop")
-plugins.applyIfNeeded("kmp.library.android")
-plugins.applyIfNeeded("kmp.library.ios")
+plugins.applyIfNeeded(libs.plugins.convention.kmp.library.desktop.get().pluginId)
+plugins.applyIfNeeded(libs.plugins.convention.kmp.library.android.get().pluginId)
+plugins.applyIfNeeded(libs.plugins.convention.kmp.library.ios.get().pluginId)

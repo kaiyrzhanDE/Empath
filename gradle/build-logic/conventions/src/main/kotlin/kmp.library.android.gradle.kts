@@ -5,8 +5,8 @@ import kaiyrzhan.de.empath.gradle.kmpConfig
 import kaiyrzhan.de.empath.gradle.libs
 
 plugins.applyIfNeeded(libs.plugins.android.library.get().pluginId)
-plugins.applyIfNeeded("kmp.library.base")
-plugins.apply("android.base")
+plugins.applyIfNeeded(libs.plugins.convention.kmp.library.base.get().pluginId)
+plugins.apply(libs.plugins.convention.android.base.get().pluginId)
 
 kmpConfig {
     androidTarget {
