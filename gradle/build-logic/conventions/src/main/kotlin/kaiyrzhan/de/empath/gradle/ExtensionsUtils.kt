@@ -13,6 +13,7 @@ import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.ProductFlavor
 import com.android.build.api.dsl.TestExtension
 import com.android.build.gradle.internal.dsl.DynamicFeatureExtension
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -86,4 +87,9 @@ internal inline fun Project.kmpConfig(
 internal val Project.composeExtension: ComposeExtension
     get() = extensions.findByType(ComposeExtension::class.java)
         ?: error("Compose plugin is not applied")
+
+internal val Project.detektExtension: DetektExtension
+    get() = checkNotNull(extensions.findByType(DetektExtension::class))
+
+internal fun Project.detektConfig(block: DetektExtension.() -> Unit) = block(detektExtension)
 

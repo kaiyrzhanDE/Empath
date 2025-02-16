@@ -24,8 +24,12 @@ decompose = "3.1.0"
 essenty = "2.1.0"
 koin = "4.0.2"
 ktorfit = "2.2.0"
+detekt = "1.23.7"
+compose-rules = "0.4.22"
+ktlint = "1.5.0"
 kotlin = "2.1.10"
 google-ksp = "2.1.10-1.0.29"
+
 
 [libraries]
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
@@ -69,12 +73,17 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 
+detektPlugin-nlopez-composeRules = { module = "io.nlopez.compose.rules:detekt", version.ref = "compose-rules" }
+
+ktlint-cli = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
+
 gradleplugins-android = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 gradleplugins-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 gradleplugins-kotlinxSerialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
 gradleplugins-compose = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "compose-multiplatform" }
 gradleplugins-composeCompiler = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 gradleplugins-ktorfit = { group = "de.jensklingenberg.ktorfit", name = "de.jensklingenberg.ktorfit.gradle.plugin", version.ref = "ktorfit" }
+gradleplugins-detekt = { module = "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin", version.ref = "detekt" }
 
 [plugins]
 convention-android-base = { id = "android.base", version = "unspecified" }
@@ -85,6 +94,8 @@ convention-jetbrains-compose-desktop = { id = "jetbrains-compose.desktop", versi
 convention-jetbrains-compose-android = { id = "jetbrains-compose.android", version = "unspecified" }
 convention-jetbrains-compose-ios = { id = "jetbrains-compose.ios", version = "unspecified" }
 convention-jetbrains-compose-all = { id = "jetbrains-compose.all", version = "unspecified" }
+convention-ktlint = { id = "ktlint", version = "unspecified" }
+convention-detekt = { id = "detekt", version = "unspecified" }
 
 convention-kmp-library-all = { id = "kmp.library.all", version = "unspecified" }
 convention-kmp-library-base = { id = "kmp.library.base", version = "unspecified" }
@@ -103,6 +114,8 @@ jetbrains-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", versi
 jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

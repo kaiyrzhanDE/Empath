@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.convention.android.base)
-    alias(libs.plugins.convention.jetpack.compose.base)
+    id(libs.plugins.convention.android.base.get().pluginId)
+    id(libs.plugins.convention.jetpack.compose.base.get().pluginId)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 

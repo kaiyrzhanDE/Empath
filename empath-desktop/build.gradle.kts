@@ -1,8 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    alias(libs.plugins.convention.kmp.library.desktop)
-    alias(libs.plugins.convention.jetbrains.compose.desktop)
+    id(libs.plugins.convention.kmp.library.desktop.get().pluginId)
+    id(libs.plugins.convention.jetbrains.compose.desktop.get().pluginId)
 }
 
 kotlin {

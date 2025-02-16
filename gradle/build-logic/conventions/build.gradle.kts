@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.gradleplugins.composeCompiler)
     implementation(libs.gradleplugins.kotlinxSerialization)
     implementation(libs.gradleplugins.ktorfit)
+    implementation(libs.gradleplugins.detekt)
 
     // Workaround for version catalog working inside precompiled scripts
     // Issue - https://github.com/gradle/gradle/issues/15383
