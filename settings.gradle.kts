@@ -38,3 +38,4 @@ include(":empath-desktop")
 include(":empath-shared")
 project(":empath-shared").name = "EmpathShared"
 include(":core:uikit")
+include(":core:network")
