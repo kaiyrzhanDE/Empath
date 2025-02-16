@@ -1,11 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-rootProject.name = "Empath"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 pluginManagement {
-    includeBuild("gradle/build-logic")
-
     repositories {
         google {
             mavenContent {
@@ -14,8 +9,8 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
     }
 }
 
@@ -28,13 +23,14 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        gradlePluginPortal()
         mavenCentral()
+    }
+    versionCatalogs {
+        create("libs") {
+            from(files("../libs.versions.toml"))
+        }
     }
 }
 
-include(":composeApp")
-include(":empath-android")
-include(":empath-desktop")
-include(":empath-shared")
-project(":empath-shared").name = "EmpathShared"
-include(":core:uikit")
+include(":conventions")
