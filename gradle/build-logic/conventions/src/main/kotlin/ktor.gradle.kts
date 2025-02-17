@@ -33,7 +33,3 @@ kmpConfig {
         }
     }
 }
-
-kotlinJvmCompilerOptions {
-    jvmTarget.set(libs.jvmTarget())
-}

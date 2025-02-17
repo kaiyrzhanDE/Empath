@@ -5,12 +5,16 @@ plugins {
 
 kotlin {
     sourceSets {
-        commonMain.dependencies {
-            implementation(projects.features.auth.ui)
+        commonMain {
+            dependencies {
+                implementation(projects.core.uikit)
+            }
         }
     }
+
+    explicitApi()
 }
 
 android {
-    namespace = "kaiyrzhan.de.empath.composeapp"
+    namespace = "kaiyrzhan.de.empath.features.auth.ui"
 }

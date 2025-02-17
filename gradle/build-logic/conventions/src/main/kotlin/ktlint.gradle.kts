@@ -43,5 +43,5 @@ tasks.register<JavaExec>("ktlintFormat") {
     mainClass = ktLintCliMainClass
     jvmArgs = listOf("--add-opens=java.base/java.lang=ALL-UNNAMED")
     // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
-    args = sources
+    args = listOf("-F", ) + sources
 }
