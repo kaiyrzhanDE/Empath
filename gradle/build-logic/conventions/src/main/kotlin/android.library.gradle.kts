@@ -1,6 +1,7 @@
 import kaiyrzhan.de.empath.gradle.applyIfNeeded
 import kaiyrzhan.de.empath.gradle.implementation
 import kaiyrzhan.de.empath.gradle.javaVersion
+import kaiyrzhan.de.empath.gradle.jvmTarget
 import kaiyrzhan.de.empath.gradle.kotlinJvmCompilerOptions
 import kaiyrzhan.de.empath.gradle.libs
 
@@ -16,5 +17,8 @@ project.dependencies {
 }
 
 kotlinJvmCompilerOptions {
+    jvmTarget.set(libs.jvmTarget())
     freeCompilerArgs.add("-Xjdk-release=${libs.javaVersion()}")
 }
+
+

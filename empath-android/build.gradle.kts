@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.application)
     id(libs.plugins.convention.android.base.get().pluginId)
@@ -25,6 +26,10 @@ android {
         checkReleaseBuilds = false
         checkDependencies = true
     }
+
+    kotlinOptions {
+        jvmTarget = libs.versions.jdk.get()
+    }
 }
 
 dependencies {
@@ -32,5 +37,4 @@ dependencies {
     implementation(projects.composeApp)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
-    implementation(libs.androidx.core)
 }
