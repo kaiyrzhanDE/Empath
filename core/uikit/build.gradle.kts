@@ -13,6 +13,9 @@ kotlin {
             api(compose.foundation)
             api(compose.material3)
             api(compose.ui)
+            api(libs.adaptive)
+            api(libs.adaptive.layout)
+            api(libs.adaptive.navigation)
         }
     }
 }
