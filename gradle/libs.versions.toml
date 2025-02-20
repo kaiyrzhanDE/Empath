@@ -9,21 +9,23 @@ androidx-activityCompose = "1.10.0"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
 androidx-core = "1.15.0"
+androidx-datastore = "1.1.2"
 androidx-annotation = "1.9.1"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.4"
-jetbrains-lifecycle = "2.8.2"
+jetbrains-lifecycle = "2.8.3"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.1"
 junit = "4.13.2"
-kotlinx-coroutines = "1.9.0"
+kotlinx-coroutines = "1.10.1"
 kotlinx-serialization = "1.7.3"
 kotlinx-datetime = "0.6.1"
 ktor = "3.0.1"
 decompose = "3.1.0"
-essenty = "2.1.0"
+essenty = "2.2.1"
 koin = "4.0.2"
+kermit = "2.0.3"
 ktorfit = "2.2.0"
 detekt = "1.23.7"
 compose-rules = "0.4.22"
@@ -51,6 +53,11 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 jetbrains-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "jetbrains-lifecycle" }
 
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidx-datastore" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidx-datastore" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+
+
 adaptive = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive", version.ref = "adaptive" }
 adaptive-layout = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive-layout", version.ref = "adaptive" }
 adaptive-navigation = { group = "org.jetbrains.compose.material3.adaptive", name = "adaptive-navigation", version.ref = "adaptive" }
@@ -69,7 +76,9 @@ ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version
 ktor-client-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
 ktor-client-contentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
 ktorfit = { group = "de.jensklingenberg.ktorfit", name = "ktorfit-lib-light", version.ref = "ktorfit" }
+
 
 arkivanov-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
 arkivanov-decompose-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }

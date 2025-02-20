@@ -5,34 +5,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-/***
-// * /* Text-size styles */
- * --empath--display--large: 57px;
- * --empath--display--medium: 45px;
- * --empath--display--small: 36px;
- * --empath--headline--large: 32px;
- * --empath--headline--medium: 28px;
- * --empath--headline--small: 24px;
- * --empath--body--large: 16px;
- * --empath--body--medium: 14px;
- * --empath--body--small: 12px;
- * --empath--label--large: 16px;
- * --empath--label--medium: 14px;
- * --empath--label--small: 12px;
- * --empath--title--large: 22px;
- * --empath--title--medium: 18px;
- * --empath--title--small: 16px;
- *
- * /* Effect styles */
- * --empath--elevation--1:  0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
- * --empath--elevation--2:  0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
- * --empath--elevation--3:  0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
- * --empath--elevation--4:  0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
- * --empath--elevation--5:  0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
- *
- */
-
-
 internal val LocalColorScheme = staticCompositionLocalOf { lightColorScheme() }
 
 internal fun lightColorScheme(): ColorScheme {
@@ -158,7 +130,7 @@ internal fun darkColorScheme(): ColorScheme {
 }
 
 @Immutable
-data class ColorScheme(
+public data class ColorScheme(
     val primary: Color,
     val onPrimary: Color,
     val primaryContainer: Color,

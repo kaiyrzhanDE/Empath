@@ -23,7 +23,7 @@ internal fun shapes(): Shapes {
 }
 
 @Immutable
-data class Shapes(
+public data class Shapes(
     val none: CornerBasedShape,
     val extraSmall: CornerBasedShape,
     val small: CornerBasedShape,

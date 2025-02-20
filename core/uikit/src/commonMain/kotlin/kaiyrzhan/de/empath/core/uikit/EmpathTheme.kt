@@ -9,7 +9,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 
 @Composable
-fun EmpathTheme(
+public fun EmpathTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     colors: ColorScheme = if (isDarkTheme) darkColorScheme() else lightColorScheme(),
     typography: Typography = typography(),
@@ -29,13 +29,13 @@ fun EmpathTheme(
     }
 }
 
-object EmpathTheme {
-    val colors: ColorScheme
+public object EmpathTheme {
+    public val colors: ColorScheme
         @[Composable ReadOnlyComposable] get() = LocalColorScheme.current
 
-    val typography: Typography
+    public val typography: Typography
         @[Composable ReadOnlyComposable] get() = MaterialTheme.typography
 
-    val shapes: Shapes
+    public val shapes: Shapes
         @[Composable ReadOnlyComposable] get() = LocalShapes.current
 }

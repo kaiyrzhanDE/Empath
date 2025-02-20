@@ -22,6 +22,7 @@ import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
@@ -93,3 +94,8 @@ internal val Project.detektExtension: DetektExtension
 
 internal fun Project.detektConfig(block: DetektExtension.() -> Unit) = block(detektExtension)
 
+internal val Project.kotlinBaseExtension: KotlinBaseExtension
+    get() = extensions.findByType(KotlinBaseExtension::class)
+        ?: error("Kotlin base plugin is not applied")
+
+internal fun Project.enableExplicitApi() = kotlinBaseExtension.explicitApi()

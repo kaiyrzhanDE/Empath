@@ -13,23 +13,6 @@ kmpConfig {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)
-            implementation(libs.koin.test)
-        }
-
-        androidMain.dependencies {
-            implementation(libs.koin.core)
-            implementation(libs.koin.android)
-        }
-
-        val desktopMain by getting
-        desktopMain.dependencies {
-            implementation(libs.koin.core)
-            implementation(libs.koin.test)
-        }
-
-        iosMain.dependencies {
-            implementation(libs.koin.core)
-            implementation(libs.koin.test)
         }
     }
 }

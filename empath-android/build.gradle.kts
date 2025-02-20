@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.application)
     id(libs.plugins.convention.android.base.get().pluginId)
@@ -37,4 +36,6 @@ dependencies {
     implementation(projects.composeApp)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
+
+    implementation(libs.koin.android)
 }

@@ -12,7 +12,6 @@ kotlin {
         }
     }
 
-    explicitApi()
 }
 
 android {
