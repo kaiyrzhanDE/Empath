@@ -21,8 +21,8 @@ internal const val TIME_OUT = 30_000L
 
 internal fun defaultHttpClient(
     json: Json = DefaultJson,
-    block: HttpClientConfig<*>.() -> Unit
-) = HttpClient() {
+    block: HttpClientConfig<*>.() -> Unit = {},
+) = HttpClient {
 
     install(DefaultRequest) {
         header(HttpHeaders.AcceptLanguage, "ru")

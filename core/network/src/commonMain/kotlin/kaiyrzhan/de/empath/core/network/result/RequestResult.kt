@@ -6,7 +6,6 @@ public sealed class RequestResult<out S> {
     public class Exception(public val throwable: Throwable) : RequestResult<Nothing>()
 }
 
-
 public suspend fun <S : Any> RequestResult<S>.onSuccess(
     executable: suspend (S) -> Unit
 ): RequestResult<S> = apply {
