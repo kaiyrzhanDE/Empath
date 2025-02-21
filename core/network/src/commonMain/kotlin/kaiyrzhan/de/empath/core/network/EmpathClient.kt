@@ -1,41 +1,26 @@
 package kaiyrzhan.de.empath.core.network
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import de.jensklingenberg.ktorfit.Ktorfit
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.DefaultJson
-import io.ktor.serialization.kotlinx.json.json
 import kaiyrzhan.de.empath.core.network.token.TokenApi
 import kaiyrzhan.de.empath.core.network.token.TokenProvider
+import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.coroutines.flow.first
-import kotlinx.serialization.json.Json
 
-internal class EmpathClient internal constructor(
-    private val baseUrl: String,
-    private val httpClient: HttpClient,
-) {
+internal const val BASE_URL = "http://80.90.191.162/"
 
-    private val ktorfit by lazy {
-        Ktorfit.Builder()
-            .httpClient(httpClient)
-            .baseUrl(baseUrl)
-            .build()
-    }
-
-    @Suppress("DEPRECATION")
-    private val tokenApi by lazy { ktorfit.create<TokenApi>() }
-
-}
-
-internal fun EmpathClient(
-    baseUrl: String = "BASE_URL",
-    json: Json = DefaultJson,
+internal fun empathClient(
     tokenProvider: TokenProvider,
-): EmpathClient {
-    val httpClient = defaultHttpClient {
+    logger: BaseLogger,
+): HttpClient {
+    val httpClient = defaultHttpClient(
+        logger = logger,
+    ) {
         install(Auth) {
             bearer {
                 loadTokens {
@@ -58,10 +43,7 @@ internal fun EmpathClient(
                 }
             }
         }
-        install(ContentNegotiation) {
-            json(json)
-        }
     }
-    return EmpathClient(baseUrl, httpClient)
+    return httpClient
 }
 

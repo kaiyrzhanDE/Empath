@@ -1,9 +1,15 @@
 package kaiyrzhan.de.empath.core.utils.di
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import kaiyrzhan.de.empath.core.utils.datastore.DATA_STORE_FILE_NAME
 import kaiyrzhan.de.empath.core.utils.datastore.createDataStore
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-public val androidUtilsModule: Module = module(createdAtStart = true) {
-    single { createDataStore(context = get()) }
+public actual val dataStoreModule: Module = module {
+    single<DataStore<Preferences>> {
+        createDataStore { get<Context>().filesDir.resolve(DATA_STORE_FILE_NAME).absolutePath }
+    }
 }

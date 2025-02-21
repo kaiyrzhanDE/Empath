@@ -21,17 +21,17 @@ junit = "4.13.2"
 kotlinx-coroutines = "1.10.1"
 kotlinx-serialization = "1.7.3"
 kotlinx-datetime = "0.6.1"
-ktor = "3.0.1"
+ktor = "3.1.0"
 decompose = "3.1.0"
 essenty = "2.2.1"
 koin = "4.0.2"
 kermit = "2.0.3"
-ktorfit = "2.2.0"
+ktorfit = "2.3.0"
 detekt = "1.23.7"
 compose-rules = "0.4.22"
 ktlint = "1.5.0"
 kotlin = "2.1.10"
-google-ksp = "2.1.10-1.0.29"
+google-ksp = "2.1.10-1.0.30"
 
 
 [libraries]
@@ -131,6 +131,8 @@ jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serializati
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+
+ktorfit= { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
 
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

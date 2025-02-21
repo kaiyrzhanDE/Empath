@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kaiyrzhan.de.empath.core.network.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.datastore.DataStoreKeys
-import kaiyrzhan.de.empath.core.utils.logger.Logger
+import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -24,7 +24,7 @@ public interface TokenProvider {
 internal class TokenProviderImpl(
     private val tokenApi: TokenApi,
     private val preferences: DataStore<Preferences>,
-    private val logger: Logger,
+    private val logger: BaseLogger,
 ) : TokenProvider {
 
     companion object {
@@ -63,35 +63,36 @@ internal class TokenProviderImpl(
     }
 
     override suspend fun refreshToken(): Token {
-        return try {
-            val currentToken = getLocalToken().first().toData()
-            val request = tokenApi.refreshToken(currentToken)
-            when (request) {
-                is RequestResult.Success -> {
-                    logger.d(TOKEN_PROVIDER, "refreshToken successfully: ${request.data.refreshToken}")
-                    request.data.toDomain()
-                }
-
-                is RequestResult.Exception -> {
-                    logger.d(TOKEN_PROVIDER, "refreshToken exception: ${request.throwable.message}")
-                    throw TokenRefreshException(
-                        cause = request.throwable,
-                        message = request.throwable.message,
-                    )
-                }
-
-                is RequestResult.Error -> {
-                    logger.d(TOKEN_PROVIDER, "refreshToken error: ${request.error.message}")
+//        return try {
+//            val currentToken = getLocalToken().first().toData()
+//            val request = tokenApi.refreshToken(currentToken)
+//            when (request) {
+//                is RequestResult.Success -> {
+//                    logger.d(TOKEN_PROVIDER, "refreshToken successfully: ${request.data.refreshToken}")
+//                    request.data.toDomain()
+//                }
+//
+//                is RequestResult.Exception -> {
+//                    logger.d(TOKEN_PROVIDER, "refreshToken exception: ${request.throwable.message}")
+//                    throw TokenRefreshException(
+//                        cause = request.throwable,
+//                        message = request.throwable.message,
+//                    )
+//                }
+//
+//                is RequestResult.Error -> {
+//                    logger.d(TOKEN_PROVIDER, "refreshToken error: ${request.error.message}")
                     throw TokenRefreshException(
                         cause = null,
-                        message = request.error.message,
+                        message = "",
+//                        message = request.error.message,
                     )
-                }
-            }
-        } catch (exception: Exception) {
-            logger.d(TOKEN_PROVIDER, "refreshToken unknown error: ${exception.message}")
-            throw exception
-        }
+//                }
+//            }
+//        } catch (exception: Exception) {
+//            logger.d(TOKEN_PROVIDER, "refreshToken unknown error: ${exception.message}")
+//            throw exception
+//        }
     }
 
 }

@@ -9,7 +9,7 @@ public class TokenRefreshException(
 ) : Exception(message, cause)
 
 @Serializable
-internal data class TokenEntity(
+public data class TokenEntity(
     @SerialName("access_token") val accessToken: String? = null,
     @SerialName("refresh_token") val refreshToken: String? = null,
 )

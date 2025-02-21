@@ -5,7 +5,8 @@ import kaiyrzhan.de.empath.gradle.kotlinJvmCompilerOptions
 import kaiyrzhan.de.empath.gradle.libs
 
 plugins.applyIfNeeded(libs.plugins.jetbrains.kotlin.serialization.get().pluginId)
-plugins.applyIfNeeded(libs.plugins.google.ksp.get().pluginId)
+plugins.apply(libs.plugins.google.ksp.get().pluginId)
+plugins.apply(libs.plugins.ktorfit.get().pluginId)
 plugins.apply(libs.plugins.convention.kmp.library.all.get().pluginId)
 
 kmpConfig {

@@ -36,6 +36,5 @@ dependencies {
     implementation(projects.composeApp)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
-
     implementation(libs.koin.android)
 }

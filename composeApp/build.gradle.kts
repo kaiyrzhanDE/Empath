@@ -9,6 +9,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.features.auth.ui)
             implementation(projects.core.utils)
+            implementation(projects.core.network)
         }
     }
 }
