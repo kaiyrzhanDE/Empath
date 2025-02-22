@@ -1,6 +1,7 @@
 plugins {
     id(libs.plugins.convention.kmp.library.all.get().pluginId)
     id(libs.plugins.convention.jetbrains.compose.all.get().pluginId)
+    id(libs.plugins.convention.koin.get().pluginId)
 }
 
 kotlin {
@@ -8,10 +9,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.uikit)
+                implementation(projects.core.utils)
             }
         }
     }
-
 }
 
 android {

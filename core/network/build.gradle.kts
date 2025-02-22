@@ -5,9 +5,9 @@ plugins {
     id(libs.plugins.convention.koin.get().pluginId)
 }
 
-kotlin{
-    sourceSets{
-        commonMain.dependencies{
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
             implementation(projects.core.utils)
         }
     }
