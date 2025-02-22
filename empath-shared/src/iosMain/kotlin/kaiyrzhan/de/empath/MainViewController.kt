@@ -11,5 +11,7 @@ public fun MainViewController(): UIViewController = ComposeUIViewController(
         initKoin()
     },
 ) {
-    EmpathApp()
+    EmpathApp(
+
+    )
 }

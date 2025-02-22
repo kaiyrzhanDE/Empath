@@ -1,38 +1,47 @@
 package kaiyrzhan.de.empath.compose
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.scale
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.auth.ui.AuthScreen
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import kaiyrzhan.de.empath.features.auth.ui.root.AuthScreen
+import kaiyrzhan.de.empath.root.RootComponent
 
+@OptIn(ExperimentalDecomposeApi::class)
 @Composable
-@Suppress("ModifierMissing")
-public fun EmpathApp() {
+public fun EmpathApp(
+    component: RootComponent,
+    modifier: Modifier = Modifier,
+) {
     EmpathTheme {
-        Scaffold(
-            containerColor = EmpathTheme.colors.surfaceDim,
-        ) { innerPadding ->
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(16.dp),
+        Surface(
+            modifier = modifier
+                .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.systemBars),
+        ) {
+            Children(
+                stack = component.stack,
+                modifier = Modifier.fillMaxSize(),
+                animation = predictiveBackAnimation(
+                    backHandler = component.backHandler,
+                    onBack = { component.onBackPressed() },
+                    fallbackAnimation = stackAnimation(scale()),
+                ),
             ) {
-                AuthScreen()
+                when (val instance = it.instance) {
+                    is RootComponent.Child.Auth -> AuthScreen(instance.component)
+                }
             }
         }
     }
 }
 
-@[Preview Composable]
-internal fun EmpathAppPreview() {
-    EmpathApp()
-}

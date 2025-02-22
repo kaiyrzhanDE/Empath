@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+
 plugins {
     id(libs.plugins.convention.kmp.library.all.get().pluginId)
     id(libs.plugins.convention.jetbrains.compose.all.get().pluginId)
@@ -10,6 +12,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.uikit)
                 implementation(projects.core.utils)
+                implementation(projects.features.auth.domain)
             }
         }
     }
