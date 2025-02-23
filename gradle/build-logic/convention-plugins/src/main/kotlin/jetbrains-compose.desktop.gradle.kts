@@ -3,7 +3,7 @@ import kaiyrzhan.de.empath.gradle.composeExtension
 import kaiyrzhan.de.empath.gradle.kmpConfig
 import kaiyrzhan.de.empath.gradle.libs
 
-plugins.applyIfNeeded(libs.plugins.convention.jetbrains.compose.base.get().pluginId)
+plugins.applyIfNeeded(libs.plugins.empath.compose.base.get().pluginId)
 
 kmpConfig {
     sourceSets {

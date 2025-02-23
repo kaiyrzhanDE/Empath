@@ -1,6 +1,6 @@
 plugins {
-    id(libs.plugins.convention.kmp.library.ios.get().pluginId)
-    id(libs.plugins.convention.jetbrains.compose.ios.get().pluginId)
+    alias(libs.plugins.empath.kmp.library.ios)
+    alias(libs.plugins.empath.compose.ios)
 }
 
 kotlin {

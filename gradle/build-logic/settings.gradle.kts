@@ -35,4 +35,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":conventions")
+include(":convention-plugins")

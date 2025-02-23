@@ -1,6 +1,5 @@
 plugins {
-    id(libs.plugins.convention.kmp.library.all.get().pluginId)
-    id(libs.plugins.convention.koin.get().pluginId)
+    alias(libs.plugins.empath.kmp.library.all)
 }
 
 android {

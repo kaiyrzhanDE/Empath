@@ -5,7 +5,6 @@ import org.gradle.kotlin.dsl.invoke
 
 plugins.applyIfNeeded(libs.plugins.jetbrains.kotlin.serialization.get().pluginId)
 plugins.applyIfNeeded(libs.plugins.google.ksp.get().pluginId)
-plugins.apply(libs.plugins.convention.kmp.library.all.get().pluginId)
 
 kmpConfig {
     sourceSets {

@@ -4,7 +4,7 @@ import kaiyrzhan.de.empath.gradle.kmpConfig
 import kaiyrzhan.de.empath.gradle.config.kmpIosPlatforms
 import kaiyrzhan.de.empath.gradle.libs
 
-plugins.applyIfNeeded(libs.plugins.convention.kmp.library.base.get().pluginId)
+plugins.applyIfNeeded(libs.plugins.empath.kmp.library.base.get().pluginId)
 
 kmpConfig {
     kmpIosPlatforms

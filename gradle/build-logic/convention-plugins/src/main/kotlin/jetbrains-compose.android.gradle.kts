@@ -7,8 +7,8 @@ import kaiyrzhan.de.empath.gradle.libs
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
 
-plugins.applyIfNeeded(libs.plugins.convention.jetbrains.compose.base.get().pluginId)
-plugins.apply(libs.plugins.convention.jetpack.compose.base.get().pluginId)
+plugins.applyIfNeeded(libs.plugins.empath.compose.base.get().pluginId)
+plugins.apply(libs.plugins.empath.compose.jetpack.base.get().pluginId)
 
 kmpConfig {
     androidConfig {

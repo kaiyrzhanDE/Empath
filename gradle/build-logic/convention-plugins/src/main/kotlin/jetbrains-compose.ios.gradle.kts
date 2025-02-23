@@ -1,4 +1,4 @@
 import kaiyrzhan.de.empath.gradle.applyIfNeeded
 import kaiyrzhan.de.empath.gradle.libs
 
-plugins.applyIfNeeded(libs.plugins.convention.jetbrains.compose.base.get().pluginId)
+plugins.applyIfNeeded(libs.plugins.empath.compose.base.get().pluginId)

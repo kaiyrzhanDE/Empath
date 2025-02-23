@@ -2,7 +2,8 @@
 adaptive = "1.0.1"
 agp = "8.8.1"
 android-compileSdk = "35"
-jdk = "11"
+jdkAndroid = "11"
+jdkDesktop = "21"
 android-minSdk = "24"
 android-targetSdk = "34"
 androidx-activityCompose = "1.10.0"
@@ -93,24 +94,24 @@ gradleplugins-composeCompiler = { group = "org.jetbrains.kotlin", name = "compos
 gradleplugins-ktorfit = { group = "de.jensklingenberg.ktorfit", name = "de.jensklingenberg.ktorfit.gradle.plugin", version.ref = "ktorfit" }
 
 [plugins]
-convention-android-base = { id = "android.base", version = "unspecified" }
-convention-android-library = { id = "android.library", version = "unspecified" }
-convention-jetpack-compose-base = { id = "jetpack-compose.base", version = "unspecified" }
-convention-jetbrains-compose-base = { id = "jetbrains-compose.base", version = "unspecified" }
-convention-jetbrains-compose-desktop = { id = "jetbrains-compose.desktop", version = "unspecified" }
-convention-jetbrains-compose-android = { id = "jetbrains-compose.android", version = "unspecified" }
-convention-jetbrains-compose-ios = { id = "jetbrains-compose.ios", version = "unspecified" }
-convention-jetbrains-compose-all = { id = "jetbrains-compose.all", version = "unspecified" }
-convention-decompose = { id = "decompose", version = "unspecified" }
+empath-android-base = { id = "android.base" }
+empath-android-library = { id = "android.library" }
+empath-compose-jetpack-base = { id = "jetpack-compose.base" }
+empath-compose-base = { id = "jetbrains-compose.base" }
+empath-compose-desktop = { id = "jetbrains-compose.desktop" }
+empath-compose-android = { id = "jetbrains-compose.android" }
+empath-compose-ios = { id = "jetbrains-compose.ios" }
+empath-compose-all = { id = "jetbrains-compose.all" }
+empath-decompose = { id = "decompose" }
 
-convention-kmp-library-all = { id = "kmp.library.all", version = "unspecified" }
-convention-kmp-library-base = { id = "kmp.library.base", version = "unspecified" }
-convention-kmp-library-android = { id = "kmp.library.android", version = "unspecified" }
-convention-kmp-library-desktop = { id = "kmp.library.desktop", version = "unspecified" }
-convention-kmp-library-ios = { id = "kmp.library.ios", version = "unspecified" }
+empath-kmp-library-all = { id = "kmp.library.all" }
+empath-kmp-library-base = { id = "kmp.library.base" }
+empath-kmp-library-android = { id = "kmp.library.android" }
+empath-kmp-library-desktop = { id = "kmp.library.desktop" }
+empath-kmp-library-ios = { id = "kmp.library.ios" }
 
-convention-ktor = { id = "ktor", version = "unspecified" }
-convention-koin = { id = "koin", version = "unspecified" }
+empath-ktor = { id = "ktor" }
+empath-koin = { id = "koin" }
 
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -121,7 +122,7 @@ jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", ve
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
-ktorfit= { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
+ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
 
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

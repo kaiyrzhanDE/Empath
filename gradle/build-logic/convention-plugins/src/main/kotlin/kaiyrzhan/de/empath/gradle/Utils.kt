@@ -5,6 +5,7 @@ import org.gradle.api.plugins.PluginContainer
 import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 
+internal const val DESKTOP = "desktop"
 
 private const val IMPLEMENTATION = "implementation"
 internal fun DependencyHandlerScope.implementation(dependencyNotation: Provider<MinimalExternalModuleDependency>){

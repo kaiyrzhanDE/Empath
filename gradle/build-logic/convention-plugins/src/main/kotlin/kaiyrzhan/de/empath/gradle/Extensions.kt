@@ -29,17 +29,25 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 internal val Project.libs: LibrariesForLibs
     get() = the<LibrariesForLibs>()
 
-internal fun LibrariesForLibs.javaVersion(): JavaVersion {
-    val jdkVersion = versions.jdk.get().toInt()
+internal fun LibrariesForLibs.javaVersion(target: ProjectTargets.JvmTarget): JavaVersion {
+    val jdkVersion = jvmVersion(target)
     require(jdkVersion >= 10)
     return JavaVersion.toVersion(jdkVersion)
 }
 
-internal fun LibrariesForLibs.jvmTarget(): JvmTarget {
-    val jdkVersion = versions.jdk.get().toInt()
+private fun LibrariesForLibs.jvmVersion(target: ProjectTargets.JvmTarget): Int {
+    return when (target) {
+        ProjectTargets.Android -> versions.jdkAndroid.get().toInt()
+        ProjectTargets.Desktop -> versions.jdkDesktop.get().toInt()
+    }
+}
+
+internal fun LibrariesForLibs.jvmTarget(target: ProjectTargets.JvmTarget): JvmTarget {
+    val jdkVersion = jvmVersion(target)
     require(jdkVersion >= 10)
     return JvmTarget.valueOf("JVM_$jdkVersion")
 }
+
 
 private typealias AndroidExtensions = CommonExtension<
         out BuildFeatures,

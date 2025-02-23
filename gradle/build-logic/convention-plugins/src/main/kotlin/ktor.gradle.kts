@@ -1,13 +1,11 @@
 import kaiyrzhan.de.empath.gradle.applyIfNeeded
-import kaiyrzhan.de.empath.gradle.jvmTarget
 import kaiyrzhan.de.empath.gradle.kmpConfig
-import kaiyrzhan.de.empath.gradle.kotlinJvmCompilerOptions
 import kaiyrzhan.de.empath.gradle.libs
 
 plugins.applyIfNeeded(libs.plugins.jetbrains.kotlin.serialization.get().pluginId)
 plugins.apply(libs.plugins.google.ksp.get().pluginId)
 plugins.apply(libs.plugins.ktorfit.get().pluginId)
-plugins.apply(libs.plugins.convention.kmp.library.all.get().pluginId)
+plugins.apply(libs.plugins.empath.kmp.library.all.get().pluginId)
 
 kmpConfig {
     sourceSets {

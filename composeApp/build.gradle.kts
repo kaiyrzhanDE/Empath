@@ -1,15 +1,18 @@
 plugins {
-    id(libs.plugins.convention.kmp.library.all.get().pluginId)
-    id(libs.plugins.convention.jetbrains.compose.all.get().pluginId)
-    id(libs.plugins.convention.koin.get().pluginId)
+    alias(libs.plugins.empath.kmp.library.all)
+    alias(libs.plugins.empath.compose.all)
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.features.auth.ui)
+            implementation(libs.kotlinx.serialization.json)
+
             implementation(projects.core.utils)
             implementation(projects.core.network)
+
+            implementation(projects.features.auth.ui)
+
         }
     }
 }

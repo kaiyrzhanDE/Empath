@@ -1,3 +1,4 @@
+import kaiyrzhan.de.empath.gradle.ProjectTargets
 import kaiyrzhan.de.empath.gradle.androidConfig
 import kaiyrzhan.de.empath.gradle.config.requestedAndroidAbis
 import kaiyrzhan.de.empath.gradle.javaVersion
@@ -22,7 +23,7 @@ androidConfig {
     }
 
     compileOptions {
-        val javaVersion = libs.javaVersion()
+        val javaVersion = libs.javaVersion(ProjectTargets.Android)
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }

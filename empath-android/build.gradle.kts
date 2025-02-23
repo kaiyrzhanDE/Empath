@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
-    id(libs.plugins.convention.android.base.get().pluginId)
-    id(libs.plugins.convention.jetpack.compose.base.get().pluginId)
+    alias(libs.plugins.empath.android.base)
+    alias(libs.plugins.empath.compose.jetpack.base)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
@@ -27,7 +27,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = libs.versions.jdk.get()
+        jvmTarget = libs.versions.jdkAndroid.get()
     }
 }
 

@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
-    id(libs.plugins.convention.kmp.library.all.get().pluginId)
-    id(libs.plugins.convention.decompose.get().pluginId)
+    alias(libs.plugins.empath.kmp.library.all)
     //Don't use plugin jetbrains-compose.all
     alias(libs.plugins.jetbrains.compose.multiplatform)
     alias(libs.plugins.jetbrains.compose.compiler)
+    alias(libs.plugins.empath.decompose)
 }
 
 kotlin {
