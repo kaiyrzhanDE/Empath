@@ -19,6 +19,11 @@ kmpConfig {
             iosTarget.binaries.framework {
                 baseName = project.name
                 isStatic = true
+                export(libs.arkivanov.decompose)
+                export(libs.arkivanov.decompose.compose)
+                export(libs.arkivanov.essenty.lifecycle)
+                export(libs.arkivanov.essenty.stateKeeper)
+                export(libs.arkivanov.essenty.backHandler)
             }
         }
 }

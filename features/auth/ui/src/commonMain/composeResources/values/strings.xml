@@ -1,0 +1,11 @@
+<resources>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="reset_password">Reset password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_up_prompt">Do you haven't account?</string>
+    <string name="dividers_placeholder">or</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+</resources>

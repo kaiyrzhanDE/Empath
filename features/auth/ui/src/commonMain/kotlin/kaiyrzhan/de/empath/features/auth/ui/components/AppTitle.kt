@@ -1,0 +1,38 @@
+package kaiyrzhan.de.empath.features.auth.ui.components
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.app_name
+import empath.core.uikit.generated.resources.created_by_
+import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+
+@Preview
+@Composable
+internal fun AppTitle(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = stringResource(CoreRes.string.app_name),
+            style = EmpathTheme.typography.displayLarge,
+            color = EmpathTheme.colors.onSurface,
+        )
+        Text(
+            text = stringResource(CoreRes.string.created_by_),
+            style = EmpathTheme.typography.labelLarge,
+            color = EmpathTheme.colors.onSurfaceVariant,
+        )
+    }
+}

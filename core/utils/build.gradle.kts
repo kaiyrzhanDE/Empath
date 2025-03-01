@@ -6,7 +6,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(libs.kermit)
+            implementation(libs.kermit)
             api(libs.androidx.datastore)
             api(libs.androidx.datastore.preferences)
         }

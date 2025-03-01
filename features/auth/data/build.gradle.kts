@@ -6,12 +6,12 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.features.auth.data)
+                implementation(projects.core.network)
             }
         }
     }
 }
 
 android {
-    namespace = "kaiyrzhan.de.empath.features.auth.domain"
+    namespace = "kaiyrzhan.de.empath.features.auth.data"
 }

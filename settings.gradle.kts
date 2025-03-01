@@ -40,6 +40,7 @@ project(":empath-shared").name = "EmpathShared"
 
 include(":features:auth:ui")
 include(":features:auth:domain")
+include(":features:auth:data")
 
 include(":core:uikit")
 include(":core:utils")

@@ -7,12 +7,9 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.serialization.json)
-
-            implementation(projects.core.utils)
             implementation(projects.core.network)
-
+            implementation(projects.core.utils)
             implementation(projects.features.auth.ui)
-
         }
     }
 }

@@ -1,24 +1,31 @@
 @file:Suppress("unused")
+
 package kaiyrzhan.de.empath.core.uikit
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 public fun EmpathTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     colors: ColorScheme = if (isDarkTheme) darkColorScheme() else lightColorScheme(),
     typography: Typography = typography(),
     shapes: Shapes = shapes(),
+    rippleConfiguration: RippleConfiguration = rippleConfiguration(),
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
         LocalColorScheme provides colors,
         LocalShapes provides shapes,
+        LocalRippleConfiguration provides rippleConfiguration,
     ) {
         MaterialTheme(
             colorScheme = colors.toM3ColorScheme(),

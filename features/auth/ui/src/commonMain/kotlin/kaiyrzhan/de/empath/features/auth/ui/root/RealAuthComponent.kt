@@ -41,6 +41,9 @@ public class RealAuthComponent(
         AuthComponent.Child.Login(
             RealLoginComponent(
                 componentContext = componentContext,
+                onLoginClick = {
+                    TODO()
+                }
             ),
         )
 

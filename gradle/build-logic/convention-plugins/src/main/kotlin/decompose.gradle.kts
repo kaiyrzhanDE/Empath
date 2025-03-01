@@ -10,6 +10,8 @@ kmpConfig{
             api(libs.arkivanov.decompose)
             api(libs.arkivanov.decompose.compose)
             api(libs.arkivanov.essenty.lifecycle)
+            api(libs.arkivanov.essenty.lifecycle.coroutines)
+            api(libs.arkivanov.essenty.stateKeeper)
         }
     }
 }

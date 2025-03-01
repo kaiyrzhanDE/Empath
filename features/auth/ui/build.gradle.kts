@@ -7,12 +7,15 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.core.uikit)
                 implementation(projects.core.utils)
-                implementation(projects.features.auth.domain)
             }
         }
     }
+}
+
+compose.resources{
+    publicResClass = false
+    generateResClass = always
 }
 
 android {

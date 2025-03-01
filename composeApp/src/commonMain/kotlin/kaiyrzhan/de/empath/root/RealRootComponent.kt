@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.features.auth.ui.root.RealAuthComponent
+
 import kotlinx.serialization.Serializable
 
 public class RealRootComponent(
@@ -22,7 +23,7 @@ public class RealRootComponent(
         childFactory = ::child,
     )
 
-    override fun onBackPressed(): Unit = navigation.pop()
+    override fun onBackClicked(): Unit = navigation.pop()
 
     private fun child(config: Config, childComponentContext: ComponentContext) =
         when (config) {
