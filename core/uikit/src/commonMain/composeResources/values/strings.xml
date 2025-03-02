@@ -5,4 +5,6 @@
     <string name="authorization_process">Authorization process</string>
     <string name="loading">Loading</string>
     <string name="loading_prompt">Please wait a bit.</string>
+
+    <string name="ic_arrow_back_description">Navigation back</string>
 </resources>

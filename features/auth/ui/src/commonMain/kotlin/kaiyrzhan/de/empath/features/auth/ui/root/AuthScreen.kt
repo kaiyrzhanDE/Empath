@@ -15,6 +15,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import kaiyrzhan.de.empath.features.auth.ui.emailVerification.EmailVerificationScreen
 import kaiyrzhan.de.empath.features.auth.ui.login.LoginScreen
 
 
@@ -26,17 +27,17 @@ public fun AuthScreen(
 ) {
     Children(
         stack = component.stack,
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         animation = predictiveBackAnimation(
             backHandler = component.backHandler,
             onBack = { component.onBackClick() },
             fallbackAnimation = stackAnimation(slide() + fade()),
         ),
-    ) {
-        when (val instance = it.instance) {
+    ) { child ->
+        when (val instance = child.instance) {
             is AuthComponent.Child.Login -> LoginScreen(instance.component)
+            is AuthComponent.Child.EmailVerification -> EmailVerificationScreen(instance.component)
 //                    is AuthComponent.Child.PasswordRecovery -> PasswordRecoveryContent(instance.component)
-//                    is AuthComponent.Child.EmailVerification -> EmailVerificationContent(instance.component)
 //                    is AuthComponent.Child.OptionalUserInfo -> OptionalUserInfoContent(instance.component)
 //                    is AuthComponent.Child.CreateAccount -> CreateAccountContent(instance.component)
 //                    is AuthComponent.Child.Privacy -> PrivacyContent(instance.component)

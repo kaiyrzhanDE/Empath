@@ -33,7 +33,7 @@ import kaiyrzhan.de.empath.core.components.CircularLoading
 import kaiyrzhan.de.empath.core.modifiers.appendSpace
 import kaiyrzhan.de.empath.core.modifiers.isPhone
 import kaiyrzhan.de.empath.core.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.auth.ui.components.AppTitle
+import kaiyrzhan.de.empath.features.auth.ui.components.Logo
 import kaiyrzhan.de.empath.features.auth.ui.components.LowPolyBackground
 import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
@@ -89,7 +89,7 @@ private fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                AppTitle()
+                Logo()
                 Spacer(
                     modifier = Modifier
                         .heightIn(min = 30.dp, max = 60.dp)
@@ -212,7 +212,7 @@ private fun PrimaryAuthorizationContent(
             modifier = Modifier.fillMaxWidth(),
             value = email,
             onValueChange = onEmailChange,
-            placeholder = {
+            label = {
                 Text(
                     text = stringResource(FeatureRes.string.email),
                     style = EmpathTheme.typography.bodyLarge,
@@ -225,7 +225,7 @@ private fun PrimaryAuthorizationContent(
             modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = onPasswordChange,
-            placeholder = {
+            label = {
                 Text(
                     text = stringResource(FeatureRes.string.password),
                     style = EmpathTheme.typography.bodyLarge,

@@ -27,6 +27,7 @@ internal class RealLoginComponent(
     override val state = MutableStateFlow<LoginState>(LoginState.Success())
 
     override fun onEvent(event: LoginEvent) {
+        logger.d(this::class.simpleName.toString(), event.toString())
         when (event) {
             is LoginEvent.EmailChange -> changeEmail(event.email)
             is LoginEvent.PasswordChange -> changePassword(event.password)
@@ -40,27 +41,20 @@ internal class RealLoginComponent(
 
     private fun changePassword(password: String) {
         state.update { currentState ->
-            logger.d("veildc", "changePassword: $currentState")
             if (currentState !is LoginState.Success) return@update currentState
-            logger.d("veildc", "changePassword 1: $currentState")
             currentState.copy(password = password)
         }
     }
 
     private fun changeEmail(email: String) {
         state.update { currentState ->
-            logger.d("veildc", "changeEmail: $currentState")
             if (currentState !is LoginState.Success) return@update currentState
-            logger.d("veildc", "changeEmail 1: $currentState")
             currentState.copy(email = email)
         }
     }
 
     private fun logIn() {
         coroutineScope.launch {
-            withContext(appDispatchers.io) {
-                delay(2000)
-            }
             onLoginClick()
         }
     } //TODO("Need implementation)
@@ -69,6 +63,4 @@ internal class RealLoginComponent(
     private fun resetPassword() = Unit //TODO("Need implementation)
     private fun authWithFacebook() = Unit //TODO("Need implementation)
     private fun authWithGoogle() = Unit //TODO("Need implementation)
-
-
 }

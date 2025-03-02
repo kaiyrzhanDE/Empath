@@ -38,8 +38,8 @@ public fun EmpathApp(
                     onBack = { component.onBackClicked() },
                     fallbackAnimation = stackAnimation(scale()),
                 ),
-            ) {
-                when (val instance = it.instance) {
+            ) { child ->
+                when (val instance = child.instance) {
                     is RootComponent.Child.Auth -> AuthScreen(instance.component)
                 }
             }

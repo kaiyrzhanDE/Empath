@@ -16,7 +16,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-internal fun AppTitle(
+internal fun Logo(
     modifier: Modifier = Modifier,
 ) {
     Column(

@@ -8,4 +8,8 @@
     <string name="dividers_placeholder">or</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="continue_with_facebook">Continue with Facebook</string>
+
+    <string name="enter_email_title">Enter a email</string>
+    <string name="enter_email_description">We will send you an email with a code for verification you</string>
+    <string name="send_code">Send code</string>
 </resources>
