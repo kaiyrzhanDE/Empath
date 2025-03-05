@@ -15,6 +15,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.CodeConfirmationScreen
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.EmailVerificationScreen
 import kaiyrzhan.de.empath.features.auth.ui.login.LoginScreen
 
@@ -37,11 +38,11 @@ public fun AuthScreen(
         when (val instance = child.instance) {
             is AuthComponent.Child.Login -> LoginScreen(instance.component)
             is AuthComponent.Child.EmailVerification -> EmailVerificationScreen(instance.component)
+            is AuthComponent.Child.CodeConfirmation -> CodeConfirmationScreen(instance.component)
 //                    is AuthComponent.Child.PasswordRecovery -> PasswordRecoveryContent(instance.component)
 //                    is AuthComponent.Child.OptionalUserInfo -> OptionalUserInfoContent(instance.component)
 //                    is AuthComponent.Child.CreateAccount -> CreateAccountContent(instance.component)
 //                    is AuthComponent.Child.Privacy -> PrivacyContent(instance.component)
-//                    is AuthComponent.Child.CodeConfirmation -> CodeConfirmationContent(instance.component)
         }
     }
 }

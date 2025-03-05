@@ -55,11 +55,21 @@ internal class RealLoginComponent(
 
     private fun logIn() {
         coroutineScope.launch {
+            withContext(appDispatchers.io) {
+                delay(500) //TODO("Request simulating, onSuccess")
+            }
             onLoginClick()
         }
     } //TODO("Need implementation)
 
-    private fun signUp() = Unit //TODO("Need implementation)
+    private fun signUp(){
+        coroutineScope.launch {
+            withContext(appDispatchers.io) {
+                delay(500) //TODO("Request simulating, onSuccess")
+            }
+            onLoginClick()
+        }
+    }
     private fun resetPassword() = Unit //TODO("Need implementation)
     private fun authWithFacebook() = Unit //TODO("Need implementation)
     private fun authWithGoogle() = Unit //TODO("Need implementation)

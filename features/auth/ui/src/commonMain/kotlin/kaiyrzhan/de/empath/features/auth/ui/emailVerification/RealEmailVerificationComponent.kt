@@ -38,12 +38,13 @@ internal class RealEmailVerificationComponent(
     }
 
     private fun sendCode() {
-        val state = state.value as? EmailVerificationState.Success ?: return
+        val currentState = state.value as? EmailVerificationState.Success ?: return
+        state.update { EmailVerificationState.Loading }
         coroutineScope.launch {
             withContext(appDispatchers.io) {
-                delay(2000) //TODO("Request simulating, onSuccess")
+                delay(500) //TODO("Request simulating, onSuccess")
             }
-            onSendCodeClick(state.email)
+            onSendCodeClick(currentState.email)
         }
     }//TODO("Need implementation)
 

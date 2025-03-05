@@ -8,6 +8,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.RealCodeConfirmationComponent
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.RealEmailVerificationComponent
 import kaiyrzhan.de.empath.features.auth.ui.login.RealLoginComponent
 import kotlinx.serialization.Serializable
@@ -34,9 +35,9 @@ public class RealAuthComponent(
     ): AuthComponent.Child = when (config) {
         is Config.Login -> createLoginComponent(childComponentContext)
         is Config.EmailVerification -> createEmailVerificationComponent(childComponentContext)
+        is Config.CodeConfirmation -> createCodeConfirmationComponent(childComponentContext, config)
 //        is Config.CreateAccount -> createAccountComponent(childComponentContext)
 //        is Config.Privacy -> privacyComponent(childComponentContext)
-//        is Config.CodeConfirmation -> codeConfirmationComponent(childComponentContext, config)
 //        is Config.PasswordRecovery -> recoveryPasswordComponent(childComponentContext)
 //        is Config.OptionalAccountInfo -> optionalAccountInfoComponent(childComponentContext)
     }
@@ -50,11 +51,25 @@ public class RealAuthComponent(
             ),
         )
 
+    @OptIn(DelicateDecomposeApi::class)
     private fun createEmailVerificationComponent(componentContext: ComponentContext) =
         AuthComponent.Child.EmailVerification(
             RealEmailVerificationComponent(
                 componentContext = componentContext,
-                onSendCodeClick = { TODO("Need implementation") },
+                onSendCodeClick = { email -> navigation.push(Config.CodeConfirmation(email)) },
+                onBackClick = ::onBackClick,
+            )
+        )
+
+    private fun createCodeConfirmationComponent(
+        componentContext: ComponentContext,
+        config: Config.CodeConfirmation
+    ) =
+        AuthComponent.Child.CodeConfirmation(
+            RealCodeConfirmationComponent(
+                componentContext = componentContext,
+                email = config.email,
+                onCodeConfirm = { TODO("Navigation to Enter fields screen") },
                 onBackClick = ::onBackClick,
             )
         )
@@ -66,5 +81,8 @@ public class RealAuthComponent(
 
         @Serializable
         data object EmailVerification : Config
+
+        @Serializable
+        data class CodeConfirmation(val email: String) : Config
     }
 }
