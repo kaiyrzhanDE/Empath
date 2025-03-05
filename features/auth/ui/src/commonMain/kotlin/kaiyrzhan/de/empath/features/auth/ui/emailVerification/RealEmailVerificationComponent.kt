@@ -45,6 +45,8 @@ internal class RealEmailVerificationComponent(
                 delay(500) //TODO("Request simulating, onSuccess")
             }
             onSendCodeClick(currentState.email)
+            delay(500)
+            state.update { currentState }
         }
     }//TODO("Need implementation)
 
