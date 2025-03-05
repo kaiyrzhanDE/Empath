@@ -7,7 +7,7 @@ public sealed class CodeConfirmationState {
     internal data class Success(
         val email: String,
         val code: String = "",
-        val isResendAllowed: Boolean,
-        val resentTimer: Int,
+        val isResendAllowed: Boolean = false,
+        val resentTimer: Int = -1,
     ) : CodeConfirmationState()
 }

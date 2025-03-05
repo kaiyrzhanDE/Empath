@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -15,7 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -26,11 +24,9 @@ import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.components.CircularLoading
 import kaiyrzhan.de.empath.core.modifiers.appendSpace
-import kaiyrzhan.de.empath.core.modifiers.isPhone
 import kaiyrzhan.de.empath.core.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationEvent
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationState
-import kaiyrzhan.de.empath.features.auth.ui.components.LowPolyBackground
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
@@ -42,30 +38,13 @@ public fun CodeConfirmationScreen(
     component: CodeConfirmationComponent,
     modifier: Modifier = Modifier,
 ) {
-    val currentWindowInfo = currentWindowAdaptiveInfo()
     val codeConfirmationState = component.state.collectAsState()
 
-    if (currentWindowInfo.isPhone()) {
-        CodeConfirmationScreen(
-            modifier = modifier.fillMaxSize(),
-            state = codeConfirmationState.value,
-            onEvent = component::onEvent,
-        )
-    } else {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            LowPolyBackground(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(vertical = 24.dp, horizontal = 12.dp),
-            )
-            CodeConfirmationScreen(
-                modifier = modifier.weight(1f),
-                state = codeConfirmationState.value,
-                onEvent = component::onEvent,
-            )
-        }
-    }
-
+    CodeConfirmationScreen(
+        modifier = modifier.fillMaxSize(),
+        state = codeConfirmationState.value,
+        onEvent = component::onEvent,
+    )
 }
 
 @Composable
@@ -165,9 +144,7 @@ private fun CodeConfirmationScreen(
         }
 
         is CodeConfirmationState.Loading -> {
-            CircularLoading(
-                modifier = Modifier.fillMaxWidth(fraction = 0.5f),
-            )
+            CircularLoading()
         }
 
         is CodeConfirmationState.Error -> Unit

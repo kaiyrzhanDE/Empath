@@ -17,7 +17,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -31,10 +30,8 @@ import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.components.CircularLoading
 import kaiyrzhan.de.empath.core.modifiers.appendSpace
-import kaiyrzhan.de.empath.core.modifiers.isPhone
 import kaiyrzhan.de.empath.core.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.auth.ui.components.Logo
-import kaiyrzhan.de.empath.features.auth.ui.components.LowPolyBackground
 import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
@@ -46,29 +43,13 @@ public fun LoginScreen(
     component: LoginComponent,
     modifier: Modifier = Modifier,
 ) {
-    val currentWindowInfo = currentWindowAdaptiveInfo()
     val loginState = component.state.collectAsState()
 
-    if (currentWindowInfo.isPhone()) {
-        LoginScreen(
-            modifier = modifier.fillMaxSize(),
-            loginState = loginState.value,
-            onEvent = component::onEvent,
-        )
-    } else {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            LowPolyBackground(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(vertical = 24.dp, horizontal = 12.dp),
-            )
-            LoginScreen(
-                modifier = Modifier.weight(1f),
-                loginState = loginState.value,
-                onEvent = component::onEvent,
-            )
-        }
-    }
+    LoginScreen(
+        modifier = modifier.fillMaxSize(),
+        loginState = loginState.value,
+        onEvent = component::onEvent,
+    )
 }
 
 
@@ -114,9 +95,7 @@ private fun LoginScreen(
         }
 
         is LoginState.Loading -> {
-            CircularLoading(
-                modifier = Modifier.fillMaxWidth(fraction = 0.5f),
-            )
+            CircularLoading()
         }
 
         is LoginState.Error -> Unit

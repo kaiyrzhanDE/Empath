@@ -29,11 +29,7 @@ internal class RealCodeConfirmationComponent(
     private val coroutineScope = coroutineScope(appDispatchers.main + SupervisorJob())
 
     override val state = MutableStateFlow<CodeConfirmationState>(
-        CodeConfirmationState.Success(
-            email = email,
-            isResendAllowed = false,
-            resentTimer = -1,
-        )
+        CodeConfirmationState.Success(email = email)
     )
 
     init {
