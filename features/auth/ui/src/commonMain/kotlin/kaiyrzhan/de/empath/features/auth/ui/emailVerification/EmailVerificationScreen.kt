@@ -49,9 +49,11 @@ private fun EmailVerificationScreen(
     state: EmailVerificationState,
     onEvent: (EmailVerificationEvent) -> Unit,
 ) {
+    val scrollState = rememberScrollState()
+
     when (state) {
         is EmailVerificationState.Success -> {
-            val scrollState = rememberScrollState()
+
             Column(
                 modifier = modifier
                     .verticalScroll(scrollState)
@@ -87,8 +89,6 @@ private fun EmailVerificationScreen(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = EmpathTheme.colors.primary,
                         contentColor = EmpathTheme.colors.onPrimary,
-                        disabledContentColor = EmpathTheme.colors.onSurface,
-                        disabledContainerColor = EmpathTheme.colors.surfaceBright
                     ),
                 ) {
                     Text(

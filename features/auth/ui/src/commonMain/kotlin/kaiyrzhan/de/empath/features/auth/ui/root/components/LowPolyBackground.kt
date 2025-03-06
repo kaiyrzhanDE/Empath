@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.auth.ui.components
+package kaiyrzhan.de.empath.features.auth.ui.root.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize

@@ -25,6 +25,7 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
@@ -33,6 +34,8 @@ import kaiyrzhan.de.empath.core.modifiers.appendSpace
 import kaiyrzhan.de.empath.core.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.auth.ui.components.Logo
 import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
+import kaiyrzhan.de.empath.features.auth.ui.login.components.SecondaryAuthButtons
+import kaiyrzhan.de.empath.features.auth.ui.login.components.TitledDivider
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
@@ -59,9 +62,10 @@ private fun LoginScreen(
     loginState: LoginState,
     onEvent: (LoginEvent) -> Unit,
 ) {
+    val scrollState = rememberScrollState()
+
     when (loginState) {
         is LoginState.Success -> {
-            val scrollState = rememberScrollState()
             Column(
                 modifier = modifier
                     .verticalScroll(scrollState)
@@ -86,7 +90,7 @@ private fun LoginScreen(
                     onResetPasswordClick = { onEvent(LoginEvent.ResetPassword) },
                 )
                 TitledDivider()
-                SecondaryAuthContent(
+                SecondaryAuthButtons(
                     onGoogleAuthClick = { onEvent(LoginEvent.GoogleAuthClick) },
                     onFacebookAuthClick = { onEvent(LoginEvent.FacebookAuthClick) },
                 )
@@ -100,74 +104,6 @@ private fun LoginScreen(
 
         is LoginState.Error -> Unit
         is LoginState.Initial -> Unit
-    }
-}
-
-@Composable
-private fun TitledDivider(
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .defaultMaxWidth()
-            .padding(vertical = 30.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(20.dp),
-    ) {
-        HorizontalDivider(modifier = Modifier.weight(1f))
-        Text(
-            text = stringResource(FeatureRes.string.dividers_placeholder),
-            style = EmpathTheme.typography.bodyMedium,
-            color = EmpathTheme.colors.outlineVariant,
-        )
-        HorizontalDivider(modifier = Modifier.weight(1f))
-    }
-}
-
-@Composable
-private fun SecondaryAuthContent(
-    onGoogleAuthClick: () -> Unit,
-    onFacebookAuthClick: () -> Unit,
-) {
-    Column(
-        modifier = Modifier.defaultMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-    ) {
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = onGoogleAuthClick,
-            shape = EmpathTheme.shapes.small,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = EmpathTheme.colors.onScrim,
-                contentColor = EmpathTheme.colors.shadow,
-                disabledContentColor = EmpathTheme.colors.onSurface,
-                disabledContainerColor = EmpathTheme.colors.surfaceBright
-            ),
-        ) {
-            Text(
-                text = stringResource(FeatureRes.string.continue_with_google),
-                style = EmpathTheme.typography.labelLarge,
-                maxLines = 1,
-            )
-        }
-
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = onFacebookAuthClick,
-            shape = EmpathTheme.shapes.small,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = EmpathTheme.colors.primary,
-                contentColor = EmpathTheme.colors.onPrimary,
-                disabledContentColor = EmpathTheme.colors.onSurface,
-                disabledContainerColor = EmpathTheme.colors.surfaceBright
-            ),
-        ) {
-            Text(
-                text = stringResource(FeatureRes.string.continue_with_facebook),
-                style = EmpathTheme.typography.labelLarge,
-                maxLines = 1,
-            )
-        }
     }
 }
 
@@ -231,6 +167,7 @@ private fun PrimaryAuthorizationContent(
                     text = stringResource(FeatureRes.string.reset_password),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
 
@@ -242,14 +179,13 @@ private fun PrimaryAuthorizationContent(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = EmpathTheme.colors.primary,
                     contentColor = EmpathTheme.colors.onPrimary,
-                    disabledContentColor = EmpathTheme.colors.onSurface,
-                    disabledContainerColor = EmpathTheme.colors.surfaceBright
                 ),
             ) {
                 Text(
                     text = stringResource(FeatureRes.string.login),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }

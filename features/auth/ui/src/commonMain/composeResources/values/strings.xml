@@ -17,7 +17,6 @@
     <string name="enter_code_description">Enter the code that we sent to your email:</string>
     <string name="code">Code</string>
     <string name="resend">Resend</string>
-    <string name="resend_placeholder">Resend (%d)</string>
     <string name="check">Check</string>
 
 </resources>

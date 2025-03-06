@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
@@ -53,9 +54,10 @@ private fun CodeConfirmationScreen(
     state: CodeConfirmationState,
     onEvent: (CodeConfirmationEvent) -> Unit,
 ) {
+    val scrollState = rememberScrollState()
+
     when (state) {
         is CodeConfirmationState.Success -> {
-            val scrollState = rememberScrollState()
             Column(
                 modifier = modifier
                     .verticalScroll(scrollState)
@@ -117,6 +119,7 @@ private fun CodeConfirmationScreen(
                             },
                             style = EmpathTheme.typography.labelLarge,
                             maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
 
@@ -128,8 +131,6 @@ private fun CodeConfirmationScreen(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = EmpathTheme.colors.primary,
                             contentColor = EmpathTheme.colors.onPrimary,
-                            disabledContentColor = EmpathTheme.colors.onSurface,
-                            disabledContainerColor = EmpathTheme.colors.surfaceBright
                         ),
                     ) {
                         Text(
