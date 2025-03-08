@@ -16,7 +16,7 @@ kmpConfig {
 
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)
-            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.jetbrains.lifecycle.runtime.compose)
         }
     }
 }
