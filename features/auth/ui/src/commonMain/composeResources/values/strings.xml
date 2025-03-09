@@ -19,4 +19,11 @@
     <string name="resend">Resend</string>
     <string name="check">Check</string>
 
+    <string name="enter_fields_title">Enter fields</string>
+    <string name="enter_fields_description">Create an nickname and password for your account</string>
+    <string name="nickname">Nickname</string>
+    <string name="repeated_password">Repeated password</string>
+    <string name="user_agreement_and_privacy_policy">User Agreement and Privacy Policy</string>
+    <string name="user_agreement_prompt">By clicking "Sign up", you agree to the</string>
+    <string name="password_dont_match_error">Passwords don't match</string>
 </resources>

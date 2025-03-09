@@ -118,7 +118,6 @@ private fun CodeConfirmationScreen(
                                 }
                             },
                             style = EmpathTheme.typography.labelLarge,
-                            maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
@@ -136,7 +135,6 @@ private fun CodeConfirmationScreen(
                         Text(
                             text = stringResource(FeatureRes.string.check),
                             style = EmpathTheme.typography.labelLarge,
-                            maxLines = 1,
                         )
                     }
                 }

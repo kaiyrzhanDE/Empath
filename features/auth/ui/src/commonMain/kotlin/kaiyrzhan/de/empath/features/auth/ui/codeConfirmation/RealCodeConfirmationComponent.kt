@@ -52,6 +52,7 @@ internal class RealCodeConfirmationComponent(
             withContext(appDispatchers.io) {
                 delay(500) //TODO("Request simulating, onSuccess")
             }
+            onCodeConfirm(currentState.email)
         }
     }
 

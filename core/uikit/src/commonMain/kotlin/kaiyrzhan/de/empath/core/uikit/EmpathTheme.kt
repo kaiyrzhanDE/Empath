@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RippleConfiguration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -20,12 +21,15 @@ public fun EmpathTheme(
     typography: Typography = typography(),
     shapes: Shapes = shapes(),
     rippleConfiguration: RippleConfiguration = rippleConfiguration(),
+    snackbarHostState: SnackbarHostState,
     content: @Composable () -> Unit,
 ) {
+
     CompositionLocalProvider(
         LocalColorScheme provides colors,
         LocalShapes provides shapes,
         LocalRippleConfiguration provides rippleConfiguration,
+        LocalSnackbarHostState provides snackbarHostState,
     ) {
         MaterialTheme(
             colorScheme = colors.toM3ColorScheme(),

@@ -2,11 +2,15 @@ package kaiyrzhan.de.empath.compose
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.stack.Children
@@ -23,16 +27,23 @@ public fun EmpathApp(
     component: RootComponent,
     modifier: Modifier = Modifier,
 ) {
-    EmpathTheme {
-        Surface(
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    EmpathTheme(
+        snackbarHostState = snackbarHostState,
+    ) {
+        Scaffold(
             modifier = modifier
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.systemBars),
-            color = EmpathTheme.colors.surface,
-        ) {
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+            containerColor = EmpathTheme.colors.surface,
+        ) { contentPadding ->
             Children(
                 stack = component.stack,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
                 animation = predictiveBackAnimation(
                     backHandler = component.backHandler,
                     onBack = { component.onBackClicked() },

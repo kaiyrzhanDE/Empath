@@ -20,6 +20,7 @@ import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.CodeConfirmationScr
 import kaiyrzhan.de.empath.features.auth.ui.root.components.LowPolyBackground
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.EmailVerificationScreen
 import kaiyrzhan.de.empath.features.auth.ui.login.LoginScreen
+import kaiyrzhan.de.empath.features.auth.ui.signUp.SignUpScreen
 
 
 @OptIn(ExperimentalDecomposeApi::class)
@@ -75,9 +76,9 @@ private fun AuthScreen(
             is AuthComponent.Child.Login -> LoginScreen(instance.component)
             is AuthComponent.Child.EmailVerification -> EmailVerificationScreen(instance.component)
             is AuthComponent.Child.CodeConfirmation -> CodeConfirmationScreen(instance.component)
+            is AuthComponent.Child.SignUp -> SignUpScreen(instance.component)
 //                    is AuthComponent.Child.PasswordRecovery -> PasswordRecoveryContent(instance.component)
 //                    is AuthComponent.Child.CreateAccount -> CreateAccountContent(instance.component)
-//                    is AuthComponent.Child.Privacy -> PrivacyContent(instance.component)
         }
     }
 }
