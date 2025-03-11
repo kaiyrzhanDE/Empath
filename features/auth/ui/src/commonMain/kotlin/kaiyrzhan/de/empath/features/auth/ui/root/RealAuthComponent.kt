@@ -11,6 +11,7 @@ import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.RealCodeConfirmationComponent
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.RealEmailVerificationComponent
 import kaiyrzhan.de.empath.features.auth.ui.login.RealLoginComponent
+import kaiyrzhan.de.empath.features.auth.ui.password_recovery.RealPasswordRecoveryComponent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.RealSignUpComponent
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -38,6 +39,7 @@ public class RealAuthComponent(
         is Config.EmailVerification -> createEmailVerificationComponent(childComponentContext)
         is Config.CodeConfirmation -> createCodeConfirmationComponent(childComponentContext, config)
         is Config.SignUp -> createSignUpComponent(childComponentContext, config)
+        is Config.PasswordRecovery -> createPasswordRecoveryComponent(childComponentContext, config)
 //        is Config.Privacy -> privacyComponent(childComponentContext)
 //        is Config.PasswordRecovery -> recoveryPasswordComponent(childComponentContext)
 //        is Config.OptionalAccountInfo -> optionalAccountInfoComponent(childComponentContext)
@@ -49,6 +51,7 @@ public class RealAuthComponent(
             RealLoginComponent(
                 componentContext = componentContext,
                 onLoginClick = { navigation.push(Config.EmailVerification) },
+                onPasswordResetClick = { navigation.push(Config.PasswordRecovery("")) }
             ),
         )
 
@@ -82,7 +85,19 @@ public class RealAuthComponent(
         RealSignUpComponent(
             componentContext = componentContext,
             email = config.email,
-            onSignUpClick = { TODO("Navigation to Main screen")  },
+            onSignUpClick = { TODO("Navigation to Main screen") },
+            onBackClick = ::onBackClick,
+        )
+    )
+
+    private fun createPasswordRecoveryComponent(
+        componentContext: ComponentContext,
+        config: Config.PasswordRecovery,
+    ) = AuthComponent.Child.PasswordRecovery(
+        RealPasswordRecoveryComponent(
+            componentContext = componentContext,
+            email = config.email,
+            onPasswordReset = { TODO("Navigation to login screen again") },
             onBackClick = ::onBackClick,
         )
     )
@@ -100,5 +115,8 @@ public class RealAuthComponent(
 
         @Serializable
         data class SignUp(val email: String) : Config
+
+        @Serializable
+        data class PasswordRecovery(val email: String) : Config
     }
 }

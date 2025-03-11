@@ -26,4 +26,7 @@
     <string name="user_agreement_and_privacy_policy">User Agreement and Privacy Policy</string>
     <string name="user_agreement_prompt">By clicking "Sign up", you agree to the</string>
     <string name="password_dont_match_error">Passwords don't match</string>
+
+    <string name="enter_new_password_title">Enter new password</string>
+    <string name="enter_new_password_description">Enter a new password for your account</string>
 </resources>

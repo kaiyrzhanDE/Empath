@@ -18,6 +18,7 @@ import org.koin.core.component.inject
 internal class RealLoginComponent(
     componentContext: ComponentContext,
     private val onLoginClick: () -> Unit,
+    private val onPasswordResetClick: () -> Unit,
 ) : ComponentContext by componentContext, LoginComponent, KoinComponent {
 
     private val appDispatchers: AppDispatchers by inject()
@@ -70,7 +71,14 @@ internal class RealLoginComponent(
             onLoginClick()
         }
     }
-    private fun resetPassword() = Unit //TODO("Need implementation)
+    private fun resetPassword() {
+        coroutineScope.launch {
+            withContext(appDispatchers.io) {
+                delay(500) //TODO("Request simulating, onSuccess")
+            }
+            onPasswordResetClick()
+        }
+    }
     private fun authWithFacebook() = Unit //TODO("Need implementation)
     private fun authWithGoogle() = Unit //TODO("Need implementation)
 }
