@@ -11,6 +11,7 @@ import kaiyrzhan.de.empath.core.network.token.TokenApi
 import kaiyrzhan.de.empath.core.network.token.TokenProvider
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.coroutines.flow.first
+import kotlinx.serialization.SerializationException
 
 internal const val BASE_URL = "http://80.90.191.162/"
 
@@ -27,17 +28,20 @@ internal fun empathClient(
                     tokenProvider
                         .getLocalToken()
                         .first()
-                        .let { token ->
-                            BearerTokens(accessToken = token.accessToken, refreshToken = token.refreshToken)
+                        .run {
+                            BearerTokens(
+                                accessToken = accessToken,
+                                refreshToken = refreshToken
+                            )
                         }
                 }
                 refreshTokens {
                     tokenProvider
                         .refreshToken()
-                        .let { token ->
+                        .run {
                             BearerTokens(
-                                accessToken = token.accessToken,
-                                refreshToken = token.refreshToken,
+                                accessToken = accessToken,
+                                refreshToken = refreshToken,
                             )
                         }
                 }

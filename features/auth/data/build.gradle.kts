@@ -1,5 +1,7 @@
 plugins {
+    alias(libs.plugins.android.library)
     alias(libs.plugins.empath.kmp.library.all)
+    alias(libs.plugins.empath.ktor)
 }
 
 kotlin {

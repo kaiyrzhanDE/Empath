@@ -4,13 +4,17 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kaiyrzhan.de.empath.core.network.result.RequestResult
+import kaiyrzhan.de.empath.core.network.result.StatusCode
+import kaiyrzhan.de.empath.core.network.result.onSuccess
 import kaiyrzhan.de.empath.core.utils.datastore.DataStoreKeys
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-public interface TokenProvider {
+private const val TOKEN_PROVIDER = "TokenProvider"
+
+internal interface TokenProvider {
     public suspend fun getLocalToken(): Flow<Token>
 
     public suspend fun deleteLocalToken(): Boolean
@@ -27,10 +31,6 @@ internal class TokenProviderImpl(
     private val logger: BaseLogger,
 ) : TokenProvider {
 
-    companion object {
-        private const val TOKEN_PROVIDER = "TokenProvider"
-    }
-
     override suspend fun getLocalToken(): Flow<Token> {
         logger.d(TOKEN_PROVIDER, "getLocalToken")
         return preferences.data.map { dataStore ->
@@ -42,6 +42,7 @@ internal class TokenProviderImpl(
     }
 
     override suspend fun deleteLocalToken(): Boolean {
+        logger.d(TOKEN_PROVIDER, "deleteLocalToken")
         return try {
             preferences.edit { dataStore ->
                 dataStore.remove(DataStoreKeys.USER_AUTH_ACCESS_TOKEN)
@@ -63,36 +64,30 @@ internal class TokenProviderImpl(
     }
 
     override suspend fun refreshToken(): Token {
-//        return try {
-//            val currentToken = getLocalToken().first().toData()
-//            val request = tokenApi.refreshToken(currentToken)
-//            when (request) {
-//                is RequestResult.Success -> {
-//                    logger.d(TOKEN_PROVIDER, "refreshToken successfully: ${request.data.refreshToken}")
-//                    request.data.toDomain()
-//                }
-//
-//                is RequestResult.Exception -> {
-//                    logger.d(TOKEN_PROVIDER, "refreshToken exception: ${request.throwable.message}")
-//                    throw TokenRefreshException(
-//                        cause = request.throwable,
-//                        message = request.throwable.message,
-//                    )
-//                }
-//
-//                is RequestResult.Error -> {
-//                    logger.d(TOKEN_PROVIDER, "refreshToken error: ${request.error.message}")
-                    throw TokenRefreshException(
-                        cause = null,
-                        message = "",
-//                        message = request.error.message,
-                    )
-//                }
-//            }
-//        } catch (exception: Exception) {
-//            logger.d(TOKEN_PROVIDER, "refreshToken unknown error: ${exception.message}")
-//            throw exception
-//        }
+        val currentToken = getLocalToken().first().toData()
+        val request = tokenApi.refreshToken(currentToken)
+        return when (request) {
+            is RequestResult.Success -> {
+                logger.d(TOKEN_PROVIDER, "refreshToken successfully: ${request.data}")
+                request.data.toDomain()
+            }
+
+            is RequestResult.Failure.Error -> {
+                logger.d(TOKEN_PROVIDER, "refreshToken error: ${request.statusCode} - ${request.payload}")
+
+                if (request.statusCode == StatusCode.Unauthorized) {
+                    deleteLocalToken()
+                    throw AuthenticationException("Invalid refresh token")
+                }
+
+                throw RequestException("Token refresh failed: ${request.statusCode}")
+            }
+
+            is RequestResult.Failure.Exception -> {
+                logger.d(TOKEN_PROVIDER, "refreshToken exception: ${request.throwable.message}")
+                throw request.throwable
+            }
+        }
     }
 
 }
