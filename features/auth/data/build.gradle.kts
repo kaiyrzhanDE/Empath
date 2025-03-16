@@ -9,6 +9,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.network)
+                implementation(projects.features.auth.domain)
             }
         }
     }

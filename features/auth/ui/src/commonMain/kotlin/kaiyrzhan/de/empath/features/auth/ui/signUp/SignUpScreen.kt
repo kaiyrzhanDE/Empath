@@ -14,7 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,15 +26,15 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.components.CircularLoading
-import kaiyrzhan.de.empath.core.effects.SingleEventEffect
-import kaiyrzhan.de.empath.core.modifiers.appendSpace
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
-import kaiyrzhan.de.empath.core.uikit.LocalSnackbarHostState
+import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
+import kaiyrzhan.de.empath.core.ui.modifiers.appendSpace
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.components.PasswordOutlinedTextField
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
-import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpAction
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpEvent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpState
@@ -112,8 +111,8 @@ private fun SignUpScreen(
                     onValueChange = { password ->
                         onEvent(SignUpEvent.PasswordChange(password))
                     },
-                    arePasswordsMatching = state.arePasswordsMatching,
                     label = stringResource(FeatureRes.string.password),
+                    arePasswordsMatching = state.arePasswordsMatching,
                     isValueVisible = state.isPasswordVisible,
                     onShowClick = { onEvent(SignUpEvent.PasswordShow) },
                 )
@@ -123,8 +122,8 @@ private fun SignUpScreen(
                     onValueChange = { password ->
                         onEvent(SignUpEvent.RepeatedPasswordChange(password))
                     },
-                    arePasswordsMatching = state.arePasswordsMatching,
                     label = stringResource(FeatureRes.string.repeated_password),
+                    arePasswordsMatching = state.arePasswordsMatching,
                     isValueVisible = state.isRepeatedPasswordVisible,
                     onShowClick = { onEvent(SignUpEvent.RepeatedPasswordShow) },
                 )

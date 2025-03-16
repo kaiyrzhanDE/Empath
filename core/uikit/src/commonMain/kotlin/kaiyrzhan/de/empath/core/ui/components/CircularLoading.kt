@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.components
+package kaiyrzhan.de.empath.core.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 

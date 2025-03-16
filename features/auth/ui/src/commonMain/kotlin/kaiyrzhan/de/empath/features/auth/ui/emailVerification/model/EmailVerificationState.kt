@@ -6,5 +6,6 @@ public sealed class EmailVerificationState {
     internal data class Error(val message: String) : EmailVerificationState()
     internal data class Success(
         val email: String = "",
+        val isEmailValid: Boolean = true,
     ) : EmailVerificationState()
 }

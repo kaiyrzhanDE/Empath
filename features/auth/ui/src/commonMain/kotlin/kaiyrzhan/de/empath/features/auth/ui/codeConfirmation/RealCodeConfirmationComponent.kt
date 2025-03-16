@@ -7,6 +7,7 @@ import kaiyrzhan.de.empath.core.utils.flow.timerFlow
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationEvent
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationState
+import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ import kotlin.getValue
 internal class RealCodeConfirmationComponent(
     componentContext: ComponentContext,
     private val email: String,
+    private val verificationType: VerificationType,
     private val onCodeConfirm: (email: String) -> Unit,
     private val onBackClick: () -> Unit,
 ) : ComponentContext by componentContext, CodeConfirmationComponent, KoinComponent {

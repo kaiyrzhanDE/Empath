@@ -6,7 +6,9 @@ public sealed class LoginState {
     public data class Error(val message: String) : LoginState()
     public data class Success(
         val email: String = "",
+        val isEmailValid: Boolean = true,
         val password: String = "",
+        val isPasswordValid: Boolean = true,
     ) : LoginState()
 }
 

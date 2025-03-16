@@ -13,9 +13,9 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
-import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
-import kaiyrzhan.de.empath.core.modifiers.isPhone
+import kaiyrzhan.de.empath.core.ui.animations.swipe
+import kaiyrzhan.de.empath.core.ui.modifiers.isPhone
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.CodeConfirmationScreen
 import kaiyrzhan.de.empath.features.auth.ui.root.components.LowPolyBackground
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.EmailVerificationScreen
@@ -39,7 +39,7 @@ public fun AuthScreen(
             animation = predictiveBackAnimation(
                 backHandler = component.backHandler,
                 onBack = { component.onBackClick() },
-                fallbackAnimation = stackAnimation(slide()),
+                fallbackAnimation = stackAnimation(swipe()),
             ),
         )
     } else {
@@ -79,8 +79,6 @@ private fun AuthScreen(
             is AuthComponent.Child.CodeConfirmation -> CodeConfirmationScreen(instance.component)
             is AuthComponent.Child.SignUp -> SignUpScreen(instance.component)
             is AuthComponent.Child.PasswordRecovery -> PasswordRecoveryScreen(instance.component)
-//                    is AuthComponent.Child.PasswordRecovery -> PasswordRecoveryContent(instance.component)
-//                    is AuthComponent.Child.CreateAccount -> CreateAccountContent(instance.component)
         }
     }
 }

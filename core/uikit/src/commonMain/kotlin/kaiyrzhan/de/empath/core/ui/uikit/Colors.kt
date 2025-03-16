@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.uikit
+package kaiyrzhan.de.empath.core.ui.uikit
 
 import androidx.compose.material3.ColorScheme as M3ColorScheme
 import androidx.compose.runtime.Immutable

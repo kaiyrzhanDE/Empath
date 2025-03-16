@@ -23,14 +23,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.components.CircularLoading
-import kaiyrzhan.de.empath.core.modifiers.appendSpace
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.modifiers.appendSpace
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationEvent
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationState
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
-import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import org.jetbrains.compose.resources.stringResource
 import kotlin.text.isNotBlank
 

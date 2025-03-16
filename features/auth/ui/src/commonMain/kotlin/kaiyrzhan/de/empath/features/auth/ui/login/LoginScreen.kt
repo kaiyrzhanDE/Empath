@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.auth.ui.login
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.LinkAnnotation
@@ -27,16 +30,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.components.CircularLoading
-import kaiyrzhan.de.empath.core.modifiers.appendSpace
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
+import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
+import kaiyrzhan.de.empath.core.ui.modifiers.appendSpace
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.components.Logo
-import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
 import kaiyrzhan.de.empath.features.auth.ui.login.components.SecondaryAuthButtons
 import kaiyrzhan.de.empath.features.auth.ui.login.components.TitledDivider
+import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginAction
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
+import kotlinx.coroutines.launch
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import org.jetbrains.compose.resources.stringResource
 
@@ -46,6 +55,26 @@ public fun LoginScreen(
     modifier: Modifier = Modifier,
 ) {
     val loginState = component.state.collectAsState()
+
+    val snackbarHostState = LocalSnackbarHostState.current
+    val coroutineScope = rememberCoroutineScope()
+
+    val messageDialogSlot by component.messageDialog.subscribeAsState()
+    messageDialogSlot.child?.instance?.also { messageComponent ->
+        MessageDialog(
+            component = messageComponent,
+        )
+    }
+
+    SingleEventEffect(component.action) { action ->
+        when (action) {
+            is LoginAction.ShowSnackbar -> {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(action.message)
+                }
+            }
+        }
+    }
 
     LoginScreen(
         modifier = modifier.fillMaxSize(),
@@ -67,6 +96,7 @@ private fun LoginScreen(
         is LoginState.Success -> {
             Column(
                 modifier = modifier
+                    .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),
@@ -81,8 +111,10 @@ private fun LoginScreen(
                 )
                 PrimaryAuthorizationContent(
                     email = loginState.email,
+                    isEmailValid = loginState.isEmailValid,
                     onEmailChange = { email -> onEvent(LoginEvent.EmailChange(email)) },
                     password = loginState.password,
+                    isPasswordValid = loginState.isPasswordValid,
                     onPasswordChange = { password -> onEvent(LoginEvent.PasswordChange(password)) },
                     onLoginClick = { onEvent(LoginEvent.LogIn) },
                     onSignUpClick = { onEvent(LoginEvent.SignUp) },
@@ -109,8 +141,10 @@ private fun LoginScreen(
 private fun PrimaryAuthorizationContent(
     modifier: Modifier = Modifier,
     email: String,
+    isEmailValid: Boolean,
     onEmailChange: (String) -> Unit,
     password: String,
+    isPasswordValid: Boolean,
     onPasswordChange: (String) -> Unit,
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
@@ -125,6 +159,7 @@ private fun PrimaryAuthorizationContent(
             modifier = Modifier.fillMaxWidth(),
             value = email,
             onValueChange = onEmailChange,
+            isError = isEmailValid.not(),
             label = {
                 Text(
                     text = stringResource(FeatureRes.string.email),
@@ -138,6 +173,7 @@ private fun PrimaryAuthorizationContent(
             modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = onPasswordChange,
+            isError = isPasswordValid.not(),
             label = {
                 Text(
                     text = stringResource(FeatureRes.string.password),
@@ -172,7 +208,7 @@ private fun PrimaryAuthorizationContent(
             Button(
                 modifier = Modifier.weight(1f),
                 onClick = onLoginClick,
-                enabled = email.isNotBlank() && password.isNotBlank(),
+                enabled = email.isNotBlank() && password.isNotBlank() && isEmailValid && isPasswordValid,
                 shape = EmpathTheme.shapes.small,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = EmpathTheme.colors.primary,

@@ -10,9 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
-import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

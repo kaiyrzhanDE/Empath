@@ -3,18 +3,17 @@ package kaiyrzhan.de.empath.core.network.token
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import kaiyrzhan.de.empath.core.network.result.RequestResult
-import kaiyrzhan.de.empath.core.network.result.StatusCode
-import kaiyrzhan.de.empath.core.network.result.onSuccess
 import kaiyrzhan.de.empath.core.utils.datastore.DataStoreKeys
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.result.RequestResult
+import kaiyrzhan.de.empath.core.utils.result.StatusCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 private const val TOKEN_PROVIDER = "TokenProvider"
 
-internal interface TokenProvider {
+public interface TokenProvider {
     public suspend fun getLocalToken(): Flow<Token>
 
     public suspend fun deleteLocalToken(): Boolean
@@ -42,7 +41,7 @@ internal class TokenProviderImpl(
     }
 
     override suspend fun deleteLocalToken(): Boolean {
-        logger.d(TOKEN_PROVIDER, "deleteLocalToken")
+        logger.d(TOKEN_PROVIDER, "getLocalToken")
         return try {
             preferences.edit { dataStore ->
                 dataStore.remove(DataStoreKeys.USER_AUTH_ACCESS_TOKEN)
@@ -65,8 +64,7 @@ internal class TokenProviderImpl(
 
     override suspend fun refreshToken(): Token {
         val currentToken = getLocalToken().first().toData()
-        val request = tokenApi.refreshToken(currentToken)
-        return when (request) {
+        return when (val request = tokenApi.refreshToken(currentToken)) {
             is RequestResult.Success -> {
                 logger.d(TOKEN_PROVIDER, "refreshToken successfully: ${request.data}")
                 request.data.toDomain()

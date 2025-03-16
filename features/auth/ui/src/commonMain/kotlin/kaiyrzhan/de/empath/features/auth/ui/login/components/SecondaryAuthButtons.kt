@@ -12,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import empath.features.auth.ui.generated.resources.continue_with_facebook
 import empath.features.auth.ui.generated.resources.continue_with_google
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

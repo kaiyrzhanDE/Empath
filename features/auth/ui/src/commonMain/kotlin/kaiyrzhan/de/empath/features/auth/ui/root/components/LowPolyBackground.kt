@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import empath.features.auth.ui.generated.resources.background_low_poly
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 

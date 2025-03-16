@@ -6,16 +6,20 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
+import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kaiyrzhan.de.empath.features.auth.ui.root.RealAuthComponent
 
 import kotlinx.serialization.Serializable
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 public class RealRootComponent(
     componentContext: ComponentContext,
-) : ComponentContext by componentContext, RootComponent {
+) : ComponentContext by componentContext, RootComponent, KoinComponent {
+
+    private val logger: BaseLogger by inject()
 
     private val navigation = StackNavigation<Config>()
-
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
         source = navigation,
         serializer = Config.serializer(),
@@ -34,6 +38,7 @@ public class RealRootComponent(
         RootComponent.Child.Auth(
             RealAuthComponent(
                 componentContext = componentContext,
+                onLoginClick = { logger.d("RootComponent", "onLoginClick") },
             ),
         )
 

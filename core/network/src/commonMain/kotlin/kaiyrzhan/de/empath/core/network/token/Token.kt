@@ -3,22 +3,22 @@ package kaiyrzhan.de.empath.core.network.token
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 @Serializable
-internal data class TokenEntity(
-    @SerialName("access_token") val accessToken: String? = null,
-    @SerialName("refresh_token") val refreshToken: String? = null,
+public data class TokenEntity(
+    @SerialName("accessToken") val accessToken: String? = null,
+    @SerialName("refreshToken") val refreshToken: String? = null,
 )
 
-internal fun TokenEntity.toDomain() = Token(
+public fun TokenEntity.toDomain(): Token = Token(
     accessToken = this.accessToken.orEmpty(),
     refreshToken = this.refreshToken.orEmpty(),
 )
 
-internal fun Token.toData() = TokenEntity(
+public fun Token.toData(): TokenEntity = TokenEntity(
     accessToken = this.accessToken,
     refreshToken = this.refreshToken,
 )
 
-internal data class Token(
+public data class Token(
     val accessToken: String,
     val refreshToken: String,
 )

@@ -1,14 +1,14 @@
-package kaiyrzhan.de.empath.features.auth.ui.components
+package kaiyrzhan.de.empath.core.ui.modifiers
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-internal fun Modifier.defaultMaxWidth(): Modifier {
+public fun Modifier.defaultMaxWidth(): Modifier {
     return this.then(
         Modifier
-            .widthIn(max = 350.dp)
+            .widthIn(max = 400.dp)
             .fillMaxWidth()
     )
 }

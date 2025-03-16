@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.auth.ui.emailVerification
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,17 +16,25 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.components.CircularLoading
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
+import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
-import kaiyrzhan.de.empath.features.auth.ui.components.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
+import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerificationAction
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerificationEvent
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerificationState
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import kotlin.text.isNotBlank
 
@@ -35,6 +44,27 @@ public fun EmailVerificationScreen(
     modifier: Modifier = Modifier,
 ) {
     val emailVerificationState = component.state.collectAsState()
+    val snackbarHostState = LocalSnackbarHostState.current
+    val coroutineScope = rememberCoroutineScope()
+
+    val messageDialogSlot by component.messageDialog.subscribeAsState()
+    messageDialogSlot.child?.instance?.also { messageComponent ->
+        MessageDialog(
+            component = messageComponent,
+        )
+    }
+
+    SingleEventEffect(component.action){ action ->
+        when(action){
+            is EmailVerificationAction.ShowSnackbar -> {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = action.message,
+                    )
+                }
+            }
+        }
+    }
 
     EmailVerificationScreen(
         modifier = modifier.fillMaxSize(),
@@ -53,9 +83,9 @@ private fun EmailVerificationScreen(
 
     when (state) {
         is EmailVerificationState.Success -> {
-
             Column(
                 modifier = modifier
+                    .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),
@@ -71,6 +101,7 @@ private fun EmailVerificationScreen(
                 OutlinedTextField(
                     modifier = Modifier.defaultMaxWidth(),
                     value = state.email,
+                    isError = state.isEmailValid.not(),
                     onValueChange = { email -> onEvent(EmailVerificationEvent.EmailChange(email)) },
                     label = {
                         Text(

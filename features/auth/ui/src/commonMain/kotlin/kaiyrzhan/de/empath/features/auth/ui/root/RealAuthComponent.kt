@@ -7,21 +7,22 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.RealCodeConfirmationComponent
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.RealEmailVerificationComponent
 import kaiyrzhan.de.empath.features.auth.ui.login.RealLoginComponent
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.RealPasswordRecoveryComponent
+import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kaiyrzhan.de.empath.features.auth.ui.signUp.RealSignUpComponent
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
 
 public class RealAuthComponent(
     componentContext: ComponentContext,
+    private val onLoginClick: () -> Unit,
 ) : ComponentContext by componentContext, AuthComponent {
 
     private val navigation = StackNavigation<Config>()
-
     override val stack: Value<ChildStack<*, AuthComponent.Child>> = childStack(
         source = navigation,
         initialConfiguration = Config.Login,
@@ -36,13 +37,14 @@ public class RealAuthComponent(
         childComponentContext: ComponentContext,
     ): AuthComponent.Child = when (config) {
         is Config.Login -> createLoginComponent(childComponentContext)
-        is Config.EmailVerification -> createEmailVerificationComponent(childComponentContext)
+        is Config.EmailVerification -> createEmailVerificationComponent(
+            childComponentContext,
+            config
+        )
+
         is Config.CodeConfirmation -> createCodeConfirmationComponent(childComponentContext, config)
         is Config.SignUp -> createSignUpComponent(childComponentContext, config)
         is Config.PasswordRecovery -> createPasswordRecoveryComponent(childComponentContext, config)
-//        is Config.Privacy -> privacyComponent(childComponentContext)
-//        is Config.PasswordRecovery -> recoveryPasswordComponent(childComponentContext)
-//        is Config.OptionalAccountInfo -> optionalAccountInfoComponent(childComponentContext)
     }
 
     @OptIn(DelicateDecomposeApi::class)
@@ -50,17 +52,48 @@ public class RealAuthComponent(
         AuthComponent.Child.Login(
             RealLoginComponent(
                 componentContext = componentContext,
-                onLoginClick = { navigation.push(Config.EmailVerification) },
-                onPasswordResetClick = { navigation.push(Config.PasswordRecovery("")) }
+                onLoginClick = onLoginClick,
+                onSignUpClick = {
+                    navigation.push(Config.EmailVerification(type = VerificationType.SIGN_UP))
+                },
+                onPasswordResetClick = {
+                    navigation.push(Config.EmailVerification(type = VerificationType.RESET_PASSWORD))
+                }
             ),
         )
 
     @OptIn(DelicateDecomposeApi::class)
-    private fun createEmailVerificationComponent(componentContext: ComponentContext) =
+    private fun createEmailVerificationComponent(
+        componentContext: ComponentContext,
+        config: Config.EmailVerification
+    ) =
         AuthComponent.Child.EmailVerification(
             RealEmailVerificationComponent(
                 componentContext = componentContext,
-                onSendCodeClick = { email -> navigation.push(Config.CodeConfirmation(email)) },
+                email = config.email,
+                verificationType = config.type,
+                onSendResetPasswordCodeClick = { email ->
+                    navigation.push(Config.CodeConfirmation(email, config.type))
+                },
+                onSendSignUpCodeClick = { email ->
+                    navigation.push(Config.CodeConfirmation(email, config.type))
+                },
+                onSignUpClick = { email ->
+                    navigation.replaceCurrent(
+                        Config.EmailVerification(
+                            email = email,
+                            type = VerificationType.SIGN_UP,
+                        )
+                    )
+                },
+                onResetPasswordClick = { email ->
+                    navigation.replaceCurrent(
+                        Config.EmailVerification(
+                            email = email,
+                            type = VerificationType.RESET_PASSWORD,
+                        )
+                    )
+                },
                 onBackClick = ::onBackClick,
             )
         )
@@ -68,11 +101,12 @@ public class RealAuthComponent(
     @OptIn(DelicateDecomposeApi::class)
     private fun createCodeConfirmationComponent(
         componentContext: ComponentContext,
-        config: Config.CodeConfirmation
+        config: Config.CodeConfirmation,
     ) = AuthComponent.Child.CodeConfirmation(
         RealCodeConfirmationComponent(
             componentContext = componentContext,
             email = config.email,
+            verificationType = config.type,
             onCodeConfirm = { email -> navigation.push(Config.SignUp(email)) },
             onBackClick = ::onBackClick,
         )
@@ -108,10 +142,10 @@ public class RealAuthComponent(
         data object Login : Config
 
         @Serializable
-        data object EmailVerification : Config
+        data class EmailVerification(val email: String = "", val type: VerificationType) : Config
 
         @Serializable
-        data class CodeConfirmation(val email: String) : Config
+        data class CodeConfirmation(val email: String, val type: VerificationType) : Config
 
         @Serializable
         data class SignUp(val email: String) : Config

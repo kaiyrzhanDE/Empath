@@ -29,4 +29,29 @@
 
     <string name="enter_new_password_title">Enter new password</string>
     <string name="enter_new_password_description">Enter a new password for your account</string>
+
+    <string name="too_many_login_attempts_title">Too many login attempts!</string>
+    <string name="too_many_login_attempts_description">It seems you've made too many login attempts. Please wait 30 minutes and try again.</string>
+
+    <string name="too_many_sign_up_attempts_title">Too many sign up attempts!</string>
+    <string name="too_many_sign_up_attempts_description">It seems you've made too many sign up attempts. Please wait 30 minutes and try again.</string>
+
+    <string name="too_many_password_recovery_attempts_title">Too many password recovery attempts!</string>
+    <string name="too_many_password_recovery_attempts_description">It seems you've made too many password recovery attempts. Please wait 30 minutes and try again.</string>
+
+    <string name="email_already_registered_title">Email already registered</string>
+    <string name="email_already_registered_description">An account with this email address has already been registered.</string>
+
+    <string name="email_is_not_registered_title">Email is not registered</string>
+    <string name="email_is_not_registered_description">An account with this email address doesn’t exists.</string>
+
+    <string name="abort_registration_title">Abort registration</string>
+    <string name="abort_registration_description">Are you sure you want to cancel the registration? If not, the account will not be created.</string>
+
+    <string name="abort_password_recovery_title">Abort password recovery</string>
+    <string name="abort_password_recovery_description">Are you sure you want to cancel the password recovery? If not, the password recovery process will be interrupted.</string>
+
+    <string name="use_different_email">Use a different email</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_email_or_password">Invalid email or password</string>
 </resources>

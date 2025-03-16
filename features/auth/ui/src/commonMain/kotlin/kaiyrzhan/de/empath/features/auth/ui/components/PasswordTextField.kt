@@ -1,7 +1,6 @@
 package kaiyrzhan.de.empath.features.auth.ui.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -17,12 +16,13 @@ import empath.features.auth.ui.generated.resources.ic_error
 import empath.features.auth.ui.generated.resources.ic_visibility_off
 import empath.features.auth.ui.generated.resources.ic_visibility_on
 import empath.features.auth.ui.generated.resources.password_dont_match_error
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun ColumnScope.PasswordOutlinedTextField(
+internal fun PasswordOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,

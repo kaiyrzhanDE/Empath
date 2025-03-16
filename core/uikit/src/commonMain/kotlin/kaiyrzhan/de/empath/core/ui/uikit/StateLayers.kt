@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.uikit
+package kaiyrzhan.de.empath.core.ui.uikit
 
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material3.ExperimentalMaterial3Api

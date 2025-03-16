@@ -7,4 +7,9 @@
     <string name="loading_prompt">Please wait a bit.</string>
 
     <string name="ic_arrow_back_description">Navigation back</string>
+
+    <string name="unknown_error">Unknown error</string>
+    <string name="unknown_remote_error">Unknown remote error</string>
+    <string name="action">Action</string>
+    <string name="close">Close</string>
 </resources>

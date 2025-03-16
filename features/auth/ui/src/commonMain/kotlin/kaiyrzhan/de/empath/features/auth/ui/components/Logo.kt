@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res as CoreRes
 import empath.core.uikit.generated.resources.app_name
 import empath.core.uikit.generated.resources.created_by_
-import kaiyrzhan.de.empath.core.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

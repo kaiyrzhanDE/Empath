@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.effects
+package kaiyrzhan.de.empath.core.ui.effects
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

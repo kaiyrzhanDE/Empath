@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.uikit
+package kaiyrzhan.de.empath.core.ui.uikit
 
 import androidx.compose.material3.Typography as M3Typography
 import androidx.compose.ui.text.TextStyle

@@ -15,20 +15,28 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.DefaultJson
 import io.ktor.serialization.kotlinx.json.json
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.serialization.json.Json
 
 internal const val KTOR_CLIENT = "KtorClient"
-internal const val TIME_OUT = 30_000L
+internal const val TIME_OUT = 60_000L
+
+internal val DefaultJson = Json {
+    encodeDefaults = true
+    isLenient = true
+    allowSpecialFloatingPointValues = true
+    allowStructuredMapKeys = true
+    prettyPrint = false
+    useArrayPolymorphism = false
+    ignoreUnknownKeys = true
+}
 
 internal fun defaultHttpClient(
     json: Json = DefaultJson,
     logger: BaseLogger,
     block: HttpClientConfig<*>.() -> Unit = {},
 ) = HttpClient {
-
     install(DefaultRequest) {
         header(HttpHeaders.AcceptLanguage, "ru")
         header("Locale", "ru")
@@ -41,7 +49,7 @@ internal fun defaultHttpClient(
             protocol = URLProtocol.HTTPS
         }
     }
-    install(Logging){
+    install(Logging) {
         this.logger = object : Logger {
             override fun log(message: String) {
                 logger.d(KTOR_CLIENT, message)

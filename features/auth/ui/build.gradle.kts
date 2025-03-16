@@ -7,7 +7,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.core.utils)
+                implementation(projects.features.auth.domain)
             }
         }
     }

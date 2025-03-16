@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.uikit
+package kaiyrzhan.de.empath.core.ui.uikit
 
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.RoundedCornerShape

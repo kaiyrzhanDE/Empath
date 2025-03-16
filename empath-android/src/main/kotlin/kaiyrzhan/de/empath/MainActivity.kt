@@ -10,7 +10,7 @@ import kaiyrzhan.de.empath.root.RealRootComponent
 
 class MainActivity : ComponentActivity() {
     private val roomComponent by lazy {
-        retainedComponent{ componentContext -> RealRootComponent(componentContext = componentContext) }
+        retainedComponent{ componentContext -> RealRootComponent(componentContext) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

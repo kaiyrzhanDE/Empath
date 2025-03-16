@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package kaiyrzhan.de.empath.core.uikit
+package kaiyrzhan.de.empath.core.ui.uikit
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
