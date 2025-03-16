@@ -79,8 +79,7 @@ private fun SignUpScreen(
     when (state) {
         is SignUpState.Success -> {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = modifier
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),

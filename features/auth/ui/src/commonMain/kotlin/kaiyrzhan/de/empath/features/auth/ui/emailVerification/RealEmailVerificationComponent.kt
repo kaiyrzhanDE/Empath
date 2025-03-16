@@ -31,7 +31,6 @@ import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerific
 import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -44,7 +43,7 @@ import kotlin.getValue
 
 internal class RealEmailVerificationComponent(
     componentContext: ComponentContext,
-    private val email: String,
+    email: String,
     private val verificationType: VerificationType,
     private val onSendSignUpCodeClick: (email: String) -> Unit,
     private val onSendResetPasswordCodeClick: (email: String) -> Unit,

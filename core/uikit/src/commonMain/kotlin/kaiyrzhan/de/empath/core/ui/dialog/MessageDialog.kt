@@ -1,6 +1,5 @@
 package kaiyrzhan.de.empath.core.ui.dialog
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,7 +25,6 @@ import androidx.compose.ui.window.Dialog
 import kaiyrzhan.de.empath.core.ui.dialog.components.DialogActionButton
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogEvent
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
-import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.modifiers.isPhone
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kotlinx.coroutines.launch

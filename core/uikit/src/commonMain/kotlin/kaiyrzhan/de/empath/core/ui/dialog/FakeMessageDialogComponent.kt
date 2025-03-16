@@ -5,6 +5,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogEvent
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
 import kotlinx.coroutines.flow.MutableStateFlow
 
+@Suppress("unused")
 internal class FakeMessageDialogComponent : MessageDialogComponent {
     override val state = MutableStateFlow(
         MessageDialogState(

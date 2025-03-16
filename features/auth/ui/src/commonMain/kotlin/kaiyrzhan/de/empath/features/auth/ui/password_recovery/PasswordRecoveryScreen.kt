@@ -71,8 +71,7 @@ private fun PasswordRecoveryScreen(
     when (state) {
         is PasswordRecoveryState.Success -> {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = modifier
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),
