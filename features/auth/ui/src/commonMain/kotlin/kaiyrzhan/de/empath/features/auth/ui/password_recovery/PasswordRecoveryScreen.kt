@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.auth.ui.password_recovery
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -72,6 +73,7 @@ private fun PasswordRecoveryScreen(
         is PasswordRecoveryState.Success -> {
             Column(
                 modifier = modifier
+                    .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),

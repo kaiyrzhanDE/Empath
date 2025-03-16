@@ -11,4 +11,6 @@ public interface AuthRepository {
 
     public suspend fun sendResetPasswordCode(email: String): RequestResult<Any>
 
+    public suspend fun verifyCode(email: String, code: String): RequestResult<Any>
+
 }

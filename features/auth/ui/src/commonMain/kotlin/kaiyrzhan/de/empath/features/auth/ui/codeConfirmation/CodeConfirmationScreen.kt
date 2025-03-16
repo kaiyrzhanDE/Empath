@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.auth.ui.codeConfirmation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,7 +43,8 @@ public fun CodeConfirmationScreen(
     val codeConfirmationState = component.state.collectAsState()
 
     CodeConfirmationScreen(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize(),
         state = codeConfirmationState.value,
         onEvent = component::onEvent,
     )
@@ -60,6 +62,7 @@ private fun CodeConfirmationScreen(
         is CodeConfirmationState.Success -> {
             Column(
                 modifier = modifier
+                    .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),
@@ -124,7 +127,7 @@ private fun CodeConfirmationScreen(
 
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { onEvent(CodeConfirmationEvent.CodeCheck) },
+                        onClick = { onEvent(CodeConfirmationEvent.CodeVerify) },
                         enabled = state.code.isNotBlank(),
                         shape = EmpathTheme.shapes.small,
                         colors = ButtonDefaults.buttonColors(

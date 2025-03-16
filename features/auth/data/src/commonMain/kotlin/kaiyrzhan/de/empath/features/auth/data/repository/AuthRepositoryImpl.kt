@@ -5,6 +5,7 @@ import kaiyrzhan.de.empath.core.network.token.toDomain
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.map
 import kaiyrzhan.de.empath.features.auth.data.model.LoginRequest
+import kaiyrzhan.de.empath.features.auth.data.model.VerifyCodeRequest
 import kaiyrzhan.de.empath.features.auth.data.remote.AuthApi
 import kaiyrzhan.de.empath.features.auth.domain.repository.AuthRepository
 
@@ -28,5 +29,7 @@ internal class AuthRepositoryImpl(
         return api.sendResetPasswordOtp(email = email)
     }
 
-
+    override suspend fun verifyCode(email: String, code: String): RequestResult<Any> {
+        return api.verifyCode(body = VerifyCodeRequest(email, code))
+    }
 }

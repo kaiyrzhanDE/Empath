@@ -53,5 +53,10 @@
 
     <string name="use_different_email">Use a different email</string>
     <string name="invalid_email">Invalid email</string>
+    <string name="invalid_code">Invalid code</string>
     <string name="invalid_email_or_password">Invalid email or password</string>
+
+    <string name="code_resent_title">Code Resent</string>
+    <string name="code_resent_description">We have successfully resent the verification code. Please check your inbox or spam folder.</string>
+
 </resources>
