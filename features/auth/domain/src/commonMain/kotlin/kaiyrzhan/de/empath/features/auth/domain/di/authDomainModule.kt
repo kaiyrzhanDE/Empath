@@ -6,6 +6,7 @@ import kaiyrzhan.de.empath.features.auth.domain.usecase.LogInUseCase
 import kaiyrzhan.de.empath.features.auth.domain.usecase.ResetPasswordUseCase
 import kaiyrzhan.de.empath.features.auth.domain.usecase.SendResetPasswordCodeUseCase
 import kaiyrzhan.de.empath.features.auth.domain.usecase.SendSignUpCodeUseCase
+import kaiyrzhan.de.empath.features.auth.domain.usecase.SignUpUseCase
 import kaiyrzhan.de.empath.features.auth.domain.usecase.VerifyCodeUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -39,6 +40,13 @@ public val authDomainModule: Module = module {
     factory {
         ResetPasswordUseCase(
             repository = get<AuthRepository>(),
+        )
+    }
+
+    factory {
+        SignUpUseCase(
+            repository = get<AuthRepository>(),
+            tokenProvider = get<TokenProvider>(),
         )
     }
 }

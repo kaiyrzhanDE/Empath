@@ -15,13 +15,16 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.essenty.backhandler.BackHandler
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
@@ -45,6 +48,13 @@ public fun PasswordRecoveryScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = LocalSnackbarHostState.current
+
+    val messageDialogSlot by component.messageDialog.subscribeAsState()
+    messageDialogSlot.child?.instance?.also { messageComponent ->
+        MessageDialog(
+            component = messageComponent,
+        )
+    }
 
     BackHandler(component.backHandler){
         component.onEvent(PasswordRecoveryEvent.BackClick)

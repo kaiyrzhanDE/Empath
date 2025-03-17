@@ -15,4 +15,5 @@ public interface AuthRepository {
 
     public suspend fun resetPassword(email: String, password: String): RequestResult<Any>
 
+    public suspend fun signUp(email: String, password: String, nickname: String): RequestResult<Token>
 }

@@ -9,8 +9,10 @@ public sealed class SignUpState {
         val nickname: String = "",
         val password: String = "",
         val isPasswordVisible: Boolean = false,
+        val isPasswordValid: Boolean = true,
         val repeatedPassword: String = "",
         val isRepeatedPasswordVisible: Boolean = false,
+        val isRepeatedPasswordValid: Boolean = true,
         val isUserAgreementAccepted: Boolean = false,
         val arePasswordsMatching: Boolean = true,
     ) : SignUpState(){

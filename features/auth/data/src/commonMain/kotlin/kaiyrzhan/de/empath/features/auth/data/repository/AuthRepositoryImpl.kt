@@ -6,6 +6,7 @@ import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.map
 import kaiyrzhan.de.empath.features.auth.data.model.ForgetPasswordRequest
 import kaiyrzhan.de.empath.features.auth.data.model.LoginRequest
+import kaiyrzhan.de.empath.features.auth.data.model.SignUpRequest
 import kaiyrzhan.de.empath.features.auth.data.model.VerifyCodeRequest
 import kaiyrzhan.de.empath.features.auth.data.remote.AuthApi
 import kaiyrzhan.de.empath.features.auth.domain.repository.AuthRepository
@@ -36,5 +37,14 @@ internal class AuthRepositoryImpl(
 
     override suspend fun resetPassword(email: String, password: String): RequestResult<Any> {
         return api.resetPassword(body = ForgetPasswordRequest(email, password))
+    }
+
+    override suspend fun signUp(
+        email: String,
+        password: String,
+        nickname: String
+    ): RequestResult<Token> {
+        return api.signUp(body = SignUpRequest(email, password, nickname))
+            .map { token -> token.toDomain() }
     }
 }

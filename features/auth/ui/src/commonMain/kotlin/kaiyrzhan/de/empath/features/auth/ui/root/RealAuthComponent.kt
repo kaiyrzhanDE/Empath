@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.popWhile
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
@@ -54,7 +55,7 @@ public class RealAuthComponent(
                 },
                 onPasswordResetClick = {
                     navigation.push(Config.EmailVerification(type = VerificationType.RESET_PASSWORD))
-                }
+                },
             ),
         )
 
@@ -115,9 +116,10 @@ public class RealAuthComponent(
     ) = AuthComponent.Child.SignUp(
         RealSignUpComponent(
             componentContext = componentContext,
-
             email = config.email,
-            onSignUpClick = { TODO("Navigation to Main screen") },
+            onSignUpClick = {
+                navigation.popWhile { config -> config !is Config.Login }
+            },
             onBackClick = ::onBackClick,
         )
     )
@@ -129,7 +131,9 @@ public class RealAuthComponent(
         RealPasswordRecoveryComponent(
             componentContext = componentContext,
             email = config.email,
-            onPasswordReset = { TODO("Navigation to login screen again") },
+            onPasswordReset = {
+                navigation.popWhile { config -> config !is Config.Login }
+            },
             onBackClick = ::onBackClick,
         )
     )
