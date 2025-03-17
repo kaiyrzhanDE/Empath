@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoading
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
-import kaiyrzhan.de.empath.core.ui.modifiers.appendSpace
+import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.components.PasswordOutlinedTextField

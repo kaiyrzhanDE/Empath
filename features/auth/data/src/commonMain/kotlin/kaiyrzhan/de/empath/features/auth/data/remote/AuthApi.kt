@@ -33,13 +33,13 @@ internal interface AuthApi {
     ): RequestResult<Any>
 
     @POST("api/{version}/auth/password")
-    suspend fun resetPassword(
+    suspend fun changePassword(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Body body: ResetPasswordRequest,
     ): RequestResult<Any>
 
     @POST("api/{version}/auth/forget-password")
-    suspend fun forgetPassword(
+    suspend fun resetPassword(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Body body: ForgetPasswordRequest,
     ): RequestResult<Any>

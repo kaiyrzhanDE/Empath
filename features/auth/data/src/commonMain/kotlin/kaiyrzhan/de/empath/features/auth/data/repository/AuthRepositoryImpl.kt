@@ -4,6 +4,7 @@ import kaiyrzhan.de.empath.core.network.token.Token
 import kaiyrzhan.de.empath.core.network.token.toDomain
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.map
+import kaiyrzhan.de.empath.features.auth.data.model.ForgetPasswordRequest
 import kaiyrzhan.de.empath.features.auth.data.model.LoginRequest
 import kaiyrzhan.de.empath.features.auth.data.model.VerifyCodeRequest
 import kaiyrzhan.de.empath.features.auth.data.remote.AuthApi
@@ -31,5 +32,9 @@ internal class AuthRepositoryImpl(
 
     override suspend fun verifyCode(email: String, code: String): RequestResult<Any> {
         return api.verifyCode(body = VerifyCodeRequest(email, code))
+    }
+
+    override suspend fun resetPassword(email: String, password: String): RequestResult<Any> {
+        return api.resetPassword(body = ForgetPasswordRequest(email, password))
     }
 }

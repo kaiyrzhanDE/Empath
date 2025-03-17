@@ -34,17 +34,13 @@ public class RealAuthComponent(
 
     private fun createChild(
         config: Config,
-        childComponentContext: ComponentContext,
+        componentContext: ComponentContext,
     ): AuthComponent.Child = when (config) {
-        is Config.Login -> createLoginComponent(childComponentContext)
-        is Config.EmailVerification -> createEmailVerificationComponent(
-            childComponentContext,
-            config
-        )
-
-        is Config.CodeConfirmation -> createCodeConfirmationComponent(childComponentContext, config)
-        is Config.SignUp -> createSignUpComponent(childComponentContext, config)
-        is Config.PasswordRecovery -> createPasswordRecoveryComponent(childComponentContext, config)
+        is Config.Login -> createLoginComponent(componentContext)
+        is Config.EmailVerification -> createEmailVerificationComponent(componentContext, config)
+        is Config.CodeConfirmation -> createCodeConfirmationComponent(componentContext, config)
+        is Config.SignUp -> createSignUpComponent(componentContext, config)
+        is Config.PasswordRecovery -> createPasswordRecoveryComponent(componentContext, config)
     }
 
     @OptIn(DelicateDecomposeApi::class)
@@ -73,10 +69,10 @@ public class RealAuthComponent(
                 email = config.email,
                 verificationType = config.type,
                 onSendResetPasswordCodeClick = { email ->
-                    navigation.push(Config.CodeConfirmation(email, config.type))
+                    navigation.push(Config.CodeConfirmation(email, VerificationType.RESET_PASSWORD))
                 },
                 onSendSignUpCodeClick = { email ->
-                    navigation.push(Config.CodeConfirmation(email, config.type))
+                    navigation.push(Config.CodeConfirmation(email, VerificationType.SIGN_UP))
                 },
                 onSignUpClick = { email ->
                     navigation.replaceCurrent(
@@ -107,7 +103,8 @@ public class RealAuthComponent(
             componentContext = componentContext,
             email = config.email,
             verificationType = config.type,
-            onCodeConfirm = { email -> navigation.push(Config.SignUp(email)) },
+            onSignUpCodeConfirm = { email -> navigation.push(Config.SignUp(email)) },
+            onResetPasswordCodeConfirm = { email -> navigation.push(Config.PasswordRecovery(email)) },
             onBackClick = ::onBackClick,
         )
     )
@@ -118,6 +115,7 @@ public class RealAuthComponent(
     ) = AuthComponent.Child.SignUp(
         RealSignUpComponent(
             componentContext = componentContext,
+
             email = config.email,
             onSignUpClick = { TODO("Navigation to Main screen") },
             onBackClick = ::onBackClick,

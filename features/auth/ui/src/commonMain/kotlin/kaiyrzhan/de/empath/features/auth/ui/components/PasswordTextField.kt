@@ -26,6 +26,7 @@ internal fun PasswordOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
+    isPasswordValid: Boolean,
     arePasswordsMatching: Boolean,
     isValueVisible: Boolean,
     onShowClick: () -> Unit,
@@ -42,7 +43,7 @@ internal fun PasswordOutlinedTextField(
         },
         trailingIcon = {
             when {
-                arePasswordsMatching.not() -> {
+                arePasswordsMatching.not() || isPasswordValid.not() -> {
                     Box(
                         modifier = Modifier.minimumInteractiveComponentSize(),
                         contentAlignment = Alignment.Center,
@@ -70,7 +71,7 @@ internal fun PasswordOutlinedTextField(
             }
         },
         maxLines = 1,
-        isError = arePasswordsMatching.not(),
+        isError = arePasswordsMatching.not() || isPasswordValid.not(),
         visualTransformation = if (isValueVisible) VisualTransformation.None else PasswordVisualTransformation(),
     )
 }

@@ -19,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.arkivanov.essenty.backhandler.BackHandler
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoading
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
@@ -28,6 +29,7 @@ import kaiyrzhan.de.empath.features.auth.ui.components.PasswordOutlinedTextField
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.navigation.BackHandler
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryAction
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryEvent
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryState
@@ -43,6 +45,10 @@ public fun PasswordRecoveryScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = LocalSnackbarHostState.current
+
+    BackHandler(component.backHandler){
+        component.onEvent(PasswordRecoveryEvent.BackClick)
+    }
 
     SingleEventEffect(component.action) { action ->
         when (action) {
@@ -92,6 +98,7 @@ private fun PasswordRecoveryScreen(
                         onEvent(PasswordRecoveryEvent.PasswordChange(password))
                     },
                     label = stringResource(FeatureRes.string.password),
+                    isPasswordValid = state.isPasswordValid,
                     arePasswordsMatching = state.arePasswordsMatching,
                     isValueVisible = state.isPasswordVisible,
                     onShowClick = { onEvent(PasswordRecoveryEvent.PasswordShow) },
@@ -103,6 +110,7 @@ private fun PasswordRecoveryScreen(
                         onEvent(PasswordRecoveryEvent.RepeatedPasswordChange(password))
                     },
                     label = stringResource(FeatureRes.string.repeated_password),
+                    isPasswordValid = state.isRepeatedPasswordValid,
                     arePasswordsMatching = state.arePasswordsMatching,
                     isValueVisible = state.isRepeatedPasswordVisible,
                     onShowClick = { onEvent(PasswordRecoveryEvent.RepeatedPasswordShow) },

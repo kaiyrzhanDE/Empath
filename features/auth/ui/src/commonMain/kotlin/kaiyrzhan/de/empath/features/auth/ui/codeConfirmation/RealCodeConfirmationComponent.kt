@@ -48,7 +48,8 @@ internal class RealCodeConfirmationComponent(
     componentContext: ComponentContext,
     email: String,
     private val verificationType: VerificationType,
-    private val onCodeConfirm: (email: String) -> Unit,
+    private val onSignUpCodeConfirm: (email: String) -> Unit,
+    private val onResetPasswordCodeConfirm: (email: String) -> Unit,
     private val onBackClick: () -> Unit,
 ) : ComponentContext by componentContext, CodeConfirmationComponent, KoinComponent {
 
@@ -125,10 +126,14 @@ internal class RealCodeConfirmationComponent(
 
     private fun verifyCode() {
         val currentState = state.value as? CodeConfirmationState.Success ?: return
+        val email = currentState.email
         state.update { CodeConfirmationState.Loading }
         coroutineScope.launch {
-            verifyCodeUseCase(email = currentState.email, code = currentState.code).onSuccess {
-                onCodeConfirm(currentState.email)
+            verifyCodeUseCase(email = email, code = currentState.code).onSuccess {
+                when(verificationType){
+                    VerificationType.RESET_PASSWORD -> onResetPasswordCodeConfirm(email)
+                    VerificationType.SIGN_UP -> onSignUpCodeConfirm(email)
+                }
                 state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }

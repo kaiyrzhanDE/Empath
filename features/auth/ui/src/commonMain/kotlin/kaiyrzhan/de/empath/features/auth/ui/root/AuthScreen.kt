@@ -15,7 +15,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.ui.animations.swipe
-import kaiyrzhan.de.empath.core.ui.modifiers.isPhone
+import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.CodeConfirmationScreen
 import kaiyrzhan.de.empath.features.auth.ui.root.components.LowPolyBackground
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.EmailVerificationScreen

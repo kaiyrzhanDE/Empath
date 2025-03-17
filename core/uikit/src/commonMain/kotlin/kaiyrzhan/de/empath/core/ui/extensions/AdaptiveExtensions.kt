@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.ui.modifiers
+package kaiyrzhan.de.empath.core.ui.extensions
 
 import androidx.compose.material3.adaptive.WindowAdaptiveInfo
 import androidx.window.core.layout.WindowWidthSizeClass

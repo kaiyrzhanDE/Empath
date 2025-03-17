@@ -8,10 +8,10 @@ public sealed class PasswordRecoveryState {
         val email: String,
         val password: String = "",
         val isPasswordVisible: Boolean = false,
+        val isPasswordValid: Boolean = true,
         val repeatedPassword: String = "",
         val isRepeatedPasswordVisible: Boolean = false,
+        val isRepeatedPasswordValid: Boolean = true,
         val arePasswordsMatching: Boolean = true,
-    ) : PasswordRecoveryState(){
-        fun equalsPasswords() = password == repeatedPassword
-    }
+    ) : PasswordRecoveryState()
 }

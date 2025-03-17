@@ -25,7 +25,7 @@ import androidx.compose.ui.window.Dialog
 import kaiyrzhan.de.empath.core.ui.dialog.components.DialogActionButton
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogEvent
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
-import kaiyrzhan.de.empath.core.ui.modifiers.isPhone
+import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kotlinx.coroutines.launch
 
