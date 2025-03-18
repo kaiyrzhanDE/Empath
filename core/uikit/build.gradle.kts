@@ -26,15 +26,15 @@ kotlin {
     }
 }
 
-compose.resources {
-    publicResClass = true
-    generateResClass = always
-}
-
 android {
     namespace = "kaiyrzhan.de.empath.core.uikit"
 
     buildFeatures {
         compose = true
     }
+}
+
+compose.resources {
+    publicResClass = true
+    generateResClass = always
 }

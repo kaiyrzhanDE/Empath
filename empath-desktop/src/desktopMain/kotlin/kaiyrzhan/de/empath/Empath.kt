@@ -7,12 +7,15 @@ import androidx.compose.ui.window.application
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.statekeeper.StateKeeperDispatcher
-import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.empath_desktop.generated.resources.Res as DesktopRes
 import empath.core.uikit.generated.resources.app_name
+import empath.empath_desktop.generated.resources.ic_app
 import kaiyrzhan.de.empath.compose.EmpathApp
 import kaiyrzhan.de.empath.utils.readSerializableContainer
 import kaiyrzhan.de.empath.di.initKoin
 import kaiyrzhan.de.empath.root.RealRootComponent
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import java.io.File
 
@@ -37,7 +40,8 @@ public fun main() {
     application {
         Window(
             onCloseRequest = ::exitApplication,
-            title = stringResource(Res.string.app_name),
+            title = stringResource(CoreRes.string.app_name),
+            icon = painterResource(DesktopRes.drawable.ic_app),
         ) {
             EmpathApp(
                 component = rootComponent,
