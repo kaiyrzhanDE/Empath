@@ -59,6 +59,7 @@ internal interface AuthApi {
     @POST("api/{version}/auth/verify-code")
     suspend fun verifyCode(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
-        @Body body: VerifyCodeRequest,
+        @Query("email") email: String,
+        @Query("code") code: String,
     ): RequestResult<Any>
 }

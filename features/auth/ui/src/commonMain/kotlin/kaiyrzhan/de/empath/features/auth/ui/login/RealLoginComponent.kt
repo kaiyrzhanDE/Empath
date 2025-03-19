@@ -11,7 +11,6 @@ import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import empath.core.uikit.generated.resources.*
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import empath.core.uikit.generated.resources.Res as CoreRes
-
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.dialog.MessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.RealMessageDialogComponent

@@ -32,7 +32,7 @@ internal class AuthRepositoryImpl(
     }
 
     override suspend fun verifyCode(email: String, code: String): RequestResult<Any> {
-        return api.verifyCode(body = VerifyCodeRequest(email, code))
+        return api.verifyCode(email = email, code = code)
     }
 
     override suspend fun resetPassword(email: String, password: String): RequestResult<Any> {
