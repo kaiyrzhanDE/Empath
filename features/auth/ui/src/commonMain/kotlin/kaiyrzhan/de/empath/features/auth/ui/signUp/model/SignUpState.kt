@@ -15,7 +15,13 @@ public sealed class SignUpState {
         val isRepeatedPasswordValid: Boolean = true,
         val isUserAgreementAccepted: Boolean = false,
         val arePasswordsMatching: Boolean = true,
-    ) : SignUpState(){
-        fun equalsPasswords() = password == repeatedPassword
+    ) : SignUpState() {
+        fun canSignUp(): Boolean = nickname.isNotBlank()
+                && password.isNotBlank()
+                && repeatedPassword.isNotBlank()
+                && isUserAgreementAccepted
+                && arePasswordsMatching
+                && isPasswordValid
+                && isRepeatedPasswordValid
     }
 }

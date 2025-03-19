@@ -183,6 +183,7 @@ private fun SignUpScreen(
                     modifier = Modifier.defaultMaxWidth(),
                     onClick = { onEvent(SignUpEvent.SignUp) },
                     shape = EmpathTheme.shapes.small,
+                    enabled = state.canSignUp(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = EmpathTheme.colors.primary,
                         contentColor = EmpathTheme.colors.onPrimary,
