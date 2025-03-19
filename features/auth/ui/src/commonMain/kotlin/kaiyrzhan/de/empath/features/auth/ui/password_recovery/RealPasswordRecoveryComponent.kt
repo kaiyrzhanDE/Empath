@@ -181,21 +181,21 @@ internal class RealPasswordRecoveryComponent(
         val currentState = state.value as? PasswordRecoveryState.Success ?: return
         state.update { PasswordRecoveryState.Loading }
         coroutineScope.launch {
+            if (currentState.password != currentState.repeatedPassword) {
+                state.update { currentState.copy(arePasswordsMatching = false) }
+                _action.send(PasswordRecoveryAction.ShowSnackbar(getString(FeatureRes.string.password_dont_match_error)))
+                return@launch
+            }
+
             resetPasswordUseCase(
                 email = currentState.email,
                 password = currentState.password,
-                repeatedPassword = currentState.repeatedPassword,
             ).onSuccess {
                 state.update { currentState }
                 onPasswordReset()
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {
-                    is ResetPasswordUseCaseError.PasswordsDontMatch -> {
-                        state.update { currentState.copy(arePasswordsMatching = false) }
-                        _action.send(PasswordRecoveryAction.ShowSnackbar(getString(FeatureRes.string.password_dont_match_error)))
-                    }
-
                     is ResetPasswordUseCaseError.InvalidPasswordOrEmail -> {
                         state.update {
                             currentState.copy(

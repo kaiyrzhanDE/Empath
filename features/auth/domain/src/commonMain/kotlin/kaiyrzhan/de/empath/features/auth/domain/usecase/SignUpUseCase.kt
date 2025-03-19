@@ -14,10 +14,8 @@ public class SignUpUseCase(
     public suspend operator fun invoke(
         email: String,
         password: String,
-        repeatedPassword: String,
         nickname: String,
     ): Result<Any> {
-        if(password != repeatedPassword) throw SignUpUseCaseError.PasswordsDontMatch
         return repository.signUp(email, password, nickname)
             .onSuccess { token -> tokenProvider.saveToken(token) }
             .toDomain()
@@ -25,9 +23,8 @@ public class SignUpUseCase(
 
 }
 
-public sealed class SignUpUseCaseError : Result.Error, Throwable() {
+public sealed class SignUpUseCaseError : Result.Error {
     public data object InvalidEmailOrPassword : SignUpUseCaseError()
-    public data object PasswordsDontMatch : SignUpUseCaseError()
 }
 
 private fun <S> RequestResult<S>.toDomain(): Result<S> {

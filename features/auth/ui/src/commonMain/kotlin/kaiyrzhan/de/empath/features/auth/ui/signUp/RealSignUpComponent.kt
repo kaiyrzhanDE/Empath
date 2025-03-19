@@ -206,10 +206,15 @@ internal class RealSignUpComponent(
         val currentState = state.value as? SignUpState.Success ?: return
         state.update { SignUpState.Loading }
         coroutineScope.launch {
+            if (currentState.password != currentState.repeatedPassword) {
+                state.update { currentState.copy(arePasswordsMatching = false) }
+                _action.send(SignUpAction.ShowSnackbar(getString(FeatureRes.string.password_dont_match_error)))
+                return@launch
+            }
+
             signUpUseCase(
                 email = currentState.email,
                 password = currentState.password,
-                repeatedPassword = currentState.repeatedPassword,
                 nickname = currentState.nickname,
             ).onSuccess {
                 state.update { currentState }
@@ -217,11 +222,6 @@ internal class RealSignUpComponent(
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {
-                    is SignUpUseCaseError.PasswordsDontMatch -> {
-                        state.update { currentState.copy(arePasswordsMatching = false) }
-                        _action.send(SignUpAction.ShowSnackbar(getString(FeatureRes.string.password_dont_match_error)))
-                    }
-
                     is SignUpUseCaseError.InvalidEmailOrPassword -> {
                         state.update {
                             currentState.copy(

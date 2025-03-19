@@ -11,18 +11,15 @@ public class ResetPasswordUseCase(
     public suspend operator fun invoke(
         email: String,
         password: String,
-        repeatedPassword: String,
     ): Result<Any> {
-        if (password == repeatedPassword) throw ResetPasswordUseCaseError.PasswordsDontMatch
         return repository
             .resetPassword(email, password)
             .toDomain()
     }
 }
 
-public sealed class ResetPasswordUseCaseError : Result.Error, Throwable() {
+public sealed class ResetPasswordUseCaseError : Result.Error {
     public data object InvalidPasswordOrEmail : ResetPasswordUseCaseError()
-    public data object PasswordsDontMatch : ResetPasswordUseCaseError()
 }
 
 private fun <S> RequestResult<S>.toDomain(): Result<S> {
