@@ -120,7 +120,9 @@ public class RealAuthComponent(
             onSignUpClick = {
                 navigation.popWhile { config -> config !is Config.Login }
             },
-            onBackClick = ::onBackClick,
+            onBackClick = {
+                navigation.popWhile { config -> config !is Config.EmailVerification }
+            },
         )
     )
 
@@ -134,7 +136,9 @@ public class RealAuthComponent(
             onPasswordReset = {
                 navigation.popWhile { config -> config !is Config.Login }
             },
-            onBackClick = ::onBackClick,
+            onBackClick = {
+                navigation.popWhile { config -> config !is Config.EmailVerification }
+            },
         )
     )
 
