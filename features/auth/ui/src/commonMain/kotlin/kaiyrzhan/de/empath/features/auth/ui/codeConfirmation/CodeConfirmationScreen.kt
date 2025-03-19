@@ -17,14 +17,19 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
+import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationEvent
@@ -32,6 +37,9 @@ import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmat
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
+import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationAction
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import kotlin.text.isNotBlank
 
@@ -41,6 +49,26 @@ public fun CodeConfirmationScreen(
     modifier: Modifier = Modifier,
 ) {
     val codeConfirmationState = component.state.collectAsState()
+
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = LocalSnackbarHostState.current
+
+    val messageDialogSlot by component.messageDialog.subscribeAsState()
+    messageDialogSlot.child?.instance?.also { messageComponent ->
+        MessageDialog(
+            component = messageComponent,
+        )
+    }
+
+    SingleEventEffect(component.action) { action ->
+        when (action) {
+            is CodeConfirmationAction.ShowSnackbar -> {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(message = action.message)
+                }
+            }
+        }
+    }
 
     CodeConfirmationScreen(
         modifier = modifier
@@ -87,6 +115,7 @@ private fun CodeConfirmationScreen(
                 Spacer(modifier = Modifier.height(30.dp))
                 OutlinedTextField(
                     modifier = Modifier.defaultMaxWidth(),
+                    isError = state.isCodeValid.not(),
                     value = state.code,
                     onValueChange = { code -> onEvent(CodeConfirmationEvent.CodeChange(code)) },
                     label = {
@@ -128,7 +157,7 @@ private fun CodeConfirmationScreen(
                     Button(
                         modifier = Modifier.weight(1f),
                         onClick = { onEvent(CodeConfirmationEvent.CodeVerify) },
-                        enabled = state.code.isNotBlank(),
+                        enabled = state.canCheckCode(),
                         shape = EmpathTheme.shapes.small,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = EmpathTheme.colors.primary,

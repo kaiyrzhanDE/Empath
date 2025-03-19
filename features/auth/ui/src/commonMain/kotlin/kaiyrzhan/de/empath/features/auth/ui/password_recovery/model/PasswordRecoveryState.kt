@@ -13,5 +13,13 @@ public sealed class PasswordRecoveryState {
         val isRepeatedPasswordVisible: Boolean = false,
         val isRepeatedPasswordValid: Boolean = true,
         val arePasswordsMatching: Boolean = true,
-    ) : PasswordRecoveryState()
+    ) : PasswordRecoveryState(){
+        fun canResetPassword(): Boolean {
+            return password.isNotBlank()
+                    && repeatedPassword.isNotBlank()
+                    && isPasswordValid
+                    && isRepeatedPasswordValid
+                    && arePasswordsMatching
+        }
+    }
 }

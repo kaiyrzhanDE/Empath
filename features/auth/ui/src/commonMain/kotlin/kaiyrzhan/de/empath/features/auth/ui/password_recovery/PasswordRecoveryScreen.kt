@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.arkivanov.essenty.backhandler.BackHandler
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoading
 import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
@@ -130,6 +129,7 @@ private fun PasswordRecoveryScreen(
                     modifier = Modifier.defaultMaxWidth(),
                     onClick = { onEvent(PasswordRecoveryEvent.PasswordReset) },
                     shape = EmpathTheme.shapes.small,
+                    enabled = state.canResetPassword(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = EmpathTheme.colors.primary,
                         contentColor = EmpathTheme.colors.onPrimary,

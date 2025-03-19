@@ -10,5 +10,9 @@ public sealed class CodeConfirmationState {
         val isCodeValid: Boolean = true,
         val isResendAllowed: Boolean = false,
         val resentTimer: Int = -1,
-    ) : CodeConfirmationState()
+    ) : CodeConfirmationState() {
+        fun canCheckCode(): Boolean {
+            return code.isNotBlank() && isCodeValid
+        }
+    }
 }
