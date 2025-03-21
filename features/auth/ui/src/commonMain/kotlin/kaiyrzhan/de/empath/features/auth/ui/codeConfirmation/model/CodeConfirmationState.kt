@@ -6,10 +6,10 @@ internal sealed class CodeConfirmationState {
     class Error(val message: String) : CodeConfirmationState()
     data class Success(
         val email: String,
-        val code: String = "",
-        val isCodeValid: Boolean = true,
-        val isResendAllowed: Boolean = false,
-        val resentTimer: Int = -1,
+        val code: String,
+        val isCodeValid: Boolean,
+        val isResendAllowed: Boolean,
+        val resentTimer: Int,
     ) : CodeConfirmationState() {
         fun canCheckCode(): Boolean {
             return code.isNotBlank() && isCodeValid
@@ -17,6 +17,14 @@ internal sealed class CodeConfirmationState {
     }
 
     companion object {
-        fun default(email: String): CodeConfirmationState = Success(email = email)
+        fun default(email: String): CodeConfirmationState{
+            return Success(
+                email = email,
+                code = "",
+                isCodeValid = true,
+                isResendAllowed = false,
+                resentTimer = -1,
+            )
+        }
     }
 }

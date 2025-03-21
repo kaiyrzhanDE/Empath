@@ -6,13 +6,13 @@ internal sealed class PasswordRecoveryState {
     class Error(val message: String) : PasswordRecoveryState()
     data class Success(
         val email: String,
-        val password: String = "",
-        val isPasswordVisible: Boolean = false,
-        val isPasswordValid: Boolean = true,
-        val repeatedPassword: String = "",
-        val isRepeatedPasswordVisible: Boolean = false,
-        val isRepeatedPasswordValid: Boolean = true,
-        val arePasswordsMatching: Boolean = true,
+        val password: String,
+        val isPasswordVisible: Boolean,
+        val isPasswordValid: Boolean,
+        val repeatedPassword: String,
+        val isRepeatedPasswordVisible: Boolean,
+        val isRepeatedPasswordValid: Boolean,
+        val arePasswordsMatching: Boolean,
     ) : PasswordRecoveryState() {
         fun canResetPassword(): Boolean {
             return password.isNotBlank()
@@ -24,6 +24,17 @@ internal sealed class PasswordRecoveryState {
     }
 
     companion object {
-        fun default(email: String): PasswordRecoveryState = Success(email = email)
+        fun default(email: String): PasswordRecoveryState {
+            return Success(
+                email = email,
+                password = "",
+                isPasswordVisible = false,
+                isPasswordValid = true,
+                repeatedPassword = "",
+                isRepeatedPasswordVisible = false,
+                isRepeatedPasswordValid = true,
+                arePasswordsMatching = true,
+            )
+        }
     }
 }
