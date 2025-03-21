@@ -10,7 +10,7 @@ import com.arkivanov.decompose.router.stack.popWhile
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
-import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.RealCodeConfirmationComponent
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.RealEmailVerificationComponent
@@ -19,15 +19,11 @@ import kaiyrzhan.de.empath.features.auth.ui.password_recovery.RealPasswordRecove
 import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kaiyrzhan.de.empath.features.auth.ui.signUp.RealSignUpComponent
 import kotlinx.serialization.Serializable
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 public class RealAuthComponent(
     componentContext: ComponentContext,
     private val onLoginClick: () -> Unit,
-) : ComponentContext by componentContext, AuthComponent, KoinComponent {
-
-    private val logger: BaseLogger by inject()
+) : BaseComponent(componentContext), AuthComponent {
 
     private val navigation = StackNavigation<Config>()
     override val stack: Value<ChildStack<*, AuthComponent.Child>> = childStack(

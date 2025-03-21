@@ -21,6 +21,7 @@ kotlin {
             api(libs.jetbrains.compose.adaptive)
             api(libs.jetbrains.compose.adaptive.layout)
             api(libs.jetbrains.compose.adaptive.navigation)
+            implementation(projects.core.utils)
 
         }
     }

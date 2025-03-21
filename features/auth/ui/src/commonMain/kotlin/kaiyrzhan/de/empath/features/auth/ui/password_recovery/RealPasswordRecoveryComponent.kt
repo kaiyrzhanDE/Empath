@@ -7,7 +7,6 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import empath.core.uikit.generated.resources.Res as CoreRes
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import empath.core.uikit.generated.resources.*
@@ -16,8 +15,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.MessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.RealMessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
-import kaiyrzhan.de.empath.core.utils.dispatchers.AppDispatchers
-import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
@@ -27,7 +25,6 @@ import kaiyrzhan.de.empath.features.auth.domain.usecase.ResetPasswordUseCaseErro
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryAction
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryEvent
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryState
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -36,7 +33,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.getValue
 
@@ -45,11 +41,7 @@ internal class RealPasswordRecoveryComponent(
     email: String,
     private val onPasswordReset: () -> Unit,
     private val onBackClick: () -> Unit,
-) : ComponentContext by componentContext, PasswordRecoveryComponent, KoinComponent {
-
-    private val appDispatchers: AppDispatchers by inject()
-    private val logger: BaseLogger by inject()
-    private val coroutineScope = coroutineScope(appDispatchers.main + SupervisorJob())
+) : BaseComponent(componentContext), PasswordRecoveryComponent {
 
     private val resetPasswordUseCase: ResetPasswordUseCase by inject()
 
