@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-public fun PasswordRecoveryScreen(
+internal fun PasswordRecoveryScreen(
     component: PasswordRecoveryComponent,
     modifier: Modifier = Modifier,
 ) {
@@ -55,7 +55,7 @@ public fun PasswordRecoveryScreen(
         )
     }
 
-    BackHandler(component.backHandler){
+    BackHandler(component.backHandler) {
         component.onEvent(PasswordRecoveryEvent.BackClick)
     }
 
@@ -144,10 +144,7 @@ private fun PasswordRecoveryScreen(
             }
         }
 
-        is PasswordRecoveryState.Loading -> {
-            CircularLoading()
-        }
-
+        is PasswordRecoveryState.Loading -> CircularLoading()
         is PasswordRecoveryState.Error -> Unit
         is PasswordRecoveryState.Initial -> Unit
     }

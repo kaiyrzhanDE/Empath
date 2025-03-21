@@ -1,10 +1,10 @@
 package kaiyrzhan.de.empath.features.auth.ui.login.model
 
-public sealed class LoginState {
-    public data object Initial : LoginState()
-    public data object Loading : LoginState()
-    public data class Error(val message: String) : LoginState()
-    public data class Success(
+internal sealed class LoginState {
+    object Initial : LoginState()
+    object Loading : LoginState()
+    class Error(val message: String) : LoginState()
+    data class Success(
         val email: String = "",
         val isEmailValid: Boolean = true,
         val password: String = "",

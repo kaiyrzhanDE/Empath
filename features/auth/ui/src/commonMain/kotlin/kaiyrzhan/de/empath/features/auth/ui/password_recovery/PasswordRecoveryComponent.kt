@@ -10,14 +10,14 @@ import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordReco
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-public interface PasswordRecoveryComponent: BackHandlerOwner {
+internal interface PasswordRecoveryComponent : BackHandlerOwner {
 
-    public val state: StateFlow<PasswordRecoveryState>
+    val state: StateFlow<PasswordRecoveryState>
 
-    public val action: Flow<PasswordRecoveryAction>
+    val action: Flow<PasswordRecoveryAction>
 
-    public val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
+    val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
 
-    public fun onEvent(event: PasswordRecoveryEvent)
+    fun onEvent(event: PasswordRecoveryEvent)
 
 }

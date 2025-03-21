@@ -1,13 +1,13 @@
 package kaiyrzhan.de.empath.features.auth.ui.signUp.model
 
-public sealed class SignUpEvent {
-    internal class NicknameChange(val nickname: String): SignUpEvent()
-    internal class PasswordChange(val password: String): SignUpEvent()
-    internal class RepeatedPasswordChange(val password: String): SignUpEvent()
-    internal data object SignUp: SignUpEvent()
-    internal data object BackClick: SignUpEvent()
-    internal data class UserAgreementAccept(val isAccepted: Boolean): SignUpEvent()
-    internal data object UserAgreementClick: SignUpEvent()
-    internal data object PasswordShow: SignUpEvent()
-    internal data object RepeatedPasswordShow: SignUpEvent()
+internal sealed interface SignUpEvent {
+    data class NicknameChange(val nickname: String) : SignUpEvent
+    data class PasswordChange(val password: String) : SignUpEvent
+    data class RepeatedPasswordChange(val password: String) : SignUpEvent
+    data object SignUp : SignUpEvent
+    data object BackClick : SignUpEvent
+    data class UserAgreementAccept(val isAccepted: Boolean) : SignUpEvent
+    data object UserAgreementClick : SignUpEvent
+    data object PasswordShow : SignUpEvent
+    data object RepeatedPasswordShow : SignUpEvent
 }

@@ -18,6 +18,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
 import kaiyrzhan.de.empath.core.utils.dispatchers.AppDispatchers
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.Result
@@ -64,12 +65,12 @@ internal class RealLoginComponent(
     )
 
     override fun onEvent(event: LoginEvent) {
-        logger.d(this::class.simpleName.toString(), event.toString())
+        logger.d(this.className(), event.toString())
         when (event) {
             is LoginEvent.EmailChange -> changeEmail(event.email)
             is LoginEvent.PasswordChange -> changePassword(event.password)
-            is LoginEvent.SignUp -> signUp()
-            is LoginEvent.ResetPassword -> resetPassword()
+            is LoginEvent.SignUp -> onSignUpClick()
+            is LoginEvent.ResetPassword -> onPasswordResetClick()
             is LoginEvent.LogIn -> logIn()
             is LoginEvent.FacebookAuthClick -> authWithFacebook()
             is LoginEvent.GoogleAuthClick -> authWithGoogle()
@@ -112,7 +113,7 @@ internal class RealLoginComponent(
 
     private fun changePassword(password: String) {
         state.update { currentState ->
-            if (currentState !is LoginState.Success) return@update currentState
+            check(currentState is LoginState.Success)
             currentState.copy(
                 password = password,
                 isPasswordValid = true,
@@ -122,7 +123,7 @@ internal class RealLoginComponent(
 
     private fun changeEmail(email: String) {
         state.update { currentState ->
-            if (currentState !is LoginState.Success) return@update currentState
+            check(currentState is LoginState.Success)
             currentState.copy(
                 email = email,
                 isEmailValid = true,
@@ -130,9 +131,10 @@ internal class RealLoginComponent(
         }
     }
 
+
     private fun logIn() {
         val currentState = state.value
-        if (currentState !is LoginState.Success) return
+        check(currentState is LoginState.Success)
         state.update { LoginState.Loading }
         coroutineScope.launch {
             logInUseCase(
@@ -188,11 +190,7 @@ internal class RealLoginComponent(
         }
     }
 
-    private fun signUp() = onSignUpClick()
+    private fun authWithFacebook() = Unit //TODO("Need implementation google auth)
 
-    private fun resetPassword() = onPasswordResetClick()
-
-    private fun authWithFacebook() = Unit //TODO("Need implementation)
-
-    private fun authWithGoogle() = Unit //TODO("Need implementation)
+    private fun authWithGoogle() = Unit //TODO("Need implementation facebook auth)
 }

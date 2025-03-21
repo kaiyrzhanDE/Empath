@@ -18,6 +18,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
 import kaiyrzhan.de.empath.core.utils.dispatchers.AppDispatchers
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
@@ -45,11 +46,11 @@ internal class RealEmailVerificationComponent(
     componentContext: ComponentContext,
     email: String,
     private val verificationType: VerificationType,
+    private val onBackClick: () -> Unit,
     private val onSendSignUpCodeClick: (email: String) -> Unit,
     private val onSendResetPasswordCodeClick: (email: String) -> Unit,
     private val onSignUpClick: (email: String) -> Unit,
     private val onResetPasswordClick: (email: String) -> Unit,
-    private val onBackClick: () -> Unit,
 ) : ComponentContext by componentContext, EmailVerificationComponent, KoinComponent {
 
     private val appDispatchers: AppDispatchers by inject()
@@ -59,7 +60,9 @@ internal class RealEmailVerificationComponent(
     private val sendSignUpCodeUseCase: SendSignUpCodeUseCase by inject()
     private val sendResetPasswordCodeUseCase: SendResetPasswordCodeUseCase by inject()
 
-    override val state = MutableStateFlow<EmailVerificationState>(EmailVerificationState.Success(email = email))
+    override val state = MutableStateFlow<EmailVerificationState>(
+        EmailVerificationState.defaultState(email = email)
+    )
 
     private val _action = Channel<EmailVerificationAction>(capacity = Channel.BUFFERED)
     override val action: Flow<EmailVerificationAction> = _action.receiveAsFlow()
@@ -73,7 +76,7 @@ internal class RealEmailVerificationComponent(
     )
 
     override fun onEvent(event: EmailVerificationEvent) {
-        logger.d(this::class.simpleName.toString(), event.toString())
+        logger.d(this.className(), event.toString())
         when (event) {
             is EmailVerificationEvent.EmailChange -> changeEmail(event.email)
             is EmailVerificationEvent.SendCodeClick -> sendCode()
@@ -123,7 +126,8 @@ internal class RealEmailVerificationComponent(
     }
 
     private fun sendResetPasswordCode() {
-        val currentState = state.value as? EmailVerificationState.Success ?: return
+        val currentState = state.value
+        check(currentState is EmailVerificationState.Success)
         state.update { EmailVerificationState.Loading }
         coroutineScope.launch {
             sendResetPasswordCodeUseCase(currentState.email).onSuccess {
@@ -193,7 +197,8 @@ internal class RealEmailVerificationComponent(
     }
 
     private fun sendSignUpCode() {
-        val currentState = state.value as? EmailVerificationState.Success ?: return
+        val currentState = state.value
+        check(currentState is EmailVerificationState.Success)
         state.update { EmailVerificationState.Loading }
         coroutineScope.launch {
             sendSignUpCodeUseCase(currentState.email).onSuccess {
@@ -264,8 +269,7 @@ internal class RealEmailVerificationComponent(
 
     private fun changeEmail(email: String) {
         state.update { currentState ->
-            if (currentState !is EmailVerificationState.Success) return@update currentState
-
+            check(currentState is EmailVerificationState.Success)
             currentState.copy(
                 email = email,
                 isEmailValid = true,

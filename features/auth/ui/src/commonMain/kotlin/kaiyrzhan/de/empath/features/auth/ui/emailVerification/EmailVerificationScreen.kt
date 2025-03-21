@@ -36,10 +36,11 @@ import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerific
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerificationState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.text.isNotBlank
 
 @Composable
-public fun EmailVerificationScreen(
+internal fun EmailVerificationScreen(
     component: EmailVerificationComponent,
     modifier: Modifier = Modifier,
 ) {
@@ -54,8 +55,8 @@ public fun EmailVerificationScreen(
         )
     }
 
-    SingleEventEffect(component.action){ action ->
-        when(action){
+    SingleEventEffect(component.action) { action ->
+        when (action) {
             is EmailVerificationAction.ShowSnackbar -> {
                 coroutineScope.launch {
                     snackbarHostState.showSnackbar(
@@ -131,12 +132,16 @@ private fun EmailVerificationScreen(
             }
         }
 
-        is EmailVerificationState.Loading -> {
-            CircularLoading()
-        }
-
+        is EmailVerificationState.Loading -> CircularLoading()
         is EmailVerificationState.Error -> Unit
         is EmailVerificationState.Initial -> Unit
     }
+}
 
+@Preview
+@Composable
+private fun Preview() {
+    EmailVerificationScreen(
+        component = FakeEmailVerificationComponent(),
+    )
 }

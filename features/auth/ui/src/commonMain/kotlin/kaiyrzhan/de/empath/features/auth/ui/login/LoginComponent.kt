@@ -9,15 +9,15 @@ import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-public interface LoginComponent {
+internal interface LoginComponent {
 
-    public val state: StateFlow<LoginState>
+    val state: StateFlow<LoginState>
 
-    public val action: Flow<LoginAction>
+    val action: Flow<LoginAction>
 
-    public val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
+    val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
 
-    public fun onEvent(event: LoginEvent)
+    fun onEvent(event: LoginEvent)
 }
 
 

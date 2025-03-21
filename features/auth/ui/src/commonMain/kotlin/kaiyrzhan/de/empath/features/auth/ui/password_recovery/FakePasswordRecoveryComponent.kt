@@ -17,7 +17,9 @@ internal class FakePasswordRecoveryComponent : PasswordRecoveryComponent {
     override val state = MutableStateFlow(
         PasswordRecoveryState.Success(
             email = "sansyzbaev.de@gmail.com",
+            isPasswordValid = false,
             password = "12345",
+            isRepeatedPasswordValid = false,
             repeatedPassword = "12345",
         )
     )

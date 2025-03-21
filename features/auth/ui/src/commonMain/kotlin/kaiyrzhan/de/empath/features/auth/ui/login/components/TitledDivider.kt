@@ -14,6 +14,7 @@ import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun TitledDivider(
@@ -34,4 +35,10 @@ internal fun TitledDivider(
         )
         HorizontalDivider(modifier = Modifier.weight(1f))
     }
+}
+
+@Preview
+@Composable
+private fun Preview(){
+    TitledDivider()
 }

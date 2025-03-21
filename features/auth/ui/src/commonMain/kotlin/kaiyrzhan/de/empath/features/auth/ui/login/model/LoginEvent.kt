@@ -1,11 +1,11 @@
 package kaiyrzhan.de.empath.features.auth.ui.login.model
 
-public sealed class LoginEvent {
-    internal class EmailChange(val email: String) : LoginEvent()
-    internal class PasswordChange(val password: String) : LoginEvent()
-    internal data object LogIn : LoginEvent()
-    internal data object SignUp : LoginEvent()
-    internal data object GoogleAuthClick : LoginEvent()
-    internal data object FacebookAuthClick : LoginEvent()
-    internal data object ResetPassword : LoginEvent()
+internal sealed interface LoginEvent {
+    data class EmailChange(val email: String) : LoginEvent
+    data class PasswordChange(val password: String) : LoginEvent
+    data object LogIn : LoginEvent
+    data object SignUp : LoginEvent
+    data object GoogleAuthClick : LoginEvent
+    data object FacebookAuthClick : LoginEvent
+    data object ResetPassword : LoginEvent
 }

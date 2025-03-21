@@ -1,11 +1,15 @@
 package kaiyrzhan.de.empath.features.auth.ui.emailVerification.model
 
-public sealed class EmailVerificationState {
-    internal data object Initial : EmailVerificationState()
-    internal data object Loading : EmailVerificationState()
-    internal data class Error(val message: String) : EmailVerificationState()
-    internal data class Success(
+internal sealed class EmailVerificationState {
+    object Initial : EmailVerificationState()
+    object Loading : EmailVerificationState()
+    class Error(val message: String) : EmailVerificationState()
+    data class Success(
         val email: String = "",
         val isEmailValid: Boolean = true,
     ) : EmailVerificationState()
+
+    companion object {
+        fun defaultState(email: String): EmailVerificationState = Success(email = email)
+    }
 }

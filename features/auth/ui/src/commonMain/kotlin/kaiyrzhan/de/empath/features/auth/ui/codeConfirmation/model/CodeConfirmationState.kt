@@ -1,10 +1,10 @@
 package kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model
 
-public sealed class CodeConfirmationState {
-    internal data object Initial : CodeConfirmationState()
-    internal data object Loading : CodeConfirmationState()
-    internal data class Error(val message: String) : CodeConfirmationState()
-    internal data class Success(
+internal sealed class CodeConfirmationState {
+    object Initial : CodeConfirmationState()
+    object Loading : CodeConfirmationState()
+    class Error(val message: String) : CodeConfirmationState()
+    data class Success(
         val email: String,
         val code: String = "",
         val isCodeValid: Boolean = true,
@@ -14,5 +14,9 @@ public sealed class CodeConfirmationState {
         fun canCheckCode(): Boolean {
             return code.isNotBlank() && isCodeValid
         }
+    }
+
+    companion object {
+        fun defaultState(email: String): CodeConfirmationState = Success(email = email)
     }
 }

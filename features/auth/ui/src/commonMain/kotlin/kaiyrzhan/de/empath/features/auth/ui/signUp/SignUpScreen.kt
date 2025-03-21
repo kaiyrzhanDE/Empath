@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.auth.ui.signUp
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,9 +45,10 @@ import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpEvent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-public fun SignUpScreen(
+internal fun SignUpScreen(
     component: SignUpComponent,
     modifier: Modifier = Modifier,
 ) {
@@ -77,17 +79,17 @@ public fun SignUpScreen(
     }
 
     SignUpScreen(
-        modifier = modifier.fillMaxSize(),
         state = signUpState.value,
         onEvent = component::onEvent,
+        modifier = modifier.fillMaxSize(),
     )
 }
 
 @Composable
 private fun SignUpScreen(
-    modifier: Modifier = Modifier,
     state: SignUpState,
     onEvent: (SignUpEvent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
 
@@ -107,77 +109,9 @@ private fun SignUpScreen(
                     onBackClick = { onEvent(SignUpEvent.BackClick) },
                 )
                 Spacer(modifier = Modifier.height(30.dp))
-                OutlinedTextField(
-                    modifier = Modifier.defaultMaxWidth(),
-                    value = state.nickname,
-                    onValueChange = { nickname -> onEvent(SignUpEvent.NicknameChange(nickname)) },
-                    label = {
-                        Text(
-                            text = stringResource(FeatureRes.string.nickname),
-                            style = EmpathTheme.typography.bodyLarge,
-                        )
-                    },
-                    maxLines = 1,
-                )
+                UserDataTextFields(state, onEvent)
                 Spacer(modifier = Modifier.height(20.dp))
-                PasswordOutlinedTextField(
-                    value = state.password,
-                    onValueChange = { password ->
-                        onEvent(SignUpEvent.PasswordChange(password))
-                    },
-                    label = stringResource(FeatureRes.string.password),
-                    arePasswordsMatching = state.arePasswordsMatching,
-                    isPasswordValid = state.isPasswordValid,
-                    isValueVisible = state.isPasswordVisible,
-                    onShowClick = { onEvent(SignUpEvent.PasswordShow) },
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                PasswordOutlinedTextField(
-                    value = state.repeatedPassword,
-                    onValueChange = { password ->
-                        onEvent(SignUpEvent.RepeatedPasswordChange(password))
-                    },
-                    label = stringResource(FeatureRes.string.repeated_password),
-                    arePasswordsMatching = state.arePasswordsMatching,
-                    isPasswordValid = state.isRepeatedPasswordValid,
-                    isValueVisible = state.isRepeatedPasswordVisible,
-                    onShowClick = { onEvent(SignUpEvent.RepeatedPasswordShow) },
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier.defaultMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Checkbox(
-                        checked = state.isUserAgreementAccepted,
-                        onCheckedChange = { checked ->
-                            onEvent(SignUpEvent.UserAgreementAccept(checked))
-                        },
-                    )
-                    Text(
-                        text = buildAnnotatedString {
-                            append(stringResource(FeatureRes.string.user_agreement_prompt))
-                            appendSpace()
-                            withLink(
-                                link = LinkAnnotation.Clickable(
-                                    tag = "USER AGREEMENT",
-                                    styles = TextLinkStyles(
-                                        style = EmpathTheme.typography.labelSmall.copy(
-                                            color = EmpathTheme.colors.onSurface,
-                                        ).toSpanStyle()
-                                    )
-                                ) {
-                                    onEvent(SignUpEvent.UserAgreementClick)
-                                },
-                            ) {
-                                append(stringResource(FeatureRes.string.user_agreement_and_privacy_policy))
-                            }
-                        },
-                        style = EmpathTheme.typography.labelSmall,
-                        color = EmpathTheme.colors.onSurfaceVariant,
-                    )
-                }
+                UserAgreementCheckBox(state, onEvent)
                 Spacer(modifier = Modifier.height(20.dp))
                 Button(
                     modifier = Modifier.defaultMaxWidth(),
@@ -198,12 +132,102 @@ private fun SignUpScreen(
             }
         }
 
-        is SignUpState.Loading -> {
-            CircularLoading()
-        }
-
+        is SignUpState.Loading -> CircularLoading()
         is SignUpState.Error -> Unit
         is SignUpState.Initial -> Unit
     }
 
+}
+
+@Composable
+private fun ColumnScope.UserDataTextFields(
+    state: SignUpState.Success,
+    onEvent: (SignUpEvent) -> Unit
+) {
+    OutlinedTextField(
+        modifier = Modifier.defaultMaxWidth(),
+        value = state.nickname,
+        onValueChange = { nickname -> onEvent(SignUpEvent.NicknameChange(nickname)) },
+        label = {
+            Text(
+                text = stringResource(FeatureRes.string.nickname),
+                style = EmpathTheme.typography.bodyLarge,
+            )
+        },
+        maxLines = 1,
+    )
+    Spacer(modifier = Modifier.height(20.dp))
+    PasswordOutlinedTextField(
+        value = state.password,
+        onValueChange = { password ->
+            onEvent(SignUpEvent.PasswordChange(password))
+        },
+        label = stringResource(FeatureRes.string.password),
+        arePasswordsMatching = state.arePasswordsMatching,
+        isPasswordValid = state.isPasswordValid,
+        isValueVisible = state.isPasswordVisible,
+        onShowClick = { onEvent(SignUpEvent.PasswordShow) },
+    )
+    Spacer(modifier = Modifier.height(20.dp))
+    PasswordOutlinedTextField(
+        value = state.repeatedPassword,
+        onValueChange = { password ->
+            onEvent(SignUpEvent.RepeatedPasswordChange(password))
+        },
+        label = stringResource(FeatureRes.string.repeated_password),
+        arePasswordsMatching = state.arePasswordsMatching,
+        isPasswordValid = state.isRepeatedPasswordValid,
+        isValueVisible = state.isRepeatedPasswordVisible,
+        onShowClick = { onEvent(SignUpEvent.RepeatedPasswordShow) },
+    )
+}
+
+@Composable
+private fun ColumnScope.UserAgreementCheckBox(
+    state: SignUpState.Success,
+    onEvent: (SignUpEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.defaultMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Checkbox(
+            checked = state.isUserAgreementAccepted,
+            onCheckedChange = { checked ->
+                onEvent(SignUpEvent.UserAgreementAccept(checked))
+            },
+        )
+        Text(
+            text = buildAnnotatedString {
+                append(stringResource(FeatureRes.string.user_agreement_prompt))
+                appendSpace()
+                withLink(
+                    link = LinkAnnotation.Clickable(
+                        tag = "USER AGREEMENT",
+                        styles = TextLinkStyles(
+                            style = EmpathTheme.typography.labelSmall.copy(
+                                color = EmpathTheme.colors.onSurface,
+                            ).toSpanStyle()
+                        )
+                    ) {
+                        onEvent(SignUpEvent.UserAgreementClick)
+                    },
+                ) {
+                    append(stringResource(FeatureRes.string.user_agreement_and_privacy_policy))
+                }
+            },
+            style = EmpathTheme.typography.labelSmall,
+            color = EmpathTheme.colors.onSurfaceVariant,
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    SignUpScreen(
+        component = FakeSignUpComponent()
+    )
 }

@@ -14,10 +14,10 @@ public interface AuthComponent : ComponentContext {
     public fun onBackClick()
 
     public sealed class Child {
-        public class Login(public val component: LoginComponent) : Child()
-        public class EmailVerification(public val component: EmailVerificationComponent) : Child()
-        public class CodeConfirmation(public val component: CodeConfirmationComponent) : Child()
-        public class SignUp(public val component: SignUpComponent) : Child()
-        public class PasswordRecovery(public val component: PasswordRecoveryComponent) : Child()
+        internal class Login(val component: LoginComponent) : Child()
+        internal class EmailVerification(val component: EmailVerificationComponent) : Child()
+        internal class CodeConfirmation(val component: CodeConfirmationComponent) : Child()
+        internal class SignUp(val component: SignUpComponent) : Child()
+        internal class PasswordRecovery(val component: PasswordRecoveryComponent) : Child()
     }
 }

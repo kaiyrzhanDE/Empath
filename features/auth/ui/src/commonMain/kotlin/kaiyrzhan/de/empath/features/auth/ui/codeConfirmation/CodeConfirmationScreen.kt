@@ -41,10 +41,11 @@ import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationAction
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.text.isNotBlank
 
 @Composable
-public fun CodeConfirmationScreen(
+internal fun CodeConfirmationScreen(
     component: CodeConfirmationComponent,
     modifier: Modifier = Modifier,
 ) {
@@ -80,9 +81,9 @@ public fun CodeConfirmationScreen(
 
 @Composable
 private fun CodeConfirmationScreen(
-    modifier: Modifier = Modifier,
     state: CodeConfirmationState,
     onEvent: (CodeConfirmationEvent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
 
@@ -173,13 +174,16 @@ private fun CodeConfirmationScreen(
 
             }
         }
-
-        is CodeConfirmationState.Loading -> {
-            CircularLoading()
-        }
-
+        is CodeConfirmationState.Loading -> CircularLoading()
         is CodeConfirmationState.Error -> Unit
         is CodeConfirmationState.Initial -> Unit
     }
+}
 
+@Preview
+@Composable
+private fun Preview(){
+    CodeConfirmationScreen(
+        component = FakeCodeConfirmationComponent(),
+    )
 }

@@ -1,10 +1,10 @@
 package kaiyrzhan.de.empath.features.auth.ui.password_recovery.model
 
-public sealed class PasswordRecoveryState {
-    internal data object Initial : PasswordRecoveryState()
-    internal data object Loading : PasswordRecoveryState()
-    internal data class Error(val message: String) : PasswordRecoveryState()
-    internal data class Success(
+internal sealed class PasswordRecoveryState {
+    object Initial : PasswordRecoveryState()
+    object Loading : PasswordRecoveryState()
+    class Error(val message: String) : PasswordRecoveryState()
+    data class Success(
         val email: String,
         val password: String = "",
         val isPasswordVisible: Boolean = false,
@@ -13,7 +13,7 @@ public sealed class PasswordRecoveryState {
         val isRepeatedPasswordVisible: Boolean = false,
         val isRepeatedPasswordValid: Boolean = true,
         val arePasswordsMatching: Boolean = true,
-    ) : PasswordRecoveryState(){
+    ) : PasswordRecoveryState() {
         fun canResetPassword(): Boolean {
             return password.isNotBlank()
                     && repeatedPassword.isNotBlank()
@@ -21,5 +21,9 @@ public sealed class PasswordRecoveryState {
                     && isRepeatedPasswordValid
                     && arePasswordsMatching
         }
+    }
+
+    companion object {
+        fun defaultState(): PasswordRecoveryState = Success(email = "")
     }
 }

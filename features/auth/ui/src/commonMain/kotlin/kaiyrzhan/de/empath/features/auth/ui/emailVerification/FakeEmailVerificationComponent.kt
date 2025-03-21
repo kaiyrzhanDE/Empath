@@ -13,7 +13,12 @@ import kotlinx.coroutines.flow.emptyFlow
 
 @Suppress("unused")
 internal class FakeEmailVerificationComponent : EmailVerificationComponent {
-    override val state = MutableStateFlow(EmailVerificationState.Success(""))
+    override val state = MutableStateFlow(
+        EmailVerificationState.Success(
+            email = "sansyzbaev.de@gmail.com",
+            isEmailValid = false,
+        )
+    )
 
     override val action: Flow<EmailVerificationAction> = emptyFlow()
 

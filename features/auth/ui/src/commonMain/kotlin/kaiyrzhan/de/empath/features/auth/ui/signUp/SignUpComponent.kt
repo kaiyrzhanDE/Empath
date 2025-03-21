@@ -11,14 +11,14 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-public interface SignUpComponent: BackHandlerOwner {
+internal interface SignUpComponent : BackHandlerOwner {
 
-    public val state: StateFlow<SignUpState>
+    val state: StateFlow<SignUpState>
 
-    public val action: Flow<SignUpAction>
+    val action: Flow<SignUpAction>
 
-    public val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
+    val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
 
-    public fun onEvent(event: SignUpEvent)
+    fun onEvent(event: SignUpEvent)
 
 }

@@ -1,7 +1,7 @@
 package kaiyrzhan.de.empath.features.auth.ui.emailVerification.model
 
-public sealed class EmailVerificationEvent {
-    internal class EmailChange(val email: String): EmailVerificationEvent()
-    internal data object SendCodeClick: EmailVerificationEvent()
-    internal data object BackClick: EmailVerificationEvent()
+internal sealed interface EmailVerificationEvent {
+    data class EmailChange(val email: String) : EmailVerificationEvent
+    data object SendCodeClick : EmailVerificationEvent
+    data object BackClick : EmailVerificationEvent
 }

@@ -48,9 +48,10 @@ import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
 import kotlinx.coroutines.launch
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-public fun LoginScreen(
+internal fun LoginScreen(
     component: LoginComponent,
     modifier: Modifier = Modifier,
 ) {
@@ -86,9 +87,9 @@ public fun LoginScreen(
 
 @Composable
 private fun LoginScreen(
-    modifier: Modifier = Modifier,
     loginState: LoginState,
     onEvent: (LoginEvent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
 
@@ -139,7 +140,6 @@ private fun LoginScreen(
 
 @Composable
 private fun PrimaryAuthorizationContent(
-    modifier: Modifier = Modifier,
     email: String,
     isEmailValid: Boolean,
     onEmailChange: (String) -> Unit,
@@ -149,6 +149,7 @@ private fun PrimaryAuthorizationContent(
     onSignUpClick: () -> Unit,
     onLoginClick: () -> Unit,
     onResetPasswordClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.defaultMaxWidth(),
@@ -223,27 +224,42 @@ private fun PrimaryAuthorizationContent(
                 )
             }
         }
-
-        Text(
-            text = buildAnnotatedString {
-                append(stringResource(FeatureRes.string.sign_up_prompt))
-                appendSpace()
-                withLink(
-                    link = LinkAnnotation.Clickable(
-                        tag = "SIGN UP",
-                        styles = TextLinkStyles(
-                            style = EmpathTheme.typography.bodyMedium.copy(
-                                color = EmpathTheme.colors.primary,
-                            ).toSpanStyle()
-                        )
-                    ) {
-                        onSignUpClick()
-                    },
-                ) {
-                    append(stringResource(FeatureRes.string.sign_up))
-                }
-            },
-            style = EmpathTheme.typography.bodyMedium,
-        )
+        SignUpText(onSignUpClick)
     }
+}
+
+@Composable
+private fun SignUpText(
+    onSignUpClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = buildAnnotatedString {
+            append(stringResource(FeatureRes.string.sign_up_prompt))
+            appendSpace()
+            withLink(
+                link = LinkAnnotation.Clickable(
+                    tag = "SIGN UP",
+                    styles = TextLinkStyles(
+                        style = EmpathTheme.typography.bodyMedium.copy(
+                            color = EmpathTheme.colors.primary,
+                        ).toSpanStyle()
+                    )
+                ) {
+                    onSignUpClick()
+                },
+            ) {
+                append(stringResource(FeatureRes.string.sign_up))
+            }
+        },
+        style = EmpathTheme.typography.bodyMedium,
+    )
+}
+
+@Preview
+@Composable
+private fun Preview(){
+    LoginScreen(
+        component = FakeLoginComponent(),
+    )
 }

@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.auth.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,7 +15,6 @@ import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@Preview
 @Composable
 internal fun Logo(
     modifier: Modifier = Modifier,
@@ -35,4 +35,12 @@ internal fun Logo(
             color = EmpathTheme.colors.onSurfaceVariant,
         )
     }
+}
+
+@Preview
+@Composable
+private fun Preview(){
+    Logo(
+        modifier = Modifier.fillMaxSize(),
+    )
 }

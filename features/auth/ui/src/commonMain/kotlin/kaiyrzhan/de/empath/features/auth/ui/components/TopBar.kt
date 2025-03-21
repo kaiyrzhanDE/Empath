@@ -17,6 +17,7 @@ import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import empath.core.uikit.generated.resources.Res as CoreRes
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun TopBar(
@@ -88,4 +89,14 @@ internal fun TopBar(
             color = EmpathTheme.colors.onSurfaceVariant,
         )
     }
+}
+
+@Preview
+@Composable
+private fun Preview(){
+    TopBar(
+        title = "Title",
+        description = "Description",
+        onBackClick = {},
+    )
 }

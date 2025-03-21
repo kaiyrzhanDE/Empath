@@ -1,10 +1,10 @@
 package kaiyrzhan.de.empath.features.auth.ui.signUp.model
 
-public sealed class SignUpState {
-    internal data object Initial : SignUpState()
-    internal data object Loading : SignUpState()
-    internal data class Error(val message: String) : SignUpState()
-    internal data class Success(
+internal sealed class SignUpState {
+    object Initial : SignUpState()
+    object Loading : SignUpState()
+    class Error(val message: String) : SignUpState()
+    data class Success(
         val email: String,
         val nickname: String = "",
         val password: String = "",

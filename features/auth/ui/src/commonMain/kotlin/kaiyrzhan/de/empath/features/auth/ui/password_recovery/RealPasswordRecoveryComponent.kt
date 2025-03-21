@@ -18,6 +18,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
 import kaiyrzhan.de.empath.core.utils.dispatchers.AppDispatchers
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
@@ -69,7 +70,7 @@ internal class RealPasswordRecoveryComponent(
     )
 
     override fun onEvent(event: PasswordRecoveryEvent) {
-        logger.d(this::class.simpleName.toString(), event.toString())
+        logger.d(this.className(), event.toString())
         when (event) {
             is PasswordRecoveryEvent.BackClick -> backClick()
             is PasswordRecoveryEvent.PasswordChange -> changePassword(event.password)
@@ -135,8 +136,7 @@ internal class RealPasswordRecoveryComponent(
 
     private fun showPassword() {
         state.update { currentState ->
-            if (currentState !is PasswordRecoveryState.Success) return@update currentState
-
+            check(currentState is PasswordRecoveryState.Success)
             currentState.copy(
                 isPasswordVisible = currentState.isPasswordVisible.not(),
             )
@@ -145,8 +145,7 @@ internal class RealPasswordRecoveryComponent(
 
     private fun showRepeatedPassword() {
         state.update { currentState ->
-            if (currentState !is PasswordRecoveryState.Success) return@update currentState
-
+            check(currentState is PasswordRecoveryState.Success)
             currentState.copy(
                 isRepeatedPasswordVisible = currentState.isRepeatedPasswordVisible.not(),
             )
@@ -155,8 +154,7 @@ internal class RealPasswordRecoveryComponent(
 
     private fun changePassword(password: String) {
         state.update { currentState ->
-            if (currentState !is PasswordRecoveryState.Success) return@update currentState
-
+            check(currentState is PasswordRecoveryState.Success)
             currentState.copy(
                 password = password,
                 isPasswordValid = true,
@@ -167,8 +165,7 @@ internal class RealPasswordRecoveryComponent(
 
     private fun changeRepeatedPassword(password: String) {
         state.update { currentState ->
-            if (currentState !is PasswordRecoveryState.Success) return@update currentState
-
+            check(currentState is PasswordRecoveryState.Success)
             currentState.copy(
                 repeatedPassword = password,
                 isRepeatedPasswordValid = true,
@@ -178,7 +175,8 @@ internal class RealPasswordRecoveryComponent(
     }
 
     private fun resetPassword() {
-        val currentState = state.value as? PasswordRecoveryState.Success ?: return
+        val currentState = state.value
+        check(currentState is PasswordRecoveryState.Success)
         state.update { PasswordRecoveryState.Loading }
         coroutineScope.launch {
             if (currentState.password != currentState.repeatedPassword) {

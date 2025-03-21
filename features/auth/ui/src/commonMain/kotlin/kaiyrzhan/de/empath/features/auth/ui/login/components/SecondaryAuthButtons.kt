@@ -15,6 +15,7 @@ import empath.features.auth.ui.generated.resources.continue_with_google
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun SecondaryAuthButtons(
@@ -61,4 +62,13 @@ internal fun SecondaryAuthButtons(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    SecondaryAuthButtons(
+        onGoogleAuthClick = {},
+        onFacebookAuthClick = {},
+    )
 }

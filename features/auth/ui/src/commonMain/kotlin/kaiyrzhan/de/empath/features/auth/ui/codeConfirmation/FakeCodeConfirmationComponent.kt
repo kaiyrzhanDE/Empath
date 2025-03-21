@@ -15,6 +15,7 @@ internal class FakeCodeConfirmationComponent : CodeConfirmationComponent {
     override val state = MutableStateFlow(
         CodeConfirmationState.Success(
             code = "12",
+            isCodeValid = false,
             email = "empath.app@gmail.com",
             isResendAllowed = true,
             resentTimer = 39,

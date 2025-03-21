@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.auth.ui.root.RealAuthComponent
 
 import kotlinx.serialization.Serializable
@@ -24,17 +25,22 @@ public class RealRootComponent(
         source = navigation,
         serializer = Config.serializer(),
         initialConfiguration = Config.Auth,
-        childFactory = ::child,
+        childFactory = ::createChild,
     )
 
     override fun onBackClicked(): Unit = navigation.pop()
 
-    private fun child(config: Config, childComponentContext: ComponentContext) =
-        when (config) {
-            Config.Auth -> createAuthComponent(childComponentContext)
+    private fun createChild(
+        config: Config,
+        childComponentContext: ComponentContext,
+    ): RootComponent.Child {
+        logger.d(this.className(), "create: $config")
+        return when (config) {
+            is Config.Auth -> createAuthComponent(childComponentContext)
         }
+    }
 
-    private fun createAuthComponent(componentContext: ComponentContext) =
+    private fun createAuthComponent(componentContext: ComponentContext): RootComponent.Child.Auth =
         RootComponent.Child.Auth(
             RealAuthComponent(
                 componentContext = componentContext,

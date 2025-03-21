@@ -18,6 +18,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
 import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
 import kaiyrzhan.de.empath.core.utils.dispatchers.AppDispatchers
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
@@ -28,13 +29,11 @@ import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpEvent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpState
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getString
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -43,8 +42,8 @@ import kotlin.getValue
 internal class RealSignUpComponent(
     componentContext: ComponentContext,
     email: String,
-    private val onSignUpClick: () -> Unit,
     private val onBackClick: () -> Unit,
+    private val onSignUpClick: () -> Unit,
 ) : ComponentContext by componentContext, SignUpComponent, KoinComponent {
 
     private val appDispatchers: AppDispatchers by inject()
@@ -71,7 +70,7 @@ internal class RealSignUpComponent(
     )
 
     override fun onEvent(event: SignUpEvent) {
-        logger.d(this::class.simpleName.toString(), event.toString())
+        logger.d(this.className(), event.toString())
         when (event) {
             is SignUpEvent.BackClick -> backClick()
             is SignUpEvent.NicknameChange -> changeNickname(event.nickname)
@@ -119,7 +118,6 @@ internal class RealSignUpComponent(
         )
     }
 
-
     private fun backClick() {
         coroutineScope.launch {
             showMessageDialog(
@@ -140,8 +138,7 @@ internal class RealSignUpComponent(
 
     private fun showPassword() {
         state.update { currentState ->
-            if (currentState !is SignUpState.Success) return@update currentState
-
+            check(currentState is SignUpState.Success)
             currentState.copy(
                 isPasswordVisible = currentState.isPasswordVisible.not(),
             )
@@ -150,8 +147,7 @@ internal class RealSignUpComponent(
 
     private fun showRepeatedPassword() {
         state.update { currentState ->
-            if (currentState !is SignUpState.Success) return@update currentState
-
+            check(currentState is SignUpState.Success)
             currentState.copy(
                 isRepeatedPasswordVisible = currentState.isRepeatedPasswordVisible.not(),
             )
@@ -160,8 +156,7 @@ internal class RealSignUpComponent(
 
     private fun changeNickname(nickname: String) {
         state.update { currentState ->
-            if (currentState !is SignUpState.Success) return@update currentState
-
+            check(currentState is SignUpState.Success)
             currentState.copy(
                 nickname = nickname,
             )
@@ -170,8 +165,7 @@ internal class RealSignUpComponent(
 
     private fun changePassword(password: String) {
         state.update { currentState ->
-            if (currentState !is SignUpState.Success) return@update currentState
-
+            check(currentState is SignUpState.Success)
             currentState.copy(
                 password = password,
                 arePasswordsMatching = true,
@@ -182,8 +176,7 @@ internal class RealSignUpComponent(
 
     private fun changeRepeatedPassword(password: String) {
         state.update { currentState ->
-            if (currentState !is SignUpState.Success) return@update currentState
-
+            check(currentState is SignUpState.Success)
             currentState.copy(
                 repeatedPassword = password,
                 arePasswordsMatching = true,
@@ -194,8 +187,7 @@ internal class RealSignUpComponent(
 
     private fun acceptUserAgreement() {
         state.update { currentState ->
-            if (currentState !is SignUpState.Success) return@update currentState
-
+            check(currentState is SignUpState.Success)
             currentState.copy(
                 isUserAgreementAccepted = currentState.isUserAgreementAccepted.not(),
             )
@@ -203,7 +195,8 @@ internal class RealSignUpComponent(
     }
 
     private fun signUp() {
-        val currentState = state.value as? SignUpState.Success ?: return
+        val currentState = state.value
+        check(currentState is SignUpState.Success)
         state.update { SignUpState.Loading }
         coroutineScope.launch {
             if (currentState.password != currentState.repeatedPassword) {

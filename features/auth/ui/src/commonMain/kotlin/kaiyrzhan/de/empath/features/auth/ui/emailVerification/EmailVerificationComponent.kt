@@ -9,14 +9,14 @@ import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerific
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-public interface EmailVerificationComponent {
+internal interface EmailVerificationComponent {
 
-    public val state: StateFlow<EmailVerificationState>
+    val state: StateFlow<EmailVerificationState>
 
-    public val action: Flow<EmailVerificationAction>
+    val action: Flow<EmailVerificationAction>
 
-    public val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
+    val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
 
-    public fun onEvent(event: EmailVerificationEvent)
+    fun onEvent(event: EmailVerificationEvent)
 
 }

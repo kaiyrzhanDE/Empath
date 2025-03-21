@@ -19,6 +19,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
 import kaiyrzhan.de.empath.core.utils.dispatchers.AppDispatchers
 import kaiyrzhan.de.empath.core.utils.flow.timerFlow
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
@@ -48,9 +49,9 @@ internal class RealCodeConfirmationComponent(
     componentContext: ComponentContext,
     email: String,
     private val verificationType: VerificationType,
+    private val onBackClick: () -> Unit,
     private val onSignUpCodeConfirm: (email: String) -> Unit,
     private val onResetPasswordCodeConfirm: (email: String) -> Unit,
-    private val onBackClick: () -> Unit,
 ) : ComponentContext by componentContext, CodeConfirmationComponent, KoinComponent {
 
     private val appDispatchers: AppDispatchers by inject()
@@ -62,7 +63,7 @@ internal class RealCodeConfirmationComponent(
     private val sendResetPasswordCodeUseCase: SendResetPasswordCodeUseCase by inject()
 
     override val state = MutableStateFlow<CodeConfirmationState>(
-        CodeConfirmationState.Success(email = email)
+        CodeConfirmationState.defaultState(email = email)
     )
 
     private val _action = Channel<CodeConfirmationAction>(capacity = Channel.BUFFERED)
@@ -81,7 +82,7 @@ internal class RealCodeConfirmationComponent(
     }
 
     override fun onEvent(event: CodeConfirmationEvent) {
-        logger.d(this::class.simpleName.toString(), event.toString())
+        logger.d(this.className(), event.toString())
         when (event) {
             is CodeConfirmationEvent.CodeChange -> changeCode(event.code)
             is CodeConfirmationEvent.ResendClick -> resendCode()
@@ -125,12 +126,16 @@ internal class RealCodeConfirmationComponent(
     }
 
     private fun verifyCode() {
-        val currentState = state.value as? CodeConfirmationState.Success ?: return
+        val currentState = state.value
+        check(currentState is CodeConfirmationState.Success)
         val email = currentState.email
         state.update { CodeConfirmationState.Loading }
         coroutineScope.launch {
-            verifyCodeUseCase(email = email, code = currentState.code).onSuccess {
-                when(verificationType){
+            verifyCodeUseCase(
+                email = email,
+                code = currentState.code,
+            ).onSuccess {
+                when (verificationType) {
                     VerificationType.RESET_PASSWORD -> onResetPasswordCodeConfirm(email)
                     VerificationType.SIGN_UP -> onSignUpCodeConfirm(email)
                 }
@@ -176,7 +181,8 @@ internal class RealCodeConfirmationComponent(
     }
 
     private fun resendSignUpCode() {
-        val currentState = state.value as? CodeConfirmationState.Success ?: return
+        val currentState = state.value
+        check(currentState is CodeConfirmationState.Success)
         state.update { CodeConfirmationState.Loading }
         coroutineScope.launch {
             sendSignUpCodeUseCase(email = currentState.email).onSuccess {
@@ -227,7 +233,8 @@ internal class RealCodeConfirmationComponent(
     }
 
     private fun resendResetPasswordCode() {
-        val currentState = state.value as? CodeConfirmationState.Success ?: return
+        val currentState = state.value
+        check(currentState is CodeConfirmationState.Success)
         state.update { CodeConfirmationState.Loading }
         coroutineScope.launch {
             sendResetPasswordCodeUseCase(email = currentState.email).onSuccess {
@@ -279,8 +286,7 @@ internal class RealCodeConfirmationComponent(
 
     private fun changeCode(code: String) {
         state.update { currentState ->
-            if (currentState !is CodeConfirmationState.Success) return@update currentState
-
+            check(currentState is CodeConfirmationState.Success)
             currentState.copy(
                 code = code,
                 isCodeValid = true,
