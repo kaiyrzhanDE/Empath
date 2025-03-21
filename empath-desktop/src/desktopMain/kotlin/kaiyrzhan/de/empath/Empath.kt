@@ -21,7 +21,6 @@ import java.io.File
 
 private const val SAVED_STATE_FILE_NAME = "saved_state.dat"
 
-@Suppress("ktlint:standard:function-signature")
 public fun main() {
     initKoin()
 

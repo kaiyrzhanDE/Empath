@@ -10,6 +10,6 @@ internal sealed class EmailVerificationState {
     ) : EmailVerificationState()
 
     companion object {
-        fun defaultState(email: String): EmailVerificationState = Success(email = email)
+        fun default(email: String): EmailVerificationState = Success(email = email)
     }
 }

@@ -24,4 +24,8 @@ internal sealed class SignUpState {
                 && isPasswordValid
                 && isRepeatedPasswordValid
     }
+
+    companion object{
+        fun default(email: String): SignUpState = Success(email = email)
+    }
 }

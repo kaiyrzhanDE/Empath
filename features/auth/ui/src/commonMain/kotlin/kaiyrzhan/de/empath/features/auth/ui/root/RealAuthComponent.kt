@@ -25,7 +25,9 @@ import org.koin.core.component.inject
 public class RealAuthComponent(
     componentContext: ComponentContext,
     private val onLoginClick: () -> Unit,
-) : ComponentContext by componentContext, AuthComponent {
+) : ComponentContext by componentContext, AuthComponent, KoinComponent {
+
+    private val logger: BaseLogger by inject()
 
     private val navigation = StackNavigation<Config>()
     override val stack: Value<ChildStack<*, AuthComponent.Child>> = childStack(
@@ -34,12 +36,15 @@ public class RealAuthComponent(
         serializer = Config.serializer(),
         childFactory = ::createChild,
     )
+
     override fun onBackClick(): Unit = navigation.pop()
 
     private fun createChild(
         config: Config,
         componentContext: ComponentContext,
-    ) = when (config) {
+    ): AuthComponent.Child {
+        logger.d(this.className(), "Auth child: $config")
+        return when (config) {
             is Config.Login ->
                 createLoginComponent(componentContext)
 
@@ -54,6 +59,7 @@ public class RealAuthComponent(
 
             is Config.PasswordRecovery ->
                 createPasswordRecoveryComponent(componentContext, config)
+        }
     }
 
     @OptIn(DelicateDecomposeApi::class)
@@ -64,12 +70,12 @@ public class RealAuthComponent(
                 onLoginClick = onLoginClick,
                 onSignUpClick = {
                     navigation.push(
-                        Config.EmailVerification.default(VerificationType.SIGN_UP)
+                        Config.EmailVerification(VerificationType.SIGN_UP)
                     )
                 },
                 onPasswordResetClick = {
                     navigation.push(
-                        Config.EmailVerification.default(VerificationType.RESET_PASSWORD)
+                        Config.EmailVerification(VerificationType.RESET_PASSWORD)
                     )
                 },
             ),
@@ -164,10 +170,7 @@ public class RealAuthComponent(
 
         @Serializable
         data class EmailVerification(val email: String, val type: VerificationType) : Config {
-            companion object {
-                fun default(type: VerificationType): EmailVerification =
-                    EmailVerification(email = "", type = type)
-            }
+            constructor(type: VerificationType) : this(email = "", type = type)
         }
 
         @Serializable

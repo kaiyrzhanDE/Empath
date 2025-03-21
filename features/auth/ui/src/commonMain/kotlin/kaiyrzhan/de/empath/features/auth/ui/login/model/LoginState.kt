@@ -10,6 +10,10 @@ internal sealed class LoginState {
         val password: String = "",
         val isPasswordValid: Boolean = true,
     ) : LoginState()
+
+    companion object {
+        fun default(): LoginState = Success()
+    }
 }
 
 

@@ -29,6 +29,7 @@ import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpEvent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpState
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -53,7 +54,7 @@ internal class RealSignUpComponent(
     private val signUpUseCase: SignUpUseCase by inject()
 
     override val state = MutableStateFlow<SignUpState>(
-        SignUpState.Success(
+        SignUpState.default(
             email = email,
         )
     )
@@ -70,7 +71,7 @@ internal class RealSignUpComponent(
     )
 
     override fun onEvent(event: SignUpEvent) {
-        logger.d(this.className(), event.toString())
+        logger.d(this.className(), "Event: $event")
         when (event) {
             is SignUpEvent.BackClick -> backClick()
             is SignUpEvent.NicknameChange -> changeNickname(event.nickname)
@@ -210,8 +211,9 @@ internal class RealSignUpComponent(
                 password = currentState.password,
                 nickname = currentState.nickname,
             ).onSuccess {
-                state.update { currentState }
                 onSignUpClick()
+                delay(1000)
+                state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {

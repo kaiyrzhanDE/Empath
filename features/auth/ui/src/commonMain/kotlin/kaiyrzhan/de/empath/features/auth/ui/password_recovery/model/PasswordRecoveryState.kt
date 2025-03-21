@@ -24,6 +24,6 @@ internal sealed class PasswordRecoveryState {
     }
 
     companion object {
-        fun defaultState(): PasswordRecoveryState = Success(email = "")
+        fun default(email: String): PasswordRecoveryState = Success(email = email)
     }
 }

@@ -17,6 +17,6 @@ internal sealed class CodeConfirmationState {
     }
 
     companion object {
-        fun defaultState(email: String): CodeConfirmationState = Success(email = email)
+        fun default(email: String): CodeConfirmationState = Success(email = email)
     }
 }

@@ -32,6 +32,7 @@ import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerific
 import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -61,7 +62,9 @@ internal class RealEmailVerificationComponent(
     private val sendResetPasswordCodeUseCase: SendResetPasswordCodeUseCase by inject()
 
     override val state = MutableStateFlow<EmailVerificationState>(
-        EmailVerificationState.defaultState(email = email)
+        EmailVerificationState.default(
+            email = email,
+        )
     )
 
     private val _action = Channel<EmailVerificationAction>(capacity = Channel.BUFFERED)
@@ -76,7 +79,7 @@ internal class RealEmailVerificationComponent(
     )
 
     override fun onEvent(event: EmailVerificationEvent) {
-        logger.d(this.className(), event.toString())
+        logger.d(this.className(), "Event: $event")
         when (event) {
             is EmailVerificationEvent.EmailChange -> changeEmail(event.email)
             is EmailVerificationEvent.SendCodeClick -> sendCode()
@@ -125,6 +128,16 @@ internal class RealEmailVerificationComponent(
         }
     }
 
+    private fun changeEmail(email: String) {
+        state.update { currentState ->
+            check(currentState is EmailVerificationState.Success)
+            currentState.copy(
+                email = email,
+                isEmailValid = true,
+            )
+        }
+    }
+
     private fun sendResetPasswordCode() {
         val currentState = state.value
         check(currentState is EmailVerificationState.Success)
@@ -132,6 +145,7 @@ internal class RealEmailVerificationComponent(
         coroutineScope.launch {
             sendResetPasswordCodeUseCase(currentState.email).onSuccess {
                 onSendResetPasswordCodeClick(currentState.email)
+                delay(1000)
                 state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }
@@ -203,6 +217,7 @@ internal class RealEmailVerificationComponent(
         coroutineScope.launch {
             sendSignUpCodeUseCase(currentState.email).onSuccess {
                 onSendSignUpCodeClick(currentState.email)
+                delay(1000)
                 state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }
@@ -264,16 +279,6 @@ internal class RealEmailVerificationComponent(
                     }
                 }
             }
-        }
-    }
-
-    private fun changeEmail(email: String) {
-        state.update { currentState ->
-            check(currentState is EmailVerificationState.Success)
-            currentState.copy(
-                email = email,
-                isEmailValid = true,
-            )
         }
     }
 }

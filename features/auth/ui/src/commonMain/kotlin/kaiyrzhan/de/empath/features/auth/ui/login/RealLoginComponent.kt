@@ -29,6 +29,7 @@ import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -51,7 +52,9 @@ internal class RealLoginComponent(
 
     private val logInUseCase: LogInUseCase by inject()
 
-    override val state = MutableStateFlow<LoginState>(LoginState.Success())
+    override val state = MutableStateFlow<LoginState>(
+        LoginState.default()
+    )
 
     private val _action = Channel<LoginAction>(capacity = Channel.BUFFERED)
     override val action: Flow<LoginAction> = _action.receiveAsFlow()
@@ -65,7 +68,7 @@ internal class RealLoginComponent(
     )
 
     override fun onEvent(event: LoginEvent) {
-        logger.d(this.className(), event.toString())
+        logger.d(this.className(), "Event: $event")
         when (event) {
             is LoginEvent.EmailChange -> changeEmail(event.email)
             is LoginEvent.PasswordChange -> changePassword(event.password)
@@ -141,8 +144,9 @@ internal class RealLoginComponent(
                 email = currentState.email,
                 password = currentState.password,
             ).onSuccess {
-                state.update { currentState }
                 onLoginClick()
+                delay(1000)
+                state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {

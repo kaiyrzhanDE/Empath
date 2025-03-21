@@ -29,6 +29,7 @@ import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordReco
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryState
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -53,7 +54,7 @@ internal class RealPasswordRecoveryComponent(
     private val resetPasswordUseCase: ResetPasswordUseCase by inject()
 
     override val state = MutableStateFlow<PasswordRecoveryState>(
-        PasswordRecoveryState.Success(
+        PasswordRecoveryState.default(
             email = email,
         )
     )
@@ -70,7 +71,7 @@ internal class RealPasswordRecoveryComponent(
     )
 
     override fun onEvent(event: PasswordRecoveryEvent) {
-        logger.d(this.className(), event.toString())
+        logger.d(this.className(), "Event: $event")
         when (event) {
             is PasswordRecoveryEvent.BackClick -> backClick()
             is PasswordRecoveryEvent.PasswordChange -> changePassword(event.password)
@@ -189,8 +190,9 @@ internal class RealPasswordRecoveryComponent(
                 email = currentState.email,
                 password = currentState.password,
             ).onSuccess {
-                state.update { currentState }
                 onPasswordReset()
+                delay(1000)
+                state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {

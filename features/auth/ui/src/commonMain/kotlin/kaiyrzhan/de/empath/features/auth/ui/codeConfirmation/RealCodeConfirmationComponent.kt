@@ -35,6 +35,7 @@ import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmat
 import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -63,7 +64,9 @@ internal class RealCodeConfirmationComponent(
     private val sendResetPasswordCodeUseCase: SendResetPasswordCodeUseCase by inject()
 
     override val state = MutableStateFlow<CodeConfirmationState>(
-        CodeConfirmationState.defaultState(email = email)
+        CodeConfirmationState.default(
+            email = email,
+        )
     )
 
     private val _action = Channel<CodeConfirmationAction>(capacity = Channel.BUFFERED)
@@ -82,7 +85,7 @@ internal class RealCodeConfirmationComponent(
     }
 
     override fun onEvent(event: CodeConfirmationEvent) {
-        logger.d(this.className(), event.toString())
+        logger.d(this.className(), "Event: $event")
         when (event) {
             is CodeConfirmationEvent.CodeChange -> changeCode(event.code)
             is CodeConfirmationEvent.ResendClick -> resendCode()
@@ -125,6 +128,30 @@ internal class RealCodeConfirmationComponent(
         )
     }
 
+    private fun changeCode(code: String) {
+        state.update { currentState ->
+            check(currentState is CodeConfirmationState.Success)
+            currentState.copy(
+                code = code,
+                isCodeValid = true,
+            )
+        }
+    }
+
+    private fun startTimer() {
+        coroutineScope.launch {
+            timerFlow(10).collect { remainingSeconds ->
+                state.update { currentState ->
+                    if (currentState !is CodeConfirmationState.Success) return@update currentState
+                    currentState.copy(
+                        resentTimer = remainingSeconds,
+                        isResendAllowed = remainingSeconds == 0,
+                    )
+                }
+            }
+        }
+    }
+
     private fun verifyCode() {
         val currentState = state.value
         check(currentState is CodeConfirmationState.Success)
@@ -139,6 +166,7 @@ internal class RealCodeConfirmationComponent(
                     VerificationType.RESET_PASSWORD -> onResetPasswordCodeConfirm(email)
                     VerificationType.SIGN_UP -> onSignUpCodeConfirm(email)
                 }
+                delay(1000)
                 state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }
@@ -279,31 +307,6 @@ internal class RealCodeConfirmationComponent(
                             ),
                         )
                     }
-                }
-            }
-        }
-    }
-
-    private fun changeCode(code: String) {
-        state.update { currentState ->
-            check(currentState is CodeConfirmationState.Success)
-            currentState.copy(
-                code = code,
-                isCodeValid = true,
-            )
-        }
-    }
-
-    private fun startTimer() {
-        coroutineScope.launch {
-            timerFlow(10).collect { remainingSeconds ->
-                state.update { currentState ->
-                    if (currentState !is CodeConfirmationState.Success) return@update currentState
-
-                    currentState.copy(
-                        resentTimer = remainingSeconds,
-                        isResendAllowed = remainingSeconds == 0,
-                    )
                 }
             }
         }

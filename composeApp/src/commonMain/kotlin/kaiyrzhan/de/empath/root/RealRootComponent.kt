@@ -9,10 +9,11 @@ import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.auth.ui.root.RealAuthComponent
-
 import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.component.inject
+import kotlin.getValue
 
 public class RealRootComponent(
     componentContext: ComponentContext,
@@ -32,11 +33,11 @@ public class RealRootComponent(
 
     private fun createChild(
         config: Config,
-        childComponentContext: ComponentContext,
+        componentContext: ComponentContext,
     ): RootComponent.Child {
-        logger.d(this.className(), "create: $config")
+        logger.d(this.className(), "Root child: $config")
         return when (config) {
-            is Config.Auth -> createAuthComponent(childComponentContext)
+            is Config.Auth -> createAuthComponent(componentContext)
         }
     }
 
@@ -44,7 +45,7 @@ public class RealRootComponent(
         RootComponent.Child.Auth(
             RealAuthComponent(
                 componentContext = componentContext,
-                onLoginClick = { logger.d("RootComponent", "onLoginClick") },
+                onLoginClick = {  },
             ),
         )
 
