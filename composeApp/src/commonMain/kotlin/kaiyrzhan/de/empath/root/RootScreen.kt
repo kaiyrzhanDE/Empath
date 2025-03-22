@@ -1,5 +1,6 @@
-package kaiyrzhan.de.empath.compose
+package kaiyrzhan.de.empath.root
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,12 +20,12 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback
 import com.arkivanov.decompose.extensions.compose.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.auth.ui.root.AuthScreen
-import kaiyrzhan.de.empath.root.RootComponent
+import kaiyrzhan.de.empath.features.auth.ui.root.AuthRootScreen
+import kaiyrzhan.de.empath.main.MainRootScreen
 
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
-public fun EmpathApp(
+public fun RootScreen(
     component: RootComponent,
     modifier: Modifier = Modifier,
 ) {
@@ -38,7 +39,7 @@ public fun EmpathApp(
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.systemBars),
             snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState){ data ->
+                SnackbarHost(hostState = snackbarHostState) { data ->
                     Snackbar(
                         snackbarData = data,
                         containerColor = EmpathTheme.colors.surfaceContainer,
@@ -57,15 +58,26 @@ public fun EmpathApp(
                     .padding(contentPadding),
                 animation = predictiveBackAnimation(
                     backHandler = component.backHandler,
-                    onBack = { component.onBackClicked() },
+                    onBack = { component.onBackClick() },
                     fallbackAnimation = stackAnimation(scale()),
                 ),
             ) { child ->
                 when (val instance = child.instance) {
-                    is RootComponent.Child.Auth -> AuthScreen(instance.component)
+                    is RootComponent.Child.Auth -> {
+                        AuthRootScreen(
+                            component = instance.component,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+
+                    is RootComponent.Child.Main -> {
+                        MainRootScreen(
+                            component = instance.component,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
                 }
             }
         }
     }
 }
-

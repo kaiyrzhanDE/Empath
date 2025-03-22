@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -42,7 +41,6 @@ import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmat
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.text.isNotBlank
 
 @Composable
 internal fun CodeConfirmationScreen(
@@ -72,8 +70,7 @@ internal fun CodeConfirmationScreen(
     }
 
     CodeConfirmationScreen(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier,
         state = codeConfirmationState.value,
         onEvent = component::onEvent,
     )

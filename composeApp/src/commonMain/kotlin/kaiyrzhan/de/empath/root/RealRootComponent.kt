@@ -5,25 +5,33 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.decompose.value.Value
+import kaiyrzhan.de.empath.core.network.token.TokenProvider
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
-import kaiyrzhan.de.empath.features.auth.ui.root.RealAuthComponent
+import kaiyrzhan.de.empath.features.auth.ui.root.RealAuthRootComponent
+import kaiyrzhan.de.empath.main.RealMainRootComponent
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
+import org.koin.core.component.get
 
 public class RealRootComponent(
     componentContext: ComponentContext,
 ) : BaseComponent(componentContext), RootComponent {
 
+    private val tokenProvider: TokenProvider = get()
+
     private val navigation = StackNavigation<Config>()
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
         source = navigation,
         serializer = Config.serializer(),
-        initialConfiguration = Config.Auth,
+        initialConfiguration = getInitialConfig(),
         childFactory = ::createChild,
     )
 
-    override fun onBackClicked(): Unit = navigation.pop()
+    override fun onBackClick(): Unit = navigation.pop()
 
     private fun createChild(
         config: Config,
@@ -32,20 +40,45 @@ public class RealRootComponent(
         logger.d(this.className(), "Root child: $config")
         return when (config) {
             is Config.Auth -> createAuthComponent(componentContext)
+            is Config.Main -> createMainComponent(componentContext)
         }
     }
 
-    private fun createAuthComponent(componentContext: ComponentContext): RootComponent.Child.Auth =
-        RootComponent.Child.Auth(
-            RealAuthComponent(
+    private fun createAuthComponent(componentContext: ComponentContext): RootComponent.Child.Auth {
+        return RootComponent.Child.Auth(
+            RealAuthRootComponent(
                 componentContext = componentContext,
-                onLoginClick = {  },
+                onLoginClick = { navigation.replaceAll(Config.Main) },
             ),
         )
+    }
+
+    private fun createMainComponent(componentContext: ComponentContext): RootComponent.Child.Main {
+        return RootComponent.Child.Main(
+            RealMainRootComponent(
+                componentContext = componentContext,
+            ),
+        )
+    }
+
+    private fun getInitialConfig(): Config = runBlocking {
+        val token = tokenProvider
+            .getLocalToken()
+            .first()
+
+        return@runBlocking if (token.isAuthorized()) {
+            Config.Main
+        } else {
+            Config.Auth
+        }
+    }
 
     @Serializable
     private sealed interface Config {
         @Serializable
         data object Auth : Config
+
+        @Serializable
+        data object Main : Config
     }
 }

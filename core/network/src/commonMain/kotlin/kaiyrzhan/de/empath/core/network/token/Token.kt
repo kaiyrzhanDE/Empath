@@ -21,4 +21,6 @@ public fun Token.toData(): TokenEntity = TokenEntity(
 public data class Token(
     val accessToken: String,
     val refreshToken: String,
-)
+){
+    public fun isAuthorized(): Boolean = accessToken.isNotBlank() && refreshToken.isNotBlank()
+}

@@ -68,7 +68,7 @@ internal fun EmailVerificationScreen(
     }
 
     EmailVerificationScreen(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         state = emailVerificationState.value,
         onEvent = component::onEvent,
     )

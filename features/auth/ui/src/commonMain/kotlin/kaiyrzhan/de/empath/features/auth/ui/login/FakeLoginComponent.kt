@@ -13,7 +13,14 @@ import kotlinx.coroutines.flow.emptyFlow
 
 @Suppress("unused")
 internal class FakeLoginComponent : LoginComponent {
-    override val state = MutableStateFlow<LoginState>(LoginState.Success())
+    override val state = MutableStateFlow<LoginState>(
+        LoginState.Success(
+            email = "",
+            isEmailValid = true,
+            password = "",
+            isPasswordValid = true,
+        )
+    )
 
     override val action: Flow<LoginAction> = emptyFlow()
 

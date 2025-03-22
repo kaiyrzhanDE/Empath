@@ -20,13 +20,13 @@ import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kaiyrzhan.de.empath.features.auth.ui.signUp.RealSignUpComponent
 import kotlinx.serialization.Serializable
 
-public class RealAuthComponent(
+public class RealAuthRootComponent(
     componentContext: ComponentContext,
     private val onLoginClick: () -> Unit,
-) : BaseComponent(componentContext), AuthComponent {
+) : BaseComponent(componentContext), AuthRootComponent {
 
     private val navigation = StackNavigation<Config>()
-    override val stack: Value<ChildStack<*, AuthComponent.Child>> = childStack(
+    override val stack: Value<ChildStack<*, AuthRootComponent.Child>> = childStack(
         source = navigation,
         initialConfiguration = Config.Login,
         serializer = Config.serializer(),
@@ -38,7 +38,7 @@ public class RealAuthComponent(
     private fun createChild(
         config: Config,
         componentContext: ComponentContext,
-    ): AuthComponent.Child {
+    ): AuthRootComponent.Child {
         logger.d(this.className(), "Auth child: $config")
         return when (config) {
             is Config.Login ->
@@ -60,7 +60,7 @@ public class RealAuthComponent(
 
     @OptIn(DelicateDecomposeApi::class)
     private fun createLoginComponent(componentContext: ComponentContext) =
-        AuthComponent.Child.Login(
+        AuthRootComponent.Child.Login(
             RealLoginComponent(
                 componentContext = componentContext,
                 onLoginClick = onLoginClick,
@@ -81,7 +81,7 @@ public class RealAuthComponent(
     private fun createEmailVerificationComponent(
         componentContext: ComponentContext,
         config: Config.EmailVerification
-    ) = AuthComponent.Child.EmailVerification(
+    ) = AuthRootComponent.Child.EmailVerification(
         RealEmailVerificationComponent(
             componentContext = componentContext,
             email = config.email,
@@ -116,7 +116,7 @@ public class RealAuthComponent(
     private fun createCodeConfirmationComponent(
         componentContext: ComponentContext,
         config: Config.CodeConfirmation,
-    ) = AuthComponent.Child.CodeConfirmation(
+    ) = AuthRootComponent.Child.CodeConfirmation(
         RealCodeConfirmationComponent(
             componentContext = componentContext,
             email = config.email,
@@ -130,7 +130,7 @@ public class RealAuthComponent(
     private fun createSignUpComponent(
         componentContext: ComponentContext,
         config: Config.SignUp,
-    ) = AuthComponent.Child.SignUp(
+    ) = AuthRootComponent.Child.SignUp(
         RealSignUpComponent(
             componentContext = componentContext,
             email = config.email,
@@ -146,7 +146,7 @@ public class RealAuthComponent(
     private fun createPasswordRecoveryComponent(
         componentContext: ComponentContext,
         config: Config.PasswordRecovery,
-    ) = AuthComponent.Child.PasswordRecovery(
+    ) = AuthRootComponent.Child.PasswordRecovery(
         RealPasswordRecoveryComponent(
             componentContext = componentContext,
             email = config.email,

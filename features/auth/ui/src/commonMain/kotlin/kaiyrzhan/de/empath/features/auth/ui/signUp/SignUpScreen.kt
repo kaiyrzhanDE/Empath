@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.auth.ui.signUp
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -81,7 +82,7 @@ internal fun SignUpScreen(
     SignUpScreen(
         state = signUpState.value,
         onEvent = component::onEvent,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
     )
 }
 
@@ -97,6 +98,7 @@ private fun SignUpScreen(
         is SignUpState.Success -> {
             Column(
                 modifier = modifier
+                    .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),

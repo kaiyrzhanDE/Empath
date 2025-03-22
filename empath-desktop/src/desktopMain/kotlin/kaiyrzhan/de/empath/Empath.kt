@@ -11,7 +11,7 @@ import empath.core.uikit.generated.resources.Res as CoreRes
 import empath.empath_desktop.generated.resources.Res as DesktopRes
 import empath.core.uikit.generated.resources.app_name
 import empath.empath_desktop.generated.resources.ic_app
-import kaiyrzhan.de.empath.compose.EmpathApp
+import kaiyrzhan.de.empath.root.RootScreen
 import kaiyrzhan.de.empath.utils.readSerializableContainer
 import kaiyrzhan.de.empath.di.initKoin
 import kaiyrzhan.de.empath.root.RealRootComponent
@@ -42,7 +42,7 @@ public fun main() {
             title = stringResource(CoreRes.string.app_name),
             icon = painterResource(DesktopRes.drawable.ic_app),
         ) {
-            EmpathApp(
+            RootScreen(
                 component = rootComponent,
             )
         }

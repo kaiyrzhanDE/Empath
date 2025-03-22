@@ -70,7 +70,7 @@ internal fun PasswordRecoveryScreen(
     }
 
     PasswordRecoveryScreen(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         state = passwordRecoveryState.value,
         onEvent = component::onEvent,
     )

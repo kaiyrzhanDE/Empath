@@ -78,7 +78,7 @@ internal fun LoginScreen(
     }
 
     LoginScreen(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         loginState = loginState.value,
         onEvent = component::onEvent,
     )

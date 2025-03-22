@@ -26,14 +26,14 @@ import kaiyrzhan.de.empath.features.auth.ui.signUp.SignUpScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-public fun AuthScreen(
-    component: AuthComponent,
+public fun AuthRootScreen(
+    component: AuthRootComponent,
     modifier: Modifier = Modifier,
 ) {
     val currentWindowInfo = currentWindowAdaptiveInfo()
 
     if (currentWindowInfo.isPhone()) {
-        AuthScreen(
+        AuthRootScreen(
             component = component,
             modifier = modifier.fillMaxSize(),
             animation = predictiveBackAnimation(
@@ -49,7 +49,7 @@ public fun AuthScreen(
                     .weight(1f)
                     .padding(vertical = 24.dp, horizontal = 12.dp),
             )
-            AuthScreen(
+            AuthRootScreen(
                 component = component,
                 modifier = modifier.weight(1f),
                 animation = predictiveBackAnimation(
@@ -63,8 +63,8 @@ public fun AuthScreen(
 }
 
 @Composable
-private fun AuthScreen(
-    component: AuthComponent,
+private fun AuthRootScreen(
+    component: AuthRootComponent,
     modifier: Modifier = Modifier,
     animation: StackAnimation<Any, Any>? = null,
 ) {
@@ -74,11 +74,40 @@ private fun AuthScreen(
         animation = animation,
     ) { child ->
         when (val instance = child.instance) {
-            is AuthComponent.Child.Login -> LoginScreen(instance.component)
-            is AuthComponent.Child.EmailVerification -> EmailVerificationScreen(instance.component)
-            is AuthComponent.Child.CodeConfirmation -> CodeConfirmationScreen(instance.component)
-            is AuthComponent.Child.SignUp -> SignUpScreen(instance.component)
-            is AuthComponent.Child.PasswordRecovery -> PasswordRecoveryScreen(instance.component)
+            is AuthRootComponent.Child.Login -> {
+                LoginScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is AuthRootComponent.Child.EmailVerification -> {
+                EmailVerificationScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is AuthRootComponent.Child.CodeConfirmation -> {
+                CodeConfirmationScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is AuthRootComponent.Child.SignUp -> {
+                SignUpScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is AuthRootComponent.Child.PasswordRecovery -> {
+                PasswordRecoveryScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
     }
 }

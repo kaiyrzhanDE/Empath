@@ -13,9 +13,19 @@ kotlin {
             implementation(projects.features.auth.data)
             implementation(projects.features.auth.domain)
             implementation(projects.features.auth.ui)
+
+            implementation(projects.features.profile.data)
+            implementation(projects.features.profile.domain)
+            implementation(projects.features.profile.ui)
         }
     }
 }
+
+compose.resources {
+    publicResClass = false
+    generateResClass = always
+}
+
 android {
     namespace = "kaiyrzhan.de.empath.composeapp"
 }
