@@ -31,18 +31,20 @@ internal class TokenProviderImpl(
 ) : TokenProvider {
 
     override suspend fun getLocalToken(): Flow<Token> {
-        logger.d(TOKEN_PROVIDER, "getLocalToken")
-        return preferences.data.map { dataStore ->
+        val token = preferences.data.map { dataStore ->
             Token(
                 accessToken = dataStore[DataStoreKeys.USER_AUTH_ACCESS_TOKEN].orEmpty(),
                 refreshToken = dataStore[DataStoreKeys.USER_AUTH_REFRESH_TOKEN].orEmpty(),
             )
         }
+        logger.d(TOKEN_PROVIDER, "getLocalToken: ${token.first()}")
+        return token
     }
 
     override suspend fun deleteLocalToken(): Boolean {
-        logger.d(TOKEN_PROVIDER, "getLocalToken")
+        logger.d(TOKEN_PROVIDER, "deleteLocalToken")
         return try {
+            logger.d(TOKEN_PROVIDER, "deleteLocalToken")
             preferences.edit { dataStore ->
                 dataStore.remove(DataStoreKeys.USER_AUTH_ACCESS_TOKEN)
                 dataStore.remove(DataStoreKeys.USER_AUTH_REFRESH_TOKEN)

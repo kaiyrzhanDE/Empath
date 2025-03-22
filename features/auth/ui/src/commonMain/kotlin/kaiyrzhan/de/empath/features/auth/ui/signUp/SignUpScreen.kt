@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.auth.ui.signUp
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -29,7 +30,7 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
@@ -81,7 +82,7 @@ internal fun SignUpScreen(
     SignUpScreen(
         state = signUpState.value,
         onEvent = component::onEvent,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
     )
 }
 
@@ -97,6 +98,7 @@ private fun SignUpScreen(
         is SignUpState.Success -> {
             Column(
                 modifier = modifier
+                    .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
                     .padding(24.dp),
@@ -132,7 +134,11 @@ private fun SignUpScreen(
             }
         }
 
-        is SignUpState.Loading -> CircularLoading()
+        is SignUpState.Loading -> {
+            CircularLoadingScreen(
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
         is SignUpState.Error -> Unit
         is SignUpState.Initial -> Unit
     }

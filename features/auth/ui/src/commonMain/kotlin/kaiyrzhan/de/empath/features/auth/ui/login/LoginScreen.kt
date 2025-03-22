@@ -32,7 +32,7 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
@@ -78,7 +78,7 @@ internal fun LoginScreen(
     }
 
     LoginScreen(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         loginState = loginState.value,
         onEvent = component::onEvent,
     )
@@ -130,7 +130,9 @@ private fun LoginScreen(
         }
 
         is LoginState.Loading -> {
-            CircularLoading()
+            CircularLoadingScreen(
+                modifier = Modifier.fillMaxSize(),
+            )
         }
 
         is LoginState.Error -> Unit

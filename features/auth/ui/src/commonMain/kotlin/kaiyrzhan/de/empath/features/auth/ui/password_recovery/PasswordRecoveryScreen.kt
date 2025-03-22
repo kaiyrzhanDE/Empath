@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -70,7 +70,7 @@ internal fun PasswordRecoveryScreen(
     }
 
     PasswordRecoveryScreen(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         state = passwordRecoveryState.value,
         onEvent = component::onEvent,
     )
@@ -144,7 +144,11 @@ private fun PasswordRecoveryScreen(
             }
         }
 
-        is PasswordRecoveryState.Loading -> CircularLoading()
+        is PasswordRecoveryState.Loading -> {
+            CircularLoadingScreen(
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
         is PasswordRecoveryState.Error -> Unit
         is PasswordRecoveryState.Initial -> Unit
     }

@@ -30,6 +30,7 @@ kermit = "2.0.3"
 ktorfit = "2.3.0"
 kotlin = "2.1.10"
 google-ksp = "2.1.10-1.0.30"
+coil = "3.0.4"
 
 
 [libraries]
@@ -76,6 +77,8 @@ ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serializatio
 
 ktorfit = { group = "de.jensklingenberg.ktorfit", name = "ktorfit-lib-light", version.ref = "ktorfit" }
 
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 
 arkivanov-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
 arkivanov-decompose-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }

@@ -11,7 +11,6 @@ import kaiyrzhan.de.empath.features.auth.data.model.ForgetPasswordRequest
 import kaiyrzhan.de.empath.features.auth.data.model.LoginRequest
 import kaiyrzhan.de.empath.features.auth.data.model.ResetPasswordRequest
 import kaiyrzhan.de.empath.features.auth.data.model.SignUpRequest
-import kaiyrzhan.de.empath.features.auth.data.model.VerifyCodeRequest
 
 internal interface AuthApi {
 

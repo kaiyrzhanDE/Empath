@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -68,7 +68,7 @@ internal fun EmailVerificationScreen(
     }
 
     EmailVerificationScreen(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         state = emailVerificationState.value,
         onEvent = component::onEvent,
     )
@@ -132,7 +132,11 @@ private fun EmailVerificationScreen(
             }
         }
 
-        is EmailVerificationState.Loading -> CircularLoading()
+        is EmailVerificationState.Loading -> {
+            CircularLoadingScreen(
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
         is EmailVerificationState.Error -> Unit
         is EmailVerificationState.Initial -> Unit
     }

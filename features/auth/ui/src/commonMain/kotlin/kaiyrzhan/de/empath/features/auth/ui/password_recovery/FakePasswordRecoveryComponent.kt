@@ -19,8 +19,11 @@ internal class FakePasswordRecoveryComponent : PasswordRecoveryComponent {
             email = "sansyzbaev.de@gmail.com",
             isPasswordValid = false,
             password = "12345",
-            isRepeatedPasswordValid = false,
+            isPasswordVisible = false,
             repeatedPassword = "12345",
+            isRepeatedPasswordValid = false,
+            isRepeatedPasswordVisible = false,
+            arePasswordsMatching = true,
         )
     )
 

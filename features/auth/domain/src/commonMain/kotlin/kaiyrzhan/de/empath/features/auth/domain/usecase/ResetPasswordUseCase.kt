@@ -22,7 +22,7 @@ public sealed class ResetPasswordUseCaseError : Result.Error {
     public data object InvalidPasswordOrEmail : ResetPasswordUseCaseError()
 }
 
-private fun <S> RequestResult<S>.toDomain(): Result<S> {
+private fun RequestResult<Any>.toDomain(): Result<Any> {
     return when (this) {
         is RequestResult.Success -> Result.Success(data)
         is RequestResult.Failure.Exception -> Result.Error.UnknownError(throwable)

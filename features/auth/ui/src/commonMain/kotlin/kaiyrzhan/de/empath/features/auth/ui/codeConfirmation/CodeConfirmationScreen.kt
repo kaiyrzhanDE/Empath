@@ -27,7 +27,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.components.CircularLoading
+import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
@@ -42,7 +42,6 @@ import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmat
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.text.isNotBlank
 
 @Composable
 internal fun CodeConfirmationScreen(
@@ -72,8 +71,7 @@ internal fun CodeConfirmationScreen(
     }
 
     CodeConfirmationScreen(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier,
         state = codeConfirmationState.value,
         onEvent = component::onEvent,
     )
@@ -174,7 +172,11 @@ private fun CodeConfirmationScreen(
 
             }
         }
-        is CodeConfirmationState.Loading -> CircularLoading()
+        is CodeConfirmationState.Loading -> {
+            CircularLoadingScreen(
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
         is CodeConfirmationState.Error -> Unit
         is CodeConfirmationState.Initial -> Unit
     }

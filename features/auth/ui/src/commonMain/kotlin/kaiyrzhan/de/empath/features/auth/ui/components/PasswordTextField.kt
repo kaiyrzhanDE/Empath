@@ -11,8 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.ic_error
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
-import empath.features.auth.ui.generated.resources.ic_error
 import empath.features.auth.ui.generated.resources.ic_visibility_off
 import empath.features.auth.ui.generated.resources.ic_visibility_on
 import empath.features.auth.ui.generated.resources.password_dont_match_error
@@ -49,7 +50,7 @@ internal fun PasswordOutlinedTextField(
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
-                            painter = painterResource(FeatureRes.drawable.ic_error),
+                            painter = painterResource(CoreRes.drawable.ic_error),
                             contentDescription = stringResource(FeatureRes.string.password_dont_match_error),
                         )
                     }

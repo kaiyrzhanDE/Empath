@@ -42,6 +42,11 @@ include(":features:auth:ui")
 include(":features:auth:domain")
 include(":features:auth:data")
 
+include(":features:profile:ui")
+include(":features:profile:domain")
+include(":features:profile:data")
+
+
 include(":core:uikit")
 include(":core:utils")
 include(":core:network")

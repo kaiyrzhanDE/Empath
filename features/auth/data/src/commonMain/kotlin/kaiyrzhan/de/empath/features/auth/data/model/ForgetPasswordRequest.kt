@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ForgetPasswordRequest(
+internal class ForgetPasswordRequest(
     @SerialName("email") val email: String,
     @SerialName("password") val password: String,
 )

@@ -9,7 +9,7 @@ import kaiyrzhan.de.empath.features.auth.ui.login.LoginComponent
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.PasswordRecoveryComponent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.SignUpComponent
 
-public interface AuthComponent : ComponentContext {
+public interface AuthRootComponent : ComponentContext {
     public val stack: Value<ChildStack<*, Child>>
     public fun onBackClick()
 

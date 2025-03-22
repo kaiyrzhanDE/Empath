@@ -9,7 +9,7 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.PredictiveBackGestureIcon
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.PredictiveBackGestureOverlay
 import com.arkivanov.essenty.backhandler.BackDispatcher
-import kaiyrzhan.de.empath.compose.EmpathApp
+import kaiyrzhan.de.empath.root.RootScreen
 import kaiyrzhan.de.empath.di.initKoin
 import kaiyrzhan.de.empath.root.RootComponent
 import platform.UIKit.UIViewController
@@ -31,7 +31,7 @@ public fun rootViewController(root: RootComponent, backDispatcher: BackDispatche
             },
             modifier = Modifier.fillMaxSize(),
         ) {
-            EmpathApp(component = root, modifier = Modifier.fillMaxSize())
+            RootScreen(component = root, modifier = Modifier.fillMaxSize())
         }
     }
 }

@@ -13,4 +13,8 @@
     <string name="action">Action</string>
     <string name="close">Close</string>
     <string name="okay">Okay</string>
+
+    <string name="error_title">Oops! Something went wrong</string>
+    <string name="error_description">We ran into a problem while loading the content. Please try again in a moment.</string>
+    <string name="try_again">Try again</string>
 </resources>

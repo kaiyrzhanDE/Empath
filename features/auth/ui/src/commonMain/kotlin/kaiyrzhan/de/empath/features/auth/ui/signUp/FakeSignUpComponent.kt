@@ -17,9 +17,15 @@ internal class FakeSignUpComponent : SignUpComponent {
     override val state = MutableStateFlow(
         SignUpState.Success(
             email = "sansyzbaev.de@gmail.com",
+            nickname = "veildc",
             password = "12345",
+            isPasswordVisible = false,
+            isPasswordValid = true,
             repeatedPassword = "12345",
+            isRepeatedPasswordVisible = false,
+            isRepeatedPasswordValid = true,
             isUserAgreementAccepted = true,
+            arePasswordsMatching = true,
         )
     )
 
