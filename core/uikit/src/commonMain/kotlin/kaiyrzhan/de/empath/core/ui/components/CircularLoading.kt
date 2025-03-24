@@ -3,11 +3,9 @@ package kaiyrzhan.de.empath.core.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -82,43 +80,5 @@ public fun CircularLoadingScreen(
             style = EmpathTheme.typography.labelLarge,
             color = EmpathTheme.colors.onSurfaceVariant,
         )
-    }
-}
-
-@Composable
-public fun CircularLoadingCard(
-    modifier: Modifier = Modifier,
-    title: String = stringResource(Res.string.loading),
-    indicatorSize: Dp = 48.dp,
-) {
-    val text = animateTextAsState(title)
-
-    Row(
-        modifier = modifier
-            .background(EmpathTheme.colors.surface),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.size(indicatorSize),
-            trackColor = EmpathTheme.colors.secondary,
-            strokeCap = StrokeCap.Square,
-            color = EmpathTheme.colors.primary,
-        )
-        Spacer(modifier = Modifier.width(20.dp))
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            Text(
-                text = text.value,
-                style = EmpathTheme.typography.titleLarge,
-                color = EmpathTheme.colors.onSurface,
-            )
-            Text(
-                text = stringResource(Res.string.loading_prompt),
-                style = EmpathTheme.typography.labelLarge,
-                color = EmpathTheme.colors.onSurfaceVariant,
-            )
-        }
     }
 }
