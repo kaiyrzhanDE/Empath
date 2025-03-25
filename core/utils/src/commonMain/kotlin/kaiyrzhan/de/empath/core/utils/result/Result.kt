@@ -8,11 +8,15 @@ public sealed interface Result<out S> {
     public interface Error : Result<Nothing> {
         public data class UnknownError(
             public val throwable: Throwable
-        ) : Error
+        ) : Error {
+            override fun toString(): String {
+                return throwable.message.orEmpty()
+            }
+        }
 
         public data class UnknownRemoteError(
             public val payload: Any? = null,
-        ) : Error{
+        ) : Error {
             override fun toString(): String {
                 return payload.toString()
             }

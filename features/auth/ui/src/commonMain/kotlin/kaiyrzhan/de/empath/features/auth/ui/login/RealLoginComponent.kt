@@ -11,10 +11,10 @@ import empath.core.uikit.generated.resources.*
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import empath.core.uikit.generated.resources.Res as CoreRes
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialogComponent
-import kaiyrzhan.de.empath.core.ui.dialog.RealMessageDialogComponent
-import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
-import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
+import kaiyrzhan.de.empath.core.ui.dialog.message.RealMessageDialogComponent
+import kaiyrzhan.de.empath.core.ui.dialog.message.model.MessageDialogState
+import kaiyrzhan.de.empath.core.ui.dialog.model.DialogActionConfig
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
@@ -26,7 +26,6 @@ import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginAction
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -78,15 +77,15 @@ internal class RealLoginComponent(
     ): MessageDialogComponent {
         return RealMessageDialogComponent(
             componentContext = childComponentContext,
-            dialogState = state,
+            messageDialogState = state,
         )
     }
 
     private fun showMessageDialog(
         title: String,
         description: String,
-        dismissActionConfig: MessageActionConfig,
-        confirmActionConfig: MessageActionConfig? = null,
+        dismissActionConfig: DialogActionConfig,
+        confirmActionConfig: DialogActionConfig? = null,
         onDismissClick: (() -> Unit)? = null,
         onConfirmClick: (() -> Unit)? = null,
     ) {
@@ -137,7 +136,6 @@ internal class RealLoginComponent(
                 password = currentState.password,
             ).onSuccess {
                 onLoginClick()
-                delay(1000)
                 state.update { currentState }
             }.onFailure { error ->
                 state.update { currentState }
@@ -156,7 +154,7 @@ internal class RealLoginComponent(
                         showMessageDialog(
                             title = getString(FeatureRes.string.too_many_login_attempts_title),
                             description = getString(FeatureRes.string.too_many_login_attempts_description),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )
@@ -166,7 +164,7 @@ internal class RealLoginComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )
@@ -176,7 +174,7 @@ internal class RealLoginComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_remote_error),
                             description = error.toString(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )

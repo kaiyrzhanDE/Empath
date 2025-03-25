@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import empath.features.auth.ui.generated.resources.Res as FeatureRes

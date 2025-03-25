@@ -5,7 +5,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.backhandler.BackHandler
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialogComponent
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpAction
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpEvent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpState

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -27,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme

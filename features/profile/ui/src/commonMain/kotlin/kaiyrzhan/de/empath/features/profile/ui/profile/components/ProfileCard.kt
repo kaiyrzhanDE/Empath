@@ -1,6 +1,7 @@
-package kaiyrzhan.de.empath.features.profile.ui.components
+package kaiyrzhan.de.empath.features.profile.ui.profile.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,30 +12,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import empath.core.uikit.generated.resources.error_description
-import empath.core.uikit.generated.resources.error_title
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.core.uikit.generated.resources.ic_arrow_forward
-import empath.core.uikit.generated.resources.ic_broken_ice
-import empath.core.uikit.generated.resources.try_again
+import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.modifiers.shimmerLoading
+import kaiyrzhan.de.empath.core.ui.modifiers.thenIf
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun ErrorCard(
-    modifier: Modifier = Modifier,
-    imageSize: Dp,
-    onReloadClick: () -> Unit,
+internal fun ProfileCard(
+    name: String,
+    email: String,
+    imageUrl: String,
     onUserPageClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -44,13 +45,8 @@ internal fun ErrorCard(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
-            modifier = Modifier
-                .clip(EmpathTheme.shapes.full)
-                .aspectRatio(1f)
-                .fillMaxSize(),
-            painter = painterResource(CoreRes.drawable.ic_broken_ice),
-            contentDescription = "Error",
+        ProfileImage(
+            imageUrl = imageUrl,
         )
         Column(
             modifier = Modifier.weight(1f),
@@ -58,29 +54,19 @@ internal fun ErrorCard(
             horizontalAlignment = Alignment.Start,
         ) {
             Text(
-                text = stringResource(CoreRes.string.error_title),
+                text = name,
                 style = EmpathTheme.typography.titleMedium,
                 color = EmpathTheme.colors.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = stringResource(CoreRes.string.error_description),
+                text = email,
                 style = EmpathTheme.typography.titleMedium,
                 color = EmpathTheme.colors.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            TextButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                onClick = onReloadClick,
-            ) {
-                Text(
-                    text = stringResource(CoreRes.string.try_again),
-                    style = EmpathTheme.typography.titleMedium,
-                    color = EmpathTheme.colors.primary,
-                )
-            }
         }
         IconButton(
             onClick = onUserPageClick,
@@ -92,4 +78,43 @@ internal fun ErrorCard(
             )
         }
     }
+}
+
+@Composable
+private fun ProfileImage(
+    imageUrl: String,
+    modifier: Modifier = Modifier,
+) {
+    val userImagePainter = rememberAsyncImagePainter(
+        model = imageUrl,
+        placeholder = painterResource(CoreRes.drawable.ic_account_circle),
+        error = painterResource(
+            resource = if (imageUrl.isNotBlank()) CoreRes.drawable.ic_error_filled
+            else CoreRes.drawable.ic_account_circle,
+        ),
+    )
+    val imageState = userImagePainter.state.collectAsState()
+
+    Image(
+        modifier = modifier
+            .clip(EmpathTheme.shapes.full)
+            .aspectRatio(1f)
+            .fillMaxSize()
+            .thenIf(imageState.value is AsyncImagePainter.State.Loading) {
+                Modifier.shimmerLoading()
+            }
+            .thenIf(imageState.value is AsyncImagePainter.State.Error) {
+                Modifier.clickable { userImagePainter.restart() }
+            }
+            .thenIf(imageState.value is AsyncImagePainter.State.Success) {
+                Modifier.border(
+                    width = 2.dp,
+                    color = EmpathTheme.colors.onSurfaceVariant,
+                    shape = EmpathTheme.shapes.full,
+                )
+            },
+        painter = userImagePainter,
+        contentScale = ContentScale.Crop,
+        contentDescription = "User Image",
+    )
 }

@@ -28,7 +28,7 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun animateTextAsState(
+public fun animateTextAsState(
     text: String,
     intervalMillis: Long = 1000L,
 ): State<String> {

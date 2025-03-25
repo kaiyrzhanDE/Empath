@@ -92,8 +92,9 @@ private fun MainScreen(
     ) { child ->
         when (val instance = child.instance) {
             is Child.Profile -> {
-                ProfileRootScreen(component = instance.component,)
+                ProfileRootScreen(component = instance.component)
             }
+
             is Child.Study -> {
                 Box(
                     modifier = Modifier

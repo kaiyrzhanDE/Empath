@@ -5,7 +5,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.backhandler.BackHandler
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialogComponent
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryAction
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryEvent
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryState

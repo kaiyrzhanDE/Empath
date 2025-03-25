@@ -11,10 +11,10 @@ import empath.core.uikit.generated.resources.Res as CoreRes
 import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import empath.core.uikit.generated.resources.*
 import empath.features.auth.ui.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialogComponent
-import kaiyrzhan.de.empath.core.ui.dialog.RealMessageDialogComponent
-import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
-import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
+import kaiyrzhan.de.empath.core.ui.dialog.message.RealMessageDialogComponent
+import kaiyrzhan.de.empath.core.ui.dialog.model.DialogActionConfig
+import kaiyrzhan.de.empath.core.ui.dialog.message.model.MessageDialogState
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.flow.timerFlow
 import kaiyrzhan.de.empath.core.utils.logger.className
@@ -92,15 +92,15 @@ internal class RealCodeConfirmationComponent(
     ): MessageDialogComponent {
         return RealMessageDialogComponent(
             componentContext = childComponentContext,
-            dialogState = state,
+            messageDialogState = state,
         )
     }
 
     private fun showMessageDialog(
         title: String,
         description: String,
-        dismissActionConfig: MessageActionConfig,
-        confirmActionConfig: MessageActionConfig? = null,
+        dismissActionConfig: DialogActionConfig,
+        confirmActionConfig: DialogActionConfig? = null,
         onDismissClick: (() -> Unit)? = null,
         onConfirmClick: (() -> Unit)? = null,
     ) {
@@ -172,7 +172,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )
@@ -182,7 +182,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_remote_error),
                             description = error.toString(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
                                 text = getString(CoreRes.string.close),
                             ),
@@ -209,7 +209,7 @@ internal class RealCodeConfirmationComponent(
                 showMessageDialog(
                     title = getString(FeatureRes.string.code_resent_title),
                     description = getString(FeatureRes.string.code_resent_description),
-                    dismissActionConfig = MessageActionConfig(
+                    dismissActionConfig = DialogActionConfig(
                         text = getString(CoreRes.string.close),
                     ),
                 )
@@ -221,7 +221,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(FeatureRes.string.too_many_sign_up_attempts_title),
                             description = getString(FeatureRes.string.too_many_sign_up_attempts_description),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )
@@ -231,7 +231,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )
@@ -241,7 +241,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_remote_error),
                             description = error.toString(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
                                 text = getString(CoreRes.string.close),
                             ),
@@ -261,7 +261,7 @@ internal class RealCodeConfirmationComponent(
                 showMessageDialog(
                     title = getString(FeatureRes.string.code_resent_title),
                     description = getString(FeatureRes.string.code_resent_description),
-                    dismissActionConfig = MessageActionConfig(
+                    dismissActionConfig = DialogActionConfig(
                         text = getString(CoreRes.string.close),
                     ),
                 )
@@ -273,7 +273,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(FeatureRes.string.too_many_password_recovery_attempts_title),
                             description = getString(FeatureRes.string.too_many_password_recovery_attempts_description),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )
@@ -283,7 +283,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 text = getString(CoreRes.string.close),
                             ),
                         )
@@ -293,7 +293,7 @@ internal class RealCodeConfirmationComponent(
                         showMessageDialog(
                             title = getString(CoreRes.string.unknown_remote_error),
                             description = error.toString(),
-                            dismissActionConfig = MessageActionConfig(
+                            dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
                                 text = getString(CoreRes.string.close),
                             ),

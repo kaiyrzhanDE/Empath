@@ -6,12 +6,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kaiyrzhan.de.empath.core.ui.dialog.model.MessageActionConfig
+import kaiyrzhan.de.empath.core.ui.dialog.model.DialogActionConfig
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 
 @Composable
 internal fun DialogActionButton(
-    config: MessageActionConfig?,
+    config: DialogActionConfig?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

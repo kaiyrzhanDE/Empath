@@ -10,6 +10,8 @@
 
     <string name="unknown_error">Unknown error</string>
     <string name="unknown_remote_error">Unknown remote error</string>
+    <string name="oops_something_went_wrong_title">Oops! Something went wrong</string>
+    <string name="oops_something_went_wrong_description">We ran into a problem while loading the content. Please try again in a moment.</string>
     <string name="action">Action</string>
     <string name="close">Close</string>
     <string name="okay">Okay</string>
@@ -17,4 +19,13 @@
     <string name="error_title">Oops! Something went wrong</string>
     <string name="error_description">We ran into a problem while loading the content. Please try again in a moment.</string>
     <string name="try_again">Try again</string>
+
+    <string name="nickname">Nickname</string>
+    <string name="name">Name</string>
+    <string name="lastname">Lastname</string>
+    <string name="patronymic">Patronymic</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="select_photo">Select photo</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

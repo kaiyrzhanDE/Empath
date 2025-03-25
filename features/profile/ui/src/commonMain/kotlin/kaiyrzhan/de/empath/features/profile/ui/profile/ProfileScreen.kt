@@ -16,10 +16,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import kaiyrzhan.de.empath.core.ui.components.CircularLoadingCard
+import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.profile.ui.components.ErrorCard
-import kaiyrzhan.de.empath.features.profile.ui.components.ProfileCard
+import kaiyrzhan.de.empath.features.profile.ui.profile.components.ProfileErrorCard
+import kaiyrzhan.de.empath.features.profile.ui.profile.components.ProfileCard
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.AccountProperties
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.GeneralProperties
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.StudyProperties
@@ -78,7 +78,7 @@ private fun ProfileScreen(
                 }
 
                 is ProfileState.Error -> {
-                    ErrorCard(
+                    ProfileErrorCard(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 88.dp, max = 200.dp)
@@ -90,7 +90,7 @@ private fun ProfileScreen(
                 }
 
                 is ProfileState.Loading -> {
-                    CircularLoadingCard(
+                    CircularLoadingScreen(
                         modifier = Modifier
                             .clip(EmpathTheme.shapes.small)
                             .fillMaxWidth()

@@ -1,9 +1,9 @@
 package kaiyrzhan.de.empath.features.profile.ui.model
 
-import kaiyrzhan.de.empath.core.utils.datePattern
-import kaiyrzhan.de.empath.core.utils.toDate
+import kaiyrzhan.de.empath.core.utils.toLocalDateTime
 import kaiyrzhan.de.empath.features.profile.domain.model.User
 import kaiyrzhan.de.empath.features.profile.domain.model.User.Gender
+import kotlinx.datetime.LocalDateTime
 
 internal data class UserUi(
     val id: String,
@@ -13,7 +13,7 @@ internal data class UserUi(
     val lastname: String,
     val name: String,
     val patronymic: String,
-    val dateOfBirth: String,
+    val dateOfBirth: LocalDateTime?,
     val gender: Gender,
     val image: String,
 )
@@ -27,7 +27,7 @@ internal fun User.toUi(): UserUi {
         lastname = lastname,
         name = name,
         patronymic = patronymic,
-        dateOfBirth = dateOfBirth.toDate(pattern = datePattern),
+        dateOfBirth = dateOfBirth.toLocalDateTime(),
         gender = gender,
         image = image,
     )

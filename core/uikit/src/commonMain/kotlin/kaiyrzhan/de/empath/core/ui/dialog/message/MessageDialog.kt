@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.core.ui.dialog
+package kaiyrzhan.de.empath.core.ui.dialog.message
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import kaiyrzhan.de.empath.core.ui.dialog.components.DialogActionButton
-import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogEvent
-import kaiyrzhan.de.empath.core.ui.dialog.model.MessageDialogState
+import kaiyrzhan.de.empath.core.ui.dialog.model.DialogEvent
+import kaiyrzhan.de.empath.core.ui.dialog.message.model.MessageDialogState
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kotlinx.coroutines.launch
@@ -58,10 +58,10 @@ public fun MessageDialog(
 private fun MessageDialog(
     modifier: Modifier,
     state: MessageDialogState,
-    onEvent: (MessageDialogEvent) -> Unit,
+    onEvent: (DialogEvent) -> Unit,
 ) {
     Dialog(
-        onDismissRequest = { onEvent(MessageDialogEvent.DismissClick) },
+        onDismissRequest = { onEvent(DialogEvent.DismissClick) },
     ) {
         Card(
             shape = EmpathTheme.shapes.medium,
@@ -84,7 +84,7 @@ private fun MessageDialog(
 private fun MessageBottomSheetDialog(
     modifier: Modifier = Modifier,
     state: MessageDialogState,
-    onEvent: (MessageDialogEvent) -> Unit,
+    onEvent: (DialogEvent) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
@@ -96,7 +96,7 @@ private fun MessageBottomSheetDialog(
             coroutineScope.launch {
                 sheetState.hide()
             }.invokeOnCompletion {
-                onEvent(MessageDialogEvent.DismissClick)
+                onEvent(DialogEvent.DismissClick)
             }
         },
         containerColor = EmpathTheme.colors.surface,
@@ -116,7 +116,7 @@ private fun MessageBottomSheetDialog(
 private fun MessageDialogContent(
     modifier: Modifier,
     state: MessageDialogState,
-    onEvent: (MessageDialogEvent) -> Unit,
+    onEvent: (DialogEvent) -> Unit,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -140,12 +140,12 @@ private fun MessageDialogContent(
         ) {
             DialogActionButton(
                 config = state.confirmActionConfig,
-                onClick = { onEvent(MessageDialogEvent.ConfirmClick) },
+                onClick = { onEvent(DialogEvent.ConfirmClick) },
             )
             Spacer(modifier = Modifier.width(8.dp))
             DialogActionButton(
                 config = state.dismissActionConfig,
-                onClick = { onEvent(MessageDialogEvent.DismissClick) },
+                onClick = { onEvent(DialogEvent.DismissClick) },
             )
         }
     }

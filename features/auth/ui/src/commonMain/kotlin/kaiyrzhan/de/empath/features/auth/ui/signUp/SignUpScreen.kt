@@ -29,9 +29,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.nickname
 import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialog
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -156,7 +158,7 @@ private fun ColumnScope.UserDataTextFields(
         onValueChange = { nickname -> onEvent(SignUpEvent.NicknameChange(nickname)) },
         label = {
             Text(
-                text = stringResource(FeatureRes.string.nickname),
+                text = stringResource(CoreRes.string.nickname),
                 style = EmpathTheme.typography.bodyLarge,
             )
         },

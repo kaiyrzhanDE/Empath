@@ -22,6 +22,7 @@ import org.koin.core.component.inject
 internal class RealProfileComponent(
     componentContext: ComponentContext,
     private val onUserPageClick: () -> Unit,
+    private val onProfileEditClick: () -> Unit,
     private val onLogOutClick: () -> Unit,
 ) : BaseComponent(componentContext), ProfileComponent {
 
@@ -40,7 +41,7 @@ internal class RealProfileComponent(
         when (event) {
             is ProfileEvent.LogOut -> onLogOutClick()
             is ProfileEvent.UserPageClick -> onUserPageClick()
-            is ProfileEvent.EditProfileClick -> {}
+            is ProfileEvent.EditProfileClick -> onProfileEditClick()
             is ProfileEvent.Reload -> loadProfile()
         }
     }

@@ -3,7 +3,7 @@ package kaiyrzhan.de.empath.features.auth.ui.login
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
-import kaiyrzhan.de.empath.core.ui.dialog.MessageDialogComponent
+import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginAction
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
