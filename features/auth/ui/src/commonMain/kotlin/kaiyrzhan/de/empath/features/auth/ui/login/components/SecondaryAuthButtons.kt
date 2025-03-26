@@ -9,9 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
-import empath.features.auth.ui.generated.resources.continue_with_facebook
-import empath.features.auth.ui.generated.resources.continue_with_google
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import org.jetbrains.compose.resources.stringResource
@@ -38,7 +37,7 @@ internal fun SecondaryAuthButtons(
             ),
         ) {
             Text(
-                text = stringResource(FeatureRes.string.continue_with_google),
+                text = stringResource(Res.string.continue_with_google),
                 style = EmpathTheme.typography.labelLarge,
                 maxLines = 1,
             )
@@ -56,7 +55,7 @@ internal fun SecondaryAuthButtons(
             ),
         ) {
             Text(
-                text = stringResource(FeatureRes.string.continue_with_facebook),
+                text = stringResource(Res.string.continue_with_facebook),
                 style = EmpathTheme.typography.labelLarge,
                 maxLines = 1,
             )

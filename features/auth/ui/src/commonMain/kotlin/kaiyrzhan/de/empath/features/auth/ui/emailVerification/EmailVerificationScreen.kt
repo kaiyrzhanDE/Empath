@@ -22,12 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
@@ -94,8 +94,8 @@ private fun EmailVerificationScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TopBar(
-                    title = stringResource(FeatureRes.string.enter_email_title),
-                    description = stringResource(FeatureRes.string.enter_email_description),
+                    title = stringResource(Res.string.enter_email_title),
+                    description = stringResource(Res.string.enter_email_description),
                     onBackClick = { onEvent(EmailVerificationEvent.BackClick) },
                 )
                 Spacer(modifier = Modifier.height(30.dp))
@@ -106,7 +106,7 @@ private fun EmailVerificationScreen(
                     onValueChange = { email -> onEvent(EmailVerificationEvent.EmailChange(email)) },
                     label = {
                         Text(
-                            text = stringResource(FeatureRes.string.email),
+                            text = stringResource(Res.string.email),
                             style = EmpathTheme.typography.bodyLarge,
                         )
                     },
@@ -124,7 +124,7 @@ private fun EmailVerificationScreen(
                     ),
                 ) {
                     Text(
-                        text = stringResource(FeatureRes.string.send_code),
+                        text = stringResource(Res.string.send_code),
                         style = EmpathTheme.typography.labelLarge,
                         maxLines = 1,
                     )

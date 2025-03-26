@@ -29,9 +29,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.nickname
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
@@ -39,7 +39,6 @@ import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.components.PasswordOutlinedTextField
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.navigation.BackHandler
@@ -108,8 +107,8 @@ private fun SignUpScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TopBar(
-                    title = stringResource(FeatureRes.string.enter_fields_title),
-                    description = stringResource(FeatureRes.string.enter_fields_description),
+                    title = stringResource(Res.string.enter_fields_title),
+                    description = stringResource(Res.string.enter_fields_description),
                     onBackClick = { onEvent(SignUpEvent.BackClick) },
                 )
                 Spacer(modifier = Modifier.height(30.dp))
@@ -128,7 +127,7 @@ private fun SignUpScreen(
                     ),
                 ) {
                     Text(
-                        text = stringResource(FeatureRes.string.sign_up),
+                        text = stringResource(Res.string.sign_up),
                         style = EmpathTheme.typography.labelLarge,
                         maxLines = 1,
                     )
@@ -158,7 +157,7 @@ private fun ColumnScope.UserDataTextFields(
         onValueChange = { nickname -> onEvent(SignUpEvent.NicknameChange(nickname)) },
         label = {
             Text(
-                text = stringResource(CoreRes.string.nickname),
+                text = stringResource(Res.string.nickname),
                 style = EmpathTheme.typography.bodyLarge,
             )
         },
@@ -170,7 +169,7 @@ private fun ColumnScope.UserDataTextFields(
         onValueChange = { password ->
             onEvent(SignUpEvent.PasswordChange(password))
         },
-        label = stringResource(FeatureRes.string.password),
+        label = stringResource(Res.string.password),
         arePasswordsMatching = state.arePasswordsMatching,
         isPasswordValid = state.isPasswordValid,
         isValueVisible = state.isPasswordVisible,
@@ -182,7 +181,7 @@ private fun ColumnScope.UserDataTextFields(
         onValueChange = { password ->
             onEvent(SignUpEvent.RepeatedPasswordChange(password))
         },
-        label = stringResource(FeatureRes.string.repeated_password),
+        label = stringResource(Res.string.repeated_password),
         arePasswordsMatching = state.arePasswordsMatching,
         isPasswordValid = state.isRepeatedPasswordValid,
         isValueVisible = state.isRepeatedPasswordVisible,
@@ -209,7 +208,7 @@ private fun ColumnScope.UserAgreementCheckBox(
         )
         Text(
             text = buildAnnotatedString {
-                append(stringResource(FeatureRes.string.user_agreement_prompt))
+                append(stringResource(Res.string.user_agreement_prompt))
                 appendSpace()
                 withLink(
                     link = LinkAnnotation.Clickable(
@@ -223,7 +222,7 @@ private fun ColumnScope.UserAgreementCheckBox(
                         onEvent(SignUpEvent.UserAgreementClick)
                     },
                 ) {
-                    append(stringResource(FeatureRes.string.user_agreement_and_privacy_policy))
+                    append(stringResource(Res.string.user_agreement_and_privacy_policy))
                 }
             },
             style = EmpathTheme.typography.labelSmall,

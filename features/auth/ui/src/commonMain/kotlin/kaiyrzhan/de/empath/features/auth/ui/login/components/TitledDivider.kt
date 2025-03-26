@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -29,7 +29,7 @@ internal fun TitledDivider(
     ) {
         HorizontalDivider(modifier = Modifier.weight(1f))
         Text(
-            text = stringResource(FeatureRes.string.dividers_placeholder),
+            text = stringResource(Res.string.dividers_placeholder),
             style = EmpathTheme.typography.bodyMedium,
             color = EmpathTheme.colors.outlineVariant,
         )

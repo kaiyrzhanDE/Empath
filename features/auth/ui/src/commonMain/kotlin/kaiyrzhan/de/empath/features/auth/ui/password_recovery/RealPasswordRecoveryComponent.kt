@@ -7,10 +7,8 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
+import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
-import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.message.RealMessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.model.DialogActionConfig
@@ -112,14 +110,14 @@ internal class RealPasswordRecoveryComponent(
     private fun backClick() {
         coroutineScope.launch {
             showMessageDialog(
-                title = getString(FeatureRes.string.abort_password_recovery_title),
-                description = getString(FeatureRes.string.abort_password_recovery_description),
+                title = getString(Res.string.abort_password_recovery_title),
+                description = getString(Res.string.abort_password_recovery_description),
                 dismissActionConfig = DialogActionConfig(
-                    text = getString(CoreRes.string.close),
+                    text = getString(Res.string.close),
                     isPrimary = true,
                 ),
                 confirmActionConfig = DialogActionConfig(
-                    text = getString(CoreRes.string.okay),
+                    text = getString(Res.string.okay),
                     isPrimary = false,
                 ),
                 onConfirmClick = onBackClick,
@@ -174,7 +172,7 @@ internal class RealPasswordRecoveryComponent(
         coroutineScope.launch {
             if (currentState.password != currentState.repeatedPassword) {
                 state.update { currentState.copy(arePasswordsMatching = false) }
-                _action.send(PasswordRecoveryAction.ShowSnackbar(getString(FeatureRes.string.password_dont_match_error)))
+                _action.send(PasswordRecoveryAction.ShowSnackbar(getString(Res.string.password_dont_match_error)))
                 return@launch
             }
 
@@ -195,26 +193,26 @@ internal class RealPasswordRecoveryComponent(
                                 isRepeatedPasswordValid = false,
                             )
                         }
-                        _action.send(PasswordRecoveryAction.ShowSnackbar(getString(FeatureRes.string.invalid_email_or_password)))
+                        _action.send(PasswordRecoveryAction.ShowSnackbar(getString(Res.string.invalid_email_or_password)))
                     }
 
                     is Result.Error.UnknownError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_error),
+                            title = getString(Res.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownRemoteError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_remote_error),
+                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }

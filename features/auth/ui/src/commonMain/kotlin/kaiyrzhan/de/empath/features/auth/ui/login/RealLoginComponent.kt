@@ -8,9 +8,7 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import empath.core.uikit.generated.resources.*
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.Res
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.message.RealMessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.message.model.MessageDialogState
@@ -147,35 +145,35 @@ internal class RealLoginComponent(
                                 isPasswordValid = false
                             )
                         }
-                        _action.send(LoginAction.ShowSnackbar(getString(FeatureRes.string.invalid_email_or_password)))
+                        _action.send(LoginAction.ShowSnackbar(getString(Res.string.invalid_email_or_password)))
                     }
 
                     is LogInUseCaseError.TooManyLoginAttempts -> {
                         showMessageDialog(
-                            title = getString(FeatureRes.string.too_many_login_attempts_title),
-                            description = getString(FeatureRes.string.too_many_login_attempts_description),
+                            title = getString(Res.string.too_many_login_attempts_title),
+                            description = getString(Res.string.too_many_login_attempts_description),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_error),
+                            title = getString(Res.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownRemoteError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_remote_error),
+                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }

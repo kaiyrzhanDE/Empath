@@ -8,10 +8,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.features.profile.ui.generated.resources.Res as FeatureRes
+import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
-import empath.features.profile.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -32,7 +30,7 @@ internal fun GeneralProperties(
         Property(
             modifier = Modifier.fillMaxWidth(),
             text = "Settings",
-            painter = painterResource(CoreRes.drawable.ic_error),
+            painter = painterResource(Res.drawable.ic_error),
             onClick = { /* TODO */ },
         )
         HorizontalDivider(
@@ -42,7 +40,7 @@ internal fun GeneralProperties(
         Property(
             modifier = Modifier.fillMaxWidth(),
             text = "FAQ",
-            painter = painterResource(CoreRes.drawable.ic_error),
+            painter = painterResource(Res.drawable.ic_error),
             onClick = { /* TODO */ },
         )
         HorizontalDivider(
@@ -52,7 +50,7 @@ internal fun GeneralProperties(
         Property(
             modifier = Modifier.fillMaxWidth(),
             text = "Share Feedback",
-            painter = painterResource(CoreRes.drawable.ic_error),
+            painter = painterResource(Res.drawable.ic_error),
             onClick = { /* TODO */ },
         )
         HorizontalDivider(
@@ -62,7 +60,7 @@ internal fun GeneralProperties(
         Property(
             modifier = Modifier.fillMaxWidth(),
             text = "Privacy Policy and Agreement",
-            painter = painterResource(CoreRes.drawable.ic_error),
+            painter = painterResource(Res.drawable.ic_error),
             onClick = { /* TODO */ },
         )
         HorizontalDivider(
@@ -71,7 +69,7 @@ internal fun GeneralProperties(
         )
         Property(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(FeatureRes.string.log_out),
+            text = stringResource(Res.string.log_out),
             onClick = onLogOutClick,
         )
     }

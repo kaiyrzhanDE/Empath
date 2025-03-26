@@ -2,9 +2,8 @@ package kaiyrzhan.de.empath.features.profile.ui.profile_edit.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import empath.core.uikit.generated.resources.select_photo
-import empath.core.uikit.generated.resources.ic_add_a_photo
-import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -17,10 +16,10 @@ internal fun ImagePickerField(
 ) {
     PickerField(
         modifier = modifier,
-        title = stringResource(CoreRes.string.select_photo),
+        title = stringResource(Res.string.select_photo),
         selected = selected,
         onClick = onClick,
         isLoading = isLoading,
-        leadingPainter = painterResource(CoreRes.drawable.ic_add_a_photo),
+        leadingPainter = painterResource(Res.drawable.ic_add_a_photo),
     )
 }

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.files.ifEmpty
-import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.Res
 import kaiyrzhan.de.empath.core.ui.files.toString
 import kaiyrzhan.de.empath.core.ui.files.rememberImagePainter
 import kaiyrzhan.de.empath.core.ui.files.rememberImagePicker
@@ -39,16 +39,16 @@ internal fun ProfileCard(
     onEvent: (ProfileEditEvent) -> Unit,
 ) {
     val singleFilePicker = rememberImagePicker(
-        title = stringResource(CoreRes.string.select_photo),
+        title = stringResource(Res.string.select_photo),
     ) { selectedFile ->
         onEvent(ProfileEditEvent.PhotoSelect(selectedFile))
     }
 
     val imagePainter = rememberImagePainter(
         model = state.selectedImage.ifEmpty { state.editableUser.image },
-        error = painterResource(CoreRes.drawable.ic_error_filled),
-        fallback = painterResource(CoreRes.drawable.ic_account_circle),
-        placeholder = painterResource(CoreRes.drawable.ic_account_circle),
+        error = painterResource(Res.drawable.ic_error_filled),
+        fallback = painterResource(Res.drawable.ic_account_circle),
+        placeholder = painterResource(Res.drawable.ic_account_circle),
         filterQuality = FilterQuality.High,
     )
 
@@ -77,7 +77,7 @@ internal fun ProfileCard(
                     )
                 },
             painter = imagePainter,
-            contentDescription = stringResource(CoreRes.string.user_image),
+            contentDescription = stringResource(Res.string.user_image),
             contentScale = ContentScale.Crop,
         )
         ImagePickerField(

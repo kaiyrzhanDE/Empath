@@ -7,9 +7,7 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.message.RealMessageDialogComponent
@@ -144,28 +142,28 @@ internal class RealEmailVerificationComponent(
                 when (error) {
                     is SendResetPasswordCodeUseCaseError.InvalidEmail -> {
                         state.update { currentState.copy(isEmailValid = false) }
-                        _action.send(EmailVerificationAction.ShowSnackbar(getString(FeatureRes.string.invalid_email)))
+                        _action.send(EmailVerificationAction.ShowSnackbar(getString(Res.string.invalid_email)))
                     }
 
                     is SendResetPasswordCodeUseCaseError.TooManyResetPasswordAttempts -> {
                         showMessageDialog(
-                            title = getString(FeatureRes.string.too_many_password_recovery_attempts_title),
-                            description = getString(FeatureRes.string.too_many_password_recovery_attempts_description),
+                            title = getString(Res.string.too_many_password_recovery_attempts_title),
+                            description = getString(Res.string.too_many_password_recovery_attempts_description),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is SendResetPasswordCodeUseCaseError.EmailIsNotRegistered -> {
                         showMessageDialog(
-                            title = getString(FeatureRes.string.email_is_not_registered_title),
-                            description = getString(FeatureRes.string.email_is_not_registered_description),
+                            title = getString(Res.string.email_is_not_registered_title),
+                            description = getString(Res.string.email_is_not_registered_description),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(FeatureRes.string.use_different_email),
+                                text = getString(Res.string.use_different_email),
                             ),
                             confirmActionConfig = DialogActionConfig(
-                                text = getString(FeatureRes.string.sign_up),
+                                text = getString(Res.string.sign_up),
                                 isPrimary = true,
                             ),
                             onDismissClick = {
@@ -179,21 +177,21 @@ internal class RealEmailVerificationComponent(
 
                     is Result.Error.UnknownError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_error),
+                            title = getString(Res.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownRemoteError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_remote_error),
+                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
@@ -216,28 +214,28 @@ internal class RealEmailVerificationComponent(
                 when (error) {
                     is SendSignUpCodeUseCaseError.InvalidEmail -> {
                         state.update { currentState.copy(isEmailValid = false) }
-                        _action.send(EmailVerificationAction.ShowSnackbar(getString(FeatureRes.string.invalid_email)))
+                        _action.send(EmailVerificationAction.ShowSnackbar(getString(Res.string.invalid_email)))
                     }
 
                     is SendSignUpCodeUseCaseError.TooManySignUpAttempts -> {
                         showMessageDialog(
-                            title = getString(FeatureRes.string.too_many_sign_up_attempts_title),
-                            description = getString(FeatureRes.string.too_many_sign_up_attempts_description),
+                            title = getString(Res.string.too_many_sign_up_attempts_title),
+                            description = getString(Res.string.too_many_sign_up_attempts_description),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is SendSignUpCodeUseCaseError.EmailAlreadyRegistered -> {
                         showMessageDialog(
-                            title = getString(FeatureRes.string.email_already_registered_title),
-                            description = getString(FeatureRes.string.email_already_registered_description),
+                            title = getString(Res.string.email_already_registered_title),
+                            description = getString(Res.string.email_already_registered_description),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(FeatureRes.string.use_different_email),
+                                text = getString(Res.string.use_different_email),
                             ),
                             confirmActionConfig = DialogActionConfig(
-                                text = getString(FeatureRes.string.reset_password),
+                                text = getString(Res.string.reset_password),
                                 isPrimary = true,
                             ),
                             onDismissClick = {
@@ -251,21 +249,21 @@ internal class RealEmailVerificationComponent(
 
                     is Result.Error.UnknownError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_error),
+                            title = getString(Res.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownRemoteError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_remote_error),
+                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }

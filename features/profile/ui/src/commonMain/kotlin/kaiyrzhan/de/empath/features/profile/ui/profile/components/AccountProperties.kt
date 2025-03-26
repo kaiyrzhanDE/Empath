@@ -5,10 +5,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.core.uikit.generated.resources.ic_error
-import empath.features.profile.ui.generated.resources.Res as FeatureRes
-import empath.features.profile.ui.generated.resources.edit_profile
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -26,8 +24,8 @@ internal fun AccountProperties(
     ) {
         Property(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(FeatureRes.string.edit_profile),
-            painter = painterResource(CoreRes.drawable.ic_error),
+            text = stringResource(Res.string.edit_profile),
+            painter = painterResource(Res.drawable.ic_error),
             onClick = onEditProfileClick,
         )
     }

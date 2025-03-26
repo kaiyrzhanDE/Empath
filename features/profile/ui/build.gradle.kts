@@ -13,11 +13,6 @@ kotlin {
     }
 }
 
-compose.resources {
-    publicResClass = false
-    generateResClass = always
-}
-
 android {
     namespace = "kaiyrzhan.de.empath.features.profile.ui"
 }

@@ -9,11 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.core.uikit.generated.resources.lastname
-import empath.core.uikit.generated.resources.name
-import empath.core.uikit.generated.resources.nickname
-import empath.core.uikit.generated.resources.patronymic
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.format
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditEvent
@@ -40,7 +37,7 @@ internal fun ProfileEditTextFields(
             },
             label = {
                 Text(
-                    text = stringResource(CoreRes.string.nickname),
+                    text = stringResource(Res.string.nickname),
                     style = EmpathTheme.typography.bodyLarge,
                 )
             },
@@ -55,7 +52,7 @@ internal fun ProfileEditTextFields(
             },
             label = {
                 Text(
-                    text = stringResource(CoreRes.string.name),
+                    text = stringResource(Res.string.name),
                     style = EmpathTheme.typography.bodyLarge,
                 )
             },
@@ -70,7 +67,7 @@ internal fun ProfileEditTextFields(
             },
             label = {
                 Text(
-                    text = stringResource(CoreRes.string.lastname),
+                    text = stringResource(Res.string.lastname),
                     style = EmpathTheme.typography.bodyLarge,
                 )
             },
@@ -85,7 +82,7 @@ internal fun ProfileEditTextFields(
             },
             label = {
                 Text(
-                    text = stringResource(CoreRes.string.patronymic),
+                    text = stringResource(Res.string.patronymic),
                     style = EmpathTheme.typography.bodyLarge,
                 )
             },

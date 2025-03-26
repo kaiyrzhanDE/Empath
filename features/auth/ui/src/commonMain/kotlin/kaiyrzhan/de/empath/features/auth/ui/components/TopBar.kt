@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.Res
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -36,8 +36,8 @@ internal fun TopBar(
         ) {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    painter = painterResource(CoreRes.drawable.ic_arrow_back),
-                    contentDescription = stringResource(CoreRes.string.ic_arrow_back_description),
+                    painter = painterResource(Res.drawable.ic_arrow_back),
+                    contentDescription = stringResource(Res.string.ic_arrow_back_description),
                     tint = EmpathTheme.colors.onSurface,
                 )
             }
@@ -72,8 +72,8 @@ internal fun TopBar(
         ) {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    painter = painterResource(CoreRes.drawable.ic_arrow_back),
-                    contentDescription = stringResource(CoreRes.string.ic_arrow_back_description),
+                    painter = painterResource(Res.drawable.ic_arrow_back),
+                    contentDescription = stringResource(Res.string.ic_arrow_back_description),
                     tint = EmpathTheme.colors.onSurface,
                 )
             }

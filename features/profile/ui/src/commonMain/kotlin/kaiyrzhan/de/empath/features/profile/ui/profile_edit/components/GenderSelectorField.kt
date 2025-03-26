@@ -13,14 +13,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import empath.core.uikit.generated.resources.ic_arrow_forward
-import empath.core.uikit.generated.resources.ic_wc
-import empath.features.profile.ui.generated.resources.select_gender
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.profile.domain.model.User
-import empath.features.profile.ui.generated.resources.Res as FeatureRes
-import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.Res
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -37,11 +34,11 @@ internal fun GenderSelectorField(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         PickerField(
-            title = stringResource(FeatureRes.string.select_gender),
+            title = stringResource(Res.string.select_gender),
             selected = gender,
             onClick = { showGenderPopUp = showGenderPopUp.not() },
-            leadingPainter = painterResource(CoreRes.drawable.ic_wc),
-            trailingPainter = painterResource(CoreRes.drawable.ic_arrow_forward),
+            leadingPainter = painterResource(Res.drawable.ic_wc),
+            trailingPainter = painterResource(Res.drawable.ic_arrow_forward),
         )
         DropdownMenu(
             modifier = Modifier.defaultMaxWidth(),

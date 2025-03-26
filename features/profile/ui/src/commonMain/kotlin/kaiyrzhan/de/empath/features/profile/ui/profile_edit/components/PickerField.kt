@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.loading
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.animateTextAsState
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.stringResource

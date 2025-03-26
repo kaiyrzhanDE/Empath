@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import empath.features.auth.ui.generated.resources.background_low_poly
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
 
 @Composable
 internal fun LowPolyBackground(
@@ -22,7 +22,7 @@ internal fun LowPolyBackground(
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(FeatureRes.drawable.background_low_poly),
+            painter = painterResource(Res.drawable.background_low_poly),
             contentScale = ContentScale.Crop,
             alignment = Alignment.BottomEnd,
             contentDescription = "Low poly blue background",

@@ -7,13 +7,9 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
-import empath.core.uikit.generated.resources.cancel
-import empath.core.uikit.generated.resources.close
-import empath.core.uikit.generated.resources.okay
-import empath.core.uikit.generated.resources.unknown_error
-import empath.core.uikit.generated.resources.unknown_remote_error
+import empath.core.uikit.generated.resources.*
 import io.github.vinceglb.filekit.PlatformFile
-import empath.core.uikit.generated.resources.Res as CoreRes
+import empath.core.uikit.generated.resources.Res
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.DatePickerComponent
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.RealDatePickerComponent
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.model.DatePickerDialogState
@@ -101,11 +97,11 @@ internal class RealProfileEditComponent(
                 configuration = DatePickerDialogState(
                     selectedDate = currentState.editableUser.dateOfBirth,
                     dismissActionConfig = DialogActionConfig(
-                        text = getString(CoreRes.string.cancel),
+                        text = getString(Res.string.cancel),
                     ),
                     onDismissClick = datePickerNavigation::dismiss,
                     confirmActionConfig = DialogActionConfig(
-                        text = getString(CoreRes.string.okay),
+                        text = getString(Res.string.okay),
                         isPrimary = true,
                     ),
                     onConfirmClick = { dateOfBirth ->
@@ -236,7 +232,7 @@ internal class RealProfileEditComponent(
                 loadProfile()
                 _action.send(
                     ProfileEditAction.ShowSnackbar(
-                        message = "Profile edited successfully"
+                        message = getString(Res.string.profile_edit_successfully)
                     ),
                 )
             }.onFailure { error ->
@@ -245,7 +241,7 @@ internal class RealProfileEditComponent(
                     is Result.Error.UnknownError -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(
-                                message = getString(CoreRes.string.unknown_error),
+                                message = getString(Res.string.unknown_error),
                             ),
                         )
                     }
@@ -253,7 +249,7 @@ internal class RealProfileEditComponent(
                     is Result.Error.UnknownRemoteError -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(
-                                message = getString(CoreRes.string.unknown_remote_error),
+                                message = getString(Res.string.unknown_remote_error),
                             ),
                         )
                     }

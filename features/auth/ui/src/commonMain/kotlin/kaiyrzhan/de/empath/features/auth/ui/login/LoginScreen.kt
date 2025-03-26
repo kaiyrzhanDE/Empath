@@ -31,7 +31,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
@@ -46,7 +47,6 @@ import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginAction
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginEvent
 import kaiyrzhan.de.empath.features.auth.ui.login.model.LoginState
 import kotlinx.coroutines.launch
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -165,7 +165,7 @@ private fun PrimaryAuthorizationContent(
             isError = isEmailValid.not(),
             label = {
                 Text(
-                    text = stringResource(FeatureRes.string.email),
+                    text = stringResource(Res.string.email),
                     style = EmpathTheme.typography.bodyLarge,
                 )
             },
@@ -179,7 +179,7 @@ private fun PrimaryAuthorizationContent(
             isError = isPasswordValid.not(),
             label = {
                 Text(
-                    text = stringResource(FeatureRes.string.password),
+                    text = stringResource(Res.string.password),
                     style = EmpathTheme.typography.bodyLarge,
                 )
             },
@@ -201,7 +201,7 @@ private fun PrimaryAuthorizationContent(
                 ),
             ) {
                 Text(
-                    text = stringResource(FeatureRes.string.reset_password),
+                    text = stringResource(Res.string.reset_password),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -219,7 +219,7 @@ private fun PrimaryAuthorizationContent(
                 ),
             ) {
                 Text(
-                    text = stringResource(FeatureRes.string.login),
+                    text = stringResource(Res.string.login),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -237,7 +237,7 @@ private fun SignUpText(
 ) {
     Text(
         text = buildAnnotatedString {
-            append(stringResource(FeatureRes.string.sign_up_prompt))
+            append(stringResource(Res.string.sign_up_prompt))
             appendSpace()
             withLink(
                 link = LinkAnnotation.Clickable(
@@ -251,7 +251,7 @@ private fun SignUpText(
                     onSignUpClick()
                 },
             ) {
-                append(stringResource(FeatureRes.string.sign_up))
+                append(stringResource(Res.string.sign_up))
             }
         },
         style = EmpathTheme.typography.bodyMedium,

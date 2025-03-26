@@ -7,10 +7,8 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
+import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
-import empath.features.auth.ui.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.message.RealMessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.dialog.model.DialogActionConfig
@@ -165,26 +163,26 @@ internal class RealCodeConfirmationComponent(
                 when (error) {
                     is VerifyCodeUseCaseError.InvalidCode -> {
                         state.update { currentState.copy(isCodeValid = false) }
-                        _action.send(CodeConfirmationAction.ShowSnackbar(getString(FeatureRes.string.invalid_code)))
+                        _action.send(CodeConfirmationAction.ShowSnackbar(getString(Res.string.invalid_code)))
                     }
 
                     is Result.Error.UnknownError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_error),
+                            title = getString(Res.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownRemoteError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_remote_error),
+                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
@@ -207,10 +205,10 @@ internal class RealCodeConfirmationComponent(
         coroutineScope.launch {
             sendSignUpCodeUseCase(email = currentState.email).onSuccess {
                 showMessageDialog(
-                    title = getString(FeatureRes.string.code_resent_title),
-                    description = getString(FeatureRes.string.code_resent_description),
+                    title = getString(Res.string.code_resent_title),
+                    description = getString(Res.string.code_resent_description),
                     dismissActionConfig = DialogActionConfig(
-                        text = getString(CoreRes.string.close),
+                        text = getString(Res.string.close),
                     ),
                 )
                 state.update { currentState }
@@ -219,31 +217,31 @@ internal class RealCodeConfirmationComponent(
                 when (error) {
                     is SendSignUpCodeUseCaseError.TooManySignUpAttempts -> {
                         showMessageDialog(
-                            title = getString(FeatureRes.string.too_many_sign_up_attempts_title),
-                            description = getString(FeatureRes.string.too_many_sign_up_attempts_description),
+                            title = getString(Res.string.too_many_sign_up_attempts_title),
+                            description = getString(Res.string.too_many_sign_up_attempts_description),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_error),
+                            title = getString(Res.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownRemoteError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_remote_error),
+                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
@@ -259,10 +257,10 @@ internal class RealCodeConfirmationComponent(
         coroutineScope.launch {
             sendResetPasswordCodeUseCase(email = currentState.email).onSuccess {
                 showMessageDialog(
-                    title = getString(FeatureRes.string.code_resent_title),
-                    description = getString(FeatureRes.string.code_resent_description),
+                    title = getString(Res.string.code_resent_title),
+                    description = getString(Res.string.code_resent_description),
                     dismissActionConfig = DialogActionConfig(
-                        text = getString(CoreRes.string.close),
+                        text = getString(Res.string.close),
                     ),
                 )
                 state.update { currentState }
@@ -271,31 +269,31 @@ internal class RealCodeConfirmationComponent(
                 when (error) {
                     is SendResetPasswordCodeUseCaseError.TooManyResetPasswordAttempts -> {
                         showMessageDialog(
-                            title = getString(FeatureRes.string.too_many_password_recovery_attempts_title),
-                            description = getString(FeatureRes.string.too_many_password_recovery_attempts_description),
+                            title = getString(Res.string.too_many_password_recovery_attempts_title),
+                            description = getString(Res.string.too_many_password_recovery_attempts_description),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_error),
+                            title = getString(Res.string.unknown_error),
                             description = error.throwable.message.orEmpty(),
                             dismissActionConfig = DialogActionConfig(
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }
 
                     is Result.Error.UnknownRemoteError -> {
                         showMessageDialog(
-                            title = getString(CoreRes.string.unknown_remote_error),
+                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
                                 isPrimary = false,
-                                text = getString(CoreRes.string.close),
+                                text = getString(Res.string.close),
                             ),
                         )
                     }

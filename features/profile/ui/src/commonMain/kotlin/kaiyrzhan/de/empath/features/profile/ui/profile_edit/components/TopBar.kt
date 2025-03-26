@@ -8,11 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import empath.core.uikit.generated.resources.ic_arrow_back
-import empath.core.uikit.generated.resources.ic_arrow_back_description
-import empath.features.profile.ui.generated.resources.Res as FeatureRes
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.features.profile.ui.generated.resources.edit_profile
+import empath.core.uikit.generated.resources.*
+import empath.core.uikit.generated.resources.Res
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -28,7 +25,7 @@ internal fun TopBar(
         modifier = modifier,
         title = {
             Text(
-                text = stringResource(FeatureRes.string.edit_profile),
+                text = stringResource(Res.string.edit_profile),
                 style = EmpathTheme.typography.titleMedium,
             )
         },
@@ -42,8 +39,8 @@ internal fun TopBar(
                 onClick = onBackClick,
             ) {
                 Icon(
-                    painter = painterResource(CoreRes.drawable.ic_arrow_back),
-                    contentDescription = stringResource(CoreRes.string.ic_arrow_back_description),
+                    painter = painterResource(Res.drawable.ic_arrow_back),
+                    contentDescription = stringResource(Res.string.ic_arrow_back_description),
                 )
             }
         },

@@ -1,8 +1,0 @@
-<resources>
-    <string name="edit_profile">Edit profile</string>
-    <string name="log_out">Log out</string>
-
-    <string name="select_photo">Select photo</string>
-    <string name="select_date_of_birth">Select date of birth</string>
-    <string name="select_gender">Select gender</string>
-</resources>

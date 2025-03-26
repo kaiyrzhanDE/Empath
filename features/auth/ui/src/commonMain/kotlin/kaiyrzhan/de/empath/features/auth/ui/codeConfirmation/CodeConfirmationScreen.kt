@@ -26,7 +26,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
@@ -34,7 +35,6 @@ import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationEvent
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.model.CodeConfirmationState
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
@@ -97,9 +97,9 @@ private fun CodeConfirmationScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TopBar(
-                    title = stringResource(FeatureRes.string.enter_code_title),
+                    title = stringResource(Res.string.enter_code_title),
                     description = buildAnnotatedString {
-                        append(stringResource(FeatureRes.string.enter_code_description))
+                        append(stringResource(Res.string.enter_code_description))
                         appendLine()
                         withStyle(
                             style = EmpathTheme.typography.labelLarge.toSpanStyle().copy(
@@ -119,7 +119,7 @@ private fun CodeConfirmationScreen(
                     onValueChange = { code -> onEvent(CodeConfirmationEvent.CodeChange(code)) },
                     label = {
                         Text(
-                            text = stringResource(FeatureRes.string.code),
+                            text = stringResource(Res.string.code),
                             style = EmpathTheme.typography.bodyLarge,
                         )
                     },
@@ -142,7 +142,7 @@ private fun CodeConfirmationScreen(
                     ) {
                         Text(
                             text = buildAnnotatedString {
-                                append(stringResource(FeatureRes.string.resend))
+                                append(stringResource(Res.string.resend))
                                 appendSpace()
                                 if (state.isResendAllowed.not()) {
                                     append("(${state.resentTimer})")
@@ -164,7 +164,7 @@ private fun CodeConfirmationScreen(
                         ),
                     ) {
                         Text(
-                            text = stringResource(FeatureRes.string.check),
+                            text = stringResource(Res.string.check),
                             style = EmpathTheme.typography.labelLarge,
                         )
                     }

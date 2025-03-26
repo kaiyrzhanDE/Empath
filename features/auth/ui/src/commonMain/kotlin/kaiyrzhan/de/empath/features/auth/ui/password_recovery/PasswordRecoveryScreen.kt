@@ -21,14 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import empath.features.auth.ui.generated.resources.*
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.components.PasswordOutlinedTextField
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.navigation.BackHandler
@@ -97,8 +97,8 @@ private fun PasswordRecoveryScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TopBar(
-                    title = stringResource(FeatureRes.string.enter_new_password_title),
-                    description = stringResource(FeatureRes.string.enter_new_password_description),
+                    title = stringResource(Res.string.enter_new_password_title),
+                    description = stringResource(Res.string.enter_new_password_description),
                     onBackClick = { onEvent(PasswordRecoveryEvent.BackClick) },
                 )
                 Spacer(modifier = Modifier.height(30.dp))
@@ -107,7 +107,7 @@ private fun PasswordRecoveryScreen(
                     onValueChange = { password ->
                         onEvent(PasswordRecoveryEvent.PasswordChange(password))
                     },
-                    label = stringResource(FeatureRes.string.password),
+                    label = stringResource(Res.string.password),
                     isPasswordValid = state.isPasswordValid,
                     arePasswordsMatching = state.arePasswordsMatching,
                     isValueVisible = state.isPasswordVisible,
@@ -119,7 +119,7 @@ private fun PasswordRecoveryScreen(
                     onValueChange = { password ->
                         onEvent(PasswordRecoveryEvent.RepeatedPasswordChange(password))
                     },
-                    label = stringResource(FeatureRes.string.repeated_password),
+                    label = stringResource(Res.string.repeated_password),
                     isPasswordValid = state.isRepeatedPasswordValid,
                     arePasswordsMatching = state.arePasswordsMatching,
                     isValueVisible = state.isRepeatedPasswordVisible,
@@ -137,7 +137,7 @@ private fun PasswordRecoveryScreen(
                     ),
                 ) {
                     Text(
-                        text = stringResource(FeatureRes.string.reset_password),
+                        text = stringResource(Res.string.reset_password),
                         style = EmpathTheme.typography.labelLarge,
                         maxLines = 1,
                     )

@@ -10,9 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.core.uikit.generated.resources.cancel
-import empath.core.uikit.generated.resources.save
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditEvent
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditState
@@ -43,7 +42,7 @@ internal fun ProfileEditActions(
                 ),
             ) {
                 Text(
-                    text = stringResource(CoreRes.string.cancel),
+                    text = stringResource(Res.string.cancel),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -61,7 +60,7 @@ internal fun ProfileEditActions(
             ),
         ) {
             Text(
-                text = stringResource(CoreRes.string.save),
+                text = stringResource(Res.string.save),
                 style = EmpathTheme.typography.labelLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

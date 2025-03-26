@@ -11,12 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.core.uikit.generated.resources.ic_error
-import empath.features.auth.ui.generated.resources.Res as FeatureRes
-import empath.features.auth.ui.generated.resources.ic_visibility_off
-import empath.features.auth.ui.generated.resources.ic_visibility_on
-import empath.features.auth.ui.generated.resources.password_dont_match_error
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
@@ -50,8 +46,8 @@ internal fun PasswordOutlinedTextField(
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
-                            painter = painterResource(CoreRes.drawable.ic_error),
-                            contentDescription = stringResource(FeatureRes.string.password_dont_match_error),
+                            painter = painterResource(Res.drawable.ic_error),
+                            contentDescription = stringResource(Res.string.password_dont_match_error),
                         )
                     }
                 }
@@ -62,8 +58,8 @@ internal fun PasswordOutlinedTextField(
                     ) {
                         Icon(
                             painter = painterResource(
-                                if (isValueVisible) FeatureRes.drawable.ic_visibility_off
-                                else FeatureRes.drawable.ic_visibility_on
+                                if (isValueVisible) Res.drawable.ic_visibility_off
+                                else Res.drawable.ic_visibility_on
                             ),
                             contentDescription = null,
                         )

@@ -8,9 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.core.uikit.generated.resources.app_name
-import empath.core.uikit.generated.resources.created_by_
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -25,12 +24,12 @@ internal fun Logo(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(CoreRes.string.app_name),
+            text = stringResource(Res.string.app_name),
             style = EmpathTheme.typography.displayLarge,
             color = EmpathTheme.colors.onSurface,
         )
         Text(
-            text = stringResource(CoreRes.string.created_by_),
+            text = stringResource(Res.string.created_by_),
             style = EmpathTheme.typography.labelLarge,
             color = EmpathTheme.colors.onSurfaceVariant,
         )

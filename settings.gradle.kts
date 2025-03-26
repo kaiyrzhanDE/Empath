@@ -32,17 +32,20 @@ dependencyResolutionManagement {
     }
 }
 
-include(":EmpathApp")
-project(":EmpathApp").name = "EmpathApp"
+private fun isDirectoryGradleModule(file: File): Boolean {
+    val buildGradleFile = File(file, "build.gradle.kts")
+    return file.isDirectory && buildGradleFile.isFile && buildGradleFile.exists()
+}
 
-include(":features:auth:ui")
-include(":features:auth:domain")
-include(":features:auth:data")
+private fun includeAllModules(directory: String) {
+    file(directory)
+        .listFiles { directoryFile -> isDirectoryGradleModule(directoryFile) }
+        ?.forEach { directoryFile -> include(":${directory.replace('/', ':')}:${directoryFile.name}") }
+}
 
-include(":features:profile:ui")
-include(":features:profile:domain")
-include(":features:profile:data")
+includeAllModules(directory = "core")
+includeAllModules(directory = "features/auth")
+includeAllModules(directory = "features/profile")
 
-include(":core:uikit")
-include(":core:utils")
-include(":core:network")
+include(":empath-app")
+project(":empath-app").name = "EmpathApp"
