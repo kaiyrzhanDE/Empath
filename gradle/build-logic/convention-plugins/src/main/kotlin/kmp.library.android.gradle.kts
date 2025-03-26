@@ -25,6 +25,7 @@ kmpConfig {
         androidMain.dependencies {
             implementation(libs.androidx.core)
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.koin.android)
         }
     }
 }

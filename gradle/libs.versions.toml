@@ -92,9 +92,9 @@ arkivanov-essenty-lifecycle-coroutines = { group = "com.arkivanov.essenty", name
 arkivanov-essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty" }
 arkivanov-essenty-backHandler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "essenty" }
 
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-android = { group = "io.insert-koin", name = "koin-android" }
 
 gradleplugins-android = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 gradleplugins-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -121,7 +121,6 @@ empath-kmp-library-desktop = { id = "kmp.library.desktop" }
 empath-kmp-library-ios = { id = "kmp.library.ios" }
 
 empath-ktor = { id = "ktor" }
-empath-koin = { id = "koin" }
 
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }

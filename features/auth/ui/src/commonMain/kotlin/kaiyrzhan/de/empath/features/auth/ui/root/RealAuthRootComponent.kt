@@ -19,6 +19,7 @@ import kaiyrzhan.de.empath.features.auth.ui.password_recovery.RealPasswordRecove
 import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kaiyrzhan.de.empath.features.auth.ui.signUp.RealSignUpComponent
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.serializer
 
 public class RealAuthRootComponent(
     componentContext: ComponentContext,

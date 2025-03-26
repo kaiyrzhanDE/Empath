@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.empath.kmp.library.all)
     alias(libs.plugins.empath.compose.all)
-    alias(libs.plugins.empath.koin)
 }
 
 kotlin {
