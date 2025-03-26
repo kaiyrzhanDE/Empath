@@ -29,7 +29,7 @@ koin = "4.0.2"
 kermit = "2.0.3"
 ktorfit = "2.4.1"
 kotlin = "2.1.10"
-google-ksp = "2.1.10-1.0.30"
+google-ksp = "2.1.10-1.0.31"
 coil = "3.0.4"
 filekit = "0.10.0-beta01"
 
