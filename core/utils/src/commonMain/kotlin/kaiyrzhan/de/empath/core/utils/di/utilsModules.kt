@@ -8,8 +8,8 @@ import org.koin.dsl.module
 
 public expect val dataStoreModule: Module
 
-public val utilsModule: Module = module {
-    single { AppDispatchers() }
+public val utilsModule: Module = module(createdAtStart = true) {
+    single<AppDispatchers> { AppDispatchers() }
     factory<BaseLogger> { Logger() }
 }
 

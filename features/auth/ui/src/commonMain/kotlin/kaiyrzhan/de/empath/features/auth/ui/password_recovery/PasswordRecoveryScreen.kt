@@ -37,6 +37,7 @@ import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordReco
 import kaiyrzhan.de.empath.features.auth.ui.password_recovery.model.PasswordRecoveryState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun PasswordRecoveryScreen(
@@ -152,5 +153,13 @@ private fun PasswordRecoveryScreen(
         is PasswordRecoveryState.Error -> Unit
         is PasswordRecoveryState.Initial -> Unit
     }
+}
 
+@Preview
+@Composable
+private fun Preview(){
+    PasswordRecoveryScreen(
+        component = FakePasswordRecoveryComponent(),
+        modifier = Modifier.fillMaxSize(),
+    )
 }

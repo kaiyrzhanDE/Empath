@@ -26,6 +26,10 @@ android {
         checkDependencies = true
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     kotlinOptions {
         jvmTarget = libs.versions.jdkAndroid.get()
     }

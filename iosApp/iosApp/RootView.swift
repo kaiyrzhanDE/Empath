@@ -1,9 +1,9 @@
 import UIKit
 import SwiftUI
-import EmpathShared
+import EmpathApp
 
 struct RootView: UIViewControllerRepresentable {
-    let root: ComposeAppRootComponent
+    let root: RootComponent
     let backDispatcher: BackDispatcher
 
     func makeUIViewController(context: Context) -> UIViewController {

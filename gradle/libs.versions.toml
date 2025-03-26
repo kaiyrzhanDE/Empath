@@ -31,7 +31,7 @@ ktorfit = "2.3.0"
 kotlin = "2.1.10"
 google-ksp = "2.1.10-1.0.30"
 coil = "3.0.4"
-
+filekit = "0.10.0-beta01"
 
 [libraries]
 
@@ -79,6 +79,11 @@ ktorfit = { group = "de.jensklingenberg.ktorfit", name = "ktorfit-lib-light", ve
 
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
+
+filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "filekit" }
+filekit-coil = { group = "io.github.vinceglb", name = "filekit-coil", version.ref = "filekit" }
+filekit-dialogs = { group = "io.github.vinceglb", name = "filekit-dialogs", version.ref = "filekit" }
+filekit-dialogs-compose = { group = "io.github.vinceglb", name = "filekit-dialogs-compose", version.ref = "filekit" }
 
 arkivanov-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
 arkivanov-decompose-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }

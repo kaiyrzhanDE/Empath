@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.empath.kmp.library.all)
@@ -21,6 +20,15 @@ kotlin {
             api(libs.jetbrains.compose.adaptive)
             api(libs.jetbrains.compose.adaptive.layout)
             api(libs.jetbrains.compose.adaptive.navigation)
+
+            api(libs.filekit.core)
+            api(libs.filekit.coil)
+            api(libs.filekit.dialogs)
+            api(libs.filekit.dialogs.compose)
+
+            api(libs.coil.network.ktor)
+            api(libs.coil.compose)
+
             implementation(projects.core.utils)
 
         }

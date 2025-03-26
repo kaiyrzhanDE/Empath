@@ -9,6 +9,11 @@ kotlin {
             implementation(libs.kermit)
             api(libs.androidx.datastore)
             api(libs.androidx.datastore.preferences)
+
+            api(libs.filekit.core)
+            api(libs.filekit.coil)
+            api(libs.filekit.dialogs)
+            api(libs.filekit.dialogs.compose)
         }
     }
 }

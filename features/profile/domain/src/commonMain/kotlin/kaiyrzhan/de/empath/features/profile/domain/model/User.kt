@@ -12,10 +12,10 @@ public data class User(
     val patronymic: String,
     val dateOfBirth: Instant?,
     val gender: Gender,
-    val image: String,
+    val image: String?,
 ){
     public enum class Gender(public val value: String){
-        UNKNOWN("Unknown"),
+        OTHER("Other"),
         MALE("Male"),
         FEMALE("Female");
 

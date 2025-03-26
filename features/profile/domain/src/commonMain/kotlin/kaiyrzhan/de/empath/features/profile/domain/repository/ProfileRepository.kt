@@ -7,4 +7,6 @@ public interface ProfileRepository {
 
     public suspend fun getUser(): RequestResult<User>
 
+    public suspend fun editUser(user: User): RequestResult<Any>
+
 }

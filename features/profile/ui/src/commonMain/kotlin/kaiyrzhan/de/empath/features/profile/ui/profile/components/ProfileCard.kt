@@ -33,7 +33,7 @@ import org.jetbrains.compose.resources.painterResource
 internal fun ProfileCard(
     name: String,
     email: String,
-    imageUrl: String,
+    imageUrl: String?,
     onUserPageClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -82,16 +82,13 @@ internal fun ProfileCard(
 
 @Composable
 private fun ProfileImage(
-    imageUrl: String,
+    imageUrl: String?,
     modifier: Modifier = Modifier,
 ) {
     val userImagePainter = rememberAsyncImagePainter(
         model = imageUrl,
-        placeholder = painterResource(CoreRes.drawable.ic_account_circle),
-        error = painterResource(
-            resource = if (imageUrl.isNotBlank()) CoreRes.drawable.ic_error_filled
-            else CoreRes.drawable.ic_account_circle,
-        ),
+        fallback = painterResource(CoreRes.drawable.ic_account_circle),
+        error = painterResource(CoreRes.drawable.ic_error_filled),
     )
     val imageState = userImagePainter.state.collectAsState()
 

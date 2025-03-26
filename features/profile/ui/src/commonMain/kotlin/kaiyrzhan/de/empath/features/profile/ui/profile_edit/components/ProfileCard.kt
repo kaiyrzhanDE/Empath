@@ -12,20 +12,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
-import coil3.compose.rememberAsyncImagePainter
+import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.files.ifEmpty
 import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.core.uikit.generated.resources.ic_account_circle
-import empath.core.uikit.generated.resources.ic_error_filled
+import kaiyrzhan.de.empath.core.ui.files.toString
+import kaiyrzhan.de.empath.core.ui.files.rememberImagePainter
+import kaiyrzhan.de.empath.core.ui.files.rememberImagePicker
 import kaiyrzhan.de.empath.core.ui.modifiers.shimmerLoading
 import kaiyrzhan.de.empath.core.ui.modifiers.thenIf
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditEvent
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditState
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ProfileCard(
@@ -34,16 +38,21 @@ internal fun ProfileCard(
     state: ProfileEditState.Success,
     onEvent: (ProfileEditEvent) -> Unit,
 ) {
-    val image = state.editableUser.image
-    val userImagePainter = rememberAsyncImagePainter(
-        model = image,
+    val singleFilePicker = rememberImagePicker(
+        title = stringResource(CoreRes.string.select_photo),
+    ) { selectedFile ->
+        onEvent(ProfileEditEvent.PhotoSelect(selectedFile))
+    }
+
+    val imagePainter = rememberImagePainter(
+        model = state.selectedImage.ifEmpty { state.editableUser.image },
+        error = painterResource(CoreRes.drawable.ic_error_filled),
+        fallback = painterResource(CoreRes.drawable.ic_account_circle),
         placeholder = painterResource(CoreRes.drawable.ic_account_circle),
-        error = painterResource(
-            resource = if (image.isNotBlank()) CoreRes.drawable.ic_error_filled
-            else CoreRes.drawable.ic_account_circle,
-        ),
+        filterQuality = FilterQuality.High,
     )
-    val imageState = userImagePainter.state.collectAsState()
+
+    val imageState = imagePainter.state.collectAsState()
 
     Column(
         modifier = modifier,
@@ -58,7 +67,7 @@ internal fun ProfileCard(
                     Modifier.shimmerLoading()
                 }
                 .thenIf(imageState.value is AsyncImagePainter.State.Error) {
-                    Modifier.clickable { userImagePainter.restart() }
+                    Modifier.clickable { imagePainter.restart() }
                 }
                 .thenIf(imageState.value is AsyncImagePainter.State.Success) {
                     Modifier.border(
@@ -67,17 +76,14 @@ internal fun ProfileCard(
                         shape = EmpathTheme.shapes.full,
                     )
                 },
-            painter = userImagePainter,
+            painter = imagePainter,
+            contentDescription = stringResource(CoreRes.string.user_image),
             contentScale = ContentScale.Crop,
-            contentDescription = "User Image",
         )
         ImagePickerField(
             modifier = Modifier.fillMaxWidth(),
-            imageUrl = image,
-            onClick = {
-                TODO()
-//                onEvent(ProfileEditEvent.PhotoSelect())
-            },
+            selected = state.selectedImage.toString(),
+            onClick = { singleFilePicker.launch() },
             isLoading = state.isImageLoading,
         )
     }

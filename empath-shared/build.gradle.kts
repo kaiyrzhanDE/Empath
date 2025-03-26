@@ -6,17 +6,23 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.composeApp)
-            implementation(projects.core.uikit)
-            implementation(projects.core.network)
-            implementation(projects.core.utils)
+            api(projects.composeApp)
+            api(projects.core.uikit)
+            api(projects.core.network)
+            api(projects.core.utils)
 
-            implementation(projects.features.auth.ui)
+            api(projects.features.auth.ui)
+            api(projects.features.auth.domain)
+            api(projects.features.auth.data)
+
+            api(projects.features.profile.ui)
+            api(projects.features.profile.domain)
+            api(projects.features.profile.data)
 
             // Необходимо явно добавить все зависимости для работы
             // приложения на iOS, чтобы они попали в XCFramework
-            implementation(compose.runtime)
-            implementation(compose.ui)
+            api(compose.runtime)
+            api(compose.ui)
         }
     }
 }

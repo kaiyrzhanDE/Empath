@@ -31,7 +31,6 @@ import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
-import kaiyrzhan.de.empath.core.utils.format
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.components.ProfileCard
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.components.ProfileEditActions
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.components.ProfileEditTextFields

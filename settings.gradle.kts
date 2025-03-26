@@ -32,11 +32,8 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp")
-include(":empath-android")
-include(":empath-desktop")
-include(":empath-shared")
-project(":empath-shared").name = "EmpathShared"
+include(":EmpathApp")
+project(":EmpathApp").name = "EmpathApp"
 
 include(":features:auth:ui")
 include(":features:auth:domain")
@@ -45,7 +42,6 @@ include(":features:auth:data")
 include(":features:profile:ui")
 include(":features:profile:domain")
 include(":features:profile:data")
-
 
 include(":core:uikit")
 include(":core:utils")

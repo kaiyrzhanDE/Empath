@@ -8,23 +8,25 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import empath.core.uikit.generated.resources.cancel
+import empath.core.uikit.generated.resources.close
 import empath.core.uikit.generated.resources.okay
+import empath.core.uikit.generated.resources.unknown_error
+import empath.core.uikit.generated.resources.unknown_remote_error
+import io.github.vinceglb.filekit.PlatformFile
 import empath.core.uikit.generated.resources.Res as CoreRes
-import empath.features.profile.ui.generated.resources.select_date_of_birth
-import empath.features.profile.ui.generated.resources.Res as FeatureRes
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.DatePickerComponent
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.RealDatePickerComponent
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.model.DatePickerDialogState
 import kaiyrzhan.de.empath.core.ui.dialog.model.DialogActionConfig
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
-import kaiyrzhan.de.empath.core.utils.format
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
 import kaiyrzhan.de.empath.features.profile.domain.model.User
+import kaiyrzhan.de.empath.features.profile.domain.usecase.EditUserUseCase
 import kaiyrzhan.de.empath.features.profile.domain.usecase.GetUserUseCase
+import kaiyrzhan.de.empath.features.profile.ui.model.toDomain
 import kaiyrzhan.de.empath.features.profile.ui.model.toUi
-import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.FieldState
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditAction
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditEvent
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditState
@@ -44,6 +46,7 @@ internal class RealProfileEditComponent(
 ) : BaseComponent(componentContext), ProfileEditComponent {
 
     private val getUserUseCase: GetUserUseCase by inject()
+    private val editUserUseCase: EditUserUseCase by inject()
 
     override val state = MutableStateFlow<ProfileEditState>(
         ProfileEditState.default()
@@ -66,7 +69,7 @@ internal class RealProfileEditComponent(
 
     override fun onEvent(event: ProfileEditEvent) {
         when (event) {
-            is ProfileEditEvent.PhotoSelect -> selectPhoto(event.imageUrl)
+            is ProfileEditEvent.PhotoSelect -> selectPhoto(event.image)
             is ProfileEditEvent.NicknameChange -> changeNickname(event.nickname)
             is ProfileEditEvent.NameChange -> changeName(event.name)
             is ProfileEditEvent.LastnameChange -> changeLastname(event.lastname)
@@ -138,8 +141,13 @@ internal class RealProfileEditComponent(
         }
     }
 
-    private fun selectPhoto(imageUrl: String) {
-//        TODO("")
+    private fun selectPhoto(image: PlatformFile) {
+        state.update { currentState ->
+            check(currentState is ProfileEditState.Success)
+            currentState.copy(
+                selectedImage = image,
+            )
+        }
     }
 
     private fun changeNickname(nickname: String) {
@@ -218,7 +226,39 @@ internal class RealProfileEditComponent(
     }
 
     private fun save() {
+        val currentState = state.value
+        check(currentState is ProfileEditState.Success)
+        state.update { ProfileEditState.Loading }
+        coroutineScope.launch {
+            editUserUseCase(
+                user = currentState.editableUser.toDomain(),
+            ).onSuccess {
+                loadProfile()
+                _action.send(
+                    ProfileEditAction.ShowSnackbar(
+                        message = "Profile edited successfully"
+                    ),
+                )
+            }.onFailure { error ->
+                state.update { currentState }
+                when (error) {
+                    is Result.Error.UnknownError -> {
+                        _action.send(
+                            ProfileEditAction.ShowSnackbar(
+                                message = getString(CoreRes.string.unknown_error),
+                            ),
+                        )
+                    }
 
+                    is Result.Error.UnknownRemoteError -> {
+                        _action.send(
+                            ProfileEditAction.ShowSnackbar(
+                                message = getString(CoreRes.string.unknown_remote_error),
+                            ),
+                        )
+                    }
+                }
+            }
+        }
     }
-
 }

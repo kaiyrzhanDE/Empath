@@ -31,7 +31,7 @@ internal fun UserDTO.toDomain(): User {
         name = name.orEmpty(),
         patronymic = patronymic.orEmpty(),
         dateOfBirth = dateOfBirth.toInstantOrNull(),
-        gender = gender.toEnumSafe(Gender.UNKNOWN),
-        image = image.orEmpty(),
+        gender = gender.toEnumSafe(Gender.OTHER),
+        image = image,
     )
 }

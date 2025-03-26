@@ -1,8 +1,13 @@
 import SwiftUI
-import EmpathShared
+import EmpathApp
 
 @main
 struct iOSApp: App {
+    
+    init(){
+        InitKoinKt.doInitKoin()
+    }
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self)
     var appDelegate: AppDelegate
 
@@ -19,7 +24,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     var backDispatcher: BackDispatcher = BackDispatcherKt.BackDispatcher()
 
 
-    lazy var root: ComposeAppRootComponent = ComposeAppRealRootComponent(
+    lazy var root: RootComponent = RealRootComponent(
         componentContext: DefaultComponentContext(
             lifecycle: ApplicationLifecycle(),
             stateKeeper: stateKeeper,
@@ -29,12 +34,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     )
 
     func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
-//        StateKeeperUtilsKt.save(coder: coder, state: stateKeeper.save())
+        StateKeeperUtilsKt.save(coder: coder, state: stateKeeper.save())
         return true
     }
     
     func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
-//        stateKeeper = StateKeeperDispatcherKt.StateKeeperDispatcher(savedState: StateKeeperUtilsKt.restore(coder: coder))
+        stateKeeper = StateKeeperDispatcherKt.StateKeeperDispatcher(savedState: StateKeeperUtilsKt.restore(coder: coder))
         return true
     }
 }

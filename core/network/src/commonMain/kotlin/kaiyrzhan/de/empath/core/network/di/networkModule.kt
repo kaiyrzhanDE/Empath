@@ -11,7 +11,7 @@ import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-public val networkModule: Module = module {
+public val networkModule: Module = module(createdAtStart = true) {
     single {
         empathClient(
             logger = get<BaseLogger>(),

@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.profile.ui.profile_edit.model
 
+import io.github.vinceglb.filekit.PlatformFile
 import kaiyrzhan.de.empath.features.profile.ui.model.UserUi
 
 internal sealed class ProfileEditState {
@@ -9,6 +10,7 @@ internal sealed class ProfileEditState {
     data class Success(
         val originalUser: UserUi,
         val editableUser: UserUi = originalUser,
+        val selectedImage: PlatformFile? = null,
         val isImageLoading: Boolean = false,
     ) : ProfileEditState(){
         fun isUserChanged(): Boolean {

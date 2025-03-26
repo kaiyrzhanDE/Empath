@@ -83,10 +83,22 @@ public fun Instant?.toLocalDateTime(): LocalDateTime? {
     }
 }
 
-public fun Instant?.toIso(): String? {
+public enum class IsoType {
+    DATE_TIME,
+    DATE,
+    TIME,
+}
+
+public fun Instant?.toIso(type: IsoType = IsoType.DATE_TIME): String? {
     return try {
-        this?.toString()
+        val localDateTime = this?.toLocalDateTime(TimeZone.UTC)
+        when (type) {
+            IsoType.DATE_TIME -> localDateTime?.toString()
+            IsoType.DATE -> localDateTime?.date?.toString()
+            IsoType.TIME -> localDateTime?.time?.toString()
+        }
     } catch (_: Exception) {
-        "Invalid date"
+        null
     }
 }
+
