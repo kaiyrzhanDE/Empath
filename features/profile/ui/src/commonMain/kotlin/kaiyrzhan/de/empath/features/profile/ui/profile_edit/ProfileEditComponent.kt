@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.profile.ui.profile_edit
 
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.Value
+import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.DatePickerComponent
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditAction
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditEvent
@@ -9,7 +10,7 @@ import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditSta
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-internal interface ProfileEditComponent {
+internal interface ProfileEditComponent: BackHandlerOwner {
 
     val state: StateFlow<ProfileEditState>
 

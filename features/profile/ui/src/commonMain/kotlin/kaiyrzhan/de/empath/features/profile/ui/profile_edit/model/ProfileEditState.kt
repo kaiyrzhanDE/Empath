@@ -14,7 +14,7 @@ internal sealed class ProfileEditState {
         val isImageLoading: Boolean = false,
     ) : ProfileEditState(){
         fun isUserChanged(): Boolean {
-            return originalUser != editableUser
+            return originalUser != editableUser || selectedImage != null
         }
     }
 

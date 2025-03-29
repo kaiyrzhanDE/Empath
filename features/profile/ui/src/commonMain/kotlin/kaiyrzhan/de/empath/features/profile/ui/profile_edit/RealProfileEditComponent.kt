@@ -43,7 +43,7 @@ import org.koin.core.component.inject
 
 internal class RealProfileEditComponent(
     componentContext: ComponentContext,
-    private val onBackClick: () -> Unit,
+    private val onBackClick: (isProfileEdited: Boolean) -> Unit,
 ) : BaseComponent(componentContext), ProfileEditComponent {
 
     private val getUserUseCase: GetUserUseCase by inject()
@@ -77,7 +77,7 @@ internal class RealProfileEditComponent(
             is ProfileEditEvent.LastnameChange -> changeLastname(event.lastname)
             is ProfileEditEvent.PatronymicChange -> changePatronymic(event.patronymic)
             is ProfileEditEvent.GenderSelect -> selectGender(event.gender)
-            is ProfileEditEvent.BackClick -> onBackClick()
+            is ProfileEditEvent.BackClick -> backClick()
             is ProfileEditEvent.Save -> save()
             is ProfileEditEvent.Cancel -> cancel()
             is ProfileEditEvent.LoadProfile -> loadProfile()
@@ -119,6 +119,12 @@ internal class RealProfileEditComponent(
         }
     }
 
+    private fun backClick() {
+        when (val currentState = state.value) {
+            is ProfileEditState.Success -> onBackClick(currentState.isUserChanged())
+            else -> onBackClick(false)
+        }
+    }
 
     private fun loadProfile() {
         state.update { ProfileEditState.Loading }
@@ -238,6 +244,14 @@ internal class RealProfileEditComponent(
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {
+                    is UpdateUserImageUseCaseError.UserImageTooLarge -> {
+                        _action.send(
+                            ProfileEditAction.ShowSnackbar(
+                                message = getString(Res.string.user_image_too_large),
+                            ),
+                        )
+                    }
+
                     is Result.Error.DefaultError -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(
@@ -267,14 +281,6 @@ internal class RealProfileEditComponent(
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {
-                    is UpdateUserImageUseCaseError.UserImageTooLarge -> {
-                        _action.send(
-                            ProfileEditAction.ShowSnackbar(
-                                message = getString(Res.string.user_image_too_large),
-                            ),
-                        )
-                    }
-
                     is Result.Error.DefaultError -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(

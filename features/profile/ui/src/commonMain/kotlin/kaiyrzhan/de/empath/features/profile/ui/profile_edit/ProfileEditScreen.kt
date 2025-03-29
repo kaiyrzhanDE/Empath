@@ -29,6 +29,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.date_picker.DatePickerDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.navigation.BackHandler
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.components.ProfileCard
@@ -65,6 +66,10 @@ internal fun ProfileEditScreen(
                 }
             }
         }
+    }
+
+    BackHandler(component.backHandler) {
+        component.onEvent(ProfileEditEvent.BackClick)
     }
 
     ProfileEditScreen(
