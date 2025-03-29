@@ -7,12 +7,13 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.decompose.value.Value
+import kaiyrzhan.de.empath.core.network.token.Token
 import kaiyrzhan.de.empath.core.network.token.TokenProvider
+import kaiyrzhan.de.empath.core.network.token.isAuthorized
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.auth.ui.root.RealAuthRootComponent
 import kaiyrzhan.de.empath.main.RealMainRootComponent
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
@@ -64,10 +65,7 @@ public class RealRootComponent(
     }
 
     private fun getInitialConfig(): Config = runBlocking {
-        val token = tokenProvider
-            .getLocalToken()
-            .first()
-
+        val token: Token? = tokenProvider.getCurrentToken()
         return@runBlocking if (token.isAuthorized()) {
             Config.Main
         } else {
@@ -75,7 +73,7 @@ public class RealRootComponent(
         }
     }
 
-    private fun logOut(){
+    private fun logOut() {
         coroutineScope.launch {
             val result = tokenProvider.deleteLocalToken()
             logger.d(this.className(), "LogOut result: $result")

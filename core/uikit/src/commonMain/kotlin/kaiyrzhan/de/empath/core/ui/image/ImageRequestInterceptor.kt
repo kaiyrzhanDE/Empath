@@ -8,7 +8,6 @@ import coil3.network.httpHeaders
 import coil3.request.ImageResult
 import coil3.util.DebugLogger
 import kaiyrzhan.de.empath.core.network.token.TokenProvider
-import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
@@ -16,11 +15,11 @@ private class ImageRequestInterceptor : Interceptor, KoinComponent {
     val tokenProvider: TokenProvider = get()
 
     override suspend fun intercept(chain: Interceptor.Chain): ImageResult {
-        val bearerTokens = tokenProvider.getLocalToken().first()
+        val bearerTokens = tokenProvider.getCurrentToken()
         val originalRequest = chain.request
 
         val networkHeaders = NetworkHeaders.Builder()
-            .add("Authorization", "Bearer ${bearerTokens.accessToken}")
+            .add("Authorization", "Bearer ${bearerTokens?.accessToken.orEmpty()}")
             .build()
         val newRequest = originalRequest.newBuilder()
             .httpHeaders(networkHeaders)

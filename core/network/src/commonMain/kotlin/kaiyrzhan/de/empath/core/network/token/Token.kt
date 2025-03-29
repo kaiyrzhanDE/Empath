@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.core.network.token
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
 @Serializable
 public data class TokenEntity(
     @SerialName("accessToken") val accessToken: String? = null,
@@ -21,11 +22,12 @@ public fun Token.toData(): TokenEntity = TokenEntity(
 public data class Token(
     val accessToken: String,
     val refreshToken: String,
-){
-    public fun isAuthorized(): Boolean = accessToken.isNotBlank() && refreshToken.isNotBlank()
-
+) {
     override fun toString(): String {
         return "Token(accessToken='${accessToken.take(16)}...', refreshToken='${refreshToken.take(16)}...')"
     }
-
 }
+
+public fun Token?.isAuthorized(): Boolean =
+    this != null && accessToken.isNotBlank() && refreshToken.isNotBlank()
+

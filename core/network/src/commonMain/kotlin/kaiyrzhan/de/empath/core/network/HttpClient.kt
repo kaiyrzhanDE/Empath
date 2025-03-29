@@ -20,7 +20,7 @@ import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.serialization.json.Json
 
 internal const val KTOR_CLIENT = "KtorClient"
-internal const val TIME_OUT = 60_000L
+internal const val TIME_OUT = 120_000L
 
 internal val DefaultJson = Json {
     encodeDefaults = true

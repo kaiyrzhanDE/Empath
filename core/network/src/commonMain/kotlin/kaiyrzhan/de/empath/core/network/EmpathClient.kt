@@ -1,9 +1,11 @@
 package kaiyrzhan.de.empath.core.network
 
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
+import kaiyrzhan.de.empath.core.network.token.RefreshTokenException
 import kaiyrzhan.de.empath.core.network.token.TokenProvider
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.coroutines.flow.first
@@ -25,7 +27,7 @@ internal fun empathClient(
                         .run {
                             BearerTokens(
                                 accessToken = accessToken,
-                                refreshToken = refreshToken
+                                refreshToken = refreshToken,
                             )
                         }
                 }
@@ -38,6 +40,13 @@ internal fun empathClient(
                                 refreshToken = refreshToken,
                             )
                         }
+                }
+            }
+        }
+        HttpResponseValidator {
+            handleResponseExceptionWithRequest { exception, request ->
+                if (exception is RefreshTokenException) {
+                    tokenProvider.deleteLocalToken()
                 }
             }
         }

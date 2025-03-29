@@ -5,16 +5,17 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kaiyrzhan.de.empath.core.utils.datastore.DataStoreKeys
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
-import kaiyrzhan.de.empath.core.utils.result.StatusCode
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
-private const val TOKEN_PROVIDER = "TokenProvider"
 
 public interface TokenProvider {
     public suspend fun getLocalToken(): Flow<Token>
+
+    public suspend fun getCurrentToken(): Token?
 
     public suspend fun deleteLocalToken(): Boolean
 
@@ -37,27 +38,30 @@ internal class TokenProviderImpl(
                 refreshToken = dataStore[DataStoreKeys.USER_AUTH_REFRESH_TOKEN].orEmpty(),
             )
         }
-        logger.d(TOKEN_PROVIDER, "getLocalToken: ${token.first()}")
         return token
     }
 
+    override suspend fun getCurrentToken(): Token? {
+        val currentToken = getLocalToken().firstOrNull()
+        return currentToken
+    }
+
     override suspend fun deleteLocalToken(): Boolean {
-        logger.d(TOKEN_PROVIDER, "deleteLocalToken")
         return try {
-            logger.d(TOKEN_PROVIDER, "deleteLocalToken")
+            logger.d(this.className(), "deleteLocalToken")
             preferences.edit { dataStore ->
                 dataStore.remove(DataStoreKeys.USER_AUTH_ACCESS_TOKEN)
                 dataStore.remove(DataStoreKeys.USER_AUTH_REFRESH_TOKEN)
             }
             true
         } catch (exception: Exception) {
-            logger.d(TOKEN_PROVIDER, "Error occured while deleting token: ${exception.message}")
+            logger.d(this.className(), "Error occured while deleting token: ${exception.message}")
             false
         }
     }
 
     override suspend fun saveToken(token: Token) {
-        logger.d(TOKEN_PROVIDER, "saveToken $token")
+        logger.d(this.className(), "saveToken $token")
         preferences.edit { dataStore ->
             dataStore[DataStoreKeys.USER_AUTH_ACCESS_TOKEN] = token.accessToken
             dataStore[DataStoreKeys.USER_AUTH_REFRESH_TOKEN] = token.refreshToken
@@ -65,27 +69,23 @@ internal class TokenProviderImpl(
     }
 
     override suspend fun refreshToken(): Token {
-        val currentToken = getLocalToken().first().toData()
+        val currentToken = getCurrentToken()?.toData() ?: throw RefreshTokenException("Invalid refresh token")
         return when (val request = tokenApi.refreshToken(currentToken)) {
             is RequestResult.Success -> {
-                logger.d(TOKEN_PROVIDER, "refreshToken successfully: ${request.data}")
-                request.data.toDomain()
+                logger.d(this.className(), "refreshToken successfully: ${request.data}")
+                val token = request.data.toDomain()
+                saveToken(token)
+                token
             }
 
             is RequestResult.Failure.Error -> {
-                logger.d(TOKEN_PROVIDER, "refreshToken error: ${request.statusCode} - ${request.payload}")
-
-                if (request.statusCode == StatusCode.Unauthorized) {
-                    deleteLocalToken()
-                    throw AuthenticationException("Invalid refresh token")
-                }
-
-                throw RequestException("Token refresh failed: ${request.statusCode}")
+                logger.d(this.className(), "refreshToken error: ${request.statusCode} - ${request.payload}")
+                throw RefreshTokenException("Invalid refresh token")
             }
 
             is RequestResult.Failure.Exception -> {
-                logger.d(TOKEN_PROVIDER, "refreshToken exception: ${request.throwable.message}")
-                throw request.throwable
+                logger.d(this.className(), "refreshToken exception: ${request.throwable.message}")
+                throw RefreshTokenException("Invalid refresh token")
             }
         }
     }
