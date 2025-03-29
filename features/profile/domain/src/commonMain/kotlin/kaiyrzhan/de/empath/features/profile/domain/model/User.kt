@@ -12,9 +12,9 @@ public data class User(
     val patronymic: String,
     val dateOfBirth: Instant?,
     val gender: Gender,
-    val image: String?,
-){
-    public enum class Gender(public val value: String){
+    val imageUrl: String?,
+) {
+    public enum class Gender(public val value: String) {
         OTHER("Other"),
         MALE("Male"),
         FEMALE("Female");

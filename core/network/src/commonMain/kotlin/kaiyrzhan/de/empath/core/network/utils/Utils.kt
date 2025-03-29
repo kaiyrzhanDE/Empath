@@ -2,9 +2,16 @@ package kaiyrzhan.de.empath.core.network.utils
 
 import kaiyrzhan.de.empath.core.network.BASE_URL
 
-public fun String.addBaseUrl(baseUrl: String = BASE_URL): String {
-    return if (this.startsWith("http", ignoreCase = true)) this
-    else baseUrl.trimEnd('/') + "/" + this.trimStart('/')
+private const val FILE_STORAGE_BASE_URL = "${BASE_URL}api/v1/file-storage"
+
+public typealias Url = String
+
+public fun Url?.addBaseUrl(baseUrl: String = FILE_STORAGE_BASE_URL): String? {
+    return when {
+        isNullOrBlank() -> null
+        startsWith("http", ignoreCase = true) -> this
+        else -> baseUrl.trimEnd('/') + "/" + this.trimStart('/')
+    }
 }
 
 public inline fun <reified T : Enum<T>> String?.toEnumSafe(default: T): T {
@@ -12,6 +19,7 @@ public inline fun <reified T : Enum<T>> String?.toEnumSafe(default: T): T {
         type.name.equals(this, ignoreCase = true)
     } ?: default
 }
+
 
 
 

@@ -140,8 +140,8 @@ private fun LoadingCard(
 ) {
     CircularProgressIndicator(
         modifier = modifier.size(24.dp),
+        color = EmpathTheme.colors.primary,
         trackColor = EmpathTheme.colors.secondary,
         strokeCap = StrokeCap.Square,
-        color = EmpathTheme.colors.primary,
     )
 }

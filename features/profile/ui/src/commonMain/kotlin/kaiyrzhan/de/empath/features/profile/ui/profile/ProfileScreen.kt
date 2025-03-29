@@ -33,7 +33,6 @@ internal fun ProfileScreen(
     component: ProfileComponent,
     modifier: Modifier = Modifier,
 ) {
-
     val profileState = component.state.collectAsState()
 
     ProfileScreen(
@@ -72,7 +71,7 @@ private fun ProfileScreen(
                             .height(maxHeight.dp),
                         name = state.user.nickname,
                         email = state.user.email,
-                        imageUrl = state.user.image,
+                        imageUrl = state.user.imageUrl,
                         onUserPageClick = { onEvent(ProfileEvent.UserPageClick) },
                     )
                 }

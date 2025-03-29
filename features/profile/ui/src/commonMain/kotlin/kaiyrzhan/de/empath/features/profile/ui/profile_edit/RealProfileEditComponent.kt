@@ -10,6 +10,9 @@ import com.arkivanov.decompose.value.Value
 import empath.core.uikit.generated.resources.*
 import io.github.vinceglb.filekit.PlatformFile
 import empath.core.uikit.generated.resources.Res
+import io.github.vinceglb.filekit.extension
+import io.github.vinceglb.filekit.name
+import io.github.vinceglb.filekit.readBytes
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.DatePickerComponent
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.RealDatePickerComponent
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.model.DatePickerDialogState
@@ -21,6 +24,7 @@ import kaiyrzhan.de.empath.core.utils.result.onSuccess
 import kaiyrzhan.de.empath.features.profile.domain.model.User
 import kaiyrzhan.de.empath.features.profile.domain.usecase.EditUserUseCase
 import kaiyrzhan.de.empath.features.profile.domain.usecase.GetUserUseCase
+import kaiyrzhan.de.empath.features.profile.domain.usecase.UpdateUserImageUseCase
 import kaiyrzhan.de.empath.features.profile.ui.model.toDomain
 import kaiyrzhan.de.empath.features.profile.ui.model.toUi
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditAction
@@ -43,6 +47,7 @@ internal class RealProfileEditComponent(
 
     private val getUserUseCase: GetUserUseCase by inject()
     private val editUserUseCase: EditUserUseCase by inject()
+    private val updateUserImageUseCase: UpdateUserImageUseCase by inject()
 
     override val state = MutableStateFlow<ProfileEditState>(
         ProfileEditState.default()
@@ -137,15 +142,6 @@ internal class RealProfileEditComponent(
         }
     }
 
-    private fun selectPhoto(image: PlatformFile) {
-        state.update { currentState ->
-            check(currentState is ProfileEditState.Success)
-            currentState.copy(
-                selectedImage = image,
-            )
-        }
-    }
-
     private fun changeNickname(nickname: String) {
         state.update { currentState ->
             check(currentState is ProfileEditState.Success)
@@ -218,6 +214,50 @@ internal class RealProfileEditComponent(
             currentState.copy(
                 editableUser = currentState.originalUser,
             )
+        }
+    }
+
+    private fun selectPhoto(image: PlatformFile) {
+        val currentState = state.value
+        check(currentState is ProfileEditState.Success)
+        state.update {
+            currentState.copy(
+                isImageLoading = true,
+            )
+        }
+        coroutineScope.launch {
+            val imageBytes = image.readBytes()
+            updateUserImageUseCase(
+                image = imageBytes,
+                imageName = image.name,
+                imageType = image.extension,
+            ).onSuccess {
+                state.update {
+                    currentState.copy(
+                        isImageLoading = false,
+                        selectedImage = image,
+                    )
+                }
+            }.onFailure { error ->
+                state.update { currentState }
+                when (error) {
+                    is Result.Error.UnknownError -> {
+                        _action.send(
+                            ProfileEditAction.ShowSnackbar(
+                                message = getString(Res.string.unknown_error),
+                            ),
+                        )
+                    }
+
+                    is Result.Error.UnknownRemoteError -> {
+                        _action.send(
+                            ProfileEditAction.ShowSnackbar(
+                                message = getString(Res.string.unknown_remote_error),
+                            ),
+                        )
+                    }
+                }
+            }
         }
     }
 

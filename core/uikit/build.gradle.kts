@@ -30,7 +30,7 @@ kotlin {
             api(libs.coil.compose)
 
             implementation(projects.core.utils)
-
+            implementation(projects.core.network)
         }
     }
 }

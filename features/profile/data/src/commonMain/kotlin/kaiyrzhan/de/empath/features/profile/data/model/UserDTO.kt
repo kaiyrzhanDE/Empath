@@ -18,7 +18,7 @@ internal class UserDTO(
     @SerialName("patronymic") val patronymic: String?,
     @SerialName("date_birth") val dateOfBirth: String?,
     @SerialName("gender") val gender: String?,
-    @SerialName("image") val image: String?,
+    @SerialName("image") val imageUrl: String?,
 )
 
 internal fun UserDTO.toDomain(): User {
@@ -32,6 +32,6 @@ internal fun UserDTO.toDomain(): User {
         patronymic = patronymic.orEmpty(),
         dateOfBirth = dateOfBirth.toInstantOrNull(),
         gender = gender.toEnumSafe(Gender.OTHER),
-        image = image,
+        imageUrl = imageUrl,
     )
 }

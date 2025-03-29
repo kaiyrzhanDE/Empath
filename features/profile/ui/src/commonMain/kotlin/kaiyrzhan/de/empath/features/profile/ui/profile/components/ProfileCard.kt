@@ -17,13 +17,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
-import coil3.compose.rememberAsyncImagePainter
 import empath.core.uikit.generated.resources.Res as CoreRes
 import empath.core.uikit.generated.resources.*
+import empath.core.uikit.generated.resources.Res
+import kaiyrzhan.de.empath.core.ui.files.rememberImagePainter
 import kaiyrzhan.de.empath.core.ui.modifiers.shimmerLoading
 import kaiyrzhan.de.empath.core.ui.modifiers.thenIf
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -85,11 +87,14 @@ private fun ProfileImage(
     imageUrl: String?,
     modifier: Modifier = Modifier,
 ) {
-    val userImagePainter = rememberAsyncImagePainter(
+    val userImagePainter = rememberImagePainter(
         model = imageUrl,
-        fallback = painterResource(CoreRes.drawable.ic_account_circle),
-        error = painterResource(CoreRes.drawable.ic_error_filled),
+        error = painterResource(Res.drawable.ic_error_filled),
+        fallback = painterResource(Res.drawable.ic_account_circle),
+        placeholder = painterResource(Res.drawable.ic_account_circle),
+        filterQuality = FilterQuality.High,
     )
+
     val imageState = userImagePainter.state.collectAsState()
 
     Image(

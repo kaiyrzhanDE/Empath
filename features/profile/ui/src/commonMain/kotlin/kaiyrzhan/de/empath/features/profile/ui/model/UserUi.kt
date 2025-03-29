@@ -1,10 +1,18 @@
 package kaiyrzhan.de.empath.features.profile.ui.model
 
+import kaiyrzhan.de.empath.core.network.utils.addBaseUrl
 import kaiyrzhan.de.empath.core.utils.toInstantSafe
 import kaiyrzhan.de.empath.core.utils.toLocalDateTime
 import kaiyrzhan.de.empath.features.profile.domain.model.User
 import kaiyrzhan.de.empath.features.profile.domain.model.User.Gender
 import kotlinx.datetime.LocalDateTime
+
+internal typealias ImageUploadProgress = Pair<Long, Long>
+
+internal fun ImageUploadProgress.getProgress(): Float {
+    val (uploaded, total) = this
+    return if (total > 0) uploaded.toFloat() / total else 0f
+}
 
 internal data class UserUi(
     val id: String,
@@ -16,7 +24,7 @@ internal data class UserUi(
     val patronymic: String,
     val dateOfBirth: LocalDateTime?,
     val gender: Gender,
-    val image: String?,
+    val imageUrl: String?,
 )
 
 internal fun User.toUi(): UserUi {
@@ -30,7 +38,7 @@ internal fun User.toUi(): UserUi {
         patronymic = patronymic,
         dateOfBirth = dateOfBirth.toLocalDateTime(),
         gender = gender,
-        image = image,
+        imageUrl = imageUrl.addBaseUrl(),
     )
 }
 
@@ -45,6 +53,6 @@ internal fun UserUi.toDomain(): User {
         patronymic = patronymic,
         dateOfBirth = dateOfBirth.toInstantSafe(),
         gender = gender,
-        image = image,
+        imageUrl = imageUrl,
     )
 }

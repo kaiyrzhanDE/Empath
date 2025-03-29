@@ -9,4 +9,10 @@ public interface ProfileRepository {
 
     public suspend fun editUser(user: User): RequestResult<Any>
 
+    public suspend fun updateUserImage(
+        image: ByteArray,
+        imageName: String,
+        imageType: String,
+    ): RequestResult<Any>
+
 }

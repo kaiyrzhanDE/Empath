@@ -45,7 +45,7 @@ internal fun ProfileCard(
     }
 
     val imagePainter = rememberImagePainter(
-        model = state.selectedImage.ifEmpty { state.editableUser.image },
+        model = state.selectedImage.ifEmpty { state.editableUser.imageUrl },
         error = painterResource(Res.drawable.ic_error_filled),
         fallback = painterResource(Res.drawable.ic_account_circle),
         placeholder = painterResource(Res.drawable.ic_account_circle),
