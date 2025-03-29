@@ -51,7 +51,7 @@ public suspend fun <S> RequestResult<S>.onException(
     }
 }
 
-public inline fun <S, D> RequestResult<S>.map(
+public inline fun <S, D> RequestResult<S>.toDomain(
     onSuccess: (S) -> D,
 ): RequestResult<D> {
     return when (this) {

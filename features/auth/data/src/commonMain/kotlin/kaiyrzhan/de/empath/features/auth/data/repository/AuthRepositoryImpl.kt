@@ -3,7 +3,7 @@ package kaiyrzhan.de.empath.features.auth.data.repository
 import kaiyrzhan.de.empath.core.network.token.Token
 import kaiyrzhan.de.empath.core.network.token.toDomain
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
-import kaiyrzhan.de.empath.core.utils.result.map
+import kaiyrzhan.de.empath.core.utils.result.toDomain
 import kaiyrzhan.de.empath.features.auth.data.model.ForgetPasswordRequest
 import kaiyrzhan.de.empath.features.auth.data.model.LoginRequest
 import kaiyrzhan.de.empath.features.auth.data.model.SignUpRequest
@@ -19,7 +19,7 @@ internal class AuthRepositoryImpl(
         password: String
     ): RequestResult<Token> {
         return api.logIn(body = LoginRequest(email, password))
-            .map { token -> token.toDomain() }
+            .toDomain { token -> token.toDomain() }
     }
 
     override suspend fun sendSignUpCode(email: String): RequestResult<Any> {
@@ -44,6 +44,6 @@ internal class AuthRepositoryImpl(
         nickname: String
     ): RequestResult<Token> {
         return api.signUp(body = SignUpRequest(email, password, nickname))
-            .map { token -> token.toDomain() }
+            .toDomain { token -> token.toDomain() }
     }
 }

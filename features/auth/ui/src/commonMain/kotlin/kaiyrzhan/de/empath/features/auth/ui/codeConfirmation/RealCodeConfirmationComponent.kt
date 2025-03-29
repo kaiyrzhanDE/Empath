@@ -166,22 +166,11 @@ internal class RealCodeConfirmationComponent(
                         _action.send(CodeConfirmationAction.ShowSnackbar(getString(Res.string.invalid_code)))
                     }
 
-                    is Result.Error.UnknownError -> {
+                    is Result.Error.DefaultError -> {
                         showMessageDialog(
                             title = getString(Res.string.unknown_error),
-                            description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = DialogActionConfig(
-                                text = getString(Res.string.close),
-                            ),
-                        )
-                    }
-
-                    is Result.Error.UnknownRemoteError -> {
-                        showMessageDialog(
-                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
-                                isPrimary = false,
                                 text = getString(Res.string.close),
                             ),
                         )
@@ -225,22 +214,11 @@ internal class RealCodeConfirmationComponent(
                         )
                     }
 
-                    is Result.Error.UnknownError -> {
+                    is Result.Error.DefaultError -> {
                         showMessageDialog(
                             title = getString(Res.string.unknown_error),
-                            description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = DialogActionConfig(
-                                text = getString(Res.string.close),
-                            ),
-                        )
-                    }
-
-                    is Result.Error.UnknownRemoteError -> {
-                        showMessageDialog(
-                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
-                                isPrimary = false,
                                 text = getString(Res.string.close),
                             ),
                         )
@@ -277,22 +255,11 @@ internal class RealCodeConfirmationComponent(
                         )
                     }
 
-                    is Result.Error.UnknownError -> {
+                    is Result.Error.DefaultError -> {
                         showMessageDialog(
                             title = getString(Res.string.unknown_error),
-                            description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = DialogActionConfig(
-                                text = getString(Res.string.close),
-                            ),
-                        )
-                    }
-
-                    is Result.Error.UnknownRemoteError -> {
-                        showMessageDialog(
-                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
-                                isPrimary = false,
                                 text = getString(Res.string.close),
                             ),
                         )

@@ -11,7 +11,7 @@ public class VerifyCodeUseCase(
     public suspend operator fun invoke(email: String, code: String): Result<Any> {
         return repository
             .verifyCode(email, code)
-            .toDomain()
+            .toResult()
     }
 }
 
@@ -19,15 +19,15 @@ public sealed interface VerifyCodeUseCaseError : Result.Error {
     public data object InvalidCode : VerifyCodeUseCaseError
 }
 
-private fun RequestResult<Any>.toDomain(): Result<Any> {
-    return when (this) {
+private fun RequestResult<Any>.toResult(): Result<Any> {
+    return when (val result = this) {
         is RequestResult.Success -> Result.Success(data)
-        is RequestResult.Failure.Exception -> Result.Error.UnknownError(throwable)
+        is RequestResult.Failure.Exception -> Result.Error.DefaultError(result.toString())
         is RequestResult.Failure.Error -> {
             when (statusCode) {
                 StatusCode.BadRequest -> VerifyCodeUseCaseError.InvalidCode
                 StatusCode.UnProcessableEntity -> VerifyCodeUseCaseError.InvalidCode
-                else -> Result.Error.UnknownRemoteError(payload)
+                else -> Result.Error.DefaultError(result.toString())
             }
         }
     }

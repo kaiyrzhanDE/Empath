@@ -19,3 +19,12 @@ public suspend fun <S> Result<S>.onFailure(
         }
     }
 }
+
+public fun <T> RequestResult<T>.toResult(): Result<T> {
+    return when (val result = this) {
+        is RequestResult.Success -> Result.Success(data)
+        is RequestResult.Failure.Exception -> Result.Error.DefaultError(result.toString())
+        is RequestResult.Failure.Error -> Result.Error.DefaultError(result.toString())
+    }
+}
+

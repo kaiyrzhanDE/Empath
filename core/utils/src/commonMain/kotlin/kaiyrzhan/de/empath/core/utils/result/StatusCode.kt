@@ -69,4 +69,8 @@ public enum class StatusCode(public val code: Int) {
     NetworkAuthenticationRequired(511);
 
     public fun isSuccess(): Boolean = code in 200..299
+
+    override fun toString(): String {
+        return "Error code: $code"
+    }
 }

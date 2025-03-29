@@ -5,7 +5,7 @@ import io.ktor.client.request.forms.formData
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
-import kaiyrzhan.de.empath.core.utils.result.map
+import kaiyrzhan.de.empath.core.utils.result.toDomain
 import kaiyrzhan.de.empath.features.profile.data.model.toData
 import kaiyrzhan.de.empath.features.profile.data.model.toDomain
 import kaiyrzhan.de.empath.features.profile.data.remote.ProfileApi
@@ -19,7 +19,7 @@ internal class ProfileRepositoryImpl(
     override suspend fun getUser(): RequestResult<User> {
         return api
             .getUser()
-            .map { user -> user.toDomain() }
+            .toDomain { user -> user.toDomain() }
     }
 
     override suspend fun editUser(user: User): RequestResult<Any> {

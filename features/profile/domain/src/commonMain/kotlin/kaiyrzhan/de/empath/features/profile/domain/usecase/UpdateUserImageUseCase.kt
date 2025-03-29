@@ -3,6 +3,7 @@ package kaiyrzhan.de.empath.features.profile.domain.usecase
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.profile.domain.repository.ProfileRepository
 import kaiyrzhan.de.empath.core.utils.result.Result
+import kaiyrzhan.de.empath.core.utils.result.StatusCode
 
 public class UpdateUserImageUseCase(
     private val repository: ProfileRepository,
@@ -18,17 +19,21 @@ public class UpdateUserImageUseCase(
                 imageName = imageName,
                 imageType = imageType,
             )
-            .toDomain()
+            .toResult()
     }
 }
 
-public sealed interface UpdateUserImageUseCaseError : Result.Error
+public sealed class UpdateUserImageUseCaseError : Result.Error {
+    public data object UserImageTooLarge : UpdateUserImageUseCaseError()
+}
 
-private fun RequestResult<Any>.toDomain(): Result<Any> {
-    return when (this) {
+public fun RequestResult<Any>.toResult(): Result<Any> {
+    return when (val result = this) {
         is RequestResult.Success -> Result.Success(data)
-        is RequestResult.Failure.Exception -> Result.Error.UnknownError(throwable)
-        is RequestResult.Failure.Error -> Result.Error.UnknownRemoteError(payload)
+        is RequestResult.Failure.Exception -> Result.Error.DefaultError(result.toString())
+        is RequestResult.Failure.Error -> when (result.statusCode) {
+            StatusCode.PayloadTooLarge -> UpdateUserImageUseCaseError.UserImageTooLarge
+            else -> Result.Error.DefaultError(result.toString())
+        }
     }
 }
-

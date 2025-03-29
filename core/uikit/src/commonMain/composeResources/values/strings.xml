@@ -98,5 +98,7 @@
     <string name="select_gender">Select gender</string>
 
     <string name="profile_edit_successfully">Profile edited successfully</string>
+    <string name="user_image_too_large">The selected image exceeds the maximum allowed size. Please choose a smaller image.</string>
+
 
 </resources>

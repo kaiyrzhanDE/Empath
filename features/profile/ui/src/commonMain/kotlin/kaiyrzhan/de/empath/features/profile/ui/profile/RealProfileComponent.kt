@@ -55,12 +55,8 @@ internal class RealProfileComponent(
                 }
             }.onFailure { error ->
                 when (error) {
-                    is Result.Error.UnknownError -> {
-                        state.update { ProfileState.Error(getString(Res.string.unknown_error)) }
-                    }
-
-                    is Result.Error.UnknownRemoteError -> {
-                        state.update { ProfileState.Error(getString(Res.string.unknown_remote_error)) }
+                    is Result.Error.DefaultError -> {
+                        state.update { ProfileState.Error(message = getString(Res.string.unknown_error)) }
                     }
                 }
             }

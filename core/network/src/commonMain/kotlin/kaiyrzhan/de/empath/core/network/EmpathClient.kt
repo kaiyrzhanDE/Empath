@@ -8,7 +8,6 @@ import kaiyrzhan.de.empath.core.network.token.TokenProvider
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
 import kotlinx.coroutines.flow.first
 
-internal const val BASE_URL = "http://45.139.78.34/"
 
 internal fun empathClient(
     tokenProvider: TokenProvider,

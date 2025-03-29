@@ -9,6 +9,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.network)
+                implementation(projects.core.utils)
                 implementation(projects.features.profile.domain)
             }
         }

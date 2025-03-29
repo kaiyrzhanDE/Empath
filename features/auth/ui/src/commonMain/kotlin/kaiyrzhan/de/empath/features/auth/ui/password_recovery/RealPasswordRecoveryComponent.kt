@@ -196,22 +196,11 @@ internal class RealPasswordRecoveryComponent(
                         _action.send(PasswordRecoveryAction.ShowSnackbar(getString(Res.string.invalid_email_or_password)))
                     }
 
-                    is Result.Error.UnknownError -> {
+                    is Result.Error.DefaultError -> {
                         showMessageDialog(
                             title = getString(Res.string.unknown_error),
-                            description = error.throwable.message.orEmpty(),
-                            dismissActionConfig = DialogActionConfig(
-                                text = getString(Res.string.close),
-                            ),
-                        )
-                    }
-
-                    is Result.Error.UnknownRemoteError -> {
-                        showMessageDialog(
-                            title = getString(Res.string.unknown_remote_error),
                             description = error.toString(),
                             dismissActionConfig = DialogActionConfig(
-                                isPrimary = false,
                                 text = getString(Res.string.close),
                             ),
                         )

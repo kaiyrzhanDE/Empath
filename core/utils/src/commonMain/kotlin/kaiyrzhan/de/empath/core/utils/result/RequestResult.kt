@@ -14,7 +14,7 @@ public sealed interface RequestResult<out S> {
         ) : Failure {
 
             override fun toString(): String {
-                return payload.toString()
+                return payload?.toString() ?: statusCode.toString()
             }
         }
 

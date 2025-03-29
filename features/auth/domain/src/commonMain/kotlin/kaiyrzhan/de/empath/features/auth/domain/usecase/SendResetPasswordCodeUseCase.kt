@@ -10,7 +10,7 @@ public class SendResetPasswordCodeUseCase(
 ) {
     public suspend operator fun invoke(email: String): Result<Any>{
         return repository.sendResetPasswordCode(email)
-            .toDomain()
+            .toResult()
     }
 }
 
@@ -20,16 +20,16 @@ public sealed interface SendResetPasswordCodeUseCaseError : Result.Error{
     public data object EmailIsNotRegistered : SendResetPasswordCodeUseCaseError
 }
 
-private fun RequestResult<Any>.toDomain(): Result<Any> {
-    return when (this) {
+private fun RequestResult<Any>.toResult(): Result<Any> {
+    return when (val result = this) {
         is RequestResult.Success -> Result.Success(data)
-        is RequestResult.Failure.Exception -> Result.Error.UnknownError(throwable)
+        is RequestResult.Failure.Exception -> Result.Error.DefaultError(result.toString())
         is RequestResult.Failure.Error -> {
             when (statusCode) {
                 StatusCode.TooManyRequests -> SendResetPasswordCodeUseCaseError.TooManyResetPasswordAttempts
                 StatusCode.UnProcessableEntity -> SendResetPasswordCodeUseCaseError.InvalidEmail
                 StatusCode.Conflict -> SendResetPasswordCodeUseCaseError.EmailIsNotRegistered
-                else -> Result.Error.UnknownRemoteError(payload)
+                else -> Result.Error.DefaultError(result.toString())
             }
         }
     }

@@ -14,7 +14,7 @@ public class ResetPasswordUseCase(
     ): Result<Any> {
         return repository
             .resetPassword(email, password)
-            .toDomain()
+            .toResult()
     }
 }
 
@@ -22,14 +22,14 @@ public sealed class ResetPasswordUseCaseError : Result.Error {
     public data object InvalidPasswordOrEmail : ResetPasswordUseCaseError()
 }
 
-private fun RequestResult<Any>.toDomain(): Result<Any> {
-    return when (this) {
+private fun RequestResult<Any>.toResult(): Result<Any> {
+    return when (val result = this) {
         is RequestResult.Success -> Result.Success(data)
-        is RequestResult.Failure.Exception -> Result.Error.UnknownError(throwable)
+        is RequestResult.Failure.Exception -> Result.Error.DefaultError(result.toString())
         is RequestResult.Failure.Error -> {
             when (statusCode) {
                 StatusCode.UnProcessableEntity -> ResetPasswordUseCaseError.InvalidPasswordOrEmail
-                else -> Result.Error.UnknownRemoteError(payload)
+                else -> Result.Error.DefaultError(result.toString())
             }
         }
     }

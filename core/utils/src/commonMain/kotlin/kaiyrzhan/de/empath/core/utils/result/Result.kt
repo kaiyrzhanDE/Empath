@@ -6,20 +6,14 @@ public sealed interface Result<out S> {
     ) : Result<S>
 
     public interface Error : Result<Nothing> {
-        public data class UnknownError(
-            public val throwable: Throwable
+
+        public data class DefaultError(
+            public val message: String,
         ) : Error {
             override fun toString(): String {
-                return throwable.message.orEmpty()
+                return message
             }
         }
 
-        public data class UnknownRemoteError(
-            public val payload: Any? = null,
-        ) : Error {
-            override fun toString(): String {
-                return payload.toString()
-            }
-        }
     }
 }

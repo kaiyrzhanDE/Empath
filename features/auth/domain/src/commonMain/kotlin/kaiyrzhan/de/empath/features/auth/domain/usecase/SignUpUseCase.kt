@@ -18,7 +18,7 @@ public class SignUpUseCase(
     ): Result<Any> {
         return repository.signUp(email, password, nickname)
             .onSuccess { token -> tokenProvider.saveToken(token) }
-            .toDomain()
+            .toResult()
     }
 
 }
@@ -27,14 +27,14 @@ public sealed class SignUpUseCaseError : Result.Error {
     public data object InvalidEmailOrPassword : SignUpUseCaseError()
 }
 
-private fun RequestResult<Any>.toDomain(): Result<Any> {
-    return when (this) {
+private fun RequestResult<Any>.toResult(): Result<Any> {
+    return when (val result = this) {
         is RequestResult.Success -> Result.Success(data)
-        is RequestResult.Failure.Exception -> Result.Error.UnknownError(throwable)
+        is RequestResult.Failure.Exception -> Result.Error.DefaultError(result.toString())
         is RequestResult.Failure.Error -> {
             when (statusCode) {
                 StatusCode.UnProcessableEntity -> SignUpUseCaseError.InvalidEmailOrPassword
-                else -> Result.Error.UnknownRemoteError(payload)
+                else -> Result.Error.DefaultError(result.toString())
             }
         }
     }

@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import de.jensklingenberg.ktorfit.Ktorfit
 import de.jensklingenberg.ktorfit.ktorfit
 import io.ktor.client.HttpClient
-import kaiyrzhan.de.empath.core.network.BASE_URL
 import kaiyrzhan.de.empath.core.network.defaultHttpClient
 import kaiyrzhan.de.empath.core.network.result.RequestResultConverterFactory
 import kaiyrzhan.de.empath.core.network.token.TokenApi
@@ -13,6 +12,7 @@ import kaiyrzhan.de.empath.core.network.token.TokenProvider
 import kaiyrzhan.de.empath.core.network.token.TokenProviderImpl
 import kaiyrzhan.de.empath.core.network.token.createTokenApi
 import kaiyrzhan.de.empath.core.utils.logger.BaseLogger
+import kaiyrzhan.de.empath.core.utils.result.BASE_URL
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

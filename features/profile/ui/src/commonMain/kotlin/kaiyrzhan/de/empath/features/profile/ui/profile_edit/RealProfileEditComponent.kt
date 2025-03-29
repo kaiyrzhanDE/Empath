@@ -25,6 +25,7 @@ import kaiyrzhan.de.empath.features.profile.domain.model.User
 import kaiyrzhan.de.empath.features.profile.domain.usecase.EditUserUseCase
 import kaiyrzhan.de.empath.features.profile.domain.usecase.GetUserUseCase
 import kaiyrzhan.de.empath.features.profile.domain.usecase.UpdateUserImageUseCase
+import kaiyrzhan.de.empath.features.profile.domain.usecase.UpdateUserImageUseCaseError
 import kaiyrzhan.de.empath.features.profile.ui.model.toDomain
 import kaiyrzhan.de.empath.features.profile.ui.model.toUi
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditAction
@@ -130,11 +131,7 @@ internal class RealProfileEditComponent(
                 }
             }.onFailure { error ->
                 when (error) {
-                    is Result.Error.UnknownError -> {
-                        state.update { ProfileEditState.Error(error.toString()) }
-                    }
-
-                    is Result.Error.UnknownRemoteError -> {
+                    is Result.Error.DefaultError -> {
                         state.update { ProfileEditState.Error(error.toString()) }
                     }
                 }
@@ -241,18 +238,10 @@ internal class RealProfileEditComponent(
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {
-                    is Result.Error.UnknownError -> {
+                    is Result.Error.DefaultError -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(
                                 message = getString(Res.string.unknown_error),
-                            ),
-                        )
-                    }
-
-                    is Result.Error.UnknownRemoteError -> {
-                        _action.send(
-                            ProfileEditAction.ShowSnackbar(
-                                message = getString(Res.string.unknown_remote_error),
                             ),
                         )
                     }
@@ -278,18 +267,18 @@ internal class RealProfileEditComponent(
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {
-                    is Result.Error.UnknownError -> {
+                    is UpdateUserImageUseCaseError.UserImageTooLarge -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(
-                                message = getString(Res.string.unknown_error),
+                                message = getString(Res.string.user_image_too_large),
                             ),
                         )
                     }
 
-                    is Result.Error.UnknownRemoteError -> {
+                    is Result.Error.DefaultError -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(
-                                message = getString(Res.string.unknown_remote_error),
+                                message = getString(Res.string.unknown_error),
                             ),
                         )
                     }

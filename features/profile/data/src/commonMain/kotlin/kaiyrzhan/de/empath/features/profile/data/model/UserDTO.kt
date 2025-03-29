@@ -1,6 +1,6 @@
 package kaiyrzhan.de.empath.features.profile.data.model
 
-import kaiyrzhan.de.empath.core.network.utils.toEnumSafe
+import kaiyrzhan.de.empath.core.utils.toEnumSafe
 import kaiyrzhan.de.empath.core.utils.toInstantOrNull
 import kaiyrzhan.de.empath.features.profile.domain.model.User
 import kaiyrzhan.de.empath.features.profile.domain.model.User.Gender
