@@ -13,7 +13,7 @@ internal data class UserEditRequest(
     @SerialName("name") val name: String?,
     @SerialName("lastname") val lastname: String?,
     @SerialName("patronymic") val patronymic: String?,
-    @SerialName("dateOfBirth") val dateOfBirth: String?,
+    @SerialName("date_birth") val dateOfBirth: String?,
 )
 
 private fun String.orNull(): String? {

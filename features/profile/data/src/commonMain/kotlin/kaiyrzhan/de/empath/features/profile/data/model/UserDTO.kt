@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.profile.data.model
 
+import kaiyrzhan.de.empath.core.utils.DatePattern
 import kaiyrzhan.de.empath.core.utils.toEnumSafe
 import kaiyrzhan.de.empath.core.utils.toInstantOrNull
 import kaiyrzhan.de.empath.features.profile.domain.model.User
@@ -30,7 +31,7 @@ internal fun UserDTO.toDomain(): User {
         lastname = lastname.orEmpty(),
         name = name.orEmpty(),
         patronymic = patronymic.orEmpty(),
-        dateOfBirth = dateOfBirth.toInstantOrNull(),
+        dateOfBirth = dateOfBirth.toInstantOrNull(pattern = DatePattern.DATE),
         gender = gender.toEnumSafe(Gender.OTHER),
         imageUrl = imageUrl,
     )

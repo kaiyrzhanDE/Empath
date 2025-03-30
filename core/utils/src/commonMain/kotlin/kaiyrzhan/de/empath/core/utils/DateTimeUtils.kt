@@ -32,10 +32,28 @@ public val datePattern: DateTimeFormat<LocalDateTime> by lazy {
     }
 }
 
-public fun String?.toInstantOrNull(): Instant? {
+public enum class DatePattern {
+    DATE,
+    DATE_TIME,
+}
+
+public fun String?.toInstantOrNull(
+    pattern: DatePattern = DatePattern.DATE_TIME,
+): Instant? {
     return try {
         this?.takeIf { dateTime -> dateTime.isNotBlank() }
-            ?.let { Instant.parse(it) }
+            ?.let { dateTime ->
+                when (pattern) {
+                    DatePattern.DATE_TIME -> {
+                        Instant.parse(dateTime)
+                    }
+
+                    DatePattern.DATE -> {
+                        val localDate = LocalDate.parse(dateTime)
+                        localDate.atStartOfDayIn(TimeZone.UTC)
+                    }
+                }
+            }
     } catch (_: Exception) {
         null
     }

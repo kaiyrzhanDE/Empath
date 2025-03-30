@@ -13,7 +13,7 @@ import kaiyrzhan.de.empath.features.profile.domain.model.User
 import kaiyrzhan.de.empath.features.profile.domain.repository.ProfileRepository
 
 internal class ProfileRepositoryImpl(
-    private val api: ProfileApi
+    private val api: ProfileApi,
 ) : ProfileRepository {
 
     override suspend fun getUser(): RequestResult<User> {
