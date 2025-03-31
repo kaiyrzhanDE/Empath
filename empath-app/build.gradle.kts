@@ -21,6 +21,12 @@ kotlin {
             api(projects.features.profile.data)
             api(projects.features.profile.domain)
             api(projects.features.profile.ui)
+
+            api(projects.features.articles.data)
+            api(projects.features.articles.domain)
+
+            api(projects.features.fileStorage.data)
+            api(projects.features.fileStorage.domain)
         }
 
         androidMain.dependencies {

@@ -26,6 +26,10 @@ kmpConfig {
                 export(libs.arkivanov.essenty.stateKeeper)
                 export(libs.arkivanov.essenty.backHandler)
 
+                export(project(":core:uikit"))
+                export(project(":core:utils"))
+                export(project(":core:network"))
+
                 export(project(":features:auth:ui"))
                 export(project(":features:auth:domain"))
                 export(project(":features:auth:data"))
@@ -34,9 +38,12 @@ kmpConfig {
                 export(project(":features:profile:domain"))
                 export(project(":features:profile:data"))
 
-                export(project(":core:uikit"))
-                export(project(":core:utils"))
-                export(project(":core:network"))
+                export(project(":features:articles:domain"))
+                export(project(":features:articles:data"))
+
+                export(project(":features:file-storage:domain"))
+                export(project(":features:file-storage:data"))
+
             }
         }
 }

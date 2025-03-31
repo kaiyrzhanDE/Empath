@@ -27,7 +27,7 @@ public sealed class UpdateUserImageUseCaseError : Result.Error {
     public data object UserImageTooLarge : UpdateUserImageUseCaseError()
 }
 
-public fun RequestResult<Any>.toResult(): Result<Any> {
+private fun RequestResult<Any>.toResult(): Result<Any> {
     return when (val result = this) {
         is RequestResult.Success -> Result.Success(data)
         is RequestResult.Failure.Exception -> Result.Error.DefaultError(result.toString())
