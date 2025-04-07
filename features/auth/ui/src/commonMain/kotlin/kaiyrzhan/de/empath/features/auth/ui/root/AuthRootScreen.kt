@@ -38,7 +38,7 @@ public fun AuthRootScreen(
             modifier = modifier.fillMaxSize(),
             animation = predictiveBackAnimation(
                 backHandler = component.backHandler,
-                onBack = { component.onBackClick() },
+                onBack = component::onBackClick,
                 fallbackAnimation = stackAnimation(swipe()),
             ),
         )
@@ -54,7 +54,7 @@ public fun AuthRootScreen(
                 modifier = modifier.weight(1f),
                 animation = predictiveBackAnimation(
                     backHandler = component.backHandler,
-                    onBack = { component.onBackClick() },
+                    onBack = component::onBackClick,
                     fallbackAnimation = stackAnimation(fade()),
                 ),
             )

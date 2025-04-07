@@ -32,6 +32,7 @@ kotlin = "2.1.10"
 google-ksp = "2.1.10-1.0.31"
 coil = "3.0.4"
 filekit = "0.10.0-beta01"
+paging = "3.3.0-alpha02-0.5.1"
 
 [libraries]
 
@@ -79,6 +80,9 @@ ktorfit = { group = "de.jensklingenberg.ktorfit", name = "ktorfit-lib-light", ve
 
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
+
+paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
+paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
 
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "filekit" }
 filekit-coil = { group = "io.github.vinceglb", name = "filekit-coil", version.ref = "filekit" }

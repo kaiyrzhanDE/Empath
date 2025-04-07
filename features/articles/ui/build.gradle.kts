@@ -8,6 +8,9 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.features.articles.domain)
+                implementation(projects.features.profile.domain)
+                implementation(projects.features.fileStorage.domain)
+                implementation(libs.paging.compose)
             }
         }
     }

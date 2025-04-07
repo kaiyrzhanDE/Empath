@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DatePicker
@@ -30,6 +29,8 @@ import kaiyrzhan.de.empath.core.ui.dialog.components.DialogActionButton
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.model.DatePickerDialogEvent
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.model.DatePickerDialogState
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
+import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
+import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.toLong
 import kotlinx.coroutines.launch
@@ -51,7 +52,7 @@ public fun DatePickerDialog(
         )
     } else {
         DatePickerModalDialog(
-            modifier = modifier,
+            modifier = modifier.screenPadding(PaddingType.DIALOG),
             state = state.value,
             onEvent = component::onEvent,
         )
@@ -66,11 +67,10 @@ private fun DatePickerModalDialog(
     onEvent: (DatePickerDialogEvent) -> Unit,
 ) {
     Box(
-        modifier = Modifier.padding(24.dp),
         contentAlignment = Alignment.Center,
     ) {
         androidx.compose.material3.DatePickerDialog(
-            modifier = modifier.padding(24.dp),
+            modifier = modifier,
             onDismissRequest = { onEvent(DatePickerDialogEvent.DismissClick) },
             shape = EmpathTheme.shapes.medium,
             dismissButton = {

@@ -10,12 +10,10 @@ public class GetCommentsUseCase(
     private val repository: ArticlesRepository,
 ) {
     public suspend operator fun invoke(
-        page: Int,
         articleId: String,
     ): Result<ListResult<Comment>> {
         return repository
             .getComments(
-                page = page,
                 articleId = articleId,
             )
             .toResult()

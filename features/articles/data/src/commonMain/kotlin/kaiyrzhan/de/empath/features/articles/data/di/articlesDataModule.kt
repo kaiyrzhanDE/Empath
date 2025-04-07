@@ -1,6 +1,7 @@
 package kaiyrzhan.de.empath.features.articles.data.di
 
 import de.jensklingenberg.ktorfit.Ktorfit
+import kaiyrzhan.de.empath.features.articles.data.pagingSource.ArticlesPagingSource
 import kaiyrzhan.de.empath.features.articles.data.remote.ArticlesApi
 import kaiyrzhan.de.empath.features.articles.data.remote.createArticlesApi
 import kaiyrzhan.de.empath.features.articles.data.repository.ArticlesRepositoryImpl

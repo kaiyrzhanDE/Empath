@@ -247,7 +247,7 @@ internal class RealProfileEditComponent(
                     is UpdateUserImageUseCaseError.UserImageTooLarge -> {
                         _action.send(
                             ProfileEditAction.ShowSnackbar(
-                                message = getString(Res.string.user_image_too_large),
+                                message = getString(Res.string.file_too_large),
                             ),
                         )
                     }

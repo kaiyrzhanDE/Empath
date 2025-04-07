@@ -2,7 +2,9 @@ package kaiyrzhan.de.empath.features.articles.data.model
 
 import kaiyrzhan.de.empath.features.articles.domain.model.Article
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class ArticleDTO(
     @SerialName("id") val id: String,
     @SerialName("title") val title: String?,

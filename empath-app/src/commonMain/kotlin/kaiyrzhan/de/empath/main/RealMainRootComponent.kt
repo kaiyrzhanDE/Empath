@@ -10,7 +10,8 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
-import kaiyrzhan.de.empath.features.profile.ui.root.RealRootProfileComponent
+import kaiyrzhan.de.empath.features.articles.ui.root.RealArticlesRootComponent
+import kaiyrzhan.de.empath.features.profile.ui.root.RealProfileRootComponent
 import kotlinx.serialization.Serializable
 
 internal class RealMainRootComponent(
@@ -30,7 +31,7 @@ internal class RealMainRootComponent(
 
     override fun onProfileTabClick() = navigation.bringToFront(Config.Profile)
 
-    override fun onStudyTabClick() = navigation.bringToFront(Config.Study)
+    override fun onArticlesTabClick() = navigation.bringToFront(Config.Articles)
 
     override fun onMenuTabClick() = navigation.bringToFront(Config.Menu)
 
@@ -45,7 +46,7 @@ internal class RealMainRootComponent(
         logger.d(this.className(), "Main child: $config")
         return when (config) {
             is Config.Profile -> createProfileComponent(componentContext)
-            is Config.Study -> createStudyComponent(componentContext)
+            is Config.Articles -> createArticlesComponent(componentContext)
             is Config.Menu -> createMenuComponent(componentContext)
             is Config.Analytics -> createAnalyticsComponent(componentContext)
             is Config.Vacancies -> createVacanciesComponent(componentContext)
@@ -54,26 +55,38 @@ internal class RealMainRootComponent(
 
     private fun createProfileComponent(componentContext: ComponentContext): MainRootComponent.Child.Profile {
         return MainRootComponent.Child.Profile(
-            RealRootProfileComponent(
+            RealProfileRootComponent(
                 componentContext = componentContext,
                 onLogOutClick = onLogOutClick,
             )
         )
     }
 
-    private fun createStudyComponent(componentContext: ComponentContext): MainRootComponent.Child.Study {
-        return MainRootComponent.Child.Study()
+    private fun createArticlesComponent(
+        componentContext: ComponentContext,
+    ): MainRootComponent.Child.Articles {
+        return MainRootComponent.Child.Articles(
+            RealArticlesRootComponent(
+                componentContext = componentContext,
+            )
+        )
     }
 
-    private fun createMenuComponent(componentContext: ComponentContext): MainRootComponent.Child.Menu {
+    private fun createMenuComponent(
+        componentContext: ComponentContext,
+    ): MainRootComponent.Child.Menu {
         return MainRootComponent.Child.Menu()
     }
 
-    private fun createAnalyticsComponent(componentContext: ComponentContext): MainRootComponent.Child.Analytics {
+    private fun createAnalyticsComponent(
+        componentContext: ComponentContext,
+    ): MainRootComponent.Child.Analytics {
         return MainRootComponent.Child.Analytics()
     }
 
-    private fun createVacanciesComponent(componentContext: ComponentContext): MainRootComponent.Child.Vacancies {
+    private fun createVacanciesComponent(
+        componentContext: ComponentContext,
+    ): MainRootComponent.Child.Vacancies {
         return MainRootComponent.Child.Vacancies()
     }
 
@@ -83,7 +96,7 @@ internal class RealMainRootComponent(
         data object Profile : Config
 
         @Serializable
-        data object Study : Config
+        data object Articles : Config
 
         @Serializable
         data object Menu : Config

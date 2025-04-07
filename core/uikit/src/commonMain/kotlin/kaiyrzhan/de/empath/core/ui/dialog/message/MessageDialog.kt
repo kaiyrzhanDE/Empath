@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,6 +25,8 @@ import kaiyrzhan.de.empath.core.ui.dialog.components.DialogActionButton
 import kaiyrzhan.de.empath.core.ui.dialog.model.DialogEvent
 import kaiyrzhan.de.empath.core.ui.dialog.message.model.MessageDialogState
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
+import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
+import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kotlinx.coroutines.launch
 
@@ -47,7 +48,7 @@ public fun MessageDialog(
         MessageDialog(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(24.dp),
+                .screenPadding(PaddingType.DIALOG),
             state = state.value,
             onEvent = component::onEvent,
         )
@@ -105,7 +106,7 @@ private fun MessageBottomSheetDialog(
         MessageDialogContent(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp),
+                .screenPadding(PaddingType.DIALOG),
             state = state,
             onEvent = onEvent,
         )

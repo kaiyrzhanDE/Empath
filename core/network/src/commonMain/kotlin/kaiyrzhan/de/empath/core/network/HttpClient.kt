@@ -30,6 +30,7 @@ internal val DefaultJson = Json {
     prettyPrint = false
     useArrayPolymorphism = false
     ignoreUnknownKeys = true
+    explicitNulls = false
 }
 
 internal fun defaultHttpClient(

@@ -46,7 +46,7 @@ internal fun empathClient(
         HttpResponseValidator {
             handleResponseExceptionWithRequest { exception, request ->
                 if (exception is RefreshTokenException) {
-                    tokenProvider.deleteLocalToken()
+//                    tokenProvider.deleteLocalToken()
                 }
             }
         }

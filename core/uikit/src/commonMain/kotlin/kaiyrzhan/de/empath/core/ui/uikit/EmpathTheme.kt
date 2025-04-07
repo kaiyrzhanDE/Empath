@@ -24,7 +24,6 @@ public fun EmpathTheme(
     snackbarHostState: SnackbarHostState,
     content: @Composable () -> Unit,
 ) {
-
     CompositionLocalProvider(
         LocalColorScheme provides colors,
         LocalShapes provides shapes,

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -27,9 +26,11 @@ import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
+import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerificationAction
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.model.EmailVerificationEvent
@@ -89,7 +90,7 @@ private fun EmailVerificationScreen(
                     .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
-                    .padding(24.dp),
+                    .screenPadding(PaddingType.AUTH),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

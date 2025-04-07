@@ -1,7 +1,10 @@
 package kaiyrzhan.de.empath.features.profile.ui.profile_edit.components
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -21,29 +24,33 @@ internal fun TopBar(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
 ) {
-    CenterAlignedTopAppBar(
+    Column(
         modifier = modifier,
-        title = {
-            Text(
-                text = stringResource(Res.string.edit_profile),
-                style = EmpathTheme.typography.titleMedium,
-            )
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = EmpathTheme.colors.surface,
-            titleContentColor = EmpathTheme.colors.onSurface,
-            navigationIconContentColor = EmpathTheme.colors.onSurface,
-        ),
-        navigationIcon = {
-            IconButton(
-                onClick = onBackClick,
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.ic_arrow_back),
-                    contentDescription = stringResource(Res.string.ic_arrow_back_description),
+    ) {
+        CenterAlignedTopAppBar(
+            modifier = Modifier.fillMaxWidth(),
+            title = {
+                Text(
+                    text = stringResource(Res.string.edit_profile),
+                    style = EmpathTheme.typography.titleMedium,
                 )
-            }
-        },
-    )
-
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = EmpathTheme.colors.surface,
+                titleContentColor = EmpathTheme.colors.onSurface,
+                navigationIconContentColor = EmpathTheme.colors.onSurface,
+            ),
+            navigationIcon = {
+                IconButton(
+                    onClick = onBackClick,
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_arrow_back),
+                        contentDescription = stringResource(Res.string.ic_arrow_back_description),
+                    )
+                }
+            },
+        )
+        HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
+    }
 }

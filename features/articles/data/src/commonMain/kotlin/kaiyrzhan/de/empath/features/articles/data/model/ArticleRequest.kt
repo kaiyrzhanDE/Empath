@@ -1,10 +1,11 @@
 package kaiyrzhan.de.empath.features.articles.data.model
 
-import kaiyrzhan.de.empath.features.articles.domain.model.Article
-import kaiyrzhan.de.empath.features.articles.domain.model.SubArticle
-import kaiyrzhan.de.empath.features.articles.domain.model.NewArticle
+import kaiyrzhan.de.empath.features.articles.domain.model.article_edit.EditedArticle
+import kaiyrzhan.de.empath.features.articles.domain.model.article_create.NewArticle
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class ArticleRequest(
     @SerialName("title") val title: String?,
     @SerialName("text") val description: String?,
@@ -31,7 +32,7 @@ internal fun NewArticle.toData(): ArticleRequest {
 /**
  * Mapping for edit article
  */
-internal fun Article.toData(): ArticleRequest {
+internal fun EditedArticle.toData(): ArticleRequest {
     return ArticleRequest(
         title = title,
         description = description,

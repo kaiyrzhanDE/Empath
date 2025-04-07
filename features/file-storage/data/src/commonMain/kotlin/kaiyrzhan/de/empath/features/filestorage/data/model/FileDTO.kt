@@ -2,10 +2,10 @@ package kaiyrzhan.de.empath.features.filestorage.data.model
 
 import kaiyrzhan.de.empath.features.filestorage.domain.model.File
 import kotlinx.serialization.SerialName
-import kotlin.jvm.JvmInline
+import kotlinx.serialization.Serializable
 
-@JvmInline
-internal value class FileDTO(
+@Serializable
+internal class FileDTO(
     @SerialName("url") val url: String,
 )
 

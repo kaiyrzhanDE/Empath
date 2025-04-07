@@ -58,7 +58,7 @@ public fun RootScreen(
                     .padding(contentPadding),
                 animation = predictiveBackAnimation(
                     backHandler = component.backHandler,
-                    onBack = { component.onBackClick() },
+                    onBack = component::onBackClick,
                     fallbackAnimation = stackAnimation(scale()),
                 ),
             ) { child ->

@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.articles.domain.model
+package kaiyrzhan.de.empath.features.articles.domain.model.article_create
 
 public data class NewSubArticle(
     val title: String,

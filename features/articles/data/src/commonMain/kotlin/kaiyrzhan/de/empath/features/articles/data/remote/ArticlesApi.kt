@@ -25,14 +25,22 @@ internal interface ArticlesApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Query("page") page: Int,
         @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_NORMAL,
-        @Query("search") search: String? = null,
+        @Query("search") query: String? = null,
     ): RequestResult<ListResultDTO<ArticleDTO>>
+
+    @GET("api/{version}/articles/{article_id}")
+    suspend fun getArticle(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("article_id") id: String,
+    ): RequestResult<ArticleDTO>
+
 
     @POST("api/{version}/articles")
     suspend fun createArticle(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Body request: ArticleRequest,
     ): RequestResult<Any>
+
 
     @DELETE("api/{version}/articles/{article_id}")
     suspend fun deleteArticle(
@@ -52,7 +60,7 @@ internal interface ArticlesApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Query("page") page: Int,
         @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_NORMAL,
-        @Query("name") name: String? = null,
+        @Query("name") query: String? = null,
     ): RequestResult<ListResultDTO<TagDTO>>
 
     @GET("api/{version}/articles/{article_id}/comments")
@@ -60,7 +68,7 @@ internal interface ArticlesApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("article_id") articleId: String,
         @Query("page") page: Int,
-        @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_NORMAL,
+        @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
     ): RequestResult<ListResultDTO<CommentDTO>>
 
     @POST("api/{version}/articles/{article_id}/comments")

@@ -11,13 +11,19 @@
     <string name="unknown_error">Unknown error</string>
     <string name="unknown_remote_error">Unknown remote error</string>
     <string name="oops_something_went_wrong_title">Oops! Something went wrong</string>
-    <string name="oops_something_went_wrong_description">We ran into a problem while loading the content. Please try again in a moment.</string>
+    <string name="oops_something_went_wrong_description">
+        We ran into a problem while loading the content. Please try again in a moment.
+    </string>
+    <string name="empty_title">Nothing here yet</string>
+    <string name="empty_description">We couldn’t find anything to show you right now.</string>
     <string name="action">Action</string>
     <string name="close">Close</string>
     <string name="okay">Okay</string>
 
     <string name="error_title">Oops! Something went wrong</string>
-    <string name="error_description">We ran into a problem while loading the content. Please try again in a moment.</string>
+    <string name="error_description">
+        We ran into a problem while loading the content. Please try again in a moment.
+    </string>
     <string name="try_again">Try again</string>
 
     <string name="nickname">Nickname</string>
@@ -42,11 +48,15 @@
     <string name="continue_with_facebook">Continue with Facebook</string>
 
     <string name="enter_email_title">Enter a email</string>
-    <string name="enter_email_description">We will send you an email with a code for verification you</string>
+    <string name="enter_email_description">
+        We will send you an email with a code for verification you
+    </string>
     <string name="send_code">Send code</string>
 
     <string name="enter_code_title">Enter a code</string>
-    <string name="enter_code_description">Enter the code that we sent to your email:</string>
+    <string name="enter_code_description">
+        Enter the code that we sent to your email:
+    </string>
     <string name="code">Code</string>
     <string name="resend">Resend</string>
     <string name="check">Check</string>
@@ -62,25 +72,39 @@
     <string name="enter_new_password_description">Enter a new password for your account</string>
 
     <string name="too_many_login_attempts_title">Too many login attempts!</string>
-    <string name="too_many_login_attempts_description">It seems you've made too many login attempts. Please wait 30 minutes and try again.</string>
+    <string name="too_many_login_attempts_description">
+        It seems you've made too many login attempts. Please wait 30 minutes and try again.
+    </string>
 
     <string name="too_many_sign_up_attempts_title">Too many sign up attempts!</string>
-    <string name="too_many_sign_up_attempts_description">It seems you've made too many sign up attempts. Please wait 30 minutes and try again.</string>
+    <string name="too_many_sign_up_attempts_description">
+        It seems you've made too many sign up attempts. Please wait 30 minutes and try again.
+    </string>
 
     <string name="too_many_password_recovery_attempts_title">Too many password recovery attempts!</string>
-    <string name="too_many_password_recovery_attempts_description">It seems you've made too many password recovery attempts. Please wait 30 minutes and try again.</string>
+    <string name="too_many_password_recovery_attempts_description">
+        It seems you've made too many password recovery attempts. Please wait 30 minutes and try again.
+    </string>
 
     <string name="email_already_registered_title">Email already registered</string>
-    <string name="email_already_registered_description">An account with this email address has already been registered.</string>
+    <string name="email_already_registered_description">
+        An account with this email address has already been registered.
+    </string>
 
     <string name="email_is_not_registered_title">Email is not registered</string>
-    <string name="email_is_not_registered_description">An account with this email address doesn’t exists.</string>
+    <string name="email_is_not_registered_description">
+        An account with this email address doesn’t exists.
+    </string>
 
     <string name="abort_registration_title">Abort registration</string>
-    <string name="abort_registration_description">Are you sure you want to cancel the registration? If not, the account will not be created.</string>
+    <string name="abort_registration_description">
+        Are you sure you want to cancel the registration? If not, the account will not be created.
+    </string>
 
     <string name="abort_password_recovery_title">Abort password recovery</string>
-    <string name="abort_password_recovery_description">Are you sure you want to cancel the password recovery? If not, the password recovery process will be interrupted.</string>
+    <string name="abort_password_recovery_description">
+        Are you sure you want to cancel the password recovery? If not, the password recovery process will be interrupted.
+    </string>
 
     <string name="use_different_email">Use a different email</string>
     <string name="invalid_email">Invalid email</string>
@@ -88,9 +112,12 @@
     <string name="invalid_email_or_password">Invalid email or password</string>
 
     <string name="code_resent_title">Code Resent</string>
-    <string name="code_resent_description">We have successfully resent the verification code. Please check your inbox or spam folder.</string>
+    <string name="code_resent_description">
+        We have successfully resent the verification code. Please check your inbox or spam folder.
+    </string>
 
     <!-- Feature: Profile -->
+    <string name="profile">Profile</string>
     <string name="edit_profile">Edit profile</string>
     <string name="log_out">Log out</string>
 
@@ -98,7 +125,47 @@
     <string name="select_gender">Select gender</string>
 
     <string name="profile_edit_successfully">Profile edited successfully</string>
-    <string name="user_image_too_large">The selected image exceeds the maximum allowed size. Please choose a smaller image.</string>
+    <string name="file_too_large">
+        The selected file exceeds the maximum allowed size. Please choose a smaller one.
+    </string>
 
+    <!-- Feature: Articles -->
+    <string name="articles">Articles</string>
+    <string name="search">Search</string>
+    <string name="create_article">Create article</string>
+    <string name="article_detail">Article detail</string>
+    <string name="article_created_successfully">Article created successfully</string>
+    <string name="article_deleted_successfully">Article deleted successfully</string>
+    <string name="invalid_article_content_error">Invalid article content</string>
+
+    <string name="abort_article_create_title">Abort creating article</string>
+    <string name="abort_article_create_description">
+        Are you sure you want to discard this article? All unsaved changes will be lost.
+    </string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="select_images">Select images</string>
+    <string name="selected_images">Selected images</string>
+    <string name="selected_images_placeholder">Your selected images visible here</string>
+    <string name="add_tags">Add tags</string>
+    <string name="selected_tags">Selected tags</string>
+    <string name="tags">Tags</string>
+    <string name="remove_sub_article">Remove sub article</string>
+    <string name="add_sub_article">Add sub article</string>
+    <string name="send">Send</string>
+    <string name="adding_tags_title">Adding tags to article</string>
+    <string name="adding_tags_description">Enter tags that best describe the article. They help users find relevant content.</string>
+    <string name="tag_name">Tag name</string>
+    <string name="select_tags">Select tags</string>
+    <string name="stay_here">Stay here</string>
+    <string name="create_tag">Create tag</string>
+    <string name="tag_not_found">tag not found</string>
+    <string name="comments">Comments</string>
+    <string name="comment_edited_successfully">Comment edited successfully</string>
+    <string name="comment">Comment</string>
+    <string name="send_comment">Send comment</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="edit_article">Edit article</string>
 
 </resources>

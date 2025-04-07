@@ -16,13 +16,13 @@ import kaiyrzhan.de.empath.features.profile.ui.profile.model.ProfileEvent
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.RealProfileEditComponent
 import kotlinx.serialization.Serializable
 
-public class RealRootProfileComponent(
+public class RealProfileRootComponent(
     componentContext: ComponentContext,
     private val onLogOutClick: () -> Unit,
-) : BaseComponent(componentContext), RootProfileComponent {
+) : BaseComponent(componentContext), ProfileRootComponent {
 
     private val navigation = StackNavigation<Config>()
-    override val stack: Value<ChildStack<*, RootProfileComponent.Child>> = childStack(
+    override val stack: Value<ChildStack<*, ProfileRootComponent.Child>> = childStack(
         source = navigation,
         serializer = Config.serializer(),
         initialConfiguration = Config.Profile,
@@ -34,7 +34,7 @@ public class RealRootProfileComponent(
     private fun createChild(
         config: Config,
         componentContext: ComponentContext,
-    ): RootProfileComponent.Child {
+    ): ProfileRootComponent.Child {
         logger.d(this.className(), "Profile child: $config")
         return when (config) {
             is Config.Profile -> createProfileComponent(componentContext)
@@ -43,8 +43,8 @@ public class RealRootProfileComponent(
     }
 
     @OptIn(DelicateDecomposeApi::class)
-    private fun createProfileComponent(componentContext: ComponentContext): RootProfileComponent.Child.Profile {
-        return RootProfileComponent.Child.Profile(
+    private fun createProfileComponent(componentContext: ComponentContext): ProfileRootComponent.Child.Profile {
+        return ProfileRootComponent.Child.Profile(
             RealProfileComponent(
                 componentContext = componentContext,
                 onLogOutClick = onLogOutClick,
@@ -54,8 +54,8 @@ public class RealRootProfileComponent(
         )
     }
 
-    private fun createProfileEditComponent(componentContext: ComponentContext): RootProfileComponent.Child.ProfileEdit {
-        return RootProfileComponent.Child.ProfileEdit(
+    private fun createProfileEditComponent(componentContext: ComponentContext): ProfileRootComponent.Child.ProfileEdit {
+        return ProfileRootComponent.Child.ProfileEdit(
             RealProfileEditComponent(
                 componentContext = componentContext,
                 onBackClick = { isProfileEdited ->
@@ -71,7 +71,7 @@ public class RealRootProfileComponent(
 
     private fun reloadProfile() {
         navigation.pop {
-            (stack.active.instance as? RootProfileComponent.Child.Profile)
+            (stack.active.instance as? ProfileRootComponent.Child.Profile)
                 ?.component
                 ?.onEvent(ProfileEvent.Reload)
         }

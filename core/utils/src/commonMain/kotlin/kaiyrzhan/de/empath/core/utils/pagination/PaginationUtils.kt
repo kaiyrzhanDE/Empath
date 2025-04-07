@@ -6,5 +6,5 @@ public object PaginationUtils {
     public const val PAGE_LIMIT_SMALL: Int = 10
     public const val PAGE_LIMIT_NORMAL: Int = 20
     public const val PAGE_LIMIT_LARGE: Int = 50
-    public const val PAGE_LIMIT_EXTRA_LARGE: Int = 100
+    public const val PAGE_LIMIT_EXTRA_LARGE: Int = 1000
 }

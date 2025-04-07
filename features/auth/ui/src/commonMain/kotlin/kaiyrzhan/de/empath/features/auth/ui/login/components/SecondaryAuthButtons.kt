@@ -11,18 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun SecondaryAuthButtons(
+    modifier: Modifier = Modifier,
     onGoogleAuthClick: () -> Unit,
     onFacebookAuthClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.defaultMaxWidth(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         Button(
@@ -67,6 +68,7 @@ internal fun SecondaryAuthButtons(
 @Composable
 private fun Preview() {
     SecondaryAuthButtons(
+        modifier = Modifier.defaultMaxWidth(),
         onGoogleAuthClick = {},
         onFacebookAuthClick = {},
     )

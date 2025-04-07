@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
@@ -28,7 +29,10 @@ import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
 import kaiyrzhan.de.empath.core.ui.dialog.date_picker.DatePickerDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
+import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
+import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.navigation.BackHandler
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
@@ -107,11 +111,12 @@ private fun ProfileEditScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(contentPadding)
-                            .padding(vertical = 32.dp, horizontal = 32.dp)
+                            .screenHorizontalPadding()
                             .verticalScroll(scrollState),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
+                        Spacer(modifier = Modifier.height(16.dp))
                         ProfileCard(
                             modifier = Modifier.defaultMaxWidth(),
                             state = state,
@@ -130,13 +135,14 @@ private fun ProfileEditScreen(
                             state = state,
                             onEvent = onEvent,
                         )
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 } else {
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(contentPadding)
-                            .padding(vertical = 32.dp, horizontal = 32.dp)
+                            .screenHorizontalPadding()
                             .verticalScroll(scrollState),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
@@ -159,6 +165,7 @@ private fun ProfileEditScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                         ) {
+                            Spacer(modifier = Modifier.height(16.dp))
                             ProfileEditTextFields(
                                 modifier = Modifier.defaultMaxWidth(),
                                 state = state,
@@ -170,6 +177,7 @@ private fun ProfileEditScreen(
                                 state = state,
                                 onEvent = onEvent,
                             )
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
                 }

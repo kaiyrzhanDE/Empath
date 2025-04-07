@@ -1,23 +1,18 @@
 package kaiyrzhan.de.empath.features.articles.domain.usecase
 
-import kaiyrzhan.de.empath.core.utils.pagination.ListResult
-import kaiyrzhan.de.empath.core.utils.result.Result
-import kaiyrzhan.de.empath.core.utils.result.toResult
+import androidx.paging.PagingData
 import kaiyrzhan.de.empath.features.articles.domain.model.Article
 import kaiyrzhan.de.empath.features.articles.domain.repository.ArticlesRepository
+import kotlinx.coroutines.flow.Flow
 
 public class GetArticlesUseCase(
     private val repository: ArticlesRepository,
 ) {
-    public suspend operator fun invoke(
-        page: Int,
-        search: String,
-    ): Result<ListResult<Article>> {
-        return repository
-            .getArticles(
-                page = page,
-                search = search,
-            )
-            .toResult()
+    public operator fun invoke(
+        query: String?,
+    ): Flow<PagingData<Article>> {
+        return repository.getArticles(
+            query = query,
+        )
     }
 }

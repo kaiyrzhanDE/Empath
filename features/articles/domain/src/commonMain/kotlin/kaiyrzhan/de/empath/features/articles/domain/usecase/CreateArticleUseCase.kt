@@ -3,7 +3,7 @@ package kaiyrzhan.de.empath.features.articles.domain.usecase
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.StatusCode
-import kaiyrzhan.de.empath.features.articles.domain.model.NewArticle
+import kaiyrzhan.de.empath.features.articles.domain.model.article_create.NewArticle
 import kaiyrzhan.de.empath.features.articles.domain.repository.ArticlesRepository
 
 public class CreateArticleUseCase(

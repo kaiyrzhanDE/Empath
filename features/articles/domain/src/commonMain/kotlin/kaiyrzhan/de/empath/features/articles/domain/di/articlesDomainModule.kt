@@ -7,6 +7,7 @@ import kaiyrzhan.de.empath.features.articles.domain.usecase.DeleteArticleUseCase
 import kaiyrzhan.de.empath.features.articles.domain.usecase.DeleteCommentUseCase
 import kaiyrzhan.de.empath.features.articles.domain.usecase.EditArticleUseCase
 import kaiyrzhan.de.empath.features.articles.domain.usecase.EditCommentUseCase
+import kaiyrzhan.de.empath.features.articles.domain.usecase.GetArticleUseCase
 import kaiyrzhan.de.empath.features.articles.domain.usecase.GetArticlesUseCase
 import kaiyrzhan.de.empath.features.articles.domain.usecase.GetCommentsUseCase
 import kaiyrzhan.de.empath.features.articles.domain.usecase.GetTagsUseCase
@@ -56,6 +57,11 @@ public val articlesDomainModule: Module = module {
     }
     factory {
         GetTagsUseCase(
+            repository = get<ArticlesRepository>(),
+        )
+    }
+    factory {
+        GetArticleUseCase(
             repository = get<ArticlesRepository>(),
         )
     }

@@ -2,7 +2,9 @@ package kaiyrzhan.de.empath.features.articles.data.model
 
 import kaiyrzhan.de.empath.features.articles.domain.model.Comment
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class CommentDTO(
     @SerialName("id") val id: String,
     @SerialName("article_id") val articleId: String,

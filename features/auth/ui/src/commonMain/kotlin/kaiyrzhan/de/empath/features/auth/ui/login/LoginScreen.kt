@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -37,7 +36,9 @@ import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
+import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.components.Logo
@@ -100,7 +101,7 @@ private fun LoginScreen(
                     .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
-                    .padding(24.dp),
+                    .screenPadding(PaddingType.AUTH),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -111,6 +112,7 @@ private fun LoginScreen(
                         .fillMaxHeight(),
                 )
                 PrimaryAuthorizationContent(
+                    modifier = Modifier.defaultMaxWidth(),
                     email = loginState.email,
                     isEmailValid = loginState.isEmailValid,
                     onEmailChange = { email -> onEvent(LoginEvent.EmailChange(email)) },
@@ -123,6 +125,7 @@ private fun LoginScreen(
                 )
                 TitledDivider()
                 SecondaryAuthButtons(
+                    modifier = Modifier.defaultMaxWidth(),
                     onGoogleAuthClick = { onEvent(LoginEvent.GoogleAuthClick) },
                     onFacebookAuthClick = { onEvent(LoginEvent.FacebookAuthClick) },
                 )
@@ -154,7 +157,7 @@ private fun PrimaryAuthorizationContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.defaultMaxWidth(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

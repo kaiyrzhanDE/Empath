@@ -1,4 +1,6 @@
-package kaiyrzhan.de.empath.features.articles.domain.model
+package kaiyrzhan.de.empath.features.articles.domain.model.article_create
+
+import kaiyrzhan.de.empath.features.articles.domain.model.Tag
 
 public data class NewArticle(
     val title: String,

@@ -1,6 +1,7 @@
 package kaiyrzhan.de.empath.core.utils.pagination
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 public data class ListResult<R>(
     val count: Int,
@@ -9,7 +10,7 @@ public data class ListResult<R>(
     val previousPage: Int?,
     val data: List<R>,
 )
-
+@Serializable
 public data class ListResultDTO<T>(
     @SerialName("count") val count: Int?,
     @SerialName("page") val currentPage: Int?,

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -36,11 +35,13 @@ import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
+import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.auth.ui.components.PasswordOutlinedTextField
 import kaiyrzhan.de.empath.features.auth.ui.components.TopBar
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
+import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.navigation.BackHandler
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpAction
 import kaiyrzhan.de.empath.features.auth.ui.signUp.model.SignUpEvent
@@ -102,7 +103,7 @@ private fun SignUpScreen(
                     .background(color = EmpathTheme.colors.surface)
                     .verticalScroll(scrollState)
                     .imePadding()
-                    .padding(24.dp),
+                    .screenPadding(PaddingType.AUTH),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -112,9 +113,16 @@ private fun SignUpScreen(
                     onBackClick = { onEvent(SignUpEvent.BackClick) },
                 )
                 Spacer(modifier = Modifier.height(30.dp))
-                UserDataTextFields(state, onEvent)
+                UserDataTextFields(
+                    state = state,
+                    onEvent = onEvent,
+                )
                 Spacer(modifier = Modifier.height(20.dp))
-                UserAgreementCheckBox(state, onEvent)
+                UserAgreementCheckBox(
+                    modifier = Modifier.defaultMaxWidth(),
+                    state = state,
+                    onEvent = onEvent,
+                )
                 Spacer(modifier = Modifier.height(20.dp))
                 Button(
                     modifier = Modifier.defaultMaxWidth(),
@@ -140,6 +148,7 @@ private fun SignUpScreen(
                 modifier = Modifier.fillMaxSize(),
             )
         }
+
         is SignUpState.Error -> Unit
         is SignUpState.Initial -> Unit
     }
@@ -196,7 +205,7 @@ private fun ColumnScope.UserAgreementCheckBox(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.defaultMaxWidth(),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {

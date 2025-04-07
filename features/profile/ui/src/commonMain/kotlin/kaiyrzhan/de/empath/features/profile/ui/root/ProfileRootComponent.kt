@@ -6,7 +6,7 @@ import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kaiyrzhan.de.empath.features.profile.ui.profile.ProfileComponent
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.ProfileEditComponent
 
-public interface RootProfileComponent : BackHandlerOwner {
+public interface ProfileRootComponent : BackHandlerOwner {
 
     public val stack: Value<ChildStack<*, Child>>
 
