@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class SubarticleRequest(
+internal class SubarticleRequest(
     @SerialName("id") val id: String?,
     @SerialName("title") val title: String?,
     @SerialName("text") val description: String?,

@@ -1,8 +1,8 @@
 package kaiyrzhan.de.empath.features.articles.domain.model
 
-public data class Comment(
-    val id: String,
-    val articleId: String,
-    val text: String,
-    val author: Author,
+public class Comment(
+    public val id: String,
+    public val articleId: String,
+    public val text: String,
+    public val author: Author,
 )

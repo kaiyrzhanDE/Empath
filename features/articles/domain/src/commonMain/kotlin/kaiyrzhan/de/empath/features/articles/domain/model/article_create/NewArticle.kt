@@ -2,11 +2,11 @@ package kaiyrzhan.de.empath.features.articles.domain.model.article_create
 
 import kaiyrzhan.de.empath.features.articles.domain.model.Tag
 
-public data class NewArticle(
-    val title: String,
-    val description: String,
-    val isVisible: Boolean,
-    val imageUrls: List<String>,
-    val tags: List<Tag>,
-    val subArticles: List<NewSubArticle>,
+public class NewArticle(
+    public val title: String,
+    public val description: String,
+    public val isVisible: Boolean,
+    public val imageUrls: List<String>,
+    public val tags: List<Tag>,
+    public val subArticles: List<NewSubArticle>,
 )

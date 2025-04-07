@@ -1,15 +1,15 @@
 package kaiyrzhan.de.empath.features.articles.domain.model
 
-public data class Article(
-    val id: String,
-    val title: String,
-    val description: String,
-    val isVisible: Boolean,
-    val imageUrls: List<String>,
-    val tags: List<Tag>,
-    val subArticles: List<SubArticle>,
-    val viewsCount: Int,
-    val likesCount: Int,
-    val dislikesCount: Int,
-    val author: Author,
+public class Article(
+    public val id: String,
+    public val title: String,
+    public val description: String,
+    public val isVisible: Boolean,
+    public val imageUrls: List<String>,
+    public val tags: List<Tag>,
+    public val subArticles: List<SubArticle>,
+    public val viewsCount: Int,
+    public val likesCount: Int,
+    public val dislikesCount: Int,
+    public val author: Author,
 )

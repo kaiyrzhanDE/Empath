@@ -1,8 +1,8 @@
 package kaiyrzhan.de.empath.features.articles.domain.model.article_edit
 
-public data class EditedSubArticle(
-    val id: String?,
-    val title: String,
-    val description: String,
-    val imageUrls: List<String>,
+public class EditedSubArticle(
+    public val id: String?,
+    public val title: String,
+    public val description: String,
+    public val imageUrls: List<String>,
 )

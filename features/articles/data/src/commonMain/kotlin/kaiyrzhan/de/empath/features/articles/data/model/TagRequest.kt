@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class TagRequest(
+internal class TagRequest(
     @SerialName("id") val id: String?,
     @SerialName("name") val name: String?,
 )

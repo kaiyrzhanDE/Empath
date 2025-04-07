@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ArticleRequest(
+internal class ArticleRequest(
     @SerialName("title") val title: String?,
     @SerialName("text") val description: String?,
     @SerialName("is_visible") val isVisible: Boolean?,

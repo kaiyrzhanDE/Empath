@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class AuthorDTO(
+internal class AuthorDTO(
     @SerialName("id") val id: String,
     @SerialName("nickname") val nickname: String?,
     @SerialName("img") val imageUrl: String?,

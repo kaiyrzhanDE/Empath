@@ -1,7 +1,7 @@
 package kaiyrzhan.de.empath.features.articles.domain.model.article_create
 
-public data class NewSubArticle(
-    val title: String,
-    val description: String,
-    val imageUrls: List<String>,
+public class NewSubArticle(
+    public val title: String,
+    public val description: String,
+    public val imageUrls: List<String>,
 )

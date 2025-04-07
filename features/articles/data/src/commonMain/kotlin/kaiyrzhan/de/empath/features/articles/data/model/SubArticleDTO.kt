@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class SubArticleDTO(
+internal class SubArticleDTO(
     @SerialName("id") val id: String,
     @SerialName("title") val title: String?,
     @SerialName("text") val description: String?,
