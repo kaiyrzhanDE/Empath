@@ -1,5 +1,7 @@
 package kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment
 
+import kotlinx.datetime.Instant
+
 public class Vacancy(
     public val id: String,
     public val title: String,
@@ -13,5 +15,5 @@ public class Vacancy(
     public val skills: List<String>,
     public val additionalSkills: List<String>,
     public val email: String?,
-    public val dateOfCreated: String?,
+    public val dateOfCreated: Instant?,
 )

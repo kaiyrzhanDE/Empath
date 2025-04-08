@@ -111,7 +111,7 @@ private fun ArticlesScreen(
                 .background(EmpathTheme.colors.scrim)
                 .padding(contentPadding)
                 .screenHorizontalPadding(PaddingType.MAIN),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             when (val refreshState = articles.loadState.refresh) {
@@ -128,7 +128,8 @@ private fun ArticlesScreen(
                         modifier = Modifier.defaultMaxWidth(),
                         value = state.query.orEmpty(),
                         onValueChange = { query -> onEvent(ArticlesEvent.ArticleSearch(query)) },
-                        textStyle = EmpathTheme.typography.titleLarge,
+                        textStyle = EmpathTheme.typography.bodyLarge,
+                        shape = EmpathTheme.shapes.small,
                         maxLines = 1,
                         label = {
                             Text(

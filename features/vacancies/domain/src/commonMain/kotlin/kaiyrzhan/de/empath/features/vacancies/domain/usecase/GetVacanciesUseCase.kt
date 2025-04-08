@@ -1,8 +1,12 @@
 package kaiyrzhan.de.empath.features.vacancies.domain.usecase
 
+import androidx.paging.PagingData
+import kaiyrzhan.de.empath.core.utils.pagination.ListResult
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.toResult
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepository
+import kotlinx.coroutines.flow.Flow
 
 public class GetVacanciesUseCase(
     private val repository: RecruitmentRepository,
@@ -16,7 +20,7 @@ public class GetVacanciesUseCase(
         excludeWords: List<String>,
         includeWords: List<String>,
         query: String?,
-    ): Result<Any> {
+    ): Flow<PagingData<Vacancy>> {
         return repository
             .getVacancies(
                 salaryFrom = salaryFrom,
@@ -28,6 +32,5 @@ public class GetVacanciesUseCase(
                 includeWords = includeWords,
                 query = query,
             )
-            .toResult()
     }
 }

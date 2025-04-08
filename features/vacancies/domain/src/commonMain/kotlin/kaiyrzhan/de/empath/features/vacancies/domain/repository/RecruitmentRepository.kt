@@ -1,9 +1,11 @@
 package kaiyrzhan.de.empath.features.vacancies.domain.repository
 
+import androidx.paging.PagingData
 import kaiyrzhan.de.empath.core.utils.pagination.ListResult
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
+import kotlinx.coroutines.flow.Flow
 
 public interface RecruitmentRepository {
     public suspend fun createRecruiter(
@@ -13,6 +15,7 @@ public interface RecruitmentRepository {
     ): RequestResult<Any>
 
     public suspend fun getVacancies(
+        query: String?,
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
@@ -20,8 +23,7 @@ public interface RecruitmentRepository {
         workFormats: List<String>,
         excludeWords: List<String>,
         includeWords: List<String>,
-        query: String?,
-    ): RequestResult<ListResult<Vacancy>>
+    ):  Flow<PagingData<Vacancy>>
 
     public suspend fun createVacancy(
         vacancy: NewVacancy,

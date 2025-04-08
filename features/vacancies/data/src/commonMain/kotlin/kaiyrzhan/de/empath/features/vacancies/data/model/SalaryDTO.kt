@@ -2,7 +2,9 @@ package kaiyrzhan.de.empath.features.vacancies.data.model
 
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Salary
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal class SalaryDTO(
     @SerialName("from_") val from: Int?,
     @SerialName("to") val to: Int?,

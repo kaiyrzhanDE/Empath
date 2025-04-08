@@ -1,0 +1,17 @@
+package kaiyrzhan.de.empath.features.vacancies.ui.model
+
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Author
+import kotlin.jvm.JvmInline
+
+
+@JvmInline
+internal value class AuthorUi(
+    val name: String,
+)
+
+
+internal fun Author.toUi(): AuthorUi {
+    return AuthorUi(
+        name = name,
+    )
+}

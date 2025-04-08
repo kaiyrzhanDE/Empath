@@ -10,6 +10,7 @@ public data class ListResult<R>(
     val previousPage: Int?,
     val data: List<R>,
 )
+
 @Serializable
 public data class ListResultDTO<T>(
     @SerialName("count") val count: Int?,

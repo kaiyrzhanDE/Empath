@@ -1,16 +1,22 @@
 package kaiyrzhan.de.empath.features.vacancies.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kaiyrzhan.de.empath.core.utils.pagination.ListResult
+import kaiyrzhan.de.empath.core.utils.pagination.PaginationUtils
 import kaiyrzhan.de.empath.core.utils.pagination.map
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.model.CreateRecruiterRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.model.toData
+import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.VacanciesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepository
+import kotlinx.coroutines.flow.Flow
 
 internal class RecruitmentRepositoryImpl(
     private val api: RecruitmentApi,
@@ -31,6 +37,7 @@ internal class RecruitmentRepositoryImpl(
     }
 
     override suspend fun getVacancies(
+        query: String?,
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
@@ -38,20 +45,27 @@ internal class RecruitmentRepositoryImpl(
         excludeWords: List<String>,
         includeWords: List<String>,
         education: List<String>,
-        query: String?,
-    ): RequestResult<ListResult<Vacancy>> {
-        return api.getVacancies(
-            salaryFrom = salaryFrom,
-            salaryTo = salaryTo,
-            workExperiences = workExperiences,
-            workFormats = workFormats,
-            excludeWords = excludeWords,
-            includeWords = includeWords,
-            query = query,
-            education = education,
-        ).toDomain { vacancies ->
-            vacancies.map { vacancy -> vacancy.toDomain() }
-        }
+    ): Flow<PagingData<Vacancy>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
+                prefetchDistance = 3,
+                enablePlaceholders = true,
+            ),
+            pagingSourceFactory = {
+                VacanciesPagingSource(
+                    api = api,
+                    query = query,
+                    salaryFrom = salaryFrom,
+                    salaryTo = salaryFrom,
+                    workFormats = workFormats,
+                    workExperiences = workExperiences,
+                    excludeWords = excludeWords,
+                    includeWords = includeWords,
+                    education = education,
+                )
+            }
+        ).flow
     }
 
     override suspend fun createVacancy(vacancy: NewVacancy): RequestResult<Any> {

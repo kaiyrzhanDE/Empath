@@ -171,5 +171,11 @@
     <!-- Feature: Vacancies -->
     <string name="recruitment">Recruitment</string>
     <string name="employment">Employment</string>
+    <string name="vacancies">Vacancies</string>
+    <string name="responses">Responses</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="kzt">KZT</string>
+    <string name="hide">Hide</string>
 
 </resources>

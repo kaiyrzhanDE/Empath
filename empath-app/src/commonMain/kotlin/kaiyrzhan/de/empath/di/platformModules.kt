@@ -12,6 +12,8 @@ import kaiyrzhan.de.empath.features.filestorage.data.di.fileStorageDataModule
 import kaiyrzhan.de.empath.features.filestorage.domain.di.fileStorageDomainModule
 import kaiyrzhan.de.empath.features.profile.data.di.profileDataModule
 import kaiyrzhan.de.empath.features.profile.domain.di.profileDomainModule
+import kaiyrzhan.de.empath.features.vacancies.data.di.vacanciesDataModule
+import kaiyrzhan.de.empath.features.vacancies.domain.di.vacanciesDomainModule
 import org.koin.core.module.Module
 
 internal expect val platformModules: List<Module>
@@ -33,6 +35,9 @@ internal val commonModules: List<Module> = listOf(
 
     articlesDomainModule,
     articlesDataModule,
+
+    vacanciesDataModule,
+    vacanciesDomainModule,
 )
 
 

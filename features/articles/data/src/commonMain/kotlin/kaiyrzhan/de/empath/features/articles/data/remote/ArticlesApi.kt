@@ -24,7 +24,7 @@ internal interface ArticlesApi {
     suspend fun getArticles(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Query("page") page: Int,
-        @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_NORMAL,
+        @Query("per_page") pageLimit: Int,
         @Query("search") query: String? = null,
     ): RequestResult<ListResultDTO<ArticleDTO>>
 

@@ -10,7 +10,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepos
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-public val vacancies: Module = module {
+public val vacanciesDataModule: Module = module {
     single<RecruitmentApi> { get<Ktorfit>().createRecruitmentApi() }
 
     single<RecruitmentRepository> {

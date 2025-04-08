@@ -89,8 +89,10 @@ public fun LocalDateTime?.toLong(): Long? {
     return this?.toInstantSafe()?.toEpochMilliseconds()
 }
 
-public fun LocalDateTime?.format(): String {
-    return this?.format(datePattern).orEmpty()
+public fun LocalDateTime?.dateFormat(
+    dateFormat: DateTimeFormat<LocalDateTime> = datePattern,
+): String {
+    return this?.format(dateFormat).orEmpty()
 }
 
 public fun Instant?.toLocalDateTime(): LocalDateTime? {

@@ -35,8 +35,8 @@ internal interface RecruitmentApi {
         @Query("exclude_word") excludeWords: List<String>,
         @Query("include_word") includeWords: List<String>,
         @Query("search") query: String?,
-        @Query("page") page: Int = 1, //TODO("Need pagination)
-        @Query("pageLimit") pageLimit: Int = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
+        @Query("page") page: Int = 1,
+        @Query("per_page") pageLimit: Int
     ): RequestResult<ListResultDTO<VacancyDTO>>
 
     @POST("api/{version}/job/recruitment/vacancies")
@@ -45,14 +45,14 @@ internal interface RecruitmentApi {
         @Body request: VacancyRequest,
     ): RequestResult<Any>
 
-    @PATCH("api/{version}/job/recruitment/{vacancy_id}")
+    @PATCH("api/{version}/job/recruitment/vacancies/{vacancy_id}")
     suspend fun editVacancy(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("vacancy_id") id: String,
         @Body request: VacancyRequest,
     ): RequestResult<Any>
 
-    @DELETE("api/{version}/job/recruitment/{vacancy_id}")
+    @DELETE("api/{version}/job/recruitment/vacancies/{vacancy_id}")
     suspend fun deleteVacancy(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("vacancy_id") id: String,

@@ -43,7 +43,15 @@ public class RealRecruitmentRootComponent(
         return RecruitmentRootComponent.Child.Vacancies(
             component = RealVacanciesComponent(
                 componentContext = componentContext,
-                onBackClick = ::onBackClick,
+                onVacanciesFiltersClick = { filters ->
+                    //TODO("Not yet implemented")
+                },
+                onVacancyCreateClick = {
+                    //TODO("Not yet implemented")
+                },
+                onVacancyEditClick = { id ->
+                    //TODO("Not yet implemented")
+                }
             )
         )
     }

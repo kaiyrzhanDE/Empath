@@ -8,7 +8,7 @@ public inline fun <reified T : Enum<T>> String?.toEnumSafe(default: T): T {
 
 
 public fun Int?.toGroupedString(): String {
-    return if (this == null) "N/A"
+    return if (this == null) "_"
     else toString()
         .reversed()
         .chunked(3)
@@ -17,7 +17,7 @@ public fun Int?.toGroupedString(): String {
 }
 
 public fun Long?.toGroupedString(): String {
-    return if (this == null) "N/A"
+    return if (this == null) "_"
     else toString()
         .reversed()
         .chunked(3)

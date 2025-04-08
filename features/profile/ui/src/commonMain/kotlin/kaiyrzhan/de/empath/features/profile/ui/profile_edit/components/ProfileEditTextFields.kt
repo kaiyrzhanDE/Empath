@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.core.utils.format
+import kaiyrzhan.de.empath.core.utils.dateFormat
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditEvent
 import kaiyrzhan.de.empath.features.profile.ui.profile_edit.model.ProfileEditState
 import org.jetbrains.compose.resources.stringResource
@@ -91,7 +91,7 @@ internal fun ProfileEditTextFields(
 
         DatePickerField(
             modifier = Modifier.fillMaxWidth(),
-            dateOfBirth = state.editableUser.dateOfBirth.format(),
+            dateOfBirth = state.editableUser.dateOfBirth.dateFormat(),
             onClick = {
                 onEvent(ProfileEditEvent.DatePickerShow)
             },

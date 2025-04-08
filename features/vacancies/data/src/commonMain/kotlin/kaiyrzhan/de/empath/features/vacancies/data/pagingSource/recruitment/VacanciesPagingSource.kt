@@ -1,28 +1,45 @@
-package kaiyrzhan.de.empath.features.articles.data.pagingSource
+package kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingSource.LoadParams
+import androidx.paging.PagingSource.LoadResult
 import androidx.paging.PagingState
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
-import kaiyrzhan.de.empath.features.articles.data.model.toDomain
-import kaiyrzhan.de.empath.features.articles.data.remote.ArticlesApi
-import kaiyrzhan.de.empath.features.articles.domain.model.Article
+import kaiyrzhan.de.empath.features.vacancies.data.model.toDomain
+import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
 import okio.IOException
+import kotlin.collections.orEmpty
 
-internal class ArticlesPagingSource(
-    private val api: ArticlesApi,
+internal class VacanciesPagingSource(
+    private val api: RecruitmentApi,
     private val query: String?,
-) : PagingSource<Int, Article>() {
+    private val salaryFrom: Int?,
+    private val salaryTo: Int?,
+    private val workExperiences: List<String>,
+    private val workFormats: List<String>,
+    private val education: List<String>,
+    private val excludeWords: List<String>,
+    private val includeWords: List<String>,
+) : PagingSource<Int, Vacancy>() {
 
-    override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Vacancy>): Int? {
         return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Vacancy> {
         return try {
             val currentPage = params.key ?: 1
-            val request = api.getArticles(
+            val request = api.getVacancies(
                 page = currentPage,
                 query = query,
+                salaryFrom = salaryFrom,
+                salaryTo = salaryTo,
+                workExperiences = workExperiences,
+                workFormats = workFormats,
+                education = education,
+                excludeWords = excludeWords,
+                includeWords = includeWords,
                 pageLimit = params.loadSize,
             )
             when (request) {
@@ -31,7 +48,7 @@ internal class ArticlesPagingSource(
                         data = request.data.data
                             .orEmpty()
                             .filterNotNull()
-                            .map { article -> article.toDomain() },
+                            .map { vacancy -> vacancy.toDomain() },
                         prevKey = request.data.previousPage,
                         nextKey = request.data.nextPage,
                     )
