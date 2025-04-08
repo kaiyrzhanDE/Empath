@@ -168,4 +168,8 @@
     <string name="edit">Edit</string>
     <string name="edit_article">Edit article</string>
 
+    <!-- Feature: Vacancies -->
+    <string name="recruitment">Recruitment</string>
+    <string name="employment">Employment</string>
+
 </resources>

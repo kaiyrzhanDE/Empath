@@ -12,6 +12,8 @@ import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.articles.ui.root.RealArticlesRootComponent
 import kaiyrzhan.de.empath.features.profile.ui.root.RealProfileRootComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.root.RealEmploymentRootComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.root.RealRecruitmentRootComponent
 import kotlinx.serialization.Serializable
 
 internal class RealMainRootComponent(
@@ -35,9 +37,9 @@ internal class RealMainRootComponent(
 
     override fun onMenuTabClick() = navigation.bringToFront(Config.Menu)
 
-    override fun onAnalyticsTabClick() = navigation.bringToFront(Config.Analytics)
+    override fun onEmploymentTabClick() = navigation.bringToFront(Config.Employment)
 
-    override fun onVacanciesTabClick() = navigation.bringToFront(Config.Vacancies)
+    override fun onRecruitmentTabClick() = navigation.bringToFront(Config.Recruitment)
 
     private fun createChild(
         config: Config,
@@ -48,8 +50,8 @@ internal class RealMainRootComponent(
             is Config.Profile -> createProfileComponent(componentContext)
             is Config.Articles -> createArticlesComponent(componentContext)
             is Config.Menu -> createMenuComponent(componentContext)
-            is Config.Analytics -> createAnalyticsComponent(componentContext)
-            is Config.Vacancies -> createVacanciesComponent(componentContext)
+            is Config.Employment -> createEmploymentComponent(componentContext)
+            is Config.Recruitment -> createRecruitmentComponent(componentContext)
         }
     }
 
@@ -78,16 +80,24 @@ internal class RealMainRootComponent(
         return MainRootComponent.Child.Menu()
     }
 
-    private fun createAnalyticsComponent(
+    private fun createEmploymentComponent(
         componentContext: ComponentContext,
-    ): MainRootComponent.Child.Analytics {
-        return MainRootComponent.Child.Analytics()
+    ): MainRootComponent.Child.Employment {
+        return MainRootComponent.Child.Employment(
+            component = RealEmploymentRootComponent(
+                componentContext = componentContext,
+            )
+        )
     }
 
-    private fun createVacanciesComponent(
+    private fun createRecruitmentComponent(
         componentContext: ComponentContext,
-    ): MainRootComponent.Child.Vacancies {
-        return MainRootComponent.Child.Vacancies()
+    ): MainRootComponent.Child.Recruitment {
+        return MainRootComponent.Child.Recruitment(
+            component = RealRecruitmentRootComponent(
+                componentContext = componentContext,
+            )
+        )
     }
 
     @Serializable
@@ -102,9 +112,9 @@ internal class RealMainRootComponent(
         data object Menu : Config
 
         @Serializable
-        data object Analytics : Config
+        data object Employment : Config
 
         @Serializable
-        data object Vacancies : Config
+        data object Recruitment : Config
     }
 }

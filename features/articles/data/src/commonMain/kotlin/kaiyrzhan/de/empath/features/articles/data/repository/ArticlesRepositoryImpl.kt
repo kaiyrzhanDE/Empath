@@ -94,7 +94,6 @@ internal class ArticlesRepositoryImpl(
         articleId: String,
     ): RequestResult<ListResult<Comment>> {
         return api.getComments(
-            page = 1, //TODO("Need pagination")
             articleId = articleId,
         ).toDomain { comments ->
             comments.map { comment -> comment.toDomain() }

@@ -26,6 +26,10 @@ kotlin {
             api(projects.features.articles.domain)
             api(projects.features.articles.ui)
 
+            api(projects.features.vacancies.data)
+            api(projects.features.vacancies.domain)
+            api(projects.features.vacancies.ui)
+
             api(projects.features.fileStorage.data)
             api(projects.features.fileStorage.domain)
         }

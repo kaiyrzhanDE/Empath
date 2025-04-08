@@ -2,9 +2,7 @@ package kaiyrzhan.de.empath.main.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -16,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
@@ -48,36 +47,46 @@ internal fun NavigationRail(
         ) {
             Spacer(modifier = Modifier.weight(1f))
             NavigationRailItem(
-                selected = currentChild is Child.Vacancies,
-                onClick = component::onVacanciesTabClick,
+                selected = currentChild is Child.Recruitment,
+                onClick = component::onRecruitmentTabClick,
                 icon = {
                     Icon(
-                        imageVector = if (currentChild is Child.Vacancies) Icons.Default.Info else Icons.Default.Info,
-                        contentDescription = "Vacancies",
+                        painter = painterResource(
+                            resource = if (currentChild is Child.Recruitment) Res.drawable.ic_person_filled
+                            else Res.drawable.ic_person_outlined,
+                        ),
+                        contentDescription = stringResource(Res.string.recruitment),
                     )
                 },
                 label = {
                     Text(
-                        text = "Vacancies",
+                        text = stringResource(Res.string.recruitment),
                         style = EmpathTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 colors = colors,
             )
             Spacer(modifier = Modifier.height(12.dp))
             NavigationRailItem(
-                selected = currentChild is Child.Analytics,
-                onClick = component::onAnalyticsTabClick,
+                selected = currentChild is Child.Employment,
+                onClick = component::onEmploymentTabClick,
                 icon = {
                     Icon(
-                        imageVector = if (currentChild is Child.Analytics) Icons.Default.Info else Icons.Default.Info,
-                        contentDescription = "Analytics",
+                        painter = painterResource(
+                            resource = if (currentChild is Child.Employment) Res.drawable.ic_work_filled
+                            else Res.drawable.ic_work_outlined,
+                        ),
+                        contentDescription = stringResource(Res.string.employment),
                     )
                 },
                 label = {
                     Text(
-                        text = "Analytics",
+                        text = stringResource(Res.string.employment),
                         style = EmpathTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 colors = colors,
@@ -96,6 +105,8 @@ internal fun NavigationRail(
                     Text(
                         text = "Menu",
                         style = EmpathTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 colors = colors,
@@ -117,6 +128,8 @@ internal fun NavigationRail(
                     Text(
                         text = stringResource(Res.string.articles),
                         style = EmpathTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 colors = colors,
@@ -138,6 +151,8 @@ internal fun NavigationRail(
                     Text(
                         text = stringResource(Res.string.profile),
                         style = EmpathTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 colors = colors,

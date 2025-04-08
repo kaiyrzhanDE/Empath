@@ -1,0 +1,43 @@
+package kaiyrzhan.de.empath.features.vacancies.data.model
+
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
+import kotlinx.serialization.SerialName
+
+internal class VacancyRequest(
+    @SerialName("title") val title: String,
+    @SerialName("isVisible") val isVisible: Boolean,
+    @SerialName("salary") val salary: SalaryRequest,
+    @SerialName("employment_type_ids") val employmentTypeIds: List<String>,
+    @SerialName("work_schedule_ids") val workScheduleIds: List<String>,
+    @SerialName("work_exp") val workExp: String,
+    @SerialName("work_formats_id") val workFormatIds: List<String>,
+    @SerialName("skills") val skills: List<SkillRequest>,
+    @SerialName("responsibility") val responsibilities: String,
+    @SerialName("requirements") val requirements: String,
+    @SerialName("education") val education: String,
+    @SerialName("additional_description") val additionalDescription: String?,
+    @SerialName("additional_skills") val additionalSkills: List<SkillRequest>?,
+    @SerialName("email") val email: String?,
+    @SerialName("address") val address: String?,
+)
+
+internal fun NewVacancy.toData(): VacancyRequest {
+    return VacancyRequest(
+        title = title,
+        isVisible = isVisible,
+        salary = salary.toData(),
+        employmentTypeIds = employmentTypes,
+        workScheduleIds = workSchedules,
+        workExp = workExperience,
+        workFormatIds = workFormats,
+        skills = skills.map { skill -> skill.toData() },
+        responsibilities = additionalDescription,
+        requirements = additionalDescription,
+        education = education,
+        additionalDescription = additionalDescription,
+        additionalSkills = additionalSkills.map { skill -> skill.toData() },
+        email = email,
+        address = address,
+    )
+}
