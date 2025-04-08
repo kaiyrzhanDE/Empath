@@ -308,6 +308,27 @@ private fun VacancyCreateScreen(
                         label = { education -> stringResource(education.type.res) },
                         isSelected = { education -> education.isSelected }
                     )
+                    HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = EmpathTheme.shapes.small,
+                        colors = CardDefaults.cardColors(
+                            containerColor = EmpathTheme.colors.surfaceContainer,
+                            contentColor = EmpathTheme.colors.onSurface,
+                        ),
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(16.dp),
+                            text = state.author.companyName,
+                            style = EmpathTheme.typography.headlineLarge,
+                        )
+                    }
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = state.author.companyDescription,
+                        style = EmpathTheme.typography.titleSmall,
+                    )
 
                     HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
 

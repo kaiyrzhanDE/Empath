@@ -11,9 +11,7 @@
     <string name="unknown_error">Unknown error</string>
     <string name="unknown_remote_error">Unknown remote error</string>
     <string name="oops_something_went_wrong_title">Oops! Something went wrong</string>
-    <string name="oops_something_went_wrong_description">
-        We ran into a problem while loading the content. Please try again in a moment.
-    </string>
+    <string name="oops_something_went_wrong_description">We ran into a problem while loading the content. Please try again in a moment.</string>
     <string name="empty_title">Nothing here yet</string>
     <string name="empty_description">We couldn’t find anything to show you right now.</string>
     <string name="action">Action</string>
@@ -21,9 +19,7 @@
     <string name="okay">Okay</string>
 
     <string name="error_title">Oops! Something went wrong</string>
-    <string name="error_description">
-        We ran into a problem while loading the content. Please try again in a moment.
-    </string>
+    <string name="error_description">We ran into a problem while loading the content. Please try again in a moment.</string>
     <string name="try_again">Try again</string>
 
     <string name="nickname">Nickname</string>
@@ -48,15 +44,11 @@
     <string name="continue_with_facebook">Continue with Facebook</string>
 
     <string name="enter_email_title">Enter a email</string>
-    <string name="enter_email_description">
-        We will send you an email with a code for verification you
-    </string>
+    <string name="enter_email_description">We will send you an email with a code for verification you</string>
     <string name="send_code">Send code</string>
 
     <string name="enter_code_title">Enter a code</string>
-    <string name="enter_code_description">
-        Enter the code that we sent to your email:
-    </string>
+    <string name="enter_code_description">Enter the code that we sent to your email:</string>
     <string name="code">Code</string>
     <string name="resend">Resend</string>
     <string name="check">Check</string>
@@ -72,39 +64,25 @@
     <string name="enter_new_password_description">Enter a new password for your account</string>
 
     <string name="too_many_login_attempts_title">Too many login attempts!</string>
-    <string name="too_many_login_attempts_description">
-        It seems you've made too many login attempts. Please wait 30 minutes and try again.
-    </string>
+    <string name="too_many_login_attempts_description">It seems you've made too many login attempts. Please wait 30 minutes and try again.</string>
 
     <string name="too_many_sign_up_attempts_title">Too many sign up attempts!</string>
-    <string name="too_many_sign_up_attempts_description">
-        It seems you've made too many sign up attempts. Please wait 30 minutes and try again.
-    </string>
+    <string name="too_many_sign_up_attempts_description">It seems you've made too many sign up attempts. Please wait 30 minutes and try again.</string>
 
     <string name="too_many_password_recovery_attempts_title">Too many password recovery attempts!</string>
-    <string name="too_many_password_recovery_attempts_description">
-        It seems you've made too many password recovery attempts. Please wait 30 minutes and try again.
-    </string>
+    <string name="too_many_password_recovery_attempts_description">It seems you've made too many password recovery attempts. Please wait 30 minutes and try again.</string>
 
     <string name="email_already_registered_title">Email already registered</string>
-    <string name="email_already_registered_description">
-        An account with this email address has already been registered.
-    </string>
+    <string name="email_already_registered_description">An account with this email address has already been registered.</string>
 
     <string name="email_is_not_registered_title">Email is not registered</string>
-    <string name="email_is_not_registered_description">
-        An account with this email address doesn’t exists.
-    </string>
+    <string name="email_is_not_registered_description">An account with this email address doesn’t exists.</string>
 
     <string name="abort_registration_title">Abort registration</string>
-    <string name="abort_registration_description">
-        Are you sure you want to cancel the registration? If not, the account will not be created.
-    </string>
+    <string name="abort_registration_description">Are you sure you want to cancel the registration? If not, the account will not be created.</string>
 
     <string name="abort_password_recovery_title">Abort password recovery</string>
-    <string name="abort_password_recovery_description">
-        Are you sure you want to cancel the password recovery? If not, the password recovery process will be interrupted.
-    </string>
+    <string name="abort_password_recovery_description">Are you sure you want to cancel the password recovery? If not, the password recovery process will be interrupted.</string>
 
     <string name="use_different_email">Use a different email</string>
     <string name="invalid_email">Invalid email</string>
@@ -112,9 +90,7 @@
     <string name="invalid_email_or_password">Invalid email or password</string>
 
     <string name="code_resent_title">Code Resent</string>
-    <string name="code_resent_description">
-        We have successfully resent the verification code. Please check your inbox or spam folder.
-    </string>
+    <string name="code_resent_description">We have successfully resent the verification code. Please check your inbox or spam folder.</string>
 
     <!-- Feature: Profile -->
     <string name="profile">Profile</string>
@@ -125,9 +101,7 @@
     <string name="select_gender">Select gender</string>
 
     <string name="profile_edit_successfully">Profile edited successfully</string>
-    <string name="file_too_large">
-        The selected file exceeds the maximum allowed size. Please choose a smaller one.
-    </string>
+    <string name="file_too_large">The selected file exceeds the maximum allowed size. Please choose a smaller one.</string>
 
     <!-- Feature: Articles -->
     <string name="articles">Articles</string>
@@ -139,9 +113,7 @@
     <string name="invalid_article_content_error">Invalid article content</string>
 
     <string name="abort_article_create_title">Abort creating article</string>
-    <string name="abort_article_create_description">
-        Are you sure you want to discard this article? All unsaved changes will be lost.
-    </string>
+    <string name="abort_article_create_description">Are you sure you want to discard this article? All unsaved changes will be lost.</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="select_images">Select images</string>
@@ -201,20 +173,15 @@
     <string name="select_education">Select education</string>
     <string name="selected_key_skills">Selected key skills</string>
     <string name="selected_additional_skills">Selected additional skills</string>
-
     <string name="abort_vacancy_create_title">Abort creating vacancy</string>
-    <string name="abort_vacancy_create_description">
-        Are you sure you want to discard this vacancy? All unsaved changes will be lost.
-    </string>
+    <string name="abort_vacancy_create_description">Are you sure you want to discard this vacancy? All unsaved changes will be lost.</string>
     <string name="adding_skills_title">Adding skills to vacancy</string>
     <string name="adding_skills_description">Enter skills that best describe the vacancy.</string>
-
     <string name="unknown">Unknown</string>
     <string name="education_school">High School</string>
     <string name="education_bachelor">Bachelor's Degree</string>
     <string name="education_master">Master's Degree</string>
     <string name="education_doctorate">Doctorate</string>
-
     <string name="work_experience_no">No experience</string>
     <string name="work_experience_1_3">1–3 years</string>
     <string name="work_experience_3_5">3–5 years</string>
@@ -226,6 +193,10 @@
     <string name="create_skill">Create skill</string>
     <string name="skill_not_found">skill not found</string>
     <string name="additional_description">Additional description</string>
-
     <string name="vacancy_created_successfully">Vacancy created successfully</string>
+    <string name="vacancy_creation_title">Vacancy creation</string>
+    <string name="company_name">Company name</string>
+    <string name="company_description">Company description</string>
+    <string name="vacancy_creation_description">To create a vacancy, you must fill in the following fields</string>
+
 </resources>

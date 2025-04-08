@@ -126,7 +126,7 @@ public fun ErrorCard(
     modifier: Modifier = Modifier,
     message: String,
     iconSize: Dp = 120.dp,
-    onTryAgainClick: () -> Unit,
+    onTryAgainClick: (() -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -160,23 +160,24 @@ public fun ErrorCard(
                 style = EmpathTheme.typography.labelLarge,
                 color = EmpathTheme.colors.onSurfaceVariant,
             )
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Button(
-                modifier = Modifier.defaultMaxWidth(),
-                onClick = onTryAgainClick,
-                shape = EmpathTheme.shapes.small,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = EmpathTheme.colors.primary,
-                    contentColor = EmpathTheme.colors.onPrimary,
-                ),
-            ) {
-                Text(
-                    text = stringResource(Res.string.try_again),
-                    style = EmpathTheme.typography.labelLarge,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+            if (onTryAgainClick != null) {
+                Spacer(modifier = Modifier.height(20.dp))
+                Button(
+                    modifier = Modifier.defaultMaxWidth(),
+                    onClick = onTryAgainClick,
+                    shape = EmpathTheme.shapes.small,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = EmpathTheme.colors.primary,
+                        contentColor = EmpathTheme.colors.onPrimary,
+                    ),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.try_again),
+                        style = EmpathTheme.typography.labelLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
     }

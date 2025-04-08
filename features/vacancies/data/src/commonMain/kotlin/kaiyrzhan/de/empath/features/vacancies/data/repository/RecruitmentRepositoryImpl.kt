@@ -5,12 +5,15 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kaiyrzhan.de.empath.core.utils.pagination.PaginationUtils
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
+import kaiyrzhan.de.empath.core.utils.result.toDomain
+import kaiyrzhan.de.empath.features.vacancies.data.model.job.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.ChangeResponseStatusRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.CreateRecruiterRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.toData
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.ResponsesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.VacanciesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
+import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Author
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
@@ -121,4 +124,10 @@ internal class RecruitmentRepositoryImpl(
         )
     }
 
+    override suspend fun getRecruiter(): RequestResult<Author> {
+        return api.getRecruiter()
+            .toDomain { author ->
+                author.toDomain()
+            }
+    }
 }

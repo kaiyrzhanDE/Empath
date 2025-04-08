@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
@@ -42,8 +44,10 @@ import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.core.utils.currentPlatform
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.RecruiterCreateDialog
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialog
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.ResponsesTab
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.Tabs
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacanciesTab
@@ -66,6 +70,13 @@ internal fun VacanciesScreen(
     val state = component.state.collectAsState()
     val vacancies = component.vacancies.collectAsLazyPagingItems()
     val responses = component.responses.collectAsLazyPagingItems()
+
+    val recruiterDialogSlot by component.recruiterDialog.subscribeAsState()
+    recruiterDialogSlot.child?.instance?.also { recruiterComponent ->
+        RecruiterCreateDialog(
+            component = recruiterComponent,
+        )
+    }
 
     SingleEventEffect(component.action) { action ->
         when (action) {

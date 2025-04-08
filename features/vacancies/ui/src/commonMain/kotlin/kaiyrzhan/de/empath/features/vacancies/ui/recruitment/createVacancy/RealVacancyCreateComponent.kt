@@ -22,6 +22,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetEmploymentTy
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetWorkFormatsUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetWorkSchedulesUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.CreateVacancyUseCase
+import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.EducationUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SkillUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.WorkExperienceUi
@@ -45,6 +46,7 @@ import org.koin.core.component.inject
 
 internal class RealVacancyCreateComponent(
     componentContext: ComponentContext,
+    private val author: AuthorUi,
     private val onBackClick: () -> Unit,
     private val onVacancyCreateClick: () -> Unit,
 ) : BaseComponent(componentContext), VacancyCreateComponent {
@@ -55,7 +57,7 @@ internal class RealVacancyCreateComponent(
     private val createVacancyUseCase: CreateVacancyUseCase by inject()
 
     override val state = MutableStateFlow<VacancyCreateState>(
-        VacancyCreateState.default()
+        VacancyCreateState.default(author)
     )
 
     private val _action = Channel<VacancyCreateAction>(capacity = Channel.BUFFERED)

@@ -3,6 +3,7 @@ package kaiyrzhan.de.empath.features.vacancies.domain.repository
 import androidx.paging.PagingData
 import kaiyrzhan.de.empath.core.utils.pagination.ListResult
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
+import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Author
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
@@ -42,6 +43,8 @@ public interface RecruitmentRepository {
     public suspend fun getResponses(
         vacancyId: String?,
     ): Flow<PagingData<Response>>
+
+    public suspend fun getRecruiter(): RequestResult<Author>
 
     public suspend fun changeResponseStatus(
         cvId: String,

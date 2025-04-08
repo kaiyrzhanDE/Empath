@@ -10,6 +10,7 @@ import de.jensklingenberg.ktorfit.http.Query
 import kaiyrzhan.de.empath.core.network.utils.ApiVersion
 import kaiyrzhan.de.empath.core.utils.pagination.ListResultDTO
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
+import kaiyrzhan.de.empath.features.vacancies.data.model.job.AuthorDTO
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.ChangeResponseStatusRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.CreateRecruiterRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.VacancyDTO
@@ -57,6 +58,11 @@ internal interface RecruitmentApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("vacancy_id") id: String,
     ): RequestResult<Any>
+
+    @GET("api/{version}/job/recruitment/vacancies/author")
+    suspend fun getRecruiter(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+    ): RequestResult<AuthorDTO>
 
     @GET("api/{version}/job/recruitment/responses")
     suspend fun getResponses(

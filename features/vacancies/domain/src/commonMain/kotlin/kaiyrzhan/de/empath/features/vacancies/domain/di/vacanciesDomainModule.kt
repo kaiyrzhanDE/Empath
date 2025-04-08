@@ -12,6 +12,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.CreateR
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.CreateVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.DeleteVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.EditVacancyUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetRecruiterUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetResponsesUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacanciesUseCase
 import org.koin.core.module.Module
@@ -77,6 +78,11 @@ public val vacanciesDomainModule: Module = module {
     factory {
         GetSkillsUseCase(
             repository = get<JobRepository>(),
+        )
+    }
+    factory {
+        GetRecruiterUseCase(
+            repository = get<RecruitmentRepository>(),
         )
     }
 }

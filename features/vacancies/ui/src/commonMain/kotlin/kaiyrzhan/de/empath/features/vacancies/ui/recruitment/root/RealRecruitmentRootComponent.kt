@@ -10,6 +10,7 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
+import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.RealVacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.RealVacanciesComponent
@@ -51,11 +52,10 @@ public class RealRecruitmentRootComponent(
                 onVacanciesFiltersClick = { filters ->
                     //TODO("Not yet implemented")
                 },
-                onVacancyCreateClick = {
-                    navigation.push(Config.VacancyCreate)
+                onVacancyCreateClick = { author ->
+                    navigation.push(Config.VacancyCreate(author))
                 },
                 onVacancyEditClick = { id ->
-                    //TODO("Not yet implemented")
                 },
                 onVacancyDetailClick = { vacancyId ->
                     navigation.push(Config.VacancyDetail(vacancyId))
@@ -95,6 +95,7 @@ public class RealRecruitmentRootComponent(
         return RecruitmentRootComponent.Child.VacancyCreate(
             component = RealVacancyCreateComponent(
                 componentContext = componentContext,
+                author = config.author,
                 onBackClick = ::onBackClick,
                 onVacancyCreateClick = {
 
@@ -112,7 +113,7 @@ public class RealRecruitmentRootComponent(
         data class VacancyDetail(val vacancyId: String) : Config
 
         @Serializable
-        data object VacancyCreate : Config
+        data class VacancyCreate(val author: AuthorUi) : Config
     }
 
 }
