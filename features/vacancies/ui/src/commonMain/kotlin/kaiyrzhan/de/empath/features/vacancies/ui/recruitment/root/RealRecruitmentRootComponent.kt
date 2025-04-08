@@ -51,7 +51,13 @@ public class RealRecruitmentRootComponent(
                 },
                 onVacancyEditClick = { id ->
                     //TODO("Not yet implemented")
-                }
+                },
+                onVacancyDetailClick = { id ->
+                    //TODO("Not yet implemented")
+                },
+                onCvClick = { id ->
+                    //TODO("Not yet implemented")
+                },
             )
         )
     }

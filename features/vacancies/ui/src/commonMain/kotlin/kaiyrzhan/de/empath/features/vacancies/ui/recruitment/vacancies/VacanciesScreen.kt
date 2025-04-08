@@ -72,9 +72,12 @@ import kaiyrzhan.de.empath.core.utils.dateFormat
 import kaiyrzhan.de.empath.core.utils.toGroupedString
 import kaiyrzhan.de.empath.features.vacancies.ui.components.WorkingConditionCard
 import kaiyrzhan.de.empath.features.vacancies.ui.components.WorkingSkillCard
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.RecruitmentVacancyActions
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.ResponsesTab
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.Tabs
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacanciesTab
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacancyCard
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacancyShimmerCard
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacancyWorkingConditions
@@ -93,6 +96,7 @@ internal fun VacanciesScreen(
 ) {
     val state = component.state.collectAsState()
     val vacancies = component.vacancies.collectAsLazyPagingItems()
+    val responses = component.responses.collectAsLazyPagingItems()
 
     SingleEventEffect(component.action) { action ->
         when (action) {
@@ -104,6 +108,7 @@ internal fun VacanciesScreen(
         modifier = modifier,
         state = state.value,
         vacancies = vacancies,
+        responses = responses,
         onEvent = component::onEvent,
     )
 }
@@ -113,10 +118,12 @@ private fun VacanciesScreen(
     modifier: Modifier = Modifier,
     state: VacanciesState,
     vacancies: LazyPagingItems<VacancyUi>,
+    responses: LazyPagingItems<ResponseUi>,
     onEvent: (VacanciesEvent) -> Unit,
 ) {
 
-    val lazyListState = rememberLazyListState()
+    val vacanciesLazyListState = rememberLazyListState()
+    val responsesLazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState {
         state.tabs.size
@@ -232,7 +239,7 @@ private fun VacanciesScreen(
                     Tab.Vacancies -> {
                         VacanciesTab(
                             modifier = Modifier.weight(1f),
-                            lazyListState = lazyListState,
+                            lazyListState = vacanciesLazyListState,
                             state = state,
                             vacancies = vacancies,
                             onEvent = onEvent,
@@ -240,12 +247,12 @@ private fun VacanciesScreen(
                     }
 
                     Tab.Responses -> {
-                        Box(
+                        ResponsesTab(
                             modifier = Modifier.weight(1f),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text("Responses")
-                        }
+                            lazyListState = responsesLazyListState,
+                            responses = responses,
+                            onEvent = onEvent,
+                        )
                     }
                 }
             }
@@ -254,108 +261,4 @@ private fun VacanciesScreen(
 
     }
 }
-
-@Composable
-internal fun VacanciesTab(
-    modifier: Modifier = Modifier,
-    lazyListState: LazyListState,
-    state: VacanciesState,
-    vacancies: LazyPagingItems<VacancyUi>,
-    onEvent: (VacanciesEvent) -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .background(EmpathTheme.colors.scrim)
-            .screenHorizontalPadding(PaddingType.MAIN),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        when (val refreshState = vacancies.loadState.refresh) {
-            is LoadState.Error -> {
-                ErrorScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    message = refreshState.error.message.orEmpty(),
-                    onTryAgainClick = vacancies::refresh,
-                )
-            }
-
-            else -> {
-                Spacer(modifier = Modifier.height(12.dp))
-                if (vacancies.itemCount != 0) {
-                    LazyColumn(
-                        state = lazyListState,
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(vertical = PaddingType.MAIN.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        items(5) {
-                            VacancyCard(
-                                vacancy = VacancyUi.sample(),
-                                onEvent = onEvent,
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                        items(5) {
-                            VacancyShimmerCard(
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                        items(vacancies.itemCount) { index ->
-                            val vacancy = vacancies[index]
-
-                            if (vacancy != null) {
-                                VacancyCard(
-                                    vacancy = vacancy,
-                                    onEvent = onEvent,
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            } else {
-                                VacancyShimmerCard(
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-                        }
-                        vacanciesAppendState(
-                            vacancies = vacancies,
-                        )
-                    }
-                } else {
-                    MessageScreen(
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                }
-            }
-        }
-    }
-}
-
-private fun LazyListScope.vacanciesAppendState(
-    vacancies: LazyPagingItems<VacancyUi>,
-) {
-    when (val appendState = vacancies.loadState.append) {
-        is LoadState.Error -> {
-            item {
-                ErrorCard(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    message = appendState.error.message.orEmpty(),
-                    onTryAgainClick = vacancies::retry,
-                )
-            }
-        }
-
-        is LoadState.Loading -> {
-            item {
-                CircularLoadingCard(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                )
-            }
-        }
-
-        is LoadState.NotLoading -> Unit
-    }
-}
-
-
 

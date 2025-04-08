@@ -24,16 +24,14 @@ import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesState
 
 @Composable
-internal fun VacanciesTab(
+internal fun ResponsesTab(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState,
-    state: VacanciesState,
-    vacancies: LazyPagingItems<VacancyUi>,
+    responses: LazyPagingItems<ResponseUi>,
     onEvent: (VacanciesEvent) -> Unit,
 ) {
     Column(
@@ -42,18 +40,18 @@ internal fun VacanciesTab(
             .screenHorizontalPadding(PaddingType.MAIN),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        when (val refreshState = vacancies.loadState.refresh) {
+        when (val refreshState = responses.loadState.refresh) {
             is LoadState.Error -> {
                 ErrorScreen(
                     modifier = Modifier.fillMaxSize(),
                     message = refreshState.error.message.orEmpty(),
-                    onTryAgainClick = vacancies::refresh,
+                    onTryAgainClick = responses::refresh,
                 )
             }
 
             else -> {
                 Spacer(modifier = Modifier.height(12.dp))
-                if (vacancies.itemCount != 0) {
+                if (responses.itemCount != 0) {
                     LazyColumn(
                         state = lazyListState,
                         modifier = Modifier.fillMaxSize(),
@@ -62,34 +60,34 @@ internal fun VacanciesTab(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         items(5) {
-                            VacancyCard(
-                                vacancy = VacancyUi.sample(),
+                            ResponseCard(
+                                response = ResponseUi.sample(),
                                 onEvent = onEvent,
                                 modifier = Modifier.fillMaxWidth(),
                             )
                         }
                         items(5) {
-                            VacancyShimmerCard(
+                            ResponseShimmerCard(
                                 modifier = Modifier.fillMaxWidth(),
                             )
                         }
-                        items(vacancies.itemCount) { index ->
-                            val vacancy = vacancies[index]
+                        items(responses.itemCount) { index ->
+                            val response = responses[index]
 
-                            if (vacancy != null) {
-                                VacancyCard(
-                                    vacancy = vacancy,
+                            if (response != null) {
+                                ResponseCard(
+                                    response = response,
                                     onEvent = onEvent,
                                     modifier = Modifier.fillMaxWidth(),
                                 )
                             } else {
-                                VacancyShimmerCard(
+                                ResponseShimmerCard(
                                     modifier = Modifier.fillMaxWidth(),
                                 )
                             }
                         }
-                        vacanciesAppendState(
-                            vacancies = vacancies,
+                        responsesAppendState(
+                            vacancies = responses,
                         )
                     }
                 } else {
@@ -102,8 +100,8 @@ internal fun VacanciesTab(
     }
 }
 
-private fun LazyListScope.vacanciesAppendState(
-    vacancies: LazyPagingItems<VacancyUi>,
+private fun LazyListScope.responsesAppendState(
+    vacancies: LazyPagingItems<ResponseUi>,
 ) {
     when (val appendState = vacancies.loadState.append) {
         is LoadState.Error -> {

@@ -9,12 +9,12 @@ import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kaiyrzhan.de.empath.core.network.utils.ApiVersion
 import kaiyrzhan.de.empath.core.utils.pagination.ListResultDTO
-import kaiyrzhan.de.empath.core.utils.pagination.PaginationUtils
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
+import kaiyrzhan.de.empath.features.vacancies.data.model.ChangeResponseStatusRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.CreateRecruiterRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.VacancyDTO
 import kaiyrzhan.de.empath.features.vacancies.data.model.VacancyRequest
-import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
+import kaiyrzhan.de.empath.features.vacancies.data.model.ResponseDTO
 
 internal interface RecruitmentApi {
 
@@ -56,5 +56,19 @@ internal interface RecruitmentApi {
     suspend fun deleteVacancy(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("vacancy_id") id: String,
+    ): RequestResult<Any>
+
+    @GET("api/{version}/job/recruitment/responses")
+    suspend fun getResponses(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Query("vacancy_id") vacancyId: String?,
+        @Query("page") page: Int = 1,
+        @Query("per_page") pageLimit: Int
+    ): RequestResult<ListResultDTO<ResponseDTO>>
+
+    @PATCH("api/{version}/job/recruitment/responses")
+    suspend fun changeResponseStatus(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Body request: ChangeResponseStatusRequest,
     ): RequestResult<Any>
 }

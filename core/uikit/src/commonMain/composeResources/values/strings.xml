@@ -177,5 +177,9 @@
     <string name="to">to</string>
     <string name="kzt">KZT</string>
     <string name="hide">Hide</string>
+    <string name="vacancy_detail">Vacancy detail</string>
+    <string name="cv">CV</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
 
 </resources>

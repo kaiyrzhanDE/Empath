@@ -8,12 +8,15 @@ import kaiyrzhan.de.empath.core.utils.pagination.PaginationUtils
 import kaiyrzhan.de.empath.core.utils.pagination.map
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.toDomain
+import kaiyrzhan.de.empath.features.vacancies.data.model.ChangeResponseStatusRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.CreateRecruiterRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.model.toData
+import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.ResponsesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.VacanciesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepository
 import kotlinx.coroutines.flow.Flow
@@ -87,6 +90,38 @@ internal class RecruitmentRepositoryImpl(
         return api.editVacancy(
             id = id,
             request = vacancy.toData(),
+        )
+    }
+
+    override suspend fun getResponses(
+        vacancyId: String?,
+    ): Flow<PagingData<Response>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
+                prefetchDistance = 3,
+                enablePlaceholders = true,
+            ),
+            pagingSourceFactory = {
+                ResponsesPagingSource(
+                    api = api,
+                    vacancyId = vacancyId,
+                )
+            }
+        ).flow
+    }
+
+    override suspend fun changeResponseStatus(
+        cvId: String,
+        status: String,
+        vacancyId: String
+    ): RequestResult<Any> {
+        return api.changeResponseStatus(
+            request = ChangeResponseStatusRequest(
+                cvId = cvId,
+                status = status,
+                vacancyId = vacancyId,
+            ),
         )
     }
 

@@ -1,6 +1,7 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies
 
 import androidx.paging.PagingData
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
@@ -13,6 +14,8 @@ internal interface VacanciesComponent {
     val state: StateFlow<VacanciesState>
 
     val vacancies: Flow<PagingData<VacancyUi>>
+
+    val responses: Flow<PagingData<ResponseUi>>
 
     val action: Flow<VacanciesAction>
 

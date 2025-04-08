@@ -4,9 +4,18 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import app.cash.paging.PagingData
 import com.arkivanov.decompose.ComponentContext
+import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.unknown_error
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
+import kaiyrzhan.de.empath.core.utils.result.onFailure
+import kaiyrzhan.de.empath.core.utils.result.onSuccess
+import kaiyrzhan.de.empath.core.utils.result.Result
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.ChangeResponseStatusUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.GetResponsesUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.GetVacanciesUseCase
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacanciesFiltersUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.toUi
@@ -25,16 +34,23 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import org.koin.core.component.get
+import org.koin.core.component.inject
 
 internal class RealVacanciesComponent(
     componentContext: ComponentContext,
     private val onVacanciesFiltersClick: (filters: VacanciesFiltersUi) -> Unit,
     private val onVacancyCreateClick: () -> Unit,
     private val onVacancyEditClick: (vacancyId: String) -> Unit,
+    private val onVacancyDetailClick: (vacancyId: String) -> Unit,
+    private val onCvClick: (cvId: String) -> Unit,
 ) : BaseComponent(componentContext), VacanciesComponent {
 
     private val getVacanciesUseCase: GetVacanciesUseCase = get()
+    private val getResponsesUseCase: GetResponsesUseCase = get()
+    private val changeResponseStatusUseCase: ChangeResponseStatusUseCase by inject()
 
     override val state = MutableStateFlow<VacanciesState>(
         VacanciesState.default()
@@ -64,6 +80,23 @@ internal class RealVacanciesComponent(
             }
         }.cachedIn(coroutineScope)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override val responses: Flow<PagingData<ResponseUi>> =
+        state.flatMapLatest { currentState ->
+            getResponsesUseCase().map { pagingData ->
+                pagingData.map { response ->
+                    val responseUi = response.toUi()
+                    responseUi.copy(
+                        status = when (responseUi) {
+                            in currentState.acceptedResponses -> ResponseStatus.ACCEPTED
+                            in currentState.rejectedResponses -> ResponseStatus.REJECTED
+                            else -> responseUi.status
+                        },
+                    )
+                }
+            }
+        }.cachedIn(coroutineScope)
+
 
     private val _action = Channel<VacanciesAction>(capacity = Channel.BUFFERED)
     override val action: Flow<VacanciesAction> = _action.receiveAsFlow()
@@ -78,6 +111,10 @@ internal class RealVacanciesComponent(
             is VacanciesEvent.VacancyCreateClick -> onVacancyCreateClick()
             is VacanciesEvent.VacancyEditClick -> onVacancyEditClick(event.id)
             is VacanciesEvent.VacancyHideClick -> hideVacancy(event.id)
+            is VacanciesEvent.VacancyDetailClick -> onVacancyDetailClick(event.id)
+            is VacanciesEvent.ResponseCvClick -> onCvClick(event.response.cvId)
+            is VacanciesEvent.ResponseAccept -> acceptResponse(event.response)
+            is VacanciesEvent.ResponseReject -> rejectResponse(event.response)
         }
     }
 
@@ -99,5 +136,59 @@ internal class RealVacanciesComponent(
 
     private fun hideVacancy(id: String) {
         //TODO(Not yer implemented)
+    }
+
+    private fun acceptResponse(
+        response: ResponseUi,
+    ) {
+        coroutineScope.launch {
+            changeResponseStatusUseCase(
+                cvId = response.cvId,
+                vacancyId = response.vacancyId,
+                status = ResponseStatus.ACCEPTED.type,
+            ).onSuccess { result ->
+                state.update { currentState ->
+                    currentState.copy(
+                        acceptedResponses = currentState.acceptedResponses + response,
+                    )
+                }
+            }.onFailure { error ->
+                when (error) {
+                    is Result.Error.DefaultError -> {
+                        _action.send(
+                            VacanciesAction.ShowSnacbar(
+                                message = getString(Res.string.unknown_error),
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun rejectResponse(response: ResponseUi) {
+        coroutineScope.launch {
+            changeResponseStatusUseCase(
+                cvId = response.cvId,
+                vacancyId = response.vacancyId,
+                status = ResponseStatus.REJECTED.type,
+            ).onSuccess { result ->
+                state.update { currentState ->
+                    currentState.copy(
+                        rejectedResponses = currentState.rejectedResponses + response,
+                    )
+                }
+            }.onFailure { error ->
+                when (error) {
+                    is Result.Error.DefaultError -> {
+                        _action.send(
+                            VacanciesAction.ShowSnacbar(
+                                message = getString(Res.string.unknown_error),
+                            )
+                        )
+                    }
+                }
+            }
+        }
     }
 }

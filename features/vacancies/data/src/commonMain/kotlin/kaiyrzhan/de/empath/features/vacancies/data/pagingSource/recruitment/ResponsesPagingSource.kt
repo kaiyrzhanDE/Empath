@@ -1,43 +1,32 @@
 package kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingSource.LoadParams
+import androidx.paging.PagingSource.LoadResult
 import androidx.paging.PagingState
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.data.model.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
 import okio.IOException
 import kotlin.collections.orEmpty
 
-internal class VacanciesPagingSource(
+internal class ResponsesPagingSource(
     private val api: RecruitmentApi,
-    private val query: String?,
-    private val salaryFrom: Int?,
-    private val salaryTo: Int?,
-    private val workExperiences: List<String>,
-    private val workFormats: List<String>,
-    private val education: List<String>,
-    private val excludeWords: List<String>,
-    private val includeWords: List<String>,
-) : PagingSource<Int, Vacancy>() {
+    private val vacancyId: String? = null,
+) : PagingSource<Int, Response>() {
 
-    override fun getRefreshKey(state: PagingState<Int, Vacancy>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Response>): Int? {
         return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Vacancy> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Response> {
         return try {
             val currentPage = params.key ?: 1
-            val request = api.getVacancies(
+            val request = api.getResponses(
                 page = currentPage,
-                query = query,
-                salaryFrom = salaryFrom,
-                salaryTo = salaryTo,
-                workExperiences = workExperiences,
-                workFormats = workFormats,
-                education = education,
-                excludeWords = excludeWords,
-                includeWords = includeWords,
+                vacancyId = vacancyId,
                 pageLimit = params.loadSize,
             )
             when (request) {
