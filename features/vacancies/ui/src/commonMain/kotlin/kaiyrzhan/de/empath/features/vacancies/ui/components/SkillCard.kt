@@ -71,7 +71,6 @@ internal fun WorkingSkillCard(
     modifier: Modifier = Modifier,
     skill: String,
     containerColor: Color,
-    painter: Painter,
 ) {
     Card(
         modifier = modifier,

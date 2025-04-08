@@ -1,8 +1,7 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model
 
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacanciesFiltersUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacanciesFiltersUi
 
 internal data class VacanciesState(
     val currentTab: Tab = Tab.Vacancies,

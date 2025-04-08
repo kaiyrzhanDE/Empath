@@ -6,9 +6,12 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.RealVacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.RealVacanciesComponent
 import kotlinx.serialization.Serializable
 
@@ -33,6 +36,8 @@ public class RealRecruitmentRootComponent(
         logger.d(this.className(), "Recruitment child: $config")
         return when (config) {
             is Config.Vacancies -> createVacanciesComponent(componentContext)
+            is Config.VacancyDetail -> createVacancyDetailComponent(componentContext, config)
+            is Config.VacancyCreate -> createVacancyCreateComponent(componentContext, config)
         }
     }
 
@@ -47,17 +52,53 @@ public class RealRecruitmentRootComponent(
                     //TODO("Not yet implemented")
                 },
                 onVacancyCreateClick = {
-                    //TODO("Not yet implemented")
+                    navigation.push(Config.VacancyCreate)
                 },
                 onVacancyEditClick = { id ->
                     //TODO("Not yet implemented")
                 },
-                onVacancyDetailClick = { id ->
-                    //TODO("Not yet implemented")
+                onVacancyDetailClick = { vacancyId ->
+                    navigation.push(Config.VacancyDetail(vacancyId))
                 },
                 onCvClick = { id ->
                     //TODO("Not yet implemented")
                 },
+            )
+        )
+    }
+
+    @OptIn(DelicateDecomposeApi::class)
+    private fun createVacancyDetailComponent(
+        componentContext: ComponentContext,
+        config: Config.VacancyDetail,
+    ): RecruitmentRootComponent.Child.VacancyDetail {
+        return RecruitmentRootComponent.Child.VacancyDetail(
+            component = RealVacancyDetailComponent(
+                componentContext = componentContext,
+                vacancyId = config.vacancyId,
+                onBackClick = ::onBackClick,
+                onVacancyEditClick = {
+                    //TODO("Not yet implemented")
+                },
+                onVacancyDeleteClick = {
+                    //TODO("Not yet implemented")
+                },
+            )
+        )
+    }
+
+    @OptIn(DelicateDecomposeApi::class)
+    private fun createVacancyCreateComponent(
+        componentContext: ComponentContext,
+        config: Config.VacancyCreate,
+    ): RecruitmentRootComponent.Child.VacancyCreate {
+        return RecruitmentRootComponent.Child.VacancyCreate(
+            component = RealVacancyCreateComponent(
+                componentContext = componentContext,
+                onBackClick = ::onBackClick,
+                onVacancyCreateClick = {
+
+                }
             )
         )
     }
@@ -67,6 +108,11 @@ public class RealRecruitmentRootComponent(
         @Serializable
         data object Vacancies : Config
 
+        @Serializable
+        data class VacancyDetail(val vacancyId: String) : Config
+
+        @Serializable
+        data object VacancyCreate : Config
     }
 
 }

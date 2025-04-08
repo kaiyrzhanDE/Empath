@@ -97,71 +97,75 @@ internal fun Tags(
                 }
 
                 is LoadState.NotLoading -> {
-                    if (tags.itemCount != 0) {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                        ) {
-                            items(tags.itemCount) { index ->
-                                val tag = tags[index]
-                                Column(
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    if (tag != null) {
-                                        val isSelected = tag in state.editableTags
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clickable {
-                                                    if (isSelected) {
-                                                        onEvent(TagsEvent.TagRemove(tag))
-                                                    } else {
-                                                        onEvent(TagsEvent.TagSelect(tag))
-                                                    }
-                                                }
-                                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                                            horizontalArrangement = Arrangement.SpaceBetween,
-                                            verticalAlignment = Alignment.CenterVertically,
-                                        ) {
-                                            Text(
-                                                text = tag.name,
-                                                color = if (isSelected) EmpathTheme.colors.secondary
-                                                else EmpathTheme.colors.onSurface,
-                                                maxLines = 2,
-                                                overflow = TextOverflow.Ellipsis,
-                                                style = EmpathTheme.typography.labelLarge,
-                                            )
-                                            if (isSelected) {
-                                                Icon(
-                                                    modifier = Modifier.size(24.dp),
-                                                    painter = painterResource(Res.drawable.ic_check),
-                                                    contentDescription = "Tag ${tag.name}",
-                                                    tint = EmpathTheme.colors.secondary
-                                                )
-                                            }
-                                        }
-                                    } else {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(40.dp)
-                                                .shimmerLoading(),
-                                        )
-                                    }
-                                    if (index != tags.itemCount) {
-                                        HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
-                                    }
-                                }
-                            }
-                            tagsAppendState(
-                                tags = tags,
+                    when {
+                        tags.itemCount == 0 && state.query.isNotBlank() -> {
+                            TagCreateCard(
+                                modifier = Modifier.fillMaxSize(),
+                                state = state,
+                                onEvent = onEvent,
                             )
                         }
-                    } else {
-                        TagCreateCard(
-                            modifier = Modifier.fillMaxSize(),
-                            state = state,
-                            onEvent = onEvent,
-                        )
+
+                        else -> {
+                            LazyColumn(
+                                modifier = Modifier.fillMaxSize(),
+                            ) {
+                                items(tags.itemCount) { index ->
+                                    val tag = tags[index]
+                                    Column(
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        if (tag != null) {
+                                            val isSelected = tag in state.editableTags
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .clickable {
+                                                        if (isSelected) {
+                                                            onEvent(TagsEvent.TagRemove(tag))
+                                                        } else {
+                                                            onEvent(TagsEvent.TagSelect(tag))
+                                                        }
+                                                    }
+                                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                                horizontalArrangement = Arrangement.SpaceBetween,
+                                                verticalAlignment = Alignment.CenterVertically,
+                                            ) {
+                                                Text(
+                                                    text = tag.name,
+                                                    color = if (isSelected) EmpathTheme.colors.secondary
+                                                    else EmpathTheme.colors.onSurface,
+                                                    maxLines = 2,
+                                                    overflow = TextOverflow.Ellipsis,
+                                                    style = EmpathTheme.typography.labelLarge,
+                                                )
+                                                if (isSelected) {
+                                                    Icon(
+                                                        modifier = Modifier.size(24.dp),
+                                                        painter = painterResource(Res.drawable.ic_check),
+                                                        contentDescription = "Tag ${tag.name}",
+                                                        tint = EmpathTheme.colors.secondary
+                                                    )
+                                                }
+                                            }
+                                        } else {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(40.dp)
+                                                    .shimmerLoading(),
+                                            )
+                                        }
+                                        if (index != tags.itemCount) {
+                                            HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
+                                        }
+                                    }
+                                }
+                                tagsAppendState(
+                                    tags = tags,
+                                )
+                            }
+                        }
                     }
                 }
             }

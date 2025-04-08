@@ -1,6 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.model
 
-import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Salary
+import kaiyrzhan.de.empath.features.vacancies.domain.model.Salary
 
 internal data class SalaryUi(
     val from: Int?,

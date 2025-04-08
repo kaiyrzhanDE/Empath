@@ -3,6 +3,7 @@ package kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.model.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy

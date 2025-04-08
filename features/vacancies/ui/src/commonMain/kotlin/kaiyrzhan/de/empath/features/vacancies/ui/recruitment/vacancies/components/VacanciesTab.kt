@@ -24,7 +24,7 @@ import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesState
 
@@ -61,18 +61,6 @@ internal fun VacanciesTab(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        items(5) {
-                            VacancyCard(
-                                vacancy = VacancyUi.sample(),
-                                onEvent = onEvent,
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                        items(5) {
-                            VacancyShimmerCard(
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
                         items(vacancies.itemCount) { index ->
                             val vacancy = vacancies[index]
 

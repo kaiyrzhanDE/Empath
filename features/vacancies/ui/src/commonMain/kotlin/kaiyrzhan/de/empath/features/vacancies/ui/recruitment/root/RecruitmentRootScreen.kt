@@ -12,6 +12,9 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.ui.animations.swipe
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailScreen
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.VacancyCreateScreen
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.VacanciesScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
@@ -60,6 +63,20 @@ private fun RecruitmentRootScreen(
         when (val instance = child.instance) {
             is RecruitmentRootComponent.Child.Vacancies -> {
                 VacanciesScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is RecruitmentRootComponent.Child.VacancyDetail -> {
+                VacancyDetailScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is RecruitmentRootComponent.Child.VacancyCreate -> {
+                VacancyCreateScreen(
                     component = instance.component,
                     modifier = Modifier.fillMaxSize(),
                 )

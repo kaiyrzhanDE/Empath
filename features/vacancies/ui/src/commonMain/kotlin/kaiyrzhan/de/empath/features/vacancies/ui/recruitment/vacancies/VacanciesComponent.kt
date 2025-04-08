@@ -1,8 +1,8 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies
 
 import androidx.paging.PagingData
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesState

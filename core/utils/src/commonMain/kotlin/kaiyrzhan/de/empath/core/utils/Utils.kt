@@ -7,6 +7,8 @@ public inline fun <reified T : Enum<T>> String?.toEnumSafe(default: T): T {
 }
 
 
+
+
 public fun Int?.toGroupedString(): String {
     return if (this == null) "_"
     else toString()
@@ -24,6 +26,16 @@ public fun Long?.toGroupedString(): String {
         .joinToString(" ")
         .reversed()
 }
+
+
+
+public inline fun String.toIntLimited(): Int? {
+    if (isEmpty() || any { !it.isDigit() }) return null
+
+    val longValue = toLongOrNull() ?: return null
+    return if (longValue > Int.MAX_VALUE) Int.MAX_VALUE else longValue.toInt()
+}
+
 
 
 

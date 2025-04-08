@@ -1,6 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.data.model
 
-import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Salary
+import kaiyrzhan.de.empath.features.vacancies.domain.model.Salary
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

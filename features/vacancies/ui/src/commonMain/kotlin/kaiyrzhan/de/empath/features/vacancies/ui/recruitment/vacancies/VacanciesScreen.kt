@@ -1,39 +1,21 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -41,14 +23,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.text.style.LineHeightStyle
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
@@ -56,33 +35,20 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
-import kaiyrzhan.de.empath.core.ui.components.CircularLoadingCard
-import kaiyrzhan.de.empath.core.ui.components.ErrorCard
-import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
-import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
-import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
-import kaiyrzhan.de.empath.core.ui.modifiers.shimmerLoading
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.core.utils.currentPlatform
-import kaiyrzhan.de.empath.core.utils.dateFormat
-import kaiyrzhan.de.empath.core.utils.toGroupedString
-import kaiyrzhan.de.empath.features.vacancies.ui.components.WorkingConditionCard
-import kaiyrzhan.de.empath.features.vacancies.ui.components.WorkingSkillCard
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.RecruitmentVacancyActions
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.ResponsesTab
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.Tabs
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacanciesTab
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacancyCard
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacancyShimmerCard
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacancyWorkingConditions
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacancyWorkingSkills
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.Tab
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesState
 import kotlinx.coroutines.launch
@@ -94,13 +60,20 @@ internal fun VacanciesScreen(
     component: VacanciesComponent,
     modifier: Modifier = Modifier
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = LocalSnackbarHostState.current
+
     val state = component.state.collectAsState()
     val vacancies = component.vacancies.collectAsLazyPagingItems()
     val responses = component.responses.collectAsLazyPagingItems()
 
     SingleEventEffect(component.action) { action ->
         when (action) {
-            else -> Unit //TODO(handle actions)
+            is VacanciesAction.ShowSnackbar -> {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(action.message)
+                }
+            }
         }
     }
 

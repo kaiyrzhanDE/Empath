@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment
 
+import kaiyrzhan.de.empath.features.vacancies.domain.model.Salary
 import kotlinx.datetime.Instant
 
 public class Vacancy(

@@ -178,8 +178,54 @@
     <string name="kzt">KZT</string>
     <string name="hide">Hide</string>
     <string name="vacancy_detail">Vacancy detail</string>
+    <string name="create_vacancy">Create vacancy</string>
     <string name="cv">CV</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
+    <string name="salary">Salary</string>
+    <string name="work_experience">Work experience</string>
+    <string name="employment_types">Employment types</string>
+    <string name="work_schedules">Work schedules</string>
+    <string name="work_formats">Work formats</string>
+    <string name="address">Address</string>
+    <string name="education">Education</string>
+    <string name="responsibilities">Responsibilities</string>
+    <string name="requirements">Requirements</string>
+    <string name="key_skills">Key skills</string>
+    <string name="additional_skills">Additional skills</string>
+    <string name="contacts">Contacts</string>
+    <string name="select_work_experiences">Select work experiences</string>
+    <string name="select_work_schedules">Select work schedules</string>
+    <string name="select_work_formats">Select work formats</string>
+    <string name="select_employments_types">Select employment types</string>
+    <string name="select_education">Select education</string>
+    <string name="selected_key_skills">Selected key skills</string>
+    <string name="selected_additional_skills">Selected additional skills</string>
 
+    <string name="abort_vacancy_create_title">Abort creating vacancy</string>
+    <string name="abort_vacancy_create_description">
+        Are you sure you want to discard this vacancy? All unsaved changes will be lost.
+    </string>
+    <string name="adding_skills_title">Adding skills to vacancy</string>
+    <string name="adding_skills_description">Enter skills that best describe the vacancy.</string>
+
+    <string name="unknown">Unknown</string>
+    <string name="education_school">High School</string>
+    <string name="education_bachelor">Bachelor's Degree</string>
+    <string name="education_master">Master's Degree</string>
+    <string name="education_doctorate">Doctorate</string>
+
+    <string name="work_experience_no">No experience</string>
+    <string name="work_experience_1_3">1–3 years</string>
+    <string name="work_experience_3_5">3–5 years</string>
+    <string name="work_experience_over_5">More than 5 years</string>
+    <string name="skills">Skills</string>
+    <string name="skill_name">Skill name</string>
+    <string name="select_skills">Select skills</string>
+    <string name="add_skill">Add skill</string>
+    <string name="create_skill">Create skill</string>
+    <string name="skill_not_found">skill not found</string>
+    <string name="additional_description">Additional description</string>
+
+    <string name="vacancy_created_successfully">Vacancy created successfully</string>
 </resources>

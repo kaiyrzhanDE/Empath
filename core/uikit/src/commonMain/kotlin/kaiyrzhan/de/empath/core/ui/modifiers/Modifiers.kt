@@ -109,10 +109,10 @@ public fun Modifier.shimmerLoading(
 
     val translateAnimation = transition.animateFloat(
         initialValue = 0f,
-        targetValue = 500f,
+        targetValue = 1000f,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = durationMillis,
+                durationMillis = 10_000,
                 easing = LinearEasing,
             ),
             repeatMode = RepeatMode.Restart,

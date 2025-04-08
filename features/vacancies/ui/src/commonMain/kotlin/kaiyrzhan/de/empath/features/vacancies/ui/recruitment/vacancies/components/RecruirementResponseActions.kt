@@ -14,7 +14,7 @@ import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.dateFormat
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import org.jetbrains.compose.resources.stringResource
 

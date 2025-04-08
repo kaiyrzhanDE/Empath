@@ -13,7 +13,7 @@ import empath.core.uikit.generated.resources.ic_domain
 import empath.core.uikit.generated.resources.ic_schedule
 import empath.core.uikit.generated.resources.ic_work_history
 import kaiyrzhan.de.empath.features.vacancies.ui.components.WorkingConditionCard
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalLayoutApi::class)

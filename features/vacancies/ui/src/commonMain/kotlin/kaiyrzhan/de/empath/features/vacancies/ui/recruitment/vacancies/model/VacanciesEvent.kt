@@ -1,6 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model
 
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 
 internal sealed interface VacanciesEvent {
     data class VacanciesSearch(val query: String) : VacanciesEvent

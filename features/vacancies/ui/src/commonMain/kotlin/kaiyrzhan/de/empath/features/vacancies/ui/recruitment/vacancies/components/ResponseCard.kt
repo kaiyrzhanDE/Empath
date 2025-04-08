@@ -22,7 +22,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
@@ -36,8 +35,8 @@ import empath.core.uikit.generated.resources.reject
 import kaiyrzhan.de.empath.core.ui.extensions.appendColon
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseStatus
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -48,7 +47,6 @@ internal fun ResponseCard(
     onEvent: (VacanciesEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     Card(
         shape = EmpathTheme.shapes.small,
         colors = CardDefaults.cardColors(

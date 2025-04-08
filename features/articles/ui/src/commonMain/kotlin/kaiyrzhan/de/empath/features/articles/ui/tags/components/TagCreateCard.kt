@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.create_tag
 import empath.core.uikit.generated.resources.tag_not_found
+import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.articles.ui.tags.model.TagsEvent
@@ -31,19 +32,21 @@ internal fun TagCreateCard(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = buildString {
-                append("\"${state.query}\"")
-                appendSpace()
-                append(stringResource(Res.string.tag_not_found))
-            },
-            style = EmpathTheme.typography.bodyLarge,
-            color = EmpathTheme.colors.onSurfaceVariant,
-        )
+        CollapseAnimatedVisibility(visible = state.query.isNotBlank()) {
+            Text(
+                text = buildString {
+                    append("\"${state.query}\"")
+                    appendSpace()
+                    append(stringResource(Res.string.tag_not_found))
+                },
+                style = EmpathTheme.typography.bodyLarge,
+                color = EmpathTheme.colors.onSurfaceVariant,
+            )
+        }
         Spacer(modifier = Modifier.height(12.dp))
         Button(
             onClick = { onEvent(TagsEvent.TagCreate) },
-            enabled = state.hasTag().not(),
+            enabled = state.hasTag().not() && state.query.isNotBlank(),
         ) {
             Text(
                 text = stringResource(Res.string.create_tag),

@@ -3,6 +3,8 @@ package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.root
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.VacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.VacanciesComponent
 
 public interface RecruitmentRootComponent: BackHandlerOwner {
@@ -12,9 +14,7 @@ public interface RecruitmentRootComponent: BackHandlerOwner {
 
     public sealed class Child {
         internal class Vacancies(val component: VacanciesComponent) : Child()
-//        internal class RecruitmentVacancyDetail(val component: RecruitmentVacanciesComponent) : Child()
-//        internal class RecruitmentVacancyCreate(val component: RecruitmentVacanciesComponent) : Child()
-//        internal class RecruitmentVacancyEdit(val component: RecruitmentVacanciesComponent) : Child()
-//        internal class CreateCV(val component: RecruitmentVacanciesComponent) : Child()
+        internal class VacancyDetail(val component: VacancyDetailComponent) : Child()
+        internal class VacancyCreate(val component: VacancyCreateComponent) : Child()
     }
 }

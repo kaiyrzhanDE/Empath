@@ -17,9 +17,10 @@ import empath.core.uikit.generated.resources.from
 import empath.core.uikit.generated.resources.kzt
 import empath.core.uikit.generated.resources.to
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
+import kaiyrzhan.de.empath.core.ui.modifiers.noRippleClickable
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.toGroupedString
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import org.jetbrains.compose.resources.stringResource
 
@@ -31,11 +32,12 @@ internal fun VacancyCard(
     onEvent: (VacanciesEvent) -> Unit,
 ) {
     Card(
+        modifier = modifier
+            .noRippleClickable { onEvent(VacanciesEvent.VacancyDetailClick(vacancy.id)) },
         shape = EmpathTheme.shapes.small,
         colors = CardDefaults.cardColors(
             containerColor = EmpathTheme.colors.surface,
         ),
-        modifier = modifier,
     ) {
         Column(
             modifier = Modifier

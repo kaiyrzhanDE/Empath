@@ -10,11 +10,11 @@ import de.jensklingenberg.ktorfit.http.Query
 import kaiyrzhan.de.empath.core.network.utils.ApiVersion
 import kaiyrzhan.de.empath.core.utils.pagination.ListResultDTO
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
-import kaiyrzhan.de.empath.features.vacancies.data.model.ChangeResponseStatusRequest
-import kaiyrzhan.de.empath.features.vacancies.data.model.CreateRecruiterRequest
-import kaiyrzhan.de.empath.features.vacancies.data.model.VacancyDTO
-import kaiyrzhan.de.empath.features.vacancies.data.model.VacancyRequest
-import kaiyrzhan.de.empath.features.vacancies.data.model.ResponseDTO
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.ChangeResponseStatusRequest
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.CreateRecruiterRequest
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.VacancyDTO
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.VacancyRequest
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.ResponseDTO
 
 internal interface RecruitmentApi {
 

@@ -11,14 +11,14 @@ import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
 import kaiyrzhan.de.empath.core.utils.result.Result
-import kaiyrzhan.de.empath.features.vacancies.domain.usecase.ChangeResponseStatusUseCase
-import kaiyrzhan.de.empath.features.vacancies.domain.usecase.GetResponsesUseCase
-import kaiyrzhan.de.empath.features.vacancies.domain.usecase.GetVacanciesUseCase
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
-import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacanciesFiltersUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.toUi
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.ChangeResponseStatusUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetResponsesUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacanciesUseCase
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseStatus
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacanciesFiltersUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.toUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.Tab
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
@@ -156,7 +156,7 @@ internal class RealVacanciesComponent(
                 when (error) {
                     is Result.Error.DefaultError -> {
                         _action.send(
-                            VacanciesAction.ShowSnacbar(
+                            VacanciesAction.ShowSnackbar(
                                 message = getString(Res.string.unknown_error),
                             )
                         )
@@ -182,7 +182,7 @@ internal class RealVacanciesComponent(
                 when (error) {
                     is Result.Error.DefaultError -> {
                         _action.send(
-                            VacanciesAction.ShowSnacbar(
+                            VacanciesAction.ShowSnackbar(
                                 message = getString(Res.string.unknown_error),
                             )
                         )
