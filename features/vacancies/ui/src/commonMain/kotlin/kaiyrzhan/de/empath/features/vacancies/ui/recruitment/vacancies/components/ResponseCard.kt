@@ -163,7 +163,7 @@ private fun ResponseOptions(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false }
         ) {
-            if (response.status != ResponseStatus.ACCEPTED) {
+            if (response.status.canBeAccepted()) {
                 DropdownMenuItem(
                     text = {
                         Text(
@@ -176,7 +176,7 @@ private fun ResponseOptions(
                     }
                 )
             }
-            if (response.status != ResponseStatus.REJECTED) {
+            if (response.status.canBeRejected()) {
                 DropdownMenuItem(
                     text = {
                         Text(

@@ -77,6 +77,11 @@ internal fun VacancyCard(
                 modifier = Modifier.fillMaxWidth(),
                 vacancy = vacancy,
             )
+            EmploymentActions(
+                modifier = Modifier.fillMaxWidth(),
+                vacancy = vacancy,
+                onEvent = onEvent,
+            )
         }
 
     }

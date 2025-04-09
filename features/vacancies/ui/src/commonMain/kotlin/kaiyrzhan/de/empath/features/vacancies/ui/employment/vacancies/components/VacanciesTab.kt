@@ -27,6 +27,7 @@ import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesState
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 
 @Composable
 internal fun VacanciesTab(
@@ -79,6 +80,11 @@ internal fun VacanciesTab(
                         vacanciesAppendState(
                             vacancies = vacancies,
                         )
+                        items(2) {
+                            VacancyShimmerCard(
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
                     }
                 } else {
                     MessageScreen(

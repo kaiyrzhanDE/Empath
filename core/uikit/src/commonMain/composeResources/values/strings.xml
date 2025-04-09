@@ -2,6 +2,8 @@
     <string name="app_name">Em-path</string>
     <string name="created_by_">Created by _</string>
 
+    <string name="under_development">This functional under development</string>
+
     <string name="authorization_process">Authorization process</string>
     <string name="loading">Loading</string>
     <string name="loading_prompt">Please wait a bit.</string>
@@ -175,8 +177,8 @@
     <string name="selected_additional_skills">Selected additional skills</string>
     <string name="abort_vacancy_create_title">Abort creating vacancy</string>
     <string name="abort_vacancy_create_description">Are you sure you want to discard this vacancy? All unsaved changes will be lost.</string>
-    <string name="adding_skills_title">Adding skills to vacancy</string>
-    <string name="adding_skills_description">Enter skills that best describe the vacancy.</string>
+    <string name="adding_skills_title">Add Skills to Vacancy</string>
+    <string name="adding_skills_description">Specify the key skills that best match the requirements of the vacancy.</string>
     <string name="unknown">Unknown</string>
     <string name="education_school">High School</string>
     <string name="education_bachelor">Bachelor's Degree</string>
@@ -200,5 +202,9 @@
     <string name="vacancy_creation_description">To create a vacancy, you must fill in the following fields</string>
     <string name="respond">Respond</string>
     <string name="responded">Responded</string>
-
+    <string name="selecting_cv_title">Select CV for Vacancy</string>
+    <string name="selecting_cv_description">The selected CV will be shown to the employer for this vacancy</string>
+    <string name="select_cv">Select CV</string>
+    <string name="cvs_not_found">CV not found, try to create CV at first</string>
+    <string name="about_me">About me</string>
 </resources>

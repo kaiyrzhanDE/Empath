@@ -59,18 +59,6 @@ internal fun ResponsesTab(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        items(5) {
-                            ResponseCard(
-                                response = ResponseUi.sample(),
-                                onEvent = onEvent,
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                        items(5) {
-                            ResponseShimmerCard(
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
                         items(responses.itemCount) { index ->
                             val response = responses[index]
 
@@ -89,6 +77,11 @@ internal fun ResponsesTab(
                         responsesAppendState(
                             vacancies = responses,
                         )
+                        items(2) {
+                            ResponseShimmerCard(
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
                     }
                 } else {
                     MessageScreen(

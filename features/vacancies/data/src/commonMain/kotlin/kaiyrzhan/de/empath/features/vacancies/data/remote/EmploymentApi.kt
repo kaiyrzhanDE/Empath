@@ -17,6 +17,7 @@ internal interface EmploymentApi {
 
     @GET("api/{version}/job/employment/cv")
     suspend fun getCvs(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Query("page") page: Int = 1,
         @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
     ): RequestResult<ListResultDTO<CvDTO>>

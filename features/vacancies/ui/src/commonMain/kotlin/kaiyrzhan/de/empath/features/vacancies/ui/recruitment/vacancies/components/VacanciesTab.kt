@@ -79,6 +79,11 @@ internal fun VacanciesTab(
                         vacanciesAppendState(
                             vacancies = vacancies,
                         )
+                        items(2){
+                            VacancyShimmerCard(
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
                     }
                 } else {
                     MessageScreen(

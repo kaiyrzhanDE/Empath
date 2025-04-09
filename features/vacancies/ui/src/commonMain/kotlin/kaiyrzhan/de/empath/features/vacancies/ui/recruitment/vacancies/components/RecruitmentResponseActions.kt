@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.components
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,8 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.cv
-import empath.core.uikit.generated.resources.vacancy_detail
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.dateFormat
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
@@ -20,7 +19,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.Vac
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun EmploymentResponseActions(
+internal fun RecruitmentResponseActions(
     modifier: Modifier = Modifier,
     response: ResponseUi,
     onEvent: (VacanciesEvent) -> Unit
@@ -35,7 +34,6 @@ internal fun EmploymentResponseActions(
             style = EmpathTheme.typography.bodyMedium,
             color = EmpathTheme.colors.onSurfaceVariant,
         )
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp),

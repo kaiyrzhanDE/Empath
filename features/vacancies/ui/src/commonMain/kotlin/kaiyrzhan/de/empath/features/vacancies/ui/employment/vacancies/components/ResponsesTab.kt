@@ -26,6 +26,7 @@ import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 
 @Composable
 internal fun ResponsesTab(
@@ -51,7 +52,7 @@ internal fun ResponsesTab(
 
             else -> {
                 Spacer(modifier = Modifier.height(12.dp))
-                if (responses.itemCount != 0) {
+//                if (responses.itemCount != 0) {
                     LazyColumn(
                         state = lazyListState,
                         modifier = Modifier.fillMaxSize(),
@@ -74,15 +75,20 @@ internal fun ResponsesTab(
                                 )
                             }
                         }
+                        items(2) {
+                            VacancyShimmerCard(
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
                         responsesAppendState(
                             vacancies = responses,
                         )
                     }
-                } else {
-                    MessageScreen(
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                }
+//                } else {
+//                    MessageScreen(
+//                        modifier = Modifier.fillMaxSize(),
+//                    )
+//                }
             }
         }
     }

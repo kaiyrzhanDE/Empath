@@ -121,7 +121,6 @@ internal fun NavigationBar(
                             else Res.drawable.ic_local_library_filled
                         ),
                         contentDescription = stringResource(Res.string.articles),
-                        tint = EmpathTheme.colors.onSurface,
                     )
                 },
                 label = {

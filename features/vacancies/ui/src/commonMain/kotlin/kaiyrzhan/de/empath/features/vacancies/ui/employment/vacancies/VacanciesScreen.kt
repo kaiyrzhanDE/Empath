@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.ic_stylus
 import empath.core.uikit.generated.resources.ic_tune
@@ -47,11 +49,13 @@ import kaiyrzhan.de.empath.core.utils.currentPlatform
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.components.ResponsesTab
 import kaiyrzhan.de.empath.features.vacancies.ui.components.Tabs
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.CvsDialog
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.components.VacanciesTab
 import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesState
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.RecruiterCreateDialog
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -67,6 +71,14 @@ internal fun VacanciesScreen(
     val state = component.state.collectAsState()
     val vacancies = component.vacancies.collectAsLazyPagingItems()
     val responses = component.responses.collectAsLazyPagingItems()
+
+    val cvsDialogSlot by component.cvsDialog.subscribeAsState()
+    cvsDialogSlot.child?.instance?.also { cvsComponent ->
+        CvsDialog(
+            component = cvsComponent,
+        )
+    }
+
 
     SingleEventEffect(component.action) { action ->
         when (action) {

@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -11,16 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.edit
-import empath.core.uikit.generated.resources.hide
+import empath.core.uikit.generated.resources.cancel
+import empath.core.uikit.generated.resources.respond
+import empath.core.uikit.generated.resources.responded
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.dateFormat
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesEvent
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun RecruitmentVacancyActions(
+internal fun EmploymentActions(
     modifier: Modifier = Modifier,
     vacancy: VacancyUi,
     onEvent: (VacanciesEvent) -> Unit
@@ -37,35 +39,46 @@ internal fun RecruitmentVacancyActions(
         )
 
         Row(
+            modifier = Modifier.animateContentSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            Button(
-                onClick = { onEvent(VacanciesEvent.VacancyHideClick(vacancy.id)) },
-                shape = EmpathTheme.shapes.small,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = EmpathTheme.colors.surfaceContainer,
-                    contentColor = EmpathTheme.colors.onSurface,
-                ),
-            ) {
-                Text(
-                    text = stringResource(Res.string.hide),
-                    style = EmpathTheme.typography.labelLarge,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+            if (vacancy.status.canBeCanceled()) {
+                Button(
+                    onClick = {
+                        //TODO(cancel response)
+                    },
+                    shape = EmpathTheme.shapes.small,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = EmpathTheme.colors.primary,
+                        contentColor = EmpathTheme.colors.onPrimary,
+                    ),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.cancel),
+                        style = EmpathTheme.typography.labelLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
 
             Button(
-                onClick = { onEvent(VacanciesEvent.VacancyEditClick(vacancy.id)) },
+                onClick = {
+                    onEvent(VacanciesEvent.ResponseToVacancy(vacancy))
+                },
                 shape = EmpathTheme.shapes.small,
+                enabled = vacancy.status.canRespond(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = EmpathTheme.colors.primary,
                     contentColor = EmpathTheme.colors.onPrimary,
                 ),
             ) {
                 Text(
-                    text = stringResource(Res.string.edit),
+                    text = stringResource(
+                        resource = if (vacancy.status.canRespond()) Res.string.respond
+                        else Res.string.responded,
+                    ),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

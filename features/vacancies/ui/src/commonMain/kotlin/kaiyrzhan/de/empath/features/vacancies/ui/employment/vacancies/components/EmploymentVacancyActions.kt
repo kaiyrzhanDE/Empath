@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components
+package kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,17 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.*
+import empath.core.uikit.generated.resources.edit
+import empath.core.uikit.generated.resources.hide
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.dateFormat
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun RecruitmentResponseActions(
+internal fun EmploymentVacancyActions(
     modifier: Modifier = Modifier,
-    response: ResponseUi,
+    vacancy: VacancyUi,
     onEvent: (VacanciesEvent) -> Unit
 ) {
     Row(
@@ -30,7 +31,7 @@ internal fun RecruitmentResponseActions(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
-            text = response.dateOfCreated.dateFormat(),
+            text = vacancy.dateOfCreated.dateFormat(),
             style = EmpathTheme.typography.bodyMedium,
             color = EmpathTheme.colors.onSurfaceVariant,
         )
@@ -40,15 +41,15 @@ internal fun RecruitmentResponseActions(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Button(
-                onClick = { onEvent(VacanciesEvent.VacancyDetailClick(response.vacancyId)) },
+                onClick = { onEvent(VacanciesEvent.VacancyHideClick(vacancy.id)) },
                 shape = EmpathTheme.shapes.small,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = EmpathTheme.colors.primary,
-                    contentColor = EmpathTheme.colors.onPrimary,
+                    containerColor = EmpathTheme.colors.surfaceContainer,
+                    contentColor = EmpathTheme.colors.onSurface,
                 ),
             ) {
                 Text(
-                    text = stringResource(Res.string.vacancy_detail),
+                    text = stringResource(Res.string.hide),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -56,7 +57,7 @@ internal fun RecruitmentResponseActions(
             }
 
             Button(
-                onClick = { onEvent(VacanciesEvent.ResponseCvClick(response)) },
+                onClick = { onEvent(VacanciesEvent.VacancyEditClick(vacancy.id)) },
                 shape = EmpathTheme.shapes.small,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = EmpathTheme.colors.primary,
@@ -64,7 +65,7 @@ internal fun RecruitmentResponseActions(
                 ),
             ) {
                 Text(
-                    text = stringResource(Res.string.cv),
+                    text = stringResource(Res.string.edit),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
