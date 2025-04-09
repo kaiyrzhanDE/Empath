@@ -47,6 +47,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.components.Wo
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailAction
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailState
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -305,36 +306,57 @@ private fun VacancyDetailScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                         ) {
-                            Button(
-                                onClick = { onEvent(VacancyDetailEvent.VacancyDeleteClick) },
-                                shape = EmpathTheme.shapes.small,
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = EmpathTheme.colors.surfaceContainer,
-                                    contentColor = EmpathTheme.colors.onSurface,
-                                ),
-                            ) {
-                                Text(
-                                    text = stringResource(Res.string.delete),
-                                    style = EmpathTheme.typography.labelLarge,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
+                            if (state.isDeleting) {
+                                Button(
+                                    onClick = { onEvent(VacancyDetailEvent.VacancyDeleteClick) },
+                                    shape = EmpathTheme.shapes.small,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = EmpathTheme.colors.surfaceContainer,
+                                        contentColor = EmpathTheme.colors.onSurface,
+                                    ),
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.delete),
+                                        style = EmpathTheme.typography.labelLarge,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
                             }
-
-                            Button(
-                                onClick = { onEvent(VacancyDetailEvent.VacancyEditClick) },
-                                shape = EmpathTheme.shapes.small,
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = EmpathTheme.colors.primary,
-                                    contentColor = EmpathTheme.colors.onPrimary,
-                                ),
-                            ) {
-                                Text(
-                                    text = stringResource(Res.string.edit),
-                                    style = EmpathTheme.typography.labelLarge,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
+                            if (state.isEditing) {
+                                Button(
+                                    onClick = { onEvent(VacancyDetailEvent.VacancyEditClick) },
+                                    shape = EmpathTheme.shapes.small,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = EmpathTheme.colors.primary,
+                                        contentColor = EmpathTheme.colors.onPrimary,
+                                    ),
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.edit),
+                                        style = EmpathTheme.typography.labelLarge,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
+                            }
+                            if (state.isResponding) {
+                                Button(
+                                    onClick = { onEvent(VacancyDetailEvent.ResponseToVacancyClick) },
+                                    shape = EmpathTheme.shapes.small,
+                                    enabled = state.responseStatus == ResponseStatus.UNKNOWN,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = EmpathTheme.colors.primary,
+                                        contentColor = EmpathTheme.colors.onPrimary,
+                                    ),
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.respond),
+                                        style = EmpathTheme.typography.labelLarge,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
                             }
                         }
                     }

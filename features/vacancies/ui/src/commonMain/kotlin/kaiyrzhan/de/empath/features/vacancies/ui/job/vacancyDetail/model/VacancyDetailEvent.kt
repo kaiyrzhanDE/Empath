@@ -5,4 +5,5 @@ internal sealed interface VacancyDetailEvent {
     data object BackClick : VacancyDetailEvent
     data object VacancyDeleteClick : VacancyDetailEvent
     data object VacancyEditClick : VacancyDetailEvent
+    data object ResponseToVacancyClick : VacancyDetailEvent
 }

@@ -35,7 +35,7 @@ import empath.core.uikit.generated.resources.reject
 import kaiyrzhan.de.empath.core.ui.extensions.appendColon
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseStatus
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import org.jetbrains.compose.resources.painterResource

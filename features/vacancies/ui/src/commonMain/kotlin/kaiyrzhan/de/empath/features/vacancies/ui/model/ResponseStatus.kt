@@ -1,5 +1,8 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model
+package kaiyrzhan.de.empath.features.vacancies.ui.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 internal enum class ResponseStatus(val type: String) {
     UNKNOWN("unknown"),
     PENDING("pending"),

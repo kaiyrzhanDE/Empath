@@ -41,7 +41,7 @@ internal fun VacancyDTO.toDomain(): Vacancy {
         workFormats = workFormats.orEmpty(),
         skills = skills.orEmpty(),
         additionalSkills = additionalSkills.orEmpty(),
-        email = email,
+        email = email.orEmpty(),
         dateOfCreated = dateOfCreated.toInstantOrNull(DatePattern.DATE),
         status = status.orEmpty(),
     )

@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components
+package kaiyrzhan.de.empath.features.vacancies.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,14 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesState
+import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun Tabs(
     modifier: Modifier = Modifier,
-    state: VacanciesState,
+    currentTab: Tab,
+    tabs: List<Tab>,
     selectedTabIndex: Int,
     onClick: (index: Int) -> Unit,
 ) {
@@ -27,12 +27,12 @@ internal fun Tabs(
     ) {
         TabRow(
             modifier = Modifier.fillMaxWidth(),
-            selectedTabIndex = state.tabs.indexOf(state.currentTab),
+            selectedTabIndex = tabs.indexOf(currentTab),
             containerColor = EmpathTheme.colors.surface,
             contentColor = EmpathTheme.colors.onSurfaceVariant,
             divider = {},
         ) {
-            state.tabs.forEachIndexed { index, tab ->
+            tabs.forEachIndexed { index, tab ->
                 Tab(
                     selected = selectedTabIndex == index,
                     onClick = { onClick(index)},

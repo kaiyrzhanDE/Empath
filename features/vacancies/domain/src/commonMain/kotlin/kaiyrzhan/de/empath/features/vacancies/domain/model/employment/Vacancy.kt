@@ -16,7 +16,7 @@ public class Vacancy(
     public val workFormats: List<String>,
     public val skills: List<String>,
     public val additionalSkills: List<String>,
-    public val email: String?,
+    public val email: String,
     public val dateOfCreated: Instant?,
     public val status: String,
 )

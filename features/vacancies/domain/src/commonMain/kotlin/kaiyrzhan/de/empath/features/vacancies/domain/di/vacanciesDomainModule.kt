@@ -1,7 +1,12 @@
+@file:Suppress("unused")
+
 package kaiyrzhan.de.empath.features.vacancies.domain.di
 
+import kaiyrzhan.de.empath.features.vacancies.domain.repository.EmploymentRepository
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.JobRepository
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepository
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetCvsUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.ResponseToVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetEmploymentTypesUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetSkillsUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetVacancyDetailUseCase
@@ -13,14 +18,17 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.CreateV
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.DeleteVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.EditVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetRecruiterUseCase
-import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetResponsesUseCase
-import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacanciesUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
+private typealias GetEmploymentVacanciesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetVacanciesUseCase
+private typealias GetEmploymentResponsesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetResponsesUseCase
+private typealias GetRecruitmentVacanciesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacanciesUseCase
+private typealias GetRecruitmentResponsesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetResponsesUseCase
+
 public val vacanciesDomainModule: Module = module {
     factory {
-        GetVacanciesUseCase(
+        GetRecruitmentVacanciesUseCase(
             repository = get<RecruitmentRepository>(),
         )
     }
@@ -45,7 +53,7 @@ public val vacanciesDomainModule: Module = module {
         )
     }
     factory {
-        GetResponsesUseCase(
+        GetRecruitmentResponsesUseCase(
             repository = get<RecruitmentRepository>(),
         )
     }
@@ -83,6 +91,27 @@ public val vacanciesDomainModule: Module = module {
     factory {
         GetRecruiterUseCase(
             repository = get<RecruitmentRepository>(),
+        )
+    }
+
+    factory {
+        GetEmploymentVacanciesUseCase(
+            repository = get<EmploymentRepository>(),
+        )
+    }
+    factory {
+        GetEmploymentResponsesUseCase(
+            repository = get<EmploymentRepository>(),
+        )
+    }
+    factory {
+        ResponseToVacancyUseCase(
+            repository = get<EmploymentRepository>(),
+        )
+    }
+    factory {
+        GetCvsUseCase(
+            repository = get<EmploymentRepository>(),
         )
     }
 }

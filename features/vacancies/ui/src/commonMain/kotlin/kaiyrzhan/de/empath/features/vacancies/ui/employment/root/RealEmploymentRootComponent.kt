@@ -6,10 +6,15 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.RealVacanciesComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.root.RealRecruitmentRootComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.root.RecruitmentRootComponent
 import kotlinx.serialization.Serializable
 
 public class RealEmploymentRootComponent(
@@ -33,6 +38,7 @@ public class RealEmploymentRootComponent(
         logger.d(this.className(), "Employment child: $config")
         return when (config) {
             is Config.Vacancies -> createVacanciesComponent(componentContext)
+            is Config.VacancyDetail -> createVacancyDetailComponent(componentContext, config)
         }
     }
 
@@ -43,6 +49,31 @@ public class RealEmploymentRootComponent(
         return EmploymentRootComponent.Child.Vacancies(
             component = RealVacanciesComponent(
                 componentContext = componentContext,
+                onVacancyDetailClick = { vacancyId, status ->
+                    navigation.push(
+                        Config.VacancyDetail(
+                            vacancyId = vacancyId,
+                            responseStatus = status,
+                        )
+                    )
+                },
+                onVacanciesFiltersClick = {
+
+                },
+            )
+        )
+    }
+
+    @OptIn(DelicateDecomposeApi::class)
+    private fun createVacancyDetailComponent(
+        componentContext: ComponentContext,
+        config: Config.VacancyDetail,
+    ): EmploymentRootComponent.Child.VacancyDetail {
+        return EmploymentRootComponent.Child.VacancyDetail(
+            component = RealVacancyDetailComponent(
+                componentContext = componentContext,
+                vacancyId = config.vacancyId,
+                responseStatus = config.responseStatus,
                 onBackClick = ::onBackClick,
             )
         )
@@ -53,6 +84,11 @@ public class RealEmploymentRootComponent(
         @Serializable
         data object Vacancies : Config
 
+        @Serializable
+        data class VacancyDetail(
+            val vacancyId: String,
+            val responseStatus: ResponseStatus,
+        ) : Config
     }
 
 }

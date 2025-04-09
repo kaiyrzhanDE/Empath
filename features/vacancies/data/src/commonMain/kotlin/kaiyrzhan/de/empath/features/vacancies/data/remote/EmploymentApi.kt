@@ -36,7 +36,7 @@ internal interface EmploymentApi {
         @Query("per_page") pageLimit: Int,
     ): RequestResult<ListResultDTO<VacancyDTO>>
 
-    @GET("api/{version}/job/employment/responses")
+    @GET("api/{version}/job/employment/vacancies/responses")
     suspend fun getResponses(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Query("salary_from") salaryFrom: Int?,

@@ -13,6 +13,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.ui.animations.swipe
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.VacanciesScreen
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -64,6 +65,14 @@ private fun EmploymentRootScreen(
                     modifier = Modifier.fillMaxSize(),
                 )
             }
+
+            is EmploymentRootComponent.Child.VacancyDetail -> {
+                VacancyDetailScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
         }
     }
 }

@@ -39,8 +39,7 @@ internal fun ColumnScope.ArticleComments(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         shape = EmpathTheme.shapes.small,
         colors = CardDefaults.cardColors(
             contentColor = EmpathTheme.colors.onSurface,

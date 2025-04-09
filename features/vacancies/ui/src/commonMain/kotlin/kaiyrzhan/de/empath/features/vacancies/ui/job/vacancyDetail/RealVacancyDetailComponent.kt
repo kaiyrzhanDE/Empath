@@ -11,6 +11,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.job.model.toUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailAction
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailState
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +24,10 @@ internal class RealVacancyDetailComponent(
     componentContext: ComponentContext,
     private val vacancyId: String,
     private val onBackClick: () -> Unit,
-    private val onVacancyDeleteClick: () -> Unit,
-    private val onVacancyEditClick: (vacancyId: String) -> Unit,
+    private val responseStatus: ResponseStatus = ResponseStatus.UNKNOWN,
+    private val onVacancyDeleteClick: ((vacancyId: String) -> Unit)? = null,
+    private val onResponseClick: ((vacancyId: String) -> Unit)? = null,
+    private val onVacancyEditClick: ((vacancyId: String) -> Unit)? = null,
 ) : BaseComponent(componentContext), VacancyDetailComponent {
 
     private val getVacancyDetailUseCase: GetVacancyDetailUseCase = get()
@@ -36,7 +39,7 @@ internal class RealVacancyDetailComponent(
     private val _action = Channel<VacancyDetailAction>(capacity = Channel.BUFFERED)
     override val action: Flow<VacancyDetailAction> = _action.receiveAsFlow()
 
-    init{
+    init {
         loadVacancy(vacancyId)
     }
 
@@ -44,9 +47,10 @@ internal class RealVacancyDetailComponent(
         logger.d(this.className(), "Event: $event")
         when (event) {
             is VacancyDetailEvent.BackClick -> onBackClick()
-            is VacancyDetailEvent.VacancyDeleteClick -> onVacancyDeleteClick()
-            is VacancyDetailEvent.VacancyEditClick -> onVacancyEditClick(vacancyId)
+            is VacancyDetailEvent.VacancyDeleteClick -> onVacancyDeleteClick?.invoke(vacancyId)
+            is VacancyDetailEvent.VacancyEditClick -> onVacancyEditClick?.invoke(vacancyId)
             is VacancyDetailEvent.ReloadVacancyDetail -> loadVacancy(vacancyId)
+            is VacancyDetailEvent.ResponseToVacancyClick -> Unit//TODO(responseToVacancy(vacancyId))
         }
     }
 
@@ -57,6 +61,10 @@ internal class RealVacancyDetailComponent(
                 state.update {
                     VacancyDetailState.Success(
                         vacancyDetail = detail.toUi(),
+                        isEditing = onVacancyEditClick != null,
+                        isDeleting = onVacancyDeleteClick != null,
+                        isResponding = onResponseClick != null,
+                        responseStatus = responseStatus,
                     )
                 }
             }.onFailure { error ->
@@ -72,5 +80,7 @@ internal class RealVacancyDetailComponent(
             }
         }
     }
+
+
 
 }

@@ -4,6 +4,7 @@ import kaiyrzhan.de.empath.core.utils.currentTimeZone
 import kaiyrzhan.de.empath.core.utils.toEnumSafe
 import kaiyrzhan.de.empath.core.utils.toLocalDateTime
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
+import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toLocalDateTime

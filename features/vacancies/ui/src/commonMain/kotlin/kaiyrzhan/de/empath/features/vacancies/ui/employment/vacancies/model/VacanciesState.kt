@@ -1,16 +1,15 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model
+package kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model
 
 import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacanciesFiltersUi
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
 
 internal data class VacanciesState(
     val currentTab: Tab = Tab.Vacancies,
     val tabs: List<Tab> = Tab.entries,
     val query: String = "",
     val vacanciesFilters: VacanciesFiltersUi = VacanciesFiltersUi(),
-    val rejectedResponses: Set<ResponseUi> = emptySet(),
-    val acceptedResponses: Set<ResponseUi> = emptySet(),
+    val respondedVacancies: Set<VacancyUi> = emptySet(),
 ) {
 
     companion object {

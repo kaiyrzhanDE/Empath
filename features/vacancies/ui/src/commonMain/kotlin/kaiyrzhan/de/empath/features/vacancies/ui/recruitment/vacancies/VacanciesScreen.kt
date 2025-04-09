@@ -44,14 +44,13 @@ import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.core.utils.currentPlatform
+import kaiyrzhan.de.empath.features.vacancies.ui.components.Tabs
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.RecruiterCreateDialog
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialog
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.ResponsesTab
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.Tabs
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.VacanciesTab
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.Tab
+import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesState
@@ -145,7 +144,8 @@ private fun VacanciesScreen(
                 modifier = Modifier
                     .defaultMaxWidth()
                     .screenHorizontalPadding(PaddingType.MAIN),
-                state = state,
+                tabs = state.tabs,
+                currentTab = state.currentTab,
                 selectedTabIndex = pagerState.currentPage,
                 onClick = { index ->
                     coroutineScope.launch {

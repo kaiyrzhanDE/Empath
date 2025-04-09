@@ -198,5 +198,7 @@
     <string name="company_name">Company name</string>
     <string name="company_description">Company description</string>
     <string name="vacancy_creation_description">To create a vacancy, you must fill in the following fields</string>
+    <string name="respond">Respond</string>
+    <string name="responded">Responded</string>
 
 </resources>
