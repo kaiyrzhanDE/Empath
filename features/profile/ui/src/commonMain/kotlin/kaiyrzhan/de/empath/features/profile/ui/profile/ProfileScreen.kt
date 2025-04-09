@@ -55,7 +55,7 @@ private fun ProfileScreen(
     Column(
         modifier = modifier
             .verticalScroll(scrollState)
-            .background(color = EmpathTheme.colors.scrim)
+            .background(color = EmpathTheme.colors.surfaceDim)
             .screenPadding(PaddingType.MAIN),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {

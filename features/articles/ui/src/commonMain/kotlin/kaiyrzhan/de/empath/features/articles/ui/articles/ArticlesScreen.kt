@@ -108,7 +108,7 @@ private fun ArticlesScreen(
     ) { contentPadding ->
         Column(
             modifier = modifier
-                .background(EmpathTheme.colors.scrim)
+                .background(EmpathTheme.colors.surfaceDim)
                 .padding(contentPadding)
                 .screenHorizontalPadding(PaddingType.MAIN),
             verticalArrangement = Arrangement.spacedBy(12.dp),

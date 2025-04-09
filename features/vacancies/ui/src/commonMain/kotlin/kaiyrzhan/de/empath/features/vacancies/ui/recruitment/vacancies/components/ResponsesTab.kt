@@ -36,7 +36,7 @@ internal fun ResponsesTab(
 ) {
     Column(
         modifier = modifier
-            .background(EmpathTheme.colors.scrim)
+            .background(EmpathTheme.colors.surfaceDim)
             .screenHorizontalPadding(PaddingType.MAIN),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

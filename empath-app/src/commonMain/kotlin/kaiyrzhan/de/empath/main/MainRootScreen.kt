@@ -132,7 +132,7 @@ private fun MainScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(EmpathTheme.colors.scrim),
+                        .background(EmpathTheme.colors.surfaceDim),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("Menu")

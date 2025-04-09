@@ -42,7 +42,7 @@ internal fun NavigationRail(
     ) {
         NavigationRail(
             modifier = Modifier.wrapContentWidth(),
-            containerColor = EmpathTheme.colors.scrim,
+            containerColor = EmpathTheme.colors.surfaceDim,
             contentColor = EmpathTheme.colors.onSurfaceVariant,
         ) {
             Spacer(modifier = Modifier.weight(1f))

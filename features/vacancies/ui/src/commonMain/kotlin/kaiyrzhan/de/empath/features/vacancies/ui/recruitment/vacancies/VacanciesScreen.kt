@@ -137,7 +137,7 @@ private fun VacanciesScreen(
         Column(
             modifier = modifier
                 .padding(contentPadding)
-                .background(EmpathTheme.colors.scrim),
+                .background(EmpathTheme.colors.surfaceDim),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(12.dp))

@@ -76,7 +76,7 @@ internal fun WorkingSkillCard(
         modifier = modifier,
         shape = EmpathTheme.shapes.small,
         colors = CardDefaults.cardColors(
-            contentColor = EmpathTheme.colors.onSurface,
+            contentColor = EmpathTheme.colors.onPrimaryContainer,
             containerColor = containerColor,
         )
     ) {
