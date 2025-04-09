@@ -57,7 +57,11 @@ internal fun ColumnScope.Cvs(
     Card(
         modifier = modifier,
         shape = EmpathTheme.shapes.small,
-        border = BorderStroke(1.dp, EmpathTheme.colors.outlineVariant),
+        border = BorderStroke(
+            width = 1.dp,
+            color = if (cvs.any { it.isSelected } && isExpanded.not()) EmpathTheme.colors.primary
+            else EmpathTheme.colors.outlineVariant,
+        ),
         onClick = { isExpanded = !isExpanded },
         colors = CardDefaults.cardColors(
             containerColor = EmpathTheme.colors.surfaceContainer,
