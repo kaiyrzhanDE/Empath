@@ -52,7 +52,7 @@ internal fun ResponsesTab(
 
             else -> {
                 Spacer(modifier = Modifier.height(12.dp))
-//                if (responses.itemCount != 0) {
+                if (responses.itemCount != 0) {
                     LazyColumn(
                         state = lazyListState,
                         modifier = Modifier.fillMaxSize(),
@@ -75,20 +75,15 @@ internal fun ResponsesTab(
                                 )
                             }
                         }
-                        items(2) {
-                            VacancyShimmerCard(
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
                         responsesAppendState(
                             vacancies = responses,
                         )
                     }
-//                } else {
-//                    MessageScreen(
-//                        modifier = Modifier.fillMaxSize(),
-//                    )
-//                }
+                } else {
+                    MessageScreen(
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
             }
         }
     }

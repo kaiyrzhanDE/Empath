@@ -156,7 +156,9 @@ internal class RealVacanciesComponent(
             componentContext = childComponentContext,
             onDismissClick = cvsDialogNavigation::dismiss,
             onSelectCv = { selectedCv ->
-                responseToVacancy(selectedCv, vacancy)
+                cvsDialogNavigation
+                    .dismiss()
+                    .also { responseToVacancy(selectedCv, vacancy) }
             },
         )
     }

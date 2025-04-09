@@ -97,9 +97,7 @@ public class RealRecruitmentRootComponent(
                 componentContext = componentContext,
                 author = config.author,
                 onBackClick = ::onBackClick,
-                onVacancyCreateClick = {
-
-                }
+                onVacancyCreateClick = ::onBackClick,
             )
         )
     }

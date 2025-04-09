@@ -9,6 +9,11 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toLocalDateTime
 
+internal data class ResponseKeyUi(
+    val vacancyId: String,
+    val cvId: String,
+)
+
 internal data class ResponseUi(
     val authorFullName: String,
     val vacancyId: String,
@@ -17,14 +22,14 @@ internal data class ResponseUi(
     val cvTitle: String,
     val dateOfCreated: LocalDateTime?,
     val status: ResponseStatus,
-){
-    companion object{
-        fun sample(): ResponseUi{
+) {
+    companion object {
+        fun sample(): ResponseUi {
             return ResponseUi(
                 authorFullName = "Sansyzbaev Dias Ermekuly",
                 vacancyId = "",
                 authorEmail = "kaiyrzhan.de@gmail.com",
-                cvId =  "",
+                cvId = "",
                 cvTitle = "cvTitle",
                 dateOfCreated = Clock.System.now().toLocalDateTime(currentTimeZone),
                 status = ResponseStatus.ACCEPTED,
@@ -43,6 +48,13 @@ internal data class ResponseUi(
         result = 31 * result + cvId.hashCode()
         return result
     }
+}
+
+internal fun ResponseUi.toKey(): ResponseKeyUi {
+    return ResponseKeyUi(
+        cvId = cvId,
+        vacancyId = vacancyId,
+    )
 }
 
 internal fun Response.toUi(): ResponseUi {

@@ -21,14 +21,9 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetRecr
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-private typealias GetEmploymentVacanciesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetVacanciesUseCase
-private typealias GetEmploymentResponsesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetResponsesUseCase
-private typealias GetRecruitmentVacanciesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacanciesUseCase
-private typealias GetRecruitmentResponsesUseCase = kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetResponsesUseCase
-
 public val vacanciesDomainModule: Module = module {
     factory {
-        GetRecruitmentVacanciesUseCase(
+        kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacanciesUseCase(
             repository = get<RecruitmentRepository>(),
         )
     }
@@ -53,7 +48,7 @@ public val vacanciesDomainModule: Module = module {
         )
     }
     factory {
-        GetRecruitmentResponsesUseCase(
+        kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetResponsesUseCase(
             repository = get<RecruitmentRepository>(),
         )
     }
@@ -95,12 +90,12 @@ public val vacanciesDomainModule: Module = module {
     }
 
     factory {
-        GetEmploymentVacanciesUseCase(
+        kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetVacanciesUseCase(
             repository = get<EmploymentRepository>(),
         )
     }
     factory {
-        GetEmploymentResponsesUseCase(
+        kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetResponsesUseCase(
             repository = get<EmploymentRepository>(),
         )
     }

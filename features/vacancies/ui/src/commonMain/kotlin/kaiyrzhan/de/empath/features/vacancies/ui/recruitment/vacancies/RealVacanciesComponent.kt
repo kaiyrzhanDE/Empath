@@ -11,8 +11,8 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.under_development
 import empath.core.uikit.generated.resources.unknown_error
-import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.onFailure
@@ -33,10 +33,8 @@ import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacanciesFiltersUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.toUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.RealSkillsDialogComponent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialogComponent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.model.SkillsState
 import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.toKey
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesState
@@ -95,38 +93,38 @@ internal class RealVacanciesComponent(
                 excludeWords = state.vacanciesFilters.excludeWords,
                 includeWords = state.vacanciesFilters.includeWords,
             ).map { pagingData ->
-                pagingData.map { it.toUi() }
+                pagingData.map { vacancy -> vacancy.toUi() }
             }
         }.cachedIn(coroutineScope)
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override val responses: Flow<PagingData<ResponseUi>> =
-        state.flatMapLatest { currentState ->
-            getResponsesUseCase().map { pagingData ->
-                pagingData.map { response ->
-                    val responseUi = response.toUi()
-                    responseUi.copy(
-                        status = when (responseUi) {
-                            in currentState.acceptedResponses -> ResponseStatus.ACCEPTED
-                            in currentState.rejectedResponses -> ResponseStatus.REJECTED
-                            else -> responseUi.status
-                        },
-                    )
-                }
+    override val responses: Flow<PagingData<ResponseUi>> = state.flatMapLatest { state ->
+        getResponsesUseCase().map { pagingData ->
+            pagingData.map { response ->
+                val responseUi = response.toUi()
+                response.toUi().copy(
+                    status = when (responseUi.toKey()) {
+                        in state.acceptedResponsesKeys -> ResponseStatus.ACCEPTED
+                        in state.rejectedResponsesKeys -> ResponseStatus.REJECTED
+                        else -> responseUi.status
+                    },
+                )
             }
-        }.cachedIn(coroutineScope)
-
+        }
+    }.cachedIn(coroutineScope)
 
     private val _action = Channel<VacanciesAction>(capacity = Channel.BUFFERED)
     override val action: Flow<VacanciesAction> = _action.receiveAsFlow()
 
     private val recruiterDialogNavigation = SlotNavigation<RecruiterCreateState>()
-    override val recruiterDialog: Value<ChildSlot<*, RecruiterCreateDialogComponent>> = childSlot(
-        source = recruiterDialogNavigation,
-        key = MessageDialogComponent.DEFAULT_KEY,
-        serializer = RecruiterCreateState.serializer(),
-        childFactory = ::createRecruiterDialog,
-    )
+    override val recruiterDialog: Value<ChildSlot<*, RecruiterCreateDialogComponent>> =
+        childSlot(
+            source = recruiterDialogNavigation,
+            key = RecruiterCreateDialogComponent.DEFAULT_KEY,
+            serializer = RecruiterCreateState.serializer(),
+            childFactory = ::createRecruiterDialog,
+        )
 
     override fun onEvent(event: VacanciesEvent) {
         logger.d(this.className(), "Event: $event")
@@ -173,6 +171,13 @@ internal class RealVacanciesComponent(
 
     private fun hideVacancy(id: String) {
         //TODO(Not yer implemented)
+        coroutineScope.launch {
+            _action.send(
+                VacanciesAction.ShowSnackbar(
+                    message = getString(Res.string.under_development),
+                )
+            )
+        }
     }
 
     private fun acceptResponse(
@@ -186,7 +191,7 @@ internal class RealVacanciesComponent(
             ).onSuccess { result ->
                 state.update { currentState ->
                     currentState.copy(
-                        acceptedResponses = currentState.acceptedResponses + response,
+                        acceptedResponsesKeys = currentState.acceptedResponsesKeys + response.toKey(),
                     )
                 }
             }.onFailure { error ->
@@ -212,7 +217,7 @@ internal class RealVacanciesComponent(
             ).onSuccess { result ->
                 state.update { currentState ->
                     currentState.copy(
-                        rejectedResponses = currentState.rejectedResponses + response,
+                        rejectedResponsesKeys = currentState.rejectedResponsesKeys + response.toKey(),
                     )
                 }
             }.onFailure { error ->

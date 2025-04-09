@@ -10,4 +10,8 @@ internal interface RecruiterCreateDialogComponent {
     val state: StateFlow<RecruiterCreateState>
 
     fun onEvent(event: RecruiterCreateEvent)
+
+    companion object{
+        const val DEFAULT_KEY = "recruiterCreate"
+    }
 }

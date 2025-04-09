@@ -59,7 +59,10 @@ internal fun ResponsesTab(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        items(responses.itemCount) { index ->
+                        items(
+                            count = responses.itemCount,
+                            key = { index -> responses[index]?.cvId + responses[index]?.vacancyId },
+                        ) { index ->
                             val response = responses[index]
 
                             if (response != null) {
@@ -77,11 +80,6 @@ internal fun ResponsesTab(
                         responsesAppendState(
                             vacancies = responses,
                         )
-                        items(2) {
-                            ResponseShimmerCard(
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
                     }
                 } else {
                     MessageScreen(
