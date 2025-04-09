@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.data.model.recruitment
 
+import kaiyrzhan.de.empath.core.utils.DatePattern
 import kaiyrzhan.de.empath.core.utils.toInstantOrNull
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kotlinx.serialization.SerialName
@@ -23,7 +24,7 @@ internal fun ResponseDTO.toDomain(): Response {
         vacancyId = vacancyId,
         cvId = cvId,
         cvTitle = cvTitle.orEmpty(),
-        dateOfCreated = dateOfCreated?.toInstantOrNull(),
+        dateOfCreated = dateOfCreated?.toInstantOrNull(DatePattern.DATE),
         status = status.orEmpty(),
     )
 }

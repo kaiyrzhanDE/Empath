@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.data.model.job
 
+import kaiyrzhan.de.empath.core.utils.DatePattern
 import kaiyrzhan.de.empath.core.utils.toInstantOrNull
 import kaiyrzhan.de.empath.features.vacancies.data.model.SalaryDTO
 import kaiyrzhan.de.empath.features.vacancies.data.model.SkillDTO
@@ -48,6 +49,6 @@ internal fun VacancyDetailDTO.toDomain(): VacancyDetail {
             .orEmpty(),
         email = email.orEmpty(),
         address = address.orEmpty(),
-        dateOfCreated = dateOfCreated.toInstantOrNull(),
+        dateOfCreated = dateOfCreated.toInstantOrNull(DatePattern.DATE),
     )
 }
