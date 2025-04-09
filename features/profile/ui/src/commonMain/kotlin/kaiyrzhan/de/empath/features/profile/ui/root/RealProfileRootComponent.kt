@@ -48,7 +48,9 @@ public class RealProfileRootComponent(
             RealProfileComponent(
                 componentContext = componentContext,
                 onLogOutClick = onLogOutClick,
-                onUserPageClick = { TODO("Need implementation") },
+                onUserPageClick = {
+//                    TODO("Need implementation")
+                },
                 onProfileEditClick = { navigation.push(Config.ProfileEdit) },
             )
         )

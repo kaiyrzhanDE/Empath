@@ -60,10 +60,6 @@ public fun MainRootScreen(
                     SnackbarHost(hostState = snackbarHostState) { data ->
                         Snackbar(
                             snackbarData = data,
-                            containerColor = EmpathTheme.colors.surfaceContainer,
-                            contentColor = EmpathTheme.colors.onSurface,
-                            actionContentColor = EmpathTheme.colors.onPrimary,
-                            actionColor = EmpathTheme.colors.primary,
                         )
                     }
                 },

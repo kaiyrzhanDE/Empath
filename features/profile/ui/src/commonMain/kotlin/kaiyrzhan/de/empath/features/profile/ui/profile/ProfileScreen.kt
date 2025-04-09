@@ -12,21 +12,26 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
+import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.ProfileErrorCard
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.ProfileCard
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.AccountProperties
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.GeneralProperties
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.StudyProperties
 import kaiyrzhan.de.empath.features.profile.ui.profile.components.WorkProperties
+import kaiyrzhan.de.empath.features.profile.ui.profile.model.ProfileAction
 import kaiyrzhan.de.empath.features.profile.ui.profile.model.ProfileEvent
 import kaiyrzhan.de.empath.features.profile.ui.profile.model.ProfileState
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -34,7 +39,20 @@ internal fun ProfileScreen(
     component: ProfileComponent,
     modifier: Modifier = Modifier,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = LocalSnackbarHostState.current
+
     val profileState = component.state.collectAsState()
+
+    SingleEventEffect(component.action) { action ->
+        when(action){
+            is ProfileAction.ShowSnackBar -> {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(action.message)
+                }
+            }
+        }
+    }
 
     ProfileScreen(
         modifier = modifier
