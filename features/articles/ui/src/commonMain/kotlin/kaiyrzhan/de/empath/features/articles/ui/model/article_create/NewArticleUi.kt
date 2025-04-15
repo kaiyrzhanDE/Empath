@@ -14,11 +14,9 @@ internal data class NewArticleUi(
     val subArticles: List<NewSubArticleUi>,
 ) {
     fun isChanged(): Boolean {
-        return title.isNotBlank() ||
-                description.isNotBlank() ||
-                images.isNotEmpty() ||
-                tags.isNotEmpty() ||
-                subArticles.any { subArticle -> subArticle.isChanged() }
+        return title.isNotBlank() &&
+                description.isNotBlank() &&
+                tags.isNotEmpty()
     }
 
     companion object {
