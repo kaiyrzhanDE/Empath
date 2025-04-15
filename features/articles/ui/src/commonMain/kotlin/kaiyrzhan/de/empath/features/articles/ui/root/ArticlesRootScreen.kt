@@ -1,11 +1,8 @@
 package kaiyrzhan.de.empath.features.articles.ui.root
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.stack.Children
@@ -15,9 +12,9 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.ui.animations.swipe
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
-import kaiyrzhan.de.empath.features.articles.ui.article_create.ArticleCreateScreen
-import kaiyrzhan.de.empath.features.articles.ui.article_detail.ArticleDetailScreen
-import kaiyrzhan.de.empath.features.articles.ui.article_edit.ArticleEditScreen
+import kaiyrzhan.de.empath.features.articles.ui.articleСreate.ArticleCreateScreen
+import kaiyrzhan.de.empath.features.articles.ui.articleDetail.ArticleDetailScreen
+import kaiyrzhan.de.empath.features.articles.ui.articleEdit.ArticleEditScreen
 import kaiyrzhan.de.empath.features.articles.ui.articles.ArticlesScreen
 
 @OptIn(ExperimentalDecomposeApi::class)

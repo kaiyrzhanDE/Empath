@@ -10,9 +10,9 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
-import kaiyrzhan.de.empath.features.articles.ui.article_create.RealArticleCreateComponent
-import kaiyrzhan.de.empath.features.articles.ui.article_detail.RealArticleDetailComponent
-import kaiyrzhan.de.empath.features.articles.ui.article_edit.RealArticleEditComponent
+import kaiyrzhan.de.empath.features.articles.ui.articleСreate.RealArticleCreateComponent
+import kaiyrzhan.de.empath.features.articles.ui.articleDetail.RealArticleDetailComponent
+import kaiyrzhan.de.empath.features.articles.ui.articleEdit.RealArticleEditComponent
 import kaiyrzhan.de.empath.features.articles.ui.articles.RealArticlesComponent
 import kotlinx.serialization.Serializable
 

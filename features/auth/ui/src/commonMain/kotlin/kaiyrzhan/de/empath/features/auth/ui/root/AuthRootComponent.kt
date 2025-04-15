@@ -6,7 +6,7 @@ import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.CodeConfirmationComponent
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.EmailVerificationComponent
 import kaiyrzhan.de.empath.features.auth.ui.login.LoginComponent
-import kaiyrzhan.de.empath.features.auth.ui.password_recovery.PasswordRecoveryComponent
+import kaiyrzhan.de.empath.features.auth.ui.passwordRecovery.PasswordRecoveryComponent
 import kaiyrzhan.de.empath.features.auth.ui.signUp.SignUpComponent
 
 public interface AuthRootComponent : ComponentContext {

@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kaiyrzhan.de.empath.core.ui.modifiers.noRippleClickable
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.articles.ui.article_detail.components.SelectedTags
+import kaiyrzhan.de.empath.features.articles.ui.articleDetail.components.SelectedTags
 import kaiyrzhan.de.empath.features.articles.ui.articles.model.ArticlesEvent
 import kaiyrzhan.de.empath.features.articles.ui.model.ArticleUi
 import kaiyrzhan.de.empath.features.articles.ui.model.TagUi

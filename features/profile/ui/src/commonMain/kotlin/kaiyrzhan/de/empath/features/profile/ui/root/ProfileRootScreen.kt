@@ -13,7 +13,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.ui.animations.swipe
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.features.profile.ui.profile.ProfileScreen
-import kaiyrzhan.de.empath.features.profile.ui.profile_edit.ProfileEditScreen
+import kaiyrzhan.de.empath.features.profile.ui.profileEdit.ProfileEditScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable

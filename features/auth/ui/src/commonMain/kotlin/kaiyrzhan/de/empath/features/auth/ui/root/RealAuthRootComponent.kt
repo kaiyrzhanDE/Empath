@@ -15,11 +15,10 @@ import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.RealCodeConfirmationComponent
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.RealEmailVerificationComponent
 import kaiyrzhan.de.empath.features.auth.ui.login.RealLoginComponent
-import kaiyrzhan.de.empath.features.auth.ui.password_recovery.RealPasswordRecoveryComponent
+import kaiyrzhan.de.empath.features.auth.ui.passwordRecovery.RealPasswordRecoveryComponent
 import kaiyrzhan.de.empath.features.auth.ui.root.model.VerificationType
 import kaiyrzhan.de.empath.features.auth.ui.signUp.RealSignUpComponent
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
 
 public class RealAuthRootComponent(
     componentContext: ComponentContext,

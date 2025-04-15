@@ -13,7 +13,7 @@ import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.profile.ui.profile.RealProfileComponent
 import kaiyrzhan.de.empath.features.profile.ui.profile.model.ProfileEvent
-import kaiyrzhan.de.empath.features.profile.ui.profile_edit.RealProfileEditComponent
+import kaiyrzhan.de.empath.features.profile.ui.profileEdit.RealProfileEditComponent
 import kotlinx.serialization.Serializable
 
 public class RealProfileRootComponent(

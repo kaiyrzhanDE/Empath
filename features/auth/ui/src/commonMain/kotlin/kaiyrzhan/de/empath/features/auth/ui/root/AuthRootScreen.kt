@@ -20,7 +20,7 @@ import kaiyrzhan.de.empath.features.auth.ui.codeConfirmation.CodeConfirmationScr
 import kaiyrzhan.de.empath.features.auth.ui.root.components.LowPolyBackground
 import kaiyrzhan.de.empath.features.auth.ui.emailVerification.EmailVerificationScreen
 import kaiyrzhan.de.empath.features.auth.ui.login.LoginScreen
-import kaiyrzhan.de.empath.features.auth.ui.password_recovery.PasswordRecoveryScreen
+import kaiyrzhan.de.empath.features.auth.ui.passwordRecovery.PasswordRecoveryScreen
 import kaiyrzhan.de.empath.features.auth.ui.signUp.SignUpScreen
 
 
