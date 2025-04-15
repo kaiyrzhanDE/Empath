@@ -24,9 +24,10 @@ import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
 import kaiyrzhan.de.empath.features.articles.domain.usecase.CreateArticleUseCase
 import kaiyrzhan.de.empath.features.articles.domain.usecase.CreateArticleUseCaseError
-import kaiyrzhan.de.empath.features.articles.ui.articleСreate.model.ArticleCreateAction
-import kaiyrzhan.de.empath.features.articles.ui.articleСreate.model.ArticleCreateEvent
-import kaiyrzhan.de.empath.features.articles.ui.articleСreate.model.ArticleCreateState
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.ArticleCreateComponent
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.model.ArticleCreateAction
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.model.ArticleCreateEvent
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.model.ArticleCreateState
 import kaiyrzhan.de.empath.features.articles.ui.tags.RealTagsDialogComponent
 import kaiyrzhan.de.empath.features.articles.ui.tags.TagsDialogComponent
 import kaiyrzhan.de.empath.features.articles.ui.tags.model.TagsState
@@ -35,7 +36,6 @@ import kaiyrzhan.de.empath.features.articles.ui.model.TagUi
 import kaiyrzhan.de.empath.features.articles.ui.model.article_create.NewArticleUi
 import kaiyrzhan.de.empath.features.articles.ui.model.article_create.NewSubArticleUi
 import kaiyrzhan.de.empath.features.articles.ui.model.article_create.toDomain
-import kaiyrzhan.de.empath.features.articles.ui.model.article_edit.toDomain
 import kaiyrzhan.de.empath.features.articles.ui.model.toUi
 import kaiyrzhan.de.empath.features.filestorage.domain.model.FileType
 import kaiyrzhan.de.empath.features.filestorage.domain.model.StorageName

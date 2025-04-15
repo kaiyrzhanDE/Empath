@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.articles.ui.articleСreate.components
+package kaiyrzhan.de.empath.features.articles.ui.articleCreate.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
 import empath.core.uikit.generated.resources.Res
@@ -29,7 +28,7 @@ import kaiyrzhan.de.empath.core.ui.modifiers.shimmerLoading
 import kaiyrzhan.de.empath.core.ui.modifiers.thenIf
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.toGroupedString
-import kaiyrzhan.de.empath.features.articles.ui.article_create.model.ArticleCreateEvent
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.model.ArticleCreateEvent
 import kaiyrzhan.de.empath.features.articles.ui.model.ImageUi
 import org.jetbrains.compose.resources.painterResource
 

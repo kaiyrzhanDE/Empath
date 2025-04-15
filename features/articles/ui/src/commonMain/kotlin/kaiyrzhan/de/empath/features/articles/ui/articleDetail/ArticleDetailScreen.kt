@@ -24,7 +24,7 @@ import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.articles.ui.articleСreate.components.Header
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.components.Header
 import kaiyrzhan.de.empath.features.articles.ui.articleDetail.components.Article
 import kaiyrzhan.de.empath.features.articles.ui.articleDetail.components.ArticleComments
 import kaiyrzhan.de.empath.features.articles.ui.articleDetail.components.SubArticle

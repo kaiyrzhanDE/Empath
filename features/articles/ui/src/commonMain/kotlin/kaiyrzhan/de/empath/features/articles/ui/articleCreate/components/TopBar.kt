@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.articles.ui.articleСreate.components
+package kaiyrzhan.de.empath.features.articles.ui.articleCreate.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -15,7 +15,7 @@ import empath.core.uikit.generated.resources.create_article
 import empath.core.uikit.generated.resources.ic_arrow_back
 import empath.core.uikit.generated.resources.ic_arrow_back_description
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.articles.ui.articleСreate.model.ArticleCreateEvent
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.model.ArticleCreateEvent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

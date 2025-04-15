@@ -1,14 +1,11 @@
-package kaiyrzhan.de.empath.features.articles.ui.articleСreate.components
+package kaiyrzhan.de.empath.features.articles.ui.articleCreate.components
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -20,7 +17,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.select_images
@@ -30,7 +26,7 @@ import io.github.vinceglb.filekit.PlatformFile
 import kaiyrzhan.de.empath.core.ui.files.rememberImagesPicker
 import kaiyrzhan.de.empath.core.ui.modifiers.wideRatio
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.articles.ui.articleСreate.model.ArticleCreateEvent
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.model.ArticleCreateEvent
 import kaiyrzhan.de.empath.features.articles.ui.model.ImageUi
 import org.jetbrains.compose.resources.stringResource
 import kotlin.uuid.ExperimentalUuidApi

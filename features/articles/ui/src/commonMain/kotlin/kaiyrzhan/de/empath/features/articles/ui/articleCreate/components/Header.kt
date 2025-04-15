@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.articles.ui.articleСreate.components
+package kaiyrzhan.de.empath.features.articles.ui.articleCreate.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

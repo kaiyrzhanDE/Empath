@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.articles.ui.articleСreate.components
+package kaiyrzhan.de.empath.features.articles.ui.articleCreate.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +23,7 @@ import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.toGroupedString
-import kaiyrzhan.de.empath.features.articles.ui.articleСreate.model.ArticleCreateEvent
+import kaiyrzhan.de.empath.features.articles.ui.articleCreate.model.ArticleCreateEvent
 import kaiyrzhan.de.empath.features.articles.ui.model.article_create.NewSubArticleUi
 import org.jetbrains.compose.resources.stringResource
 import kotlin.uuid.ExperimentalUuidApi

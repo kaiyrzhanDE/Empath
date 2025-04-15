@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.articles.ui.articleСreate.model
+package kaiyrzhan.de.empath.features.articles.ui.articleCreate.model
 
 import kaiyrzhan.de.empath.features.articles.ui.model.article_create.NewArticleUi
 import kaiyrzhan.de.empath.features.articles.ui.model.UserUi
