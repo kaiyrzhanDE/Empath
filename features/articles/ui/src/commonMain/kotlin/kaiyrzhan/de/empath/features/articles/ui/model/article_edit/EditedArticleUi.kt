@@ -8,8 +8,6 @@ import kaiyrzhan.de.empath.features.articles.ui.model.AuthorUi
 import kaiyrzhan.de.empath.features.articles.ui.model.toDomain
 import kaiyrzhan.de.empath.features.articles.ui.model.toUi
 
-//import kaiyrzhan.de.empath.features.articles.ui.model.toUi
-
 internal data class EditedArticleUi(
     val id: String,
     val title: String,

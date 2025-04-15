@@ -25,11 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.ic_arrow_forward
 import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
+import kaiyrzhan.de.empath.core.ui.extensions.appendRequiredMarker
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 
@@ -41,6 +43,7 @@ internal fun <T> ColumnScope.Filters(
     leadingPainter: Painter,
     onSelect: (T) -> Unit,
     isSelected: (T) -> Boolean,
+    anySelected: (filters: List<T>) -> Boolean,
     label: @Composable (T) -> String,
 ) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
@@ -52,7 +55,10 @@ internal fun <T> ColumnScope.Filters(
     Card(
         modifier = modifier,
         shape = EmpathTheme.shapes.small,
-        border = BorderStroke(1.dp, EmpathTheme.colors.outlineVariant),
+        border = BorderStroke(
+            width = 1.dp,
+            color = if (anySelected(filters) && isExpanded.not()) EmpathTheme.colors.primary else EmpathTheme.colors.outlineVariant,
+        ),
         onClick = { isExpanded = !isExpanded },
         colors = CardDefaults.cardColors(
             containerColor = EmpathTheme.colors.surfaceContainer,
@@ -74,7 +80,10 @@ internal fun <T> ColumnScope.Filters(
             }
 
             Text(
-                text = title,
+                text = buildAnnotatedString {
+                    append(title)
+                    appendRequiredMarker()
+                },
                 style = EmpathTheme.typography.bodyLarge,
                 color = EmpathTheme.colors.onSurfaceVariant,
                 maxLines = 1,

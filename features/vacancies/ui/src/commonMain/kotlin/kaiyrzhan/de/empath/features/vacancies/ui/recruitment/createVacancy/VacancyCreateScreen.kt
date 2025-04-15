@@ -33,6 +33,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -45,6 +47,7 @@ import kaiyrzhan.de.empath.core.ui.components.ThousandSeparatorTransformation
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialog
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.appendColon
+import kaiyrzhan.de.empath.core.ui.extensions.appendRequiredMarker
 import kaiyrzhan.de.empath.core.ui.modifiers.noRippleClickable
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -146,7 +149,10 @@ private fun VacancyCreateScreen(
                         maxLines = 2,
                         label = {
                             Text(
-                                text = stringResource(Res.string.title),
+                                text = buildAnnotatedString {
+                                    append(stringResource(Res.string.title))
+                                    appendRequiredMarker()
+                                },
                                 style = EmpathTheme.typography.bodyLarge,
                             )
                         },
@@ -157,8 +163,9 @@ private fun VacancyCreateScreen(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         Text(
-                            text = buildString {
+                            text = buildAnnotatedString {
                                 append(stringResource(Res.string.salary))
+
                                 appendColon()
                             },
                             style = EmpathTheme.typography.labelLarge,
@@ -186,7 +193,10 @@ private fun VacancyCreateScreen(
                                 maxLines = 1,
                                 label = {
                                     Text(
-                                        text = stringResource(Res.string.from),
+                                        text = buildAnnotatedString {
+                                            append(stringResource(Res.string.from))
+                                            appendRequiredMarker()
+                                        },
                                         style = EmpathTheme.typography.bodyLarge,
                                     )
                                 },
@@ -231,7 +241,10 @@ private fun VacancyCreateScreen(
                         maxLines = 2,
                         label = {
                             Text(
-                                text = stringResource(Res.string.address),
+                                text = buildAnnotatedString {
+                                    append(stringResource(Res.string.address))
+                                    appendRequiredMarker()
+                                },
                                 style = EmpathTheme.typography.bodyLarge,
                             )
                         },
@@ -257,6 +270,7 @@ private fun VacancyCreateScreen(
                         onSelect = { workExperience ->
                             onEvent(VacancyCreateEvent.WorkExperienceSelect(workExperience))
                         },
+                        anySelected = { workExperiences -> workExperiences.any { it.isSelected } },
                         label = { workExperience -> stringResource(workExperience.type.res) },
                         isSelected = { workExperience -> workExperience.isSelected }
                     )
@@ -266,6 +280,7 @@ private fun VacancyCreateScreen(
                         filters = state.newVacancy.employmentTypes,
                         title = stringResource(Res.string.select_employments_types),
                         leadingPainter = painterResource(Res.drawable.ic_schedule),
+                        anySelected = { employmentTypes -> employmentTypes.any { it.isSelected } },
                         onSelect = { employmentType ->
                             onEvent(VacancyCreateEvent.EmploymentTypeSelect(employmentType))
                         },
@@ -278,6 +293,7 @@ private fun VacancyCreateScreen(
                         filters = state.newVacancy.workFormats,
                         title = stringResource(Res.string.select_work_formats),
                         leadingPainter = painterResource(Res.drawable.ic_domain),
+                        anySelected = { workFormats -> workFormats.any { it.isSelected } },
                         onSelect = { workFormat ->
                             onEvent(VacancyCreateEvent.WorkFormatSelect(workFormat))
                         },
@@ -290,6 +306,7 @@ private fun VacancyCreateScreen(
                         filters = state.newVacancy.workSchedules,
                         title = stringResource(Res.string.select_work_schedules),
                         leadingPainter = painterResource(Res.drawable.ic_calendar_today),
+                        anySelected = { workSchedules -> workSchedules.any { it.isSelected } },
                         onSelect = { workSchedule ->
                             onEvent(VacancyCreateEvent.WorkScheduleSelect(workSchedule))
                         },
@@ -302,6 +319,7 @@ private fun VacancyCreateScreen(
                         filters = state.newVacancy.educations,
                         title = stringResource(Res.string.select_education),
                         leadingPainter = painterResource(Res.drawable.ic_school),
+                        anySelected = { education -> education.any { it.isSelected } },
                         onSelect = { education ->
                             onEvent(VacancyCreateEvent.EducationSelect(education))
                         },
@@ -345,7 +363,10 @@ private fun VacancyCreateScreen(
                         minLines = 5,
                         label = {
                             Text(
-                                text = stringResource(Res.string.responsibilities),
+                                text = buildAnnotatedString {
+                                    append(stringResource(Res.string.responsibilities))
+                                    appendRequiredMarker()
+                                },
                                 style = EmpathTheme.typography.bodyLarge,
                             )
                         },
@@ -364,7 +385,10 @@ private fun VacancyCreateScreen(
                         minLines = 5,
                         label = {
                             Text(
-                                text = stringResource(Res.string.requirements),
+                                text = buildAnnotatedString {
+                                    append(stringResource(Res.string.requirements))
+                                    appendRequiredMarker()
+                                },
                                 style = EmpathTheme.typography.bodyLarge,
                             )
                         },
@@ -372,7 +396,10 @@ private fun VacancyCreateScreen(
 
                     SelectedSkills(
                         modifier = Modifier.fillMaxWidth(),
-                        title = stringResource(Res.string.selected_key_skills),
+                        title = buildAnnotatedString {
+                            append(stringResource(Res.string.selected_key_skills))
+                            appendRequiredMarker()
+                        },
                         skills = state.newVacancy.skills,
                         onAddSkillClick = { onEvent(VacancyCreateEvent.AddKeySkillsClick) },
                         onSkillRemoveClick = { skill ->
@@ -405,7 +432,9 @@ private fun VacancyCreateScreen(
 
                     SelectedSkills(
                         modifier = Modifier.fillMaxWidth(),
-                        title = stringResource(Res.string.selected_additional_skills),
+                        title = buildAnnotatedString {
+                            append(stringResource(Res.string.selected_additional_skills))
+                        },
                         skills = state.newVacancy.additionalSkills,
                         onAddSkillClick = { onEvent(VacancyCreateEvent.AddAdditionalSkillsClick) },
                         onSkillRemoveClick = { skill ->
@@ -426,7 +455,10 @@ private fun VacancyCreateScreen(
                         maxLines = 2,
                         label = {
                             Text(
-                                text = stringResource(Res.string.email),
+                                text = buildAnnotatedString {
+                                    append(stringResource(Res.string.email))
+                                    appendRequiredMarker()
+                                },
                                 style = EmpathTheme.typography.bodyLarge,
                             )
                         },
@@ -486,7 +518,7 @@ private fun VacancyCreateScreen(
 @Composable
 internal fun SelectedSkills(
     modifier: Modifier = Modifier,
-    title: String,
+    title: AnnotatedString,
     skills: List<SkillUi>,
     onSkillRemoveClick: (SkillUi) -> Unit,
     onAddSkillClick: () -> Unit,

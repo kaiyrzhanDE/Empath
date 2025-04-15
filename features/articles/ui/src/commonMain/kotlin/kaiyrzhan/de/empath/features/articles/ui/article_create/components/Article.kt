@@ -19,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.extensions.appendRequiredMarker
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.articles.ui.article_create.model.ArticleCreateEvent
 import kaiyrzhan.de.empath.features.articles.ui.model.article_create.NewArticleUi
@@ -42,7 +44,10 @@ internal fun ColumnScope.Article(
         },
         label = {
             Text(
-                text = stringResource(Res.string.title),
+                text = buildAnnotatedString {
+                    append(stringResource(Res.string.title))
+                    appendRequiredMarker()
+                },
                 style = EmpathTheme.typography.bodyLarge,
             )
         },
@@ -52,12 +57,15 @@ internal fun ColumnScope.Article(
             unfocusedBorderColor = EmpathTheme.colors.outlineVariant,
         )
     )
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = buildAnnotatedString {
+            append(stringResource(Res.string.selected_tags))
+            appendRequiredMarker()
+        },
+        color = EmpathTheme.colors.onSurface,
+    )
     if (article.tags.isNotEmpty()) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(Res.string.selected_tags),
-            color = EmpathTheme.colors.onSurface,
-        )
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -117,7 +125,10 @@ internal fun ColumnScope.Article(
         },
         label = {
             Text(
-                text = stringResource(Res.string.description),
+                text = buildAnnotatedString {
+                    append(stringResource(Res.string.description))
+                    appendRequiredMarker()
+                },
                 style = EmpathTheme.typography.bodyLarge,
             )
         },
