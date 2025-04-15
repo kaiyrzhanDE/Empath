@@ -46,7 +46,7 @@ internal fun ColumnScope.Article(
                 style = EmpathTheme.typography.bodyLarge,
             )
         },
-        textStyle = EmpathTheme.typography.displayMedium,
+        textStyle = EmpathTheme.typography.headlineMedium,
         shape = EmpathTheme.shapes.small,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = EmpathTheme.colors.outlineVariant,

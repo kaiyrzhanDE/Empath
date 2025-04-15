@@ -80,7 +80,7 @@ internal fun ArticleImages(
                             modifier = Modifier
                                 .padding(horizontal = 4.dp, vertical = 2.dp),
                             text = buildString {
-                                append(index)
+                                append(index.plus(1))
                                 appendSlash()
                                 append(imageUrls.size)
                             },

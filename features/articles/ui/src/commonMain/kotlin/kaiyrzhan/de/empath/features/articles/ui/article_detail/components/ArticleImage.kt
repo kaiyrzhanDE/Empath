@@ -83,7 +83,7 @@ internal fun ArticleImage(
                     text = buildString {
                         append(imagePosition.plus(1).toGroupedString())
                         appendSlash()
-                        append(countOfImages.plus(1).toGroupedString())
+                        append(countOfImages.toGroupedString())
                     },
                     style = EmpathTheme.typography.bodySmall,
                 )
