@@ -335,7 +335,7 @@ internal class RealVacancyCreateComponent(
                     employmentTypes = currentState.newVacancy.employmentTypes.map { employmentType ->
                         if (employmentType.id == selectedEmploymentType.id) {
                             employmentType.copy(
-                                isSelected = !employmentType.isSelected
+                                isSelected = employmentType.isSelected.not(),
                             )
                         } else {
                             employmentType

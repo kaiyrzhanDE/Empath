@@ -51,22 +51,24 @@ internal class RealSkillsDialogComponent(
         logger.d(this.className(), "Event: $event")
         when (event) {
             is SkillsEvent.DismissClick -> dismiss()
-            is SkillsEvent.SkillSelect -> selectTag(event.skill)
-            is SkillsEvent.SkillRemove -> removeTag(event.skill)
-            is SkillsEvent.SkillCreate -> createTag()
+            is SkillsEvent.SkillSelect -> selectSkill(event.skill)
+            is SkillsEvent.SkillRemove -> removeSkill(event.skill)
+            is SkillsEvent.SkillCreate -> createSkill()
             is SkillsEvent.Search -> search(event.query)
-            is SkillsEvent.SkillsSelectClick -> selectTags()
+            is SkillsEvent.SkillsSelectClick -> selectSkills()
         }
     }
 
     private fun dismiss() {
         val currentState = state.value
-        onDismissClick(currentState.originalSkills, currentState.isKeySkills)
+        val updatedSkills = currentState.originalSkills.map { skill -> skill.copy(isSelected = true) }
+        onDismissClick(updatedSkills, currentState.isKeySkills)
     }
 
-    private fun selectTags() {
+    private fun selectSkills() {
         val currentState = state.value
-        onDismissClick(currentState.editableSkills, currentState.isKeySkills)
+        val updatedSkills = currentState.editableSkills.map { skill -> skill.copy(isSelected = true) }
+        onDismissClick(updatedSkills, currentState.isKeySkills)
     }
 
     private fun search(query: String) {
@@ -77,23 +79,23 @@ internal class RealSkillsDialogComponent(
         }
     }
 
-    private fun selectTag(selectedTag: SkillUi) {
+    private fun selectSkill(selectedSkill: SkillUi) {
         state.update { currentState ->
             currentState.copy(
-                editableSkills = currentState.editableSkills + selectedTag,
+                editableSkills = currentState.editableSkills + selectedSkill,
             )
         }
     }
 
-    private fun removeTag(selectedTag: SkillUi) {
+    private fun removeSkill(selectedSkill: SkillUi) {
         state.update { currentState ->
             currentState.copy(
-                editableSkills = currentState.editableSkills - selectedTag,
+                editableSkills = currentState.editableSkills - selectedSkill,
             )
         }
     }
 
-    private fun createTag() {
+    private fun createSkill() {
         state.update { currentState ->
             currentState.copy(
                 editableSkills = currentState.editableSkills + SkillUi.create(currentState.query),
