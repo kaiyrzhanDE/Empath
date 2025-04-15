@@ -23,6 +23,7 @@ import empath.core.uikit.generated.resources.Res
 import kaiyrzhan.de.empath.core.ui.files.toString
 import kaiyrzhan.de.empath.core.ui.files.rememberImagePainter
 import kaiyrzhan.de.empath.core.ui.files.rememberImagePicker
+import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.modifiers.shimmerLoading
 import kaiyrzhan.de.empath.core.ui.modifiers.thenIf
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -81,7 +82,7 @@ internal fun ProfileCard(
             contentScale = ContentScale.Crop,
         )
         ImagePickerField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.defaultMaxWidth(),
             selected = state.selectedImage.toString(),
             onClick = { singleFilePicker.launch() },
             isLoading = state.isImageLoading,

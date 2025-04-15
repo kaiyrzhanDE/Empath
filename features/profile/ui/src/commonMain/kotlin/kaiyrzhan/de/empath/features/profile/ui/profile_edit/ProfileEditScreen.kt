@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -118,7 +119,7 @@ private fun ProfileEditScreen(
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         ProfileCard(
-                            modifier = Modifier.defaultMaxWidth(),
+                            modifier = Modifier.wrapContentSize(),
                             state = state,
                             onEvent = onEvent,
                             imageSize = 160.dp,
@@ -153,7 +154,7 @@ private fun ProfileEditScreen(
                         ) {
                             val imageSize = maxWidth.value * 0.5f
                             ProfileCard(
-                                modifier = Modifier.defaultMaxWidth(),
+                                modifier = Modifier.wrapContentSize(),
                                 state = state,
                                 onEvent = onEvent,
                                 imageSize = imageSize.dp,
