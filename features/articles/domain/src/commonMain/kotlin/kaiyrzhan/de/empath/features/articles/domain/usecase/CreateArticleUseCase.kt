@@ -12,7 +12,8 @@ public class CreateArticleUseCase(
     public suspend operator fun invoke(
         newArticle: NewArticle,
     ): Result<Any> {
-        return repository.createArticle(newArticle)
+        return repository
+            .createArticle(newArticle)
             .toResult()
     }
 }

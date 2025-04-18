@@ -105,17 +105,17 @@
     <string name="profile_edit_successfully">Profile edited successfully</string>
     <string name="file_too_large">The selected file exceeds the maximum allowed size. Please choose a smaller one.</string>
 
-    <!-- Feature: Publications -->
-    <string name="articles">Publications</string>
+    <!-- Feature: Posts -->
+    <string name="articles">Posts</string>
     <string name="search">Search</string>
-    <string name="create_article">Create publication</string>
-    <string name="article_detail">Publication detail</string>
-    <string name="article_created_successfully">Publication created successfully</string>
-    <string name="article_deleted_successfully">Publication deleted successfully</string>
-    <string name="invalid_article_content_error">Invalid Publication content</string>
+    <string name="create_article">Create post</string>
+    <string name="article_detail">Post detail</string>
+    <string name="article_created_successfully">Post created successfully</string>
+    <string name="article_deleted_successfully">Post deleted successfully</string>
+    <string name="invalid_article_content_error">Invalid Post content</string>
 
-    <string name="abort_article_create_title">Abort creating publication</string>
-    <string name="abort_article_create_description">Are you sure you want to discard this publication? All unsaved changes will be lost.</string>
+    <string name="abort_article_create_title">Abort creating post</string>
+    <string name="abort_article_create_description">Are you sure you want to discard this post? All unsaved changes will be lost.</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="select_images">Select images</string>
@@ -124,11 +124,11 @@
     <string name="add_tags">Add tags</string>
     <string name="selected_tags">Selected tags</string>
     <string name="tags">Tags</string>
-    <string name="remove_sub_article">Remove sub publication</string>
-    <string name="add_sub_article">Add sub publication</string>
+    <string name="remove_sub_article">Remove sub post</string>
+    <string name="add_sub_article">Add sub post</string>
     <string name="send">Send</string>
-    <string name="adding_tags_title">Adding tags to publication</string>
-    <string name="adding_tags_description">Enter tags that best describe the publication. They help users find relevant content.</string>
+    <string name="adding_tags_title">Adding tags to post</string>
+    <string name="adding_tags_description">Enter tags that best describe the post. They help users find relevant content.</string>
     <string name="tag_name">Tag name</string>
     <string name="select_tags">Select tags</string>
     <string name="stay_here">Stay here</string>
@@ -140,7 +140,7 @@
     <string name="send_comment">Send comment</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
-    <string name="edit_article">Edit publication</string>
+    <string name="edit_article">Edit post</string>
 
     <!-- Feature: Vacancies -->
     <string name="recruitment">Recruitment</string>

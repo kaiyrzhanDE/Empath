@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 internal fun ArticleActions(
     modifier: Modifier = Modifier,
-    category: String = "Publication", //TODO("Need to add category")
+    category: String = "Post", //TODO("Need to add category")
     article: ArticleUi,
     onLikeClick: () -> Unit,
     onDislikeClick: () -> Unit,
