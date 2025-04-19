@@ -27,11 +27,10 @@ internal class EmploymentRepositoryImpl(
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
-        workSchedules: List<String>,
         workFormats: List<String>,
         educations: List<String>,
         excludeWords: List<String>,
-        includeWords: List<String>
+        includeWords: List<String>,
     ): Flow<PagingData<Vacancy>> {
         return Pager(
             config = PagingConfig(
@@ -47,9 +46,9 @@ internal class EmploymentRepositoryImpl(
                     salaryTo = salaryFrom,
                     workFormats = workFormats,
                     workExperiences = workExperiences,
+                    educations = educations,
                     excludeWords = excludeWords,
                     includeWords = includeWords,
-                    educations = educations,
                 )
             }
         ).flow
@@ -60,11 +59,10 @@ internal class EmploymentRepositoryImpl(
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
-        workSchedules: List<String>,
         workFormats: List<String>,
         educations: List<String>,
         excludeWords: List<String>,
-        includeWords: List<String>
+        includeWords: List<String>,
     ): Flow<PagingData<Vacancy>> {
         return Pager(
             config = PagingConfig(

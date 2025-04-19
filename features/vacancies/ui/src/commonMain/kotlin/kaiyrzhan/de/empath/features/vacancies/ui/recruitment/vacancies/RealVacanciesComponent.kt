@@ -30,7 +30,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.Rec
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.model.RecruiterCreateState
 import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacanciesFiltersUi
+import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.toUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
@@ -57,7 +57,7 @@ import kotlin.getValue
 
 internal class RealVacanciesComponent(
     componentContext: ComponentContext,
-    private val onVacanciesFiltersClick: (filters: VacanciesFiltersUi) -> Unit,
+    private val onVacanciesFiltersClick: (filters: VacancyFiltersUi) -> Unit,
     private val onVacancyCreateClick: (author: AuthorUi) -> Unit,
     private val onVacancyEditClick: (vacancyId: String) -> Unit,
     private val onVacancyDetailClick: (vacancyId: String) -> Unit,
@@ -75,7 +75,7 @@ internal class RealVacanciesComponent(
 
     @OptIn(FlowPreview::class)
     private val queryFlow = state
-        .map { state -> state.query }
+        .map { state -> state.vacancyFilters.query }
         .distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -85,13 +85,13 @@ internal class RealVacanciesComponent(
         }.flatMapLatest { (query, state) ->
             getVacanciesUseCase(
                 query = query,
-                salaryFrom = state.vacanciesFilters.salaryFrom,
-                salaryTo = state.vacanciesFilters.salaryTo,
-                workExperiences = state.vacanciesFilters.workExperiences,
-                workSchedules = state.vacanciesFilters.workSchedules,
-                workFormats = state.vacanciesFilters.workFormats,
-                excludeWords = state.vacanciesFilters.excludeWords,
-                includeWords = state.vacanciesFilters.includeWords,
+                salaryFrom = state.vacancyFilters.salaryFrom,
+                salaryTo = state.vacancyFilters.salaryTo,
+                workExperiences = state.vacancyFilters.selectedWorkExperienceTypes,
+                workFormats = state.vacancyFilters.selectedWorkFormatTypes,
+                educations = state.vacancyFilters.selectedEducationTypes,
+                excludeWords = state.vacancyFilters.excludeWords,
+                includeWords = state.vacancyFilters.includeWords,
             ).map { pagingData ->
                 pagingData.map { vacancy -> vacancy.toUi() }
             }
@@ -131,7 +131,7 @@ internal class RealVacanciesComponent(
         when (event) {
             is VacanciesEvent.VacanciesSearch -> searchVacancies(event.query)
             is VacanciesEvent.TabChange -> changeTab(event.index)
-            is VacanciesEvent.VacanciesFiltersClick -> onVacanciesFiltersClick(state.value.vacanciesFilters)
+            is VacanciesEvent.VacanciesFiltersClick -> onVacanciesFiltersClick(state.value.vacancyFilters)
             is VacanciesEvent.VacancyCreateClick -> clickVacancyCreate()
             is VacanciesEvent.VacancyEditClick -> onVacancyEditClick(event.id)
             is VacanciesEvent.VacancyHideClick -> hideVacancy(event.id)
@@ -139,6 +139,7 @@ internal class RealVacanciesComponent(
             is VacanciesEvent.ResponseCvClick -> onCvClick(event.response.cvId)
             is VacanciesEvent.ResponseAccept -> acceptResponse(event.response)
             is VacanciesEvent.ResponseReject -> rejectResponse(event.response)
+            is VacanciesEvent.ApplyFilters -> applyVacancyFilters(event.vacancyFilters)
         }
     }
 
@@ -164,7 +165,9 @@ internal class RealVacanciesComponent(
     private fun searchVacancies(query: String) {
         state.update { currentState ->
             currentState.copy(
-                query = query,
+                vacancyFilters = currentState.vacancyFilters.copy(
+                    query = query,
+                )
             )
         }
     }
@@ -255,6 +258,14 @@ internal class RealVacanciesComponent(
                     }
                 }
             }
+        }
+    }
+
+    private fun applyVacancyFilters(vacancyFilters: VacancyFiltersUi) {
+        state.update { currentState ->
+            currentState.copy(
+                vacancyFilters = vacancyFilters,
+            )
         }
     }
 }

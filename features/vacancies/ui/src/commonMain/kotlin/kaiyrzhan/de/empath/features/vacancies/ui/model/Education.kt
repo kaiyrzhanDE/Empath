@@ -5,11 +5,15 @@ import empath.core.uikit.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
 
 internal enum class Education(val value: String, val res: StringResource) {
-    UNKNOWN("unknown", Res.string.unknown),
-    SCHOOL("school", Res.string.education_school),
-    BACHELOR("bachelor", Res.string.education_bachelor),
-    MASTER("master", Res.string.education_master),
-    DOCTORATE("doctorate", Res.string.education_doctorate);
+    UNKNOWN(value = "unknown", res = Res.string.unknown),
+    SCHOOL(value = "school", res = Res.string.education_school),
+    BACHELOR(value = "bachelor", res = Res.string.education_bachelor),
+    MASTER(value = "master", res = Res.string.education_master),
+    DOCTORATE(value = "doctorate", res = Res.string.education_doctorate);
+
+    override fun toString(): String {
+        return value
+    }
 
     companion object {
         fun getEducations(): List<EducationUi> {
@@ -27,7 +31,12 @@ internal data class EducationUi(
 )
 
 internal fun List<EducationUi>.getSelected(): String {
-    return first { it.isSelected }.type.value
+    return first { it.isSelected }.type.toString()
+}
+
+internal fun List<EducationUi>.getSelectedTypes(): List<String> {
+    return filter { education -> education.isSelected }
+        .map { education -> education.type.toString() }
 }
 
 internal fun List<EducationUi>.isChanged(): Boolean {

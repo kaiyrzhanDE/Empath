@@ -56,7 +56,7 @@ import kaiyrzhan.de.empath.core.utils.toIntLimited
 import kaiyrzhan.de.empath.features.vacancies.ui.model.EducationUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SkillUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.WorkExperienceUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.components.Filters
+import kaiyrzhan.de.empath.features.vacancies.ui.components.FiltersCard
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.components.TopBar
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateEvent
@@ -262,10 +262,13 @@ private fun VacancyCreateScreen(
                         }
                     )
 
-                    Filters<WorkExperienceUi>(
+                    FiltersCard<WorkExperienceUi>(
                         modifier = Modifier.fillMaxWidth(),
                         filters = state.newVacancy.workExperiences,
-                        title = stringResource(Res.string.select_work_experiences),
+                        title = buildAnnotatedString {
+                            append(stringResource(Res.string.select_work_experiences))
+                            appendRequiredMarker()
+                        },
                         leadingPainter = painterResource(Res.drawable.ic_work_history),
                         onSelect = { workExperience ->
                             onEvent(VacancyCreateEvent.WorkExperienceSelect(workExperience))
@@ -275,10 +278,13 @@ private fun VacancyCreateScreen(
                         isSelected = { workExperience -> workExperience.isSelected }
                     )
 
-                    Filters<SkillUi>(
+                    FiltersCard<SkillUi>(
                         modifier = Modifier.fillMaxWidth(),
                         filters = state.newVacancy.employmentTypes,
-                        title = stringResource(Res.string.select_employments_types),
+                        title = buildAnnotatedString {
+                            append(stringResource(Res.string.select_employments_types))
+                            appendRequiredMarker()
+                        },
                         leadingPainter = painterResource(Res.drawable.ic_schedule),
                         anySelected = { employmentTypes -> employmentTypes.any { it.isSelected } },
                         onSelect = { employmentType ->
@@ -288,10 +294,13 @@ private fun VacancyCreateScreen(
                         isSelected = { employmentType -> employmentType.isSelected }
                     )
 
-                    Filters<SkillUi>(
+                    FiltersCard<SkillUi>(
                         modifier = Modifier.fillMaxWidth(),
                         filters = state.newVacancy.workFormats,
-                        title = stringResource(Res.string.select_work_formats),
+                        title = buildAnnotatedString {
+                            append(stringResource(Res.string.select_work_formats))
+                            appendRequiredMarker()
+                        },
                         leadingPainter = painterResource(Res.drawable.ic_domain),
                         anySelected = { workFormats -> workFormats.any { it.isSelected } },
                         onSelect = { workFormat ->
@@ -301,10 +310,13 @@ private fun VacancyCreateScreen(
                         isSelected = { workFormat -> workFormat.isSelected }
                     )
 
-                    Filters<SkillUi>(
+                    FiltersCard<SkillUi>(
                         modifier = Modifier.fillMaxWidth(),
                         filters = state.newVacancy.workSchedules,
-                        title = stringResource(Res.string.select_work_schedules),
+                        title = buildAnnotatedString {
+                            append(stringResource(Res.string.select_work_schedules))
+                            appendRequiredMarker()
+                        },
                         leadingPainter = painterResource(Res.drawable.ic_calendar_today),
                         anySelected = { workSchedules -> workSchedules.any { it.isSelected } },
                         onSelect = { workSchedule ->
@@ -314,10 +326,13 @@ private fun VacancyCreateScreen(
                         isSelected = { workSchedule -> workSchedule.isSelected }
                     )
 
-                    Filters<EducationUi>(
+                    FiltersCard<EducationUi>(
                         modifier = Modifier.fillMaxWidth(),
                         filters = state.newVacancy.educations,
-                        title = stringResource(Res.string.select_education),
+                        title = buildAnnotatedString {
+                            append(stringResource(Res.string.select_education))
+                            appendRequiredMarker()
+                        },
                         leadingPainter = painterResource(Res.drawable.ic_school),
                         anySelected = { education -> education.any { it.isSelected } },
                         onSelect = { education ->

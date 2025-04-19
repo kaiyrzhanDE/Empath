@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.active
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
@@ -12,8 +13,11 @@ import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.RealVacancyFiltersComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.RealVacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.RealVacanciesComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kotlinx.serialization.Serializable
 
 public class RealRecruitmentRootComponent(
@@ -39,6 +43,7 @@ public class RealRecruitmentRootComponent(
             is Config.Vacancies -> createVacanciesComponent(componentContext)
             is Config.VacancyDetail -> createVacancyDetailComponent(componentContext, config)
             is Config.VacancyCreate -> createVacancyCreateComponent(componentContext, config)
+            is Config.VacancyFilters -> createVacancyFiltersComponent(componentContext, config)
         }
     }
 
@@ -49,8 +54,8 @@ public class RealRecruitmentRootComponent(
         return RecruitmentRootComponent.Child.Vacancies(
             component = RealVacanciesComponent(
                 componentContext = componentContext,
-                onVacanciesFiltersClick = { filters ->
-                    //TODO("Not yet implemented")
+                onVacanciesFiltersClick = { vacancyFilters ->
+                    navigation.push(Config.VacancyFilters(vacancyFilters))
                 },
                 onVacancyCreateClick = { author ->
                     navigation.push(Config.VacancyCreate(author))
@@ -102,6 +107,33 @@ public class RealRecruitmentRootComponent(
         )
     }
 
+    private fun createVacancyFiltersComponent(
+        componentContext: ComponentContext,
+        config: Config.VacancyFilters,
+    ): RecruitmentRootComponent.Child.VacancyFilters {
+        return RecruitmentRootComponent.Child.VacancyFilters(
+            component = RealVacancyFiltersComponent(
+                componentContext = componentContext,
+                vacancyFilters = config.filters,
+                onBackClick = { isFiltersUpdated, filters ->
+                    if (isFiltersUpdated) {
+                        reloadVacancies(filters)
+                    } else {
+                        onBackClick()
+                    }
+                },
+            )
+        )
+    }
+
+    private fun reloadVacancies(filters: VacancyFiltersUi) {
+        navigation.pop {
+            (stack.active.instance as? RecruitmentRootComponent.Child.Vacancies)
+                ?.component
+                ?.onEvent(VacanciesEvent.ApplyFilters(filters))
+        }
+    }
+
     @Serializable
     private sealed interface Config {
         @Serializable
@@ -109,6 +141,11 @@ public class RealRecruitmentRootComponent(
 
         @Serializable
         data class VacancyDetail(val vacancyId: String) : Config
+
+        @Serializable
+        data class VacancyFilters(
+            val filters: VacancyFiltersUi,
+        ) : Config
 
         @Serializable
         data class VacancyCreate(val author: AuthorUi) : Config

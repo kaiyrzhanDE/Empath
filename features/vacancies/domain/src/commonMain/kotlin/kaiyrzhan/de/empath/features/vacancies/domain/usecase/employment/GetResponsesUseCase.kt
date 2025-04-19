@@ -13,11 +13,10 @@ public class GetResponsesUseCase(
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
-        workSchedules: List<String>,
         educations: List<String>,
         workFormats: List<String>,
-        excludeWords: List<String>,
-        includeWords: List<String>,
+        excludeWords: String,
+        includeWords: String,
     ): Flow<PagingData<Vacancy>> {
         return repository
             .getResponses(
@@ -25,11 +24,10 @@ public class GetResponsesUseCase(
                 salaryFrom = salaryFrom,
                 salaryTo = salaryTo,
                 workExperiences = workExperiences,
-                workSchedules = workSchedules,
                 educations = educations,
                 workFormats = workFormats,
-                excludeWords = excludeWords,
-                includeWords = includeWords,
+                excludeWords = excludeWords.split(' '),
+                includeWords = includeWords.split(' '), //TODO(remove spaces)
             )
     }
 }

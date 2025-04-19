@@ -14,9 +14,8 @@ public interface EmploymentRepository {
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
-        workSchedules: List<String>,
-        educations: List<String>,
         workFormats: List<String>,
+        educations: List<String>,
         excludeWords: List<String>,
         includeWords: List<String>,
     ): Flow<PagingData<Vacancy>>
@@ -26,7 +25,6 @@ public interface EmploymentRepository {
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
-        workSchedules: List<String>,
         workFormats: List<String>,
         educations: List<String>,
         excludeWords: List<String>,

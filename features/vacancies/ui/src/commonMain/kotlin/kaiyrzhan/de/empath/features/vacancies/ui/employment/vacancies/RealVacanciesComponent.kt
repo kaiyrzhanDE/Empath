@@ -25,7 +25,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetVacan
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.CvsDialogComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.RealCvsDialogComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.CvUi
-import kaiyrzhan.de.empath.features.vacancies.ui.model.VacanciesFiltersUi
+import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.toUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
@@ -51,7 +51,7 @@ import org.koin.core.component.inject
 
 internal class RealVacanciesComponent(
     componentContext: ComponentContext,
-    private val onVacanciesFiltersClick: (filters: VacanciesFiltersUi) -> Unit,
+    private val onVacancyFiltersClick: (filters: VacancyFiltersUi) -> Unit,
     private val onVacancyDetailClick: (vacancyId: String, status: ResponseStatus) -> Unit,
 ) : BaseComponent(componentContext), VacanciesComponent {
 
@@ -66,7 +66,7 @@ internal class RealVacanciesComponent(
 
     @OptIn(FlowPreview::class)
     private val queryFlow = state
-        .map { state -> state.query }
+        .map { state -> state.vacanciesFilters.query }
         .distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -78,12 +78,11 @@ internal class RealVacanciesComponent(
                 query = query,
                 salaryFrom = state.vacanciesFilters.salaryFrom,
                 salaryTo = state.vacanciesFilters.salaryTo,
-                workExperiences = state.vacanciesFilters.workExperiences,
-                workSchedules = state.vacanciesFilters.workSchedules,
-                workFormats = state.vacanciesFilters.workFormats,
+                workExperiences = state.vacanciesFilters.selectedWorkExperienceTypes,
+                workFormats = state.vacanciesFilters.selectedWorkFormatTypes,
                 excludeWords = state.vacanciesFilters.excludeWords,
                 includeWords = state.vacanciesFilters.includeWords,
-                educations = state.vacanciesFilters.educations,
+                educations = state.vacanciesFilters.selectedEducationTypes,
             ).map { pagingData ->
                 pagingData.map { vacancy ->
                     val vacancyUi = vacancy.toUi()
@@ -106,12 +105,11 @@ internal class RealVacanciesComponent(
                 query = query,
                 salaryFrom = state.vacanciesFilters.salaryFrom,
                 salaryTo = state.vacanciesFilters.salaryTo,
-                workExperiences = state.vacanciesFilters.workExperiences,
-                workSchedules = state.vacanciesFilters.workSchedules,
-                workFormats = state.vacanciesFilters.workFormats,
+                workExperiences = state.vacanciesFilters.selectedWorkExperienceTypes,
+                workFormats = state.vacanciesFilters.selectedWorkFormatTypes,
                 excludeWords = state.vacanciesFilters.excludeWords,
                 includeWords = state.vacanciesFilters.includeWords,
-                educations = state.vacanciesFilters.educations,
+                educations = state.vacanciesFilters.selectedEducationTypes,
             ).map { pagingData ->
                 pagingData.map { response ->
                     response.toUi()
@@ -138,13 +136,15 @@ internal class RealVacanciesComponent(
             is VacanciesEvent.TabChange -> changeTab(event.index)
 
             is VacanciesEvent.VacanciesFiltersClick ->
-                onVacanciesFiltersClick(state.value.vacanciesFilters)
+                onVacancyFiltersClick(state.value.vacanciesFilters)
 
             is VacanciesEvent.VacancyDetailClick ->
                 onVacancyDetailClick(event.vacancy.id, event.vacancy.status)
 
             is VacanciesEvent.ResponseToVacancy -> showCvsDialog(event.vacancy)
             is VacanciesEvent.CvCreateClick -> Unit// TODO(createCv())
+
+            is VacanciesEvent.ApplyFilters -> applyFilters(event.vacancyFilters)
         }
     }
 
@@ -175,7 +175,9 @@ internal class RealVacanciesComponent(
     private fun searchVacancies(query: String) {
         state.update { currentState ->
             currentState.copy(
-                query = query,
+                vacanciesFilters = currentState.vacanciesFilters.copy(
+                    query = query,
+                ),
             )
         }
     }
@@ -236,6 +238,14 @@ internal class RealVacanciesComponent(
                     }
                 }
             }
+        }
+    }
+
+    private fun applyFilters(vacanciesFilters: VacancyFiltersUi){
+        state.update { currentState ->
+            currentState.copy(
+                vacanciesFilters = vacanciesFilters,
+            )
         }
     }
 }

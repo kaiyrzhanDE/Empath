@@ -168,7 +168,7 @@ private fun VacanciesScreen(
                     modifier = Modifier
                         .wrapContentHeight()
                         .weight(1f),
-                    value = state.query,
+                    value = state.vacanciesFilters.query,
                     shape = EmpathTheme.shapes.small,
                     onValueChange = { query -> onEvent(VacanciesEvent.VacanciesSearch(query)) },
                     textStyle = EmpathTheme.typography.bodyLarge,

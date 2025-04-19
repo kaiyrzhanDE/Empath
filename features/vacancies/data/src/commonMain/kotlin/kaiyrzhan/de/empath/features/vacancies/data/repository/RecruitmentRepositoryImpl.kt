@@ -44,9 +44,9 @@ internal class RecruitmentRepositoryImpl(
         salaryTo: Int?,
         workExperiences: List<String>,
         workFormats: List<String>,
+        educations: List<String>,
         excludeWords: List<String>,
         includeWords: List<String>,
-        education: List<String>,
     ): Flow<PagingData<Vacancy>> {
         return Pager(
             config = PagingConfig(
@@ -64,7 +64,7 @@ internal class RecruitmentRepositoryImpl(
                     workExperiences = workExperiences,
                     excludeWords = excludeWords,
                     includeWords = includeWords,
-                    education = education,
+                    educations = educations,
                 )
             }
         ).flow

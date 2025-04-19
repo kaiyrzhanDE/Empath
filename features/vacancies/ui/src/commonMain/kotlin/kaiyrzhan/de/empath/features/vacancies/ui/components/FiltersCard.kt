@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.components
+package kaiyrzhan.de.empath.features.vacancies.ui.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
@@ -25,21 +25,44 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.ic_arrow_forward
 import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
-import kaiyrzhan.de.empath.core.ui.extensions.appendRequiredMarker
+import kaiyrzhan.de.empath.core.ui.modifiers.noRippleClickable
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun <T> ColumnScope.Filters(
+internal fun <T> ColumnScope.FiltersCard(
     modifier: Modifier = Modifier,
     filters: List<T>,
     title: String,
+    leadingPainter: Painter,
+    onSelect: (T) -> Unit,
+    isSelected: (T) -> Boolean,
+    anySelected: (filters: List<T>) -> Boolean,
+    label: @Composable (T) -> String,
+){
+    FiltersCard(
+        modifier = modifier,
+        filters = filters,
+        title = AnnotatedString(title),
+        leadingPainter = leadingPainter,
+        onSelect = onSelect,
+        isSelected = isSelected,
+        anySelected = anySelected,
+        label = label,
+    )
+}
+
+@Composable
+internal fun <T> ColumnScope.FiltersCard(
+    modifier: Modifier = Modifier,
+    filters: List<T>,
+    title: AnnotatedString,
     leadingPainter: Painter,
     onSelect: (T) -> Unit,
     isSelected: (T) -> Boolean,
@@ -74,16 +97,13 @@ internal fun <T> ColumnScope.Filters(
                 Icon(
                     modifier = Modifier.size(24.dp),
                     painter = leadingPainter,
-                    contentDescription = title,
+                    contentDescription = null,
                     tint = EmpathTheme.colors.onSurfaceVariant,
                 )
             }
 
             Text(
-                text = buildAnnotatedString {
-                    append(title)
-                    appendRequiredMarker()
-                },
+                text = title,
                 style = EmpathTheme.typography.bodyLarge,
                 color = EmpathTheme.colors.onSurfaceVariant,
                 maxLines = 1,
@@ -98,7 +118,7 @@ internal fun <T> ColumnScope.Filters(
                         .size(24.dp)
                         .rotate(rotateAnimation),
                     painter = painterResource(Res.drawable.ic_arrow_forward),
-                    contentDescription = title,
+                    contentDescription = null,
                     tint = EmpathTheme.colors.onSurfaceVariant,
                 )
             }
@@ -121,6 +141,7 @@ internal fun <T> ColumnScope.Filters(
             ) {
                 filters.forEach { filter ->
                     Row(
+                        modifier = Modifier.noRippleClickable { onSelect(filter) },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {

@@ -207,4 +207,10 @@
     <string name="select_cv">Select CV</string>
     <string name="cvs_not_found">CV not found, try to create CV at first</string>
     <string name="about_me">About me</string>
+    <string name="remote">Remote</string>
+    <string name="onsite">On site</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="filters">Filters</string>
+    <string name="apply">Apply</string>
+    <string name="clear">Clear</string>
 </resources>

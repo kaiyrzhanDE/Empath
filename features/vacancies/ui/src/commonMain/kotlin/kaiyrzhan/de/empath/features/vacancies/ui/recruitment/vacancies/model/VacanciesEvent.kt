@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model
 
+import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 
 internal sealed interface VacanciesEvent {
@@ -14,4 +15,6 @@ internal sealed interface VacanciesEvent {
     data class ResponseAccept(val response: ResponseUi) : VacanciesEvent
     data class ResponseReject(val response: ResponseUi) : VacanciesEvent
     data class ResponseCvClick(val response: ResponseUi) : VacanciesEvent
+
+    data class ApplyFilters(val vacancyFilters: VacancyFiltersUi) : VacanciesEvent
 }

@@ -14,6 +14,7 @@ import kaiyrzhan.de.empath.core.ui.animations.swipe
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.VacanciesScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailScreen
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.VacancyFiltersScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -73,6 +74,12 @@ private fun EmploymentRootScreen(
                 )
             }
 
+            is EmploymentRootComponent.Child.VacancyFilters -> {
+                VacancyFiltersScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
     }
 }

@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.toDomain
-import kaiyrzhan.de.empath.features.vacancies.data.model.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
 import okio.IOException
@@ -17,7 +16,7 @@ internal class VacanciesPagingSource(
     private val salaryTo: Int?,
     private val workExperiences: List<String>,
     private val workFormats: List<String>,
-    private val education: List<String>,
+    private val educations: List<String>,
     private val excludeWords: List<String>,
     private val includeWords: List<String>,
 ) : PagingSource<Int, Vacancy>() {
@@ -36,7 +35,7 @@ internal class VacanciesPagingSource(
                 salaryTo = salaryTo,
                 workExperiences = workExperiences,
                 workFormats = workFormats,
-                education = education,
+                educations = educations,
                 excludeWords = excludeWords,
                 includeWords = includeWords,
                 pageLimit = params.loadSize,

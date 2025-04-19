@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.Flow
 public class GetVacanciesUseCase(
     private val repository: EmploymentRepository,
 ) {
+    private val whiteSpaceRegex = Regex("\\s+")
     public suspend operator fun invoke(
         query: String?,
         salaryFrom: Int?,
         salaryTo: Int?,
         workExperiences: List<String>,
-        workSchedules: List<String>,
         educations: List<String>,
         workFormats: List<String>,
-        excludeWords: List<String>,
-        includeWords: List<String>,
+        excludeWords: String,
+        includeWords: String,
     ): Flow<PagingData<Vacancy>> {
         return repository
             .getVacancies(
@@ -25,11 +25,16 @@ public class GetVacanciesUseCase(
                 salaryFrom = salaryFrom,
                 salaryTo = salaryTo,
                 workExperiences = workExperiences,
-                workSchedules = workSchedules,
                 educations = educations,
                 workFormats = workFormats,
-                excludeWords = excludeWords,
-                includeWords = includeWords,
+                excludeWords = excludeWords
+                    .replace(whiteSpaceRegex, "")
+                    .split(",")
+                    .filter { word -> word.isNotBlank() },
+                includeWords = includeWords
+                    .replace(whiteSpaceRegex, "")
+                    .split(",")
+                    .filter { word -> word.isNotBlank() },
             )
     }
 }
