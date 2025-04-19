@@ -100,6 +100,36 @@ private fun VacancyFiltersScreen(
                 },
             )
 
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.includeWords,
+                shape = EmpathTheme.shapes.small,
+                onValueChange = { word -> onEvent(VacancyFiltersEvent.IncludeWordsChange(word)) },
+                textStyle = EmpathTheme.typography.bodyLarge,
+                maxLines = 2,
+                label = {
+                    Text(
+                        text = stringResource(Res.string.include_words),
+                        style = EmpathTheme.typography.bodyLarge,
+                    )
+                },
+            )
+
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.excludeWords,
+                shape = EmpathTheme.shapes.small,
+                onValueChange = { query -> onEvent(VacancyFiltersEvent.ExcludeWordsChange(query)) },
+                textStyle = EmpathTheme.typography.bodyLarge,
+                maxLines = 2,
+                label = {
+                    Text(
+                        text = stringResource(Res.string.exclude_words),
+                        style = EmpathTheme.typography.bodyLarge,
+                    )
+                },
+            )
+
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp),

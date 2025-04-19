@@ -213,4 +213,6 @@
     <string name="filters">Filters</string>
     <string name="apply">Apply</string>
     <string name="clear">Clear</string>
+    <string name="include_words">Include words (separated by commas)</string>
+    <string name="exclude_words">Exclude words (separated by commas)</string>
 </resources>
