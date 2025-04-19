@@ -46,7 +46,7 @@ private fun includeAllModules(directory: String) {
 includeAllModules(directory = "core")
 includeAllModules(directory = "features/auth")
 includeAllModules(directory = "features/profile")
-includeAllModules(directory = "features/articles")
+includeAllModules(directory = "features/posts")
 includeAllModules(directory = "features/vacancies")
 includeAllModules(directory = "features/file-storage")
 

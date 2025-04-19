@@ -22,9 +22,9 @@ kotlin {
             api(projects.features.profile.domain)
             api(projects.features.profile.ui)
 
-            api(projects.features.articles.data)
-            api(projects.features.articles.domain)
-            api(projects.features.articles.ui)
+            api(projects.features.posts.data)
+            api(projects.features.posts.domain)
+            api(projects.features.posts.ui)
 
             api(projects.features.vacancies.data)
             api(projects.features.vacancies.domain)

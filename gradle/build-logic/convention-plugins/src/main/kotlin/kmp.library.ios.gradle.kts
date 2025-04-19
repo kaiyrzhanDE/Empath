@@ -38,8 +38,9 @@ kmpConfig {
                 export(project(":features:profile:domain"))
                 export(project(":features:profile:data"))
 
-                export(project(":features:articles:domain"))
-                export(project(":features:articles:data"))
+                export(project(":features:posts:ui"))
+                export(project(":features:posts:domain"))
+                export(project(":features:posts:data"))
 
                 export(project(":features:file-storage:domain"))
                 export(project(":features:file-storage:data"))

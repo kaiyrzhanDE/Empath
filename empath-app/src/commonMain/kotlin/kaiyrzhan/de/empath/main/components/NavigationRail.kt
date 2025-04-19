@@ -113,20 +113,20 @@ internal fun NavigationRail(
             )
             Spacer(modifier = Modifier.height(12.dp))
             NavigationRailItem(
-                selected = currentChild is Child.Articles,
-                onClick = component::onArticlesTabClick,
+                selected = currentChild is Child.Posts,
+                onClick = component::onPostsTabClick,
                 icon = {
                     Icon(
                         painter = painterResource(
-                            resource = if (currentChild is Child.Articles) Res.drawable.ic_local_library_filled
+                            resource = if (currentChild is Child.Posts) Res.drawable.ic_local_library_filled
                             else Res.drawable.ic_local_library_outlined
                         ),
-                        contentDescription = stringResource(Res.string.articles),
+                        contentDescription = stringResource(Res.string.posts),
                     )
                 },
                 label = {
                     Text(
-                        text = stringResource(Res.string.articles),
+                        text = stringResource(Res.string.posts),
                         style = EmpathTheme.typography.labelMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,

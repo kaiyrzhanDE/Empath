@@ -27,7 +27,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
-import kaiyrzhan.de.empath.features.articles.ui.root.ArticlesRootScreen
+import kaiyrzhan.de.empath.features.posts.ui.root.PostsRootScreen
 import kaiyrzhan.de.empath.features.profile.ui.root.ProfileRootScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.root.EmploymentRootScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.root.RecruitmentRootScreen
@@ -117,8 +117,8 @@ private fun MainScreen(
                 )
             }
 
-            is Child.Articles -> {
-                ArticlesRootScreen(
+            is Child.Posts -> {
+                PostsRootScreen(
                     component = instance.component,
                     modifier = Modifier.fillMaxSize(),
                 )

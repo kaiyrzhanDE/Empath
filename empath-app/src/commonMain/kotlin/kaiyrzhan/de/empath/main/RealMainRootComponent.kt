@@ -10,7 +10,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
-import kaiyrzhan.de.empath.features.articles.ui.root.RealArticlesRootComponent
+import kaiyrzhan.de.empath.features.posts.ui.root.RealPostsRootComponent
 import kaiyrzhan.de.empath.features.profile.ui.root.RealProfileRootComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.root.RealEmploymentRootComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.root.RealRecruitmentRootComponent
@@ -33,7 +33,7 @@ internal class RealMainRootComponent(
 
     override fun onProfileTabClick() = navigation.bringToFront(Config.Profile)
 
-    override fun onArticlesTabClick() = navigation.bringToFront(Config.Articles)
+    override fun onPostsTabClick() = navigation.bringToFront(Config.Posts)
 
     override fun onMenuTabClick() = navigation.bringToFront(Config.Menu)
 
@@ -48,7 +48,7 @@ internal class RealMainRootComponent(
         logger.d(this.className(), "Main child: $config")
         return when (config) {
             is Config.Profile -> createProfileComponent(componentContext)
-            is Config.Articles -> createArticlesComponent(componentContext)
+            is Config.Posts -> createPostsComponent(componentContext)
             is Config.Menu -> createMenuComponent(componentContext)
             is Config.Employment -> createEmploymentComponent(componentContext)
             is Config.Recruitment -> createRecruitmentComponent(componentContext)
@@ -64,11 +64,11 @@ internal class RealMainRootComponent(
         )
     }
 
-    private fun createArticlesComponent(
+    private fun createPostsComponent(
         componentContext: ComponentContext,
-    ): MainRootComponent.Child.Articles {
-        return MainRootComponent.Child.Articles(
-            RealArticlesRootComponent(
+    ): MainRootComponent.Child.Posts {
+        return MainRootComponent.Child.Posts(
+            RealPostsRootComponent(
                 componentContext = componentContext,
             )
         )
@@ -106,7 +106,7 @@ internal class RealMainRootComponent(
         data object Profile : Config
 
         @Serializable
-        data object Articles : Config
+        data object Posts : Config
 
         @Serializable
         data object Menu : Config

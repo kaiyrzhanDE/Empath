@@ -4,8 +4,8 @@ import kaiyrzhan.de.empath.core.network.di.networkModule
 import kaiyrzhan.de.empath.core.network.di.tokenModule
 import kaiyrzhan.de.empath.core.utils.di.dataStoreModule
 import kaiyrzhan.de.empath.core.utils.di.utilsModule
-import kaiyrzhan.de.empath.features.articles.data.di.articlesDataModule
-import kaiyrzhan.de.empath.features.articles.domain.di.articlesDomainModule
+import kaiyrzhan.de.empath.features.posts.data.di.postsDataModule
+import kaiyrzhan.de.empath.features.posts.domain.di.postsDomainModule
 import kaiyrzhan.de.empath.features.auth.data.di.authDataModule
 import kaiyrzhan.de.empath.features.auth.domain.di.authDomainModule
 import kaiyrzhan.de.empath.features.filestorage.data.di.fileStorageDataModule
@@ -33,8 +33,8 @@ internal val commonModules: List<Module> = listOf(
     fileStorageDomainModule,
     fileStorageDataModule,
 
-    articlesDomainModule,
-    articlesDataModule,
+    postsDomainModule,
+    postsDataModule,
 
     vacanciesDataModule,
     vacanciesDomainModule,
