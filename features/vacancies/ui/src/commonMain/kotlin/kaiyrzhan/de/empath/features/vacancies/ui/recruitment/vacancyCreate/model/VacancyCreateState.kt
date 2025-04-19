@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model
 
 import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.NewVacancyUi

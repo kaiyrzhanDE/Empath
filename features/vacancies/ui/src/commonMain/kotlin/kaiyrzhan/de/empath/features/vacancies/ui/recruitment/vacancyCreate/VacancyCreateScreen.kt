@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -57,10 +57,10 @@ import kaiyrzhan.de.empath.features.vacancies.ui.model.EducationUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SkillUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.WorkExperienceUi
 import kaiyrzhan.de.empath.features.vacancies.ui.components.FiltersCard
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.components.TopBar
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateAction
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateState
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.components.TopBar
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateAction
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialog
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource

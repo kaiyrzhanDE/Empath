@@ -38,7 +38,6 @@ import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.ic_stylus
 import empath.core.uikit.generated.resources.ic_tune
 import empath.core.uikit.generated.resources.search
-import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
@@ -55,7 +54,6 @@ import kaiyrzhan.de.empath.features.vacancies.ui.model.Tab
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesAction
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesState
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.RecruiterCreateDialog
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

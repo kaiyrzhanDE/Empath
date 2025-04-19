@@ -45,7 +45,7 @@ import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.core.utils.currentPlatform
 import kaiyrzhan.de.empath.features.vacancies.ui.components.Tabs
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.RecruiterCreateDialog
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.RecruiterCreateDialog
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.components.ResponsesTab

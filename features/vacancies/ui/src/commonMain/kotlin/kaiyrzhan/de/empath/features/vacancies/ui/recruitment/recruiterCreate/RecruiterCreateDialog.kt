@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -33,14 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.model.RecruiterCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.model.RecruiterCreateState
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.model.RecruiterCreateEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.model.RecruiterCreateState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

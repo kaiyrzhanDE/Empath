@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.model
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.model
 
 internal sealed interface RecruiterCreateEvent {
     data class CompanyNameChange(val companyName: String) : RecruiterCreateEvent

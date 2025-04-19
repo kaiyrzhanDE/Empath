@@ -25,9 +25,9 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetResp
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacanciesUseCase
 import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.model.toUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.RealRecruiterCreateDialogComponent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.RecruiterCreateDialogComponent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.model.RecruiterCreateState
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.RealRecruiterCreateDialogComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.RecruiterCreateDialogComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.model.RecruiterCreateState
 import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.ResponseUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi

@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.components
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateEvent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

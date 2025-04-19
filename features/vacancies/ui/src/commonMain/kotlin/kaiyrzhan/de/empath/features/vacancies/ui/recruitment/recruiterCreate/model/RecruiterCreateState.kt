@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createRecruiter.model
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.recruiterCreate.model
 
 import kotlinx.serialization.Serializable
 

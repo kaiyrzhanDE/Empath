@@ -14,8 +14,7 @@ import kaiyrzhan.de.empath.core.ui.animations.swipe
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.VacancyFiltersScreen
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.VacancyCreateScreen
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateState
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.VacancyCreateScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.VacanciesScreen
 
 @OptIn(ExperimentalDecomposeApi::class)

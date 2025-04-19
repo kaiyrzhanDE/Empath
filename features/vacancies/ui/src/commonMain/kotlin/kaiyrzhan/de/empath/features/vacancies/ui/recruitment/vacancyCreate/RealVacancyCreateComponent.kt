@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
@@ -27,9 +27,9 @@ import kaiyrzhan.de.empath.features.vacancies.ui.model.EducationUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SkillUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.WorkExperienceUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.toUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateAction
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.model.VacancyCreateState
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateAction
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.toDomain
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.RealSkillsDialogComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialogComponent

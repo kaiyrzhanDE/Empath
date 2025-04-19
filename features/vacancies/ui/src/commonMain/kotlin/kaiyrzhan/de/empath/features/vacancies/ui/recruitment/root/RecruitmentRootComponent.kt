@@ -5,7 +5,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.VacancyFiltersComponent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.VacancyCreateComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.VacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.VacanciesComponent
 
 public interface RecruitmentRootComponent: BackHandlerOwner {

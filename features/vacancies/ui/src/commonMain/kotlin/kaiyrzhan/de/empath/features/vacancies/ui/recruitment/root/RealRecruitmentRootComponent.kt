@@ -15,7 +15,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.RealVacancyFiltersComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.createVacancy.RealVacancyCreateComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.RealVacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.RealVacanciesComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kotlinx.serialization.Serializable
