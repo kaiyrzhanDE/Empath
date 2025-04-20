@@ -6,6 +6,13 @@ public inline fun <reified T : Enum<T>> String?.toEnumSafe(default: T): T {
     } ?: default
 }
 
+public inline fun <reified T : Enum<T>> String?.toEnumSafe(
+    default: T,
+    crossinline match: (enum: T, value: String?) -> Boolean,
+): T {
+    return enumValues<T>().firstOrNull { enum -> match(enum, this) } ?: default
+}
+
 
 
 

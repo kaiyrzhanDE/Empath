@@ -140,6 +140,7 @@ internal class RealVacanciesComponent(
             is VacanciesEvent.ResponseAccept -> acceptResponse(event.response)
             is VacanciesEvent.ResponseReject -> rejectResponse(event.response)
             is VacanciesEvent.ApplyFilters -> applyVacancyFilters(event.vacancyFilters)
+            is VacanciesEvent.ReloadVacancies -> reloadVacancies()
         }
     }
 
@@ -265,6 +266,14 @@ internal class RealVacanciesComponent(
         state.update { currentState ->
             currentState.copy(
                 vacancyFilters = vacancyFilters,
+            )
+        }
+    }
+
+    private fun reloadVacancies() {
+        state.update { currentState ->
+            currentState.copy(
+                vacancyFilters = currentState.vacancyFilters.copy(),
             )
         }
     }

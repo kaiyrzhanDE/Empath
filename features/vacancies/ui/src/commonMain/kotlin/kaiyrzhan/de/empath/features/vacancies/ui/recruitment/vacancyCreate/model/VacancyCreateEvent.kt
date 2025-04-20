@@ -28,4 +28,7 @@ internal sealed interface VacancyCreateEvent {
     data object AddAdditionalSkillsClick : VacancyCreateEvent
     data object ChangeVisibility : VacancyCreateEvent
     data object CreateVacancyClick : VacancyCreateEvent
+    data object LoadWorkFormats : VacancyCreateEvent
+    data object LoadWorkSchedules : VacancyCreateEvent
+    data object LoadEmploymentTypes : VacancyCreateEvent
 }

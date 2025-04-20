@@ -17,4 +17,5 @@ internal sealed interface VacanciesEvent {
     data class ResponseCvClick(val response: ResponseUi) : VacanciesEvent
 
     data class ApplyFilters(val vacancyFilters: VacancyFiltersUi) : VacanciesEvent
+    data object ReloadVacancies : VacanciesEvent
 }

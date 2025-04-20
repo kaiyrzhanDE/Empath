@@ -13,11 +13,14 @@ import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.RealVacancyFiltersComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyEditFrom
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.RealVacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.RealVacanciesComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.RealVacancyEditComponent
 import kotlinx.serialization.Serializable
 
 public class RealRecruitmentRootComponent(
@@ -44,6 +47,7 @@ public class RealRecruitmentRootComponent(
             is Config.VacancyDetail -> createVacancyDetailComponent(componentContext, config)
             is Config.VacancyCreate -> createVacancyCreateComponent(componentContext, config)
             is Config.VacancyFilters -> createVacancyFiltersComponent(componentContext, config)
+            is Config.VacancyEdit -> createVacancyEditComponent(componentContext, config)
         }
     }
 
@@ -60,7 +64,13 @@ public class RealRecruitmentRootComponent(
                 onVacancyCreateClick = { author ->
                     navigation.push(Config.VacancyCreate(author))
                 },
-                onVacancyEditClick = { id ->
+                onVacancyEditClick = { vacancyId ->
+                    navigation.push(
+                        Config.VacancyEdit(
+                            vacancyId = vacancyId,
+                            from = VacancyEditFrom.VACANCIES,
+                        )
+                    )
                 },
                 onVacancyDetailClick = { vacancyId ->
                     navigation.push(Config.VacancyDetail(vacancyId))
@@ -82,8 +92,13 @@ public class RealRecruitmentRootComponent(
                 componentContext = componentContext,
                 vacancyId = config.vacancyId,
                 onBackClick = ::onBackClick,
-                onVacancyEditClick = {
-                    //TODO("Not yet implemented")
+                onVacancyEditClick = { vacancyId ->
+                    navigation.push(
+                        Config.VacancyEdit(
+                            vacancyId = vacancyId,
+                            from = VacancyEditFrom.VACANCY_DETAIL,
+                        )
+                    )
                 },
                 onVacancyDeleteClick = {
                     //TODO("Not yet implemented")
@@ -117,7 +132,7 @@ public class RealRecruitmentRootComponent(
                 vacancyFilters = config.filters,
                 onBackClick = { isFiltersUpdated, filters ->
                     if (isFiltersUpdated) {
-                        reloadVacancies(filters)
+                        applyVacanciesFilters(filters)
                     } else {
                         onBackClick()
                     }
@@ -126,11 +141,47 @@ public class RealRecruitmentRootComponent(
         )
     }
 
-    private fun reloadVacancies(filters: VacancyFiltersUi) {
+    @OptIn(DelicateDecomposeApi::class)
+    private fun createVacancyEditComponent(
+        componentContext: ComponentContext,
+        config: Config.VacancyEdit,
+    ): RecruitmentRootComponent.Child.VacancyEdit {
+        return RecruitmentRootComponent.Child.VacancyEdit(
+            component = RealVacancyEditComponent(
+                componentContext = componentContext,
+                vacancyId = config.vacancyId,
+                onBackClick = ::onBackClick,
+                onVacancyEdited = {
+                    when (config.from) {
+                        VacancyEditFrom.VACANCIES -> reloadVacancies()
+                        VacancyEditFrom.VACANCY_DETAIL -> reloadVacancy()
+                    }
+                },
+            )
+        )
+    }
+
+    private fun applyVacanciesFilters(filters: VacancyFiltersUi) {
         navigation.pop {
             (stack.active.instance as? RecruitmentRootComponent.Child.Vacancies)
                 ?.component
                 ?.onEvent(VacanciesEvent.ApplyFilters(filters))
+        }
+    }
+
+    private fun reloadVacancies() {
+        navigation.pop {
+            (stack.active.instance as? RecruitmentRootComponent.Child.Vacancies)
+                ?.component
+                ?.onEvent(VacanciesEvent.ReloadVacancies)
+        }
+    }
+
+    private fun reloadVacancy() {
+        navigation.pop {
+            (stack.active.instance as? RecruitmentRootComponent.Child.VacancyDetail)
+                ?.component
+                ?.onEvent(VacancyDetailEvent.ReloadVacancyDetail)
         }
     }
 
@@ -149,6 +200,12 @@ public class RealRecruitmentRootComponent(
 
         @Serializable
         data class VacancyCreate(val author: AuthorUi) : Config
+
+        @Serializable
+        data class VacancyEdit(
+            val vacancyId: String,
+            val from: VacancyEditFrom,
+        ) : Config
     }
 
 }

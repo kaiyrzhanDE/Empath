@@ -24,10 +24,13 @@ internal fun List<SkillUi>.isChanged(): Boolean {
     return any { skill -> skill.isSelected }
 }
 
-internal fun Skill.toUi(): SkillUi {
+internal fun Skill.toUi(
+    isSelected: Boolean = false,
+): SkillUi {
     return SkillUi(
         name = name,
         id = id,
+        isSelected = isSelected,
     )
 }
 

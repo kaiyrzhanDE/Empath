@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
@@ -19,21 +19,22 @@ import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetEmploymentTypesUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetVacancyDetailUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetWorkFormatsUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetWorkSchedulesUseCase
-import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.CreateVacancyUseCase
-import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.EditVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.ui.model.EducationUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SkillUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.WorkExperienceUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.toUi
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateAction
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.toDomain
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.toUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.RealSkillsDialogComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialogComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.model.SkillsState
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditAction
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyFilterState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -45,20 +46,21 @@ import org.jetbrains.compose.resources.getString
 import org.koin.core.component.get
 import org.koin.core.component.inject
 
-internal class RealVacancyCreateComponent(
+internal class RealVacancyEditComponent(
     componentContext: ComponentContext,
-    private val author: AuthorUi,
+    private val vacancyId: String,
     private val onBackClick: () -> Unit,
-    private val onVacancyCreateClick: () -> Unit,
-) : BaseComponent(componentContext), VacancyCreateComponent {
+    private val onVacancyEdited: () -> Unit,
+) : BaseComponent(componentContext), VacancyEditComponent {
 
     private val getWorkFormatsUseCase: GetWorkFormatsUseCase = get()
+    private val getVacancyDetailUseCase: GetVacancyDetailUseCase = get()
     private val getWorkSchedulesUseCase: GetWorkSchedulesUseCase = get()
     private val getEmploymentTypesUseCase: GetEmploymentTypesUseCase = get()
-    private val createVacancyUseCase: CreateVacancyUseCase by inject()
+    private val editVacancyUseCase: EditVacancyUseCase by inject()
 
-    override val state = MutableStateFlow<VacancyCreateState>(
-        VacancyCreateState.default(author)
+    override val state = MutableStateFlow<VacancyEditState>(
+        VacancyEditState.default()
     )
 
     private val vacancyFilterDefault = VacancyFilterState.Initial
@@ -66,8 +68,8 @@ internal class RealVacancyCreateComponent(
     override val workFormatsState = MutableStateFlow<VacancyFilterState>(vacancyFilterDefault)
     override val workSchedulesState = MutableStateFlow<VacancyFilterState>(vacancyFilterDefault)
 
-    private val _action = Channel<VacancyCreateAction>(capacity = Channel.BUFFERED)
-    override val action: Flow<VacancyCreateAction> = _action.receiveAsFlow()
+    private val _action = Channel<VacancyEditAction>(capacity = Channel.BUFFERED)
+    override val action: Flow<VacancyEditAction> = _action.receiveAsFlow()
 
     private val messageDialogNavigation = SlotNavigation<MessageDialogState>()
     override val messageDialog: Value<ChildSlot<*, MessageDialogComponent>> = childSlot(
@@ -86,40 +88,41 @@ internal class RealVacancyCreateComponent(
     )
 
     init {
+        loadVacancy(vacancyId)
+        loadEmploymentTypes()
         loadWorkSchedules()
         loadWorkFormats()
-        loadEmploymentTypes()
     }
 
-    override fun onEvent(event: VacancyCreateEvent) {
+    override fun onEvent(event: VacancyEditEvent) {
         logger.d(this.className(), "Event: $event")
         when (event) {
-            is VacancyCreateEvent.BackClick -> backClick()
-            is VacancyCreateEvent.VacancyCreateClick -> onVacancyCreateClick()
-            is VacancyCreateEvent.EducationSelect -> selectEducation(event.education)
-            is VacancyCreateEvent.WorkExperienceSelect -> selectWorkExperience(event.workExperience)
-            is VacancyCreateEvent.WorkFormatSelect -> selectWorkFormats(event.workFormat)
-            is VacancyCreateEvent.WorkScheduleSelect -> selectWorkSchedule(event.workSchedule)
-            is VacancyCreateEvent.EmploymentTypeSelect -> selectEmploymentType(event.employmentType)
-            is VacancyCreateEvent.KeySkillsAdd -> addKeySkills(event.skills)
-            is VacancyCreateEvent.AdditionalSkillsAdd -> addAdditionalSkills(event.skills)
-            is VacancyCreateEvent.TitleChange -> changeTitle(event.title)
-            is VacancyCreateEvent.ResponsibilitiesChange -> changeResponsibilities(event.responsibilities)
-            is VacancyCreateEvent.RequirementsChange -> changeRequirements(event.requirements)
-            is VacancyCreateEvent.AddressChange -> changeAddress(event.address)
-            is VacancyCreateEvent.EmailChange -> changeEmail(event.email)
-            is VacancyCreateEvent.SalaryFromChange -> changeSalaryFrom(event.salaryFrom)
-            is VacancyCreateEvent.SalaryToChange -> changeSalaryTo(event.salaryTo)
-            is VacancyCreateEvent.RemoveKeySkill -> removeKeySkill(event.skill)
-            is VacancyCreateEvent.RemoveAdditionalSkill -> removeAdditionalSkill(event.skill)
-            is VacancyCreateEvent.ChangeVisibility -> changeVisibility()
-            is VacancyCreateEvent.AddKeySkillsClick -> showKeySkillsDialog()
-            is VacancyCreateEvent.AddAdditionalSkillsClick -> showAdditionalSkillsDialog()
-            is VacancyCreateEvent.CreateVacancyClick -> createVacancy()
-            is VacancyCreateEvent.AdditionalDescriptionChange -> changeAdditionalDescription(event.description)
-            is VacancyCreateEvent.LoadWorkFormats -> loadWorkFormats()
-            is VacancyCreateEvent.LoadWorkSchedules -> loadWorkSchedules()
-            is VacancyCreateEvent.LoadEmploymentTypes -> loadEmploymentTypes()
+            is VacancyEditEvent.BackClick -> backClick()
+            is VacancyEditEvent.EducationSelect -> selectEducation(event.education)
+            is VacancyEditEvent.WorkExperienceSelect -> selectWorkExperience(event.workExperience)
+            is VacancyEditEvent.WorkFormatSelect -> selectWorkFormats(event.workFormat)
+            is VacancyEditEvent.WorkScheduleSelect -> selectWorkSchedule(event.workSchedule)
+            is VacancyEditEvent.EmploymentTypeSelect -> selectEmploymentType(event.employmentType)
+            is VacancyEditEvent.KeySkillsAdd -> addKeySkills(event.skills)
+            is VacancyEditEvent.AdditionalSkillsAdd -> addAdditionalSkills(event.skills)
+            is VacancyEditEvent.TitleChange -> changeTitle(event.title)
+            is VacancyEditEvent.ResponsibilitiesChange -> changeResponsibilities(event.responsibilities)
+            is VacancyEditEvent.RequirementsChange -> changeRequirements(event.requirements)
+            is VacancyEditEvent.AddressChange -> changeAddress(event.address)
+            is VacancyEditEvent.EmailChange -> changeEmail(event.email)
+            is VacancyEditEvent.SalaryFromChange -> changeSalaryFrom(event.salaryFrom)
+            is VacancyEditEvent.SalaryToChange -> changeSalaryTo(event.salaryTo)
+            is VacancyEditEvent.KeySkillRemove -> removeKeySkill(event.skill)
+            is VacancyEditEvent.AdditionalSkillRemove -> removeAdditionalSkill(event.skill)
+            is VacancyEditEvent.VisibilityChange -> changeVisibility()
+            is VacancyEditEvent.KeySkillsAddClick -> showKeySkillsDialog()
+            is VacancyEditEvent.AdditionalSkillsAddClick -> showAdditionalSkillsDialog()
+            is VacancyEditEvent.VacancyEditClick -> editVacancy(vacancyId)
+            is VacancyEditEvent.AdditionalDescriptionChange -> changeAdditionalDescription(event.description)
+            is VacancyEditEvent.LoadVacancy -> loadVacancy(vacancyId)
+            is VacancyEditEvent.LoadWorkFormats -> loadWorkFormats()
+            is VacancyEditEvent.LoadWorkSchedules -> loadWorkSchedules()
+            is VacancyEditEvent.LoadEmploymentTypes -> loadEmploymentTypes()
         }
     }
 
@@ -183,12 +186,12 @@ internal class RealVacancyCreateComponent(
 
     private fun backClick() {
         val currentState = state.value
-        check(currentState is VacancyCreateState.Success)
-        when (currentState.newVacancy.isChanged()) {
+        check(currentState is VacancyEditState.Success)
+        when (currentState.editableVacancy != currentState.originalVacancy) {
             true -> coroutineScope.launch {
                 showMessageDialog(
-                    title = getString(Res.string.abort_vacancy_create_title),
-                    description = getString(Res.string.abort_vacancy_create_description),
+                    title = getString(Res.string.abort_vacancy_edit_title),
+                    description = getString(Res.string.abort_vacancy_edit_description),
                     dismissActionConfig = DialogActionConfig(
                         text = getString(Res.string.close),
                     ),
@@ -203,6 +206,7 @@ internal class RealVacancyCreateComponent(
             false -> onBackClick()
         }
     }
+
 
     private fun loadWorkSchedules() {
         if (workSchedulesState.value is VacancyFilterState.Success) return
@@ -282,12 +286,13 @@ internal class RealVacancyCreateComponent(
             }
         }
     }
+
     private fun selectEducation(selectedEducation: EducationUi) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
-                    educations = currentState.newVacancy.educations.map { education ->
+                editableVacancy = currentState.editableVacancy.copy(
+                    educations = currentState.editableVacancy.educations.map { education ->
                         education.copy(
                             isSelected = education == selectedEducation
                         )
@@ -299,10 +304,10 @@ internal class RealVacancyCreateComponent(
 
     private fun selectWorkExperience(selectedWorkExperience: WorkExperienceUi) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
-                    workExperiences = currentState.newVacancy.workExperiences.map { workExperience ->
+                editableVacancy = currentState.editableVacancy.copy(
+                    workExperiences = currentState.editableVacancy.workExperiences.map { workExperience ->
                         workExperience.copy(
                             isSelected = workExperience == selectedWorkExperience
                         )
@@ -314,15 +319,15 @@ internal class RealVacancyCreateComponent(
 
     private fun selectWorkFormats(selectedWorkFormat: SkillUi) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
-            val isSelected = selectedWorkFormat in currentState.newVacancy.selectedWorkFormats
+            check(currentState is VacancyEditState.Success)
+            val isSelected = selectedWorkFormat in currentState.editableVacancy.selectedWorkFormats
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     selectedWorkFormats = if (isSelected) {
-                        currentState.newVacancy.selectedWorkFormats - selectedWorkFormat
+                        currentState.editableVacancy.selectedWorkFormats - selectedWorkFormat
                     } else {
-                        currentState.newVacancy.selectedWorkFormats + selectedWorkFormat
-                    }
+                        currentState.editableVacancy.selectedWorkFormats + selectedWorkFormat
+                    },
                 )
             )
         }
@@ -330,15 +335,15 @@ internal class RealVacancyCreateComponent(
 
     private fun selectWorkSchedule(selectedWorkSchedule: SkillUi) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
-            val isSelected = selectedWorkSchedule in currentState.newVacancy.selectedWorkSchedules
+            check(currentState is VacancyEditState.Success)
+            val isSelected = selectedWorkSchedule in currentState.editableVacancy.selectedWorkSchedules
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     selectedWorkSchedules = if (isSelected) {
-                        currentState.newVacancy.selectedWorkSchedules - selectedWorkSchedule
+                        currentState.editableVacancy.selectedWorkSchedules - selectedWorkSchedule
                     } else {
-                        currentState.newVacancy.selectedWorkSchedules + selectedWorkSchedule
-                    }
+                        currentState.editableVacancy.selectedWorkSchedules + selectedWorkSchedule
+                    },
                 )
             )
         }
@@ -346,15 +351,15 @@ internal class RealVacancyCreateComponent(
 
     private fun selectEmploymentType(selectedEmploymentType: SkillUi) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
-            val isSelected = selectedEmploymentType in currentState.newVacancy.selectedEmploymentTypes
+            check(currentState is VacancyEditState.Success)
+            val isSelected = selectedEmploymentType in currentState.editableVacancy.selectedEmploymentTypes
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     selectedEmploymentTypes = if (isSelected) {
-                        currentState.newVacancy.selectedEmploymentTypes - selectedEmploymentType
+                        currentState.editableVacancy.selectedEmploymentTypes - selectedEmploymentType
                     } else {
-                        currentState.newVacancy.selectedEmploymentTypes + selectedEmploymentType
-                    }
+                        currentState.editableVacancy.selectedEmploymentTypes + selectedEmploymentType
+                    },
                 )
             )
         }
@@ -362,9 +367,9 @@ internal class RealVacancyCreateComponent(
 
     private fun addKeySkills(skills: List<SkillUi>) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     skills = skills,
                 ),
             )
@@ -373,9 +378,9 @@ internal class RealVacancyCreateComponent(
 
     private fun addAdditionalSkills(skills: List<SkillUi>) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     additionalSkills = skills,
                 ),
             )
@@ -384,9 +389,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeTitle(title: String) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     title = title,
                 ),
             )
@@ -395,9 +400,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeResponsibilities(responsibilities: String) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     responsibilities = responsibilities,
                 ),
             )
@@ -406,9 +411,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeRequirements(requirements: String) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     requirements = requirements,
                 ),
             )
@@ -417,9 +422,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeAddress(address: String) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     address = address,
                 ),
             )
@@ -428,9 +433,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeAdditionalDescription(description: String) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     additionalDescription = description,
                 ),
             )
@@ -439,9 +444,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeEmail(email: String) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     email = email,
                 ),
             )
@@ -450,9 +455,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeSalaryFrom(salaryFrom: Int?) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     salaryFrom = salaryFrom,
                 ),
             )
@@ -461,9 +466,9 @@ internal class RealVacancyCreateComponent(
 
     private fun changeSalaryTo(salaryTo: Int?) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
+                editableVacancy = currentState.editableVacancy.copy(
                     salaryTo = salaryTo,
                 ),
             )
@@ -472,10 +477,10 @@ internal class RealVacancyCreateComponent(
 
     private fun changeVisibility() {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
-                    isVisible = currentState.newVacancy.isVisible.not(),
+                editableVacancy = currentState.editableVacancy.copy(
+                    isVisible = currentState.editableVacancy.isVisible.not(),
                 ),
             )
         }
@@ -483,10 +488,10 @@ internal class RealVacancyCreateComponent(
 
     private fun removeKeySkill(skill: SkillUi) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
-                    skills = currentState.newVacancy.skills - skill,
+                editableVacancy = currentState.editableVacancy.copy(
+                    skills = currentState.editableVacancy.skills - skill,
                 ),
             )
         }
@@ -494,10 +499,10 @@ internal class RealVacancyCreateComponent(
 
     private fun removeAdditionalSkill(skill: SkillUi) {
         state.update { currentState ->
-            check(currentState is VacancyCreateState.Success)
+            check(currentState is VacancyEditState.Success)
             currentState.copy(
-                newVacancy = currentState.newVacancy.copy(
-                    additionalSkills = currentState.newVacancy.additionalSkills - skill,
+                editableVacancy = currentState.editableVacancy.copy(
+                    additionalSkills = currentState.editableVacancy.additionalSkills - skill,
                 ),
             )
         }
@@ -505,10 +510,10 @@ internal class RealVacancyCreateComponent(
 
     private fun showKeySkillsDialog() {
         val currentState = state.value
-        check(currentState is VacancyCreateState.Success)
+        check(currentState is VacancyEditState.Success)
         skillsDialogNavigation.activate(
             configuration = SkillsState(
-                originalSkills = currentState.newVacancy.skills,
+                originalSkills = currentState.editableVacancy.skills,
                 isKeySkills = true,
             ),
         )
@@ -516,35 +521,63 @@ internal class RealVacancyCreateComponent(
 
     private fun showAdditionalSkillsDialog() {
         val currentState = state.value
-        check(currentState is VacancyCreateState.Success)
+        check(currentState is VacancyEditState.Success)
         skillsDialogNavigation.activate(
             configuration = SkillsState(
-                originalSkills = currentState.newVacancy.additionalSkills,
+                originalSkills = currentState.editableVacancy.additionalSkills,
                 isKeySkills = false,
             ),
         )
     }
 
-    private fun createVacancy() {
-        val currentState = state.value
-        check(currentState is VacancyCreateState.Success)
-        state.update { VacancyCreateState.Loading }
+    private fun loadVacancy(
+        vacancyId: String,
+    ) {
+        state.update { VacancyEditState.Loading }
         coroutineScope.launch {
-            createVacancyUseCase(
-                vacancy = currentState.newVacancy.toDomain(),
+            getVacancyDetailUseCase(vacancyId).onSuccess { vacancyDetail ->
+                state.update {
+                    VacancyEditState.Success(
+                        originalVacancy = vacancyDetail.toUi(),
+                    )
+                }
+            }.onFailure { error ->
+                when (error) {
+                    is Result.Error.DefaultError -> {
+                        state.update {
+                            VacancyEditState.Error(
+                                message = error.toString(),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun editVacancy(
+        vacancyId: String,
+    ) {
+        val currentState = state.value
+        check(currentState is VacancyEditState.Success)
+        state.update { VacancyEditState.Loading }
+        coroutineScope.launch {
+            editVacancyUseCase(
+                id = vacancyId,
+                vacancy = currentState.editableVacancy.toDomain(),
             ).onSuccess {
                 _action.send(
-                    VacancyCreateAction.ShowSnackbar(
-                        message = getString(Res.string.vacancy_created_successfully),
+                    VacancyEditAction.ShowSnackbar(
+                        message = getString(Res.string.vacancy_edited_successfully),
                     )
                 )
-                onVacancyCreateClick()
+                onVacancyEdited()
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {
                     is Result.Error.DefaultError -> {
                         _action.send(
-                            VacancyCreateAction.ShowSnackbar(
+                            VacancyEditAction.ShowSnackbar(
                                 message = error.toString(),
                             )
                         )

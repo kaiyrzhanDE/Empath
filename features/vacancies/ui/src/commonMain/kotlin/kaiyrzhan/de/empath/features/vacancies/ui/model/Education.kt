@@ -22,6 +22,17 @@ internal enum class Education(val value: String, val res: StringResource) {
                 .map { education -> EducationUi(type = education) }
         }
 
+        fun getEducations(selectedEducation: Education): List<EducationUi> {
+            return entries
+                .filter { it != UNKNOWN }
+                .map { education ->
+                    EducationUi(
+                        type = education,
+                        isSelected = education == selectedEducation,
+                    )
+                }
+        }
+
     }
 }
 

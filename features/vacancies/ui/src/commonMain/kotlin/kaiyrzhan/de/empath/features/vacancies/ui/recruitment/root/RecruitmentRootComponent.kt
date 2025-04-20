@@ -7,6 +7,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetail
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.VacancyFiltersComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.VacancyCreateComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.VacanciesComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.VacancyEditComponent
 
 public interface RecruitmentRootComponent: BackHandlerOwner {
     public val stack: Value<ChildStack<*, Child>>
@@ -18,5 +19,6 @@ public interface RecruitmentRootComponent: BackHandlerOwner {
         internal class VacancyDetail(val component: VacancyDetailComponent) : Child()
         internal class VacancyFilters(val component: VacancyFiltersComponent) : Child()
         internal class VacancyCreate(val component: VacancyCreateComponent) : Child()
+        internal class VacancyEdit(val component: VacancyEditComponent) : Child()
     }
 }

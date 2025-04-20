@@ -215,4 +215,9 @@
     <string name="clear">Clear</string>
     <string name="include_words">Include words (separated by commas)</string>
     <string name="exclude_words">Exclude words (separated by commas)</string>
+    <string name="abort_vacancy_edit_title">Abort editing vacancy</string>
+    <string name="abort_vacancy_edit_description">Are you sure you want to discard this vacancy? All unsaved changes will be lost.</string>
+    <string name="vacancy_edited_successfully">Vacancy edited successfully</string>
+    <string name="edit_vacancy">Edit vacancy</string>
+
 </resources>

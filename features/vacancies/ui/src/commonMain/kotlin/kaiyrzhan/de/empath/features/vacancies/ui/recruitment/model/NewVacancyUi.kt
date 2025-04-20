@@ -21,9 +21,9 @@ internal data class NewVacancyUi(
     val email: String,
     val additionalDescription: String,
     val isVisible: Boolean,
-    val employmentTypes: List<SkillUi>,
-    val workSchedules: List<SkillUi>,
-    val workFormats: List<SkillUi>,
+    val selectedEmploymentTypes: List<SkillUi>,
+    val selectedWorkSchedules: List<SkillUi>,
+    val selectedWorkFormats: List<SkillUi>,
     val educations: List<EducationUi>,
     val workExperiences: List<WorkExperienceUi>,
     val skills: List<SkillUi>,
@@ -37,9 +37,9 @@ internal data class NewVacancyUi(
                 responsibilities.isNotBlank() ||
                 requirements.isNotBlank() ||
                 email.isNotBlank() ||
-                employmentTypes.isChanged() ||
-                workSchedules.isChanged() ||
-                workFormats.isChanged() ||
+                selectedEmploymentTypes.isChanged() ||
+                selectedWorkSchedules.isChanged() ||
+                selectedWorkFormats.isChanged() ||
                 educations.isChanged() ||
                 workExperiences.isChanged() ||
                 additionalDescription.isNotBlank() ||
@@ -53,9 +53,9 @@ internal data class NewVacancyUi(
                 responsibilities.isNotBlank() &&
                 requirements.isNotBlank() &&
                 email.isNotBlank() &&
-                employmentTypes.isChanged() &&
-                workSchedules.isChanged() &&
-                workFormats.isChanged() &&
+                selectedEmploymentTypes.isChanged() &&
+                selectedWorkSchedules.isChanged() &&
+                selectedWorkFormats.isChanged() &&
                 educations.isChanged() &&
                 workExperiences.isChanged() &&
                 skills.isChanged()
@@ -72,9 +72,9 @@ internal data class NewVacancyUi(
                 requirements = "",
                 email = "",
                 isVisible = true,
-                employmentTypes = emptyList(),
-                workSchedules = emptyList(),
-                workFormats = emptyList(),
+                selectedEmploymentTypes = emptyList(),
+                selectedWorkSchedules = emptyList(),
+                selectedWorkFormats = emptyList(),
                 educations = Education.getEducations(),
                 workExperiences = WorkExperience.getWorkExperiences(),
                 skills = emptyList(),
@@ -97,15 +97,9 @@ internal fun NewVacancyUi.toDomain(): NewVacancy {
         responsibilities = responsibilities,
         requirements = requirements,
         workExperienceType = workExperiences.getSelected(),
-        workSchedulesIds = workSchedules
-            .filter { it.isSelected }
-            .mapNotNull { it.id },
-        employmentTypesIds = employmentTypes
-            .filter { it.isSelected }
-            .mapNotNull { it.id },
-        workFormatsIds = workFormats
-            .filter { it.isSelected }
-            .mapNotNull { it.id },
+        workSchedulesIds = selectedWorkSchedules.mapNotNull { it.id },
+        employmentTypesIds = selectedEmploymentTypes.mapNotNull { it.id },
+        workFormatsIds = selectedWorkFormats.mapNotNull { it.id },
         skills = skills.map { skill -> skill.toDomain() },
         educationType = educations.getSelected(),
         additionalDescription = additionalDescription,

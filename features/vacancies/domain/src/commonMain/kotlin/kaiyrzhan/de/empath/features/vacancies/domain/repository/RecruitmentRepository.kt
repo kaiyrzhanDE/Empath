@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import kaiyrzhan.de.empath.core.utils.pagination.ListResult
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Author
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.EditedVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
@@ -37,7 +38,7 @@ public interface RecruitmentRepository {
 
     public suspend fun editVacancy(
         id: String,
-        vacancy: NewVacancy,
+        vacancy: EditedVacancy,
     ): RequestResult<Any>
 
     public suspend fun getResponses(

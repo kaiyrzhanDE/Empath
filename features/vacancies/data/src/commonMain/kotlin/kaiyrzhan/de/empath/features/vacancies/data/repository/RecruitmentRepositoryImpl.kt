@@ -14,6 +14,7 @@ import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.Resp
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.VacanciesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
 import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Author
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.EditedVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
@@ -84,7 +85,7 @@ internal class RecruitmentRepositoryImpl(
 
     override suspend fun editVacancy(
         id: String,
-        vacancy: NewVacancy
+        vacancy: EditedVacancy
     ): RequestResult<Any> {
         return api.editVacancy(
             id = id,

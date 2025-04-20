@@ -1,20 +1,21 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit
 
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateAction
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateState
+import kaiyrzhan.de.empath.features.vacancies.ui.model.SkillUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialogComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditAction
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyFilterState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-internal interface VacancyCreateComponent: BackHandlerOwner {
+internal interface VacancyEditComponent: BackHandlerOwner {
 
-    val state: StateFlow<VacancyCreateState>
+    val state: StateFlow<VacancyEditState>
 
     val workFormatsState: StateFlow<VacancyFilterState>
 
@@ -22,12 +23,12 @@ internal interface VacancyCreateComponent: BackHandlerOwner {
 
     val employmentTypesState: StateFlow<VacancyFilterState>
 
-    val action: Flow<VacancyCreateAction>
+    val action: Flow<VacancyEditAction>
 
     val messageDialog: Value<ChildSlot<*, MessageDialogComponent>>
 
     val skillsDialog: Value<ChildSlot<*, SkillsDialogComponent>>
 
-    fun onEvent(event: VacancyCreateEvent)
+    fun onEvent(event: VacancyEditEvent)
 
 }

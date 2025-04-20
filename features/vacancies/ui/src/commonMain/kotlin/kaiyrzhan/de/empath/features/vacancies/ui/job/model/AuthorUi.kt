@@ -17,3 +17,11 @@ internal fun Author.toUi(): AuthorUi {
         email = email,
     )
 }
+
+internal fun AuthorUi.toDomain(): Author {
+    return Author(
+        companyName = companyName,
+        companyDescription = companyDescription,
+        email = email,
+    )
+}

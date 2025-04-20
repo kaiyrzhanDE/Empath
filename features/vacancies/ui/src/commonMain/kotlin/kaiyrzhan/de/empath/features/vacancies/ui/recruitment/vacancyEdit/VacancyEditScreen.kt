@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate
+package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -27,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,28 +58,26 @@ import kaiyrzhan.de.empath.features.vacancies.ui.model.EducationUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SkillUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.WorkExperienceUi
 import kaiyrzhan.de.empath.features.vacancies.ui.components.FiltersCard
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.components.TopBar
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateAction
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.model.VacancyCreateState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.skills.SkillsDialog
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.components.FiltersCard
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.components.TopBar
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditAction
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyEditState
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.model.VacancyFilterState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun VacancyCreateScreen(
+internal fun VacancyEditScreen(
     modifier: Modifier = Modifier,
-    component: VacancyCreateComponent,
+    component: VacancyEditComponent,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = LocalSnackbarHostState.current
 
     val state = component.state.collectAsState()
-
     val workSchedulesState = component.workSchedulesState.collectAsState()
     val workFormatsState = component.workFormatsState.collectAsState()
     val employmentTypesState = component.employmentTypesState.collectAsState()
@@ -99,7 +98,7 @@ internal fun VacancyCreateScreen(
 
     SingleEventEffect(component.action) { action ->
         when (action) {
-            is VacancyCreateAction.ShowSnackbar -> {
+            is VacancyEditAction.ShowSnackbar -> {
                 coroutineScope.launch {
                     snackbarHostState.showSnackbar(action.message)
                 }
@@ -107,7 +106,7 @@ internal fun VacancyCreateScreen(
         }
     }
 
-    VacancyCreateScreen(
+    VacancyEditScreen(
         modifier = modifier,
         state = state.value,
         workFormatsState = workFormatsState.value,
@@ -120,13 +119,13 @@ internal fun VacancyCreateScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun VacancyCreateScreen(
+private fun VacancyEditScreen(
     modifier: Modifier = Modifier,
-    state: VacancyCreateState,
+    state: VacancyEditState,
     employmentTypesState: VacancyFilterState,
     workSchedulesState: VacancyFilterState,
     workFormatsState: VacancyFilterState,
-    onEvent: (VacancyCreateEvent) -> Unit,
+    onEvent: (VacancyEditEvent) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -142,7 +141,7 @@ private fun VacancyCreateScreen(
     ) { contentPadding ->
 
         when (state) {
-            is VacancyCreateState.Success -> {
+            is VacancyEditState.Success -> {
                 Column(
                     modifier = Modifier
                         .padding(contentPadding)
@@ -155,9 +154,9 @@ private fun VacancyCreateScreen(
 
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = state.newVacancy.title,
+                        value = state.editableVacancy.title,
                         shape = EmpathTheme.shapes.small,
-                        onValueChange = { title -> onEvent(VacancyCreateEvent.TitleChange(title)) },
+                        onValueChange = { title -> onEvent(VacancyEditEvent.TitleChange(title)) },
                         textStyle = EmpathTheme.typography.bodyLarge,
                         maxLines = 2,
                         label = {
@@ -189,11 +188,11 @@ private fun VacancyCreateScreen(
                         ) {
                             OutlinedTextField(
                                 modifier = Modifier.weight(1f),
-                                value = state.newVacancy.salaryFrom?.toString().orEmpty(),
+                                value = state.editableVacancy.salaryFrom?.toString().orEmpty(),
                                 shape = EmpathTheme.shapes.small,
                                 onValueChange = { from ->
                                     onEvent(
-                                        VacancyCreateEvent.SalaryFromChange(
+                                        VacancyEditEvent.SalaryFromChange(
                                             from.toIntLimited()
                                         )
                                     )
@@ -217,11 +216,11 @@ private fun VacancyCreateScreen(
 
                             OutlinedTextField(
                                 modifier = Modifier.weight(1f),
-                                value = state.newVacancy.salaryTo?.toString().orEmpty(),
+                                value = state.editableVacancy.salaryTo?.toString().orEmpty(),
                                 shape = EmpathTheme.shapes.small,
                                 onValueChange = { to ->
                                     onEvent(
-                                        VacancyCreateEvent.SalaryToChange(
+                                        VacancyEditEvent.SalaryToChange(
                                             to.toIntLimited()
                                         )
                                     )
@@ -241,11 +240,11 @@ private fun VacancyCreateScreen(
 
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = state.newVacancy.address,
+                        value = state.editableVacancy.address,
                         shape = EmpathTheme.shapes.small,
                         onValueChange = { address ->
                             onEvent(
-                                VacancyCreateEvent.AddressChange(
+                                VacancyEditEvent.AddressChange(
                                     address
                                 )
                             )
@@ -277,14 +276,14 @@ private fun VacancyCreateScreen(
 
                     FiltersCard<WorkExperienceUi>(
                         modifier = Modifier.fillMaxWidth(),
-                        filters = state.newVacancy.workExperiences,
+                        filters = state.editableVacancy.workExperiences,
                         title = buildAnnotatedString {
                             append(stringResource(Res.string.select_work_experiences))
                             appendRequiredMarker()
                         },
                         leadingPainter = painterResource(Res.drawable.ic_work_history),
                         onSelect = { workExperience ->
-                            onEvent(VacancyCreateEvent.WorkExperienceSelect(workExperience))
+                            onEvent(VacancyEditEvent.WorkExperienceSelect(workExperience))
                         },
                         anySelected = { workExperiences -> workExperiences.any { it.isSelected } },
                         label = { workExperience -> stringResource(workExperience.type.res) },
@@ -300,11 +299,11 @@ private fun VacancyCreateScreen(
                         },
                         leadingPainter = painterResource(Res.drawable.ic_schedule),
                         onSelect = { employmentType ->
-                            onEvent(VacancyCreateEvent.EmploymentTypeSelect(employmentType))
+                            onEvent(VacancyEditEvent.EmploymentTypeSelect(employmentType))
                         },
-                        isSelected = { employmentType -> employmentType in state.newVacancy.selectedEmploymentTypes },
+                        isSelected = { employmentType -> employmentType in state.editableVacancy.selectedEmploymentTypes },
                         onReload = {
-                            onEvent(VacancyCreateEvent.LoadEmploymentTypes)
+                            onEvent(VacancyEditEvent.LoadEmploymentTypes)
                         }
                     )
 
@@ -317,11 +316,11 @@ private fun VacancyCreateScreen(
                         },
                         leadingPainter = painterResource(Res.drawable.ic_domain),
                         onSelect = { workFormat ->
-                            onEvent(VacancyCreateEvent.WorkFormatSelect(workFormat))
+                            onEvent(VacancyEditEvent.WorkFormatSelect(workFormat))
                         },
-                        isSelected = { workFormats -> workFormats in state.newVacancy.selectedWorkFormats },
+                        isSelected = { workFormats -> workFormats in state.editableVacancy.selectedWorkFormats },
                         onReload = {
-                            onEvent(VacancyCreateEvent.LoadWorkFormats)
+                            onEvent(VacancyEditEvent.LoadWorkFormats)
                         }
                     )
 
@@ -334,16 +333,17 @@ private fun VacancyCreateScreen(
                         },
                         leadingPainter = painterResource(Res.drawable.ic_calendar_today),
                         onSelect = { workSchedule ->
-                            onEvent(VacancyCreateEvent.WorkScheduleSelect(workSchedule))
+                            onEvent(VacancyEditEvent.WorkScheduleSelect(workSchedule))
                         },
-                        isSelected = { workSchedule -> workSchedule in state.newVacancy.selectedWorkSchedules },
+                        isSelected = { workSchedule -> workSchedule in state.editableVacancy.selectedWorkSchedules },
                         onReload = {
-                            onEvent(VacancyCreateEvent.LoadWorkSchedules)
+                            onEvent(VacancyEditEvent.LoadWorkSchedules)
                         },
                     )
+
                     FiltersCard<EducationUi>(
                         modifier = Modifier.fillMaxWidth(),
-                        filters = state.newVacancy.educations,
+                        filters = state.editableVacancy.educations,
                         title = buildAnnotatedString {
                             append(stringResource(Res.string.select_education))
                             appendRequiredMarker()
@@ -351,11 +351,12 @@ private fun VacancyCreateScreen(
                         leadingPainter = painterResource(Res.drawable.ic_school),
                         anySelected = { education -> education.any { it.isSelected } },
                         onSelect = { education ->
-                            onEvent(VacancyCreateEvent.EducationSelect(education))
+                            onEvent(VacancyEditEvent.EducationSelect(education))
                         },
                         label = { education -> stringResource(education.type.res) },
                         isSelected = { education -> education.isSelected }
                     )
+
                     HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -367,14 +368,14 @@ private fun VacancyCreateScreen(
                     ) {
                         Text(
                             modifier = Modifier.padding(16.dp),
-                            text = state.author.companyName,
+                            text = state.editableVacancy.author.companyName,
                             style = EmpathTheme.typography.headlineLarge,
                         )
                     }
 
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = state.author.companyDescription,
+                        text = state.editableVacancy.author.companyDescription,
                         style = EmpathTheme.typography.titleSmall,
                     )
 
@@ -382,11 +383,11 @@ private fun VacancyCreateScreen(
 
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = state.newVacancy.responsibilities,
+                        value = state.editableVacancy.responsibilities,
                         shape = EmpathTheme.shapes.small,
                         onValueChange = { responsibilities ->
                             onEvent(
-                                VacancyCreateEvent.ResponsibilitiesChange(responsibilities)
+                                VacancyEditEvent.ResponsibilitiesChange(responsibilities)
                             )
                         },
                         textStyle = EmpathTheme.typography.bodyLarge,
@@ -404,11 +405,11 @@ private fun VacancyCreateScreen(
 
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = state.newVacancy.requirements,
+                        value = state.editableVacancy.requirements,
                         shape = EmpathTheme.shapes.small,
                         onValueChange = { requirements ->
                             onEvent(
-                                VacancyCreateEvent.RequirementsChange(requirements)
+                                VacancyEditEvent.RequirementsChange(requirements)
                             )
                         },
                         textStyle = EmpathTheme.typography.bodyLarge,
@@ -430,24 +431,22 @@ private fun VacancyCreateScreen(
                             append(stringResource(Res.string.selected_key_skills))
                             appendRequiredMarker()
                         },
-                        skills = state.newVacancy.skills,
-                        onAddSkillClick = { onEvent(VacancyCreateEvent.AddKeySkillsClick) },
+                        skills = state.editableVacancy.skills,
+                        onAddSkillClick = { onEvent(VacancyEditEvent.KeySkillsAddClick) },
                         onSkillRemoveClick = { skill ->
                             onEvent(
-                                VacancyCreateEvent.RemoveKeySkill(
-                                    skill
-                                )
+                                VacancyEditEvent.KeySkillRemove(skill)
                             )
                         },
                     )
 
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = state.newVacancy.additionalDescription,
+                        value = state.editableVacancy.additionalDescription,
                         shape = EmpathTheme.shapes.small,
                         onValueChange = { description ->
                             onEvent(
-                                VacancyCreateEvent.AdditionalDescriptionChange(description)
+                                VacancyEditEvent.AdditionalDescriptionChange(description)
                             )
                         },
                         textStyle = EmpathTheme.typography.bodyLarge,
@@ -465,22 +464,18 @@ private fun VacancyCreateScreen(
                         title = buildAnnotatedString {
                             append(stringResource(Res.string.selected_additional_skills))
                         },
-                        skills = state.newVacancy.additionalSkills,
-                        onAddSkillClick = { onEvent(VacancyCreateEvent.AddAdditionalSkillsClick) },
+                        skills = state.editableVacancy.additionalSkills,
+                        onAddSkillClick = { onEvent(VacancyEditEvent.AdditionalSkillsAddClick) },
                         onSkillRemoveClick = { skill ->
-                            onEvent(
-                                VacancyCreateEvent.RemoveAdditionalSkill(
-                                    skill
-                                )
-                            )
+                            onEvent(VacancyEditEvent.AdditionalSkillRemove(skill))
                         },
                     )
 
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = state.newVacancy.email,
+                        value = state.editableVacancy.email,
                         shape = EmpathTheme.shapes.small,
-                        onValueChange = { email -> onEvent(VacancyCreateEvent.EmailChange(email)) },
+                        onValueChange = { email -> onEvent(VacancyEditEvent.EmailChange(email)) },
                         textStyle = EmpathTheme.typography.bodyLarge,
                         maxLines = 2,
                         label = {
@@ -508,16 +503,16 @@ private fun VacancyCreateScreen(
 
                     Button(
                         modifier = Modifier.align(Alignment.End),
-                        onClick = { onEvent(VacancyCreateEvent.CreateVacancyClick) },
+                        onClick = { onEvent(VacancyEditEvent.VacancyEditClick) },
                         shape = EmpathTheme.shapes.small,
-                        enabled = state.newVacancy.isFilled(),
+                        enabled = state.editableVacancy != state.originalVacancy,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = EmpathTheme.colors.primary,
                             contentColor = EmpathTheme.colors.onPrimary,
                         ),
                     ) {
                         Text(
-                            text = stringResource(Res.string.create_vacancy),
+                            text = stringResource(Res.string.edit_vacancy),
                             style = EmpathTheme.typography.labelLarge,
                         )
                     }
@@ -526,20 +521,23 @@ private fun VacancyCreateScreen(
                 }
             }
 
-            is VacancyCreateState.Loading -> {
+            is VacancyEditState.Loading -> {
                 CircularLoadingScreen(
                     modifier = Modifier.fillMaxSize(),
                 )
             }
 
-            is VacancyCreateState.Error -> {
+            is VacancyEditState.Error -> {
                 ErrorScreen(
                     modifier = Modifier.fillMaxSize(),
                     message = state.message,
+                    onTryAgainClick = {
+                        onEvent(VacancyEditEvent.LoadVacancy)
+                    },
                 )
             }
 
-            is VacancyCreateState.Initial -> Unit
+            is VacancyEditState.Initial -> Unit
         }
     }
 }

@@ -24,6 +24,17 @@ internal enum class WorkExperience(val value: String, val res: StringResource) {
                     WorkExperienceUi(type = workExperience)
                 }
         }
+
+        fun getWorkExperiences(selectedWorkExperience: WorkExperience): List<WorkExperienceUi> {
+            return entries
+                .filter { workExperience -> workExperience != UNKNOWN }
+                .map { workExperience ->
+                    WorkExperienceUi(
+                        type = workExperience,
+                        isSelected = workExperience == selectedWorkExperience,
+                    )
+                }
+        }
     }
 }
 
