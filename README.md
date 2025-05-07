@@ -168,5 +168,6 @@ Backend of the project: [Repo](https://github.com/nurislam-td/empath)
 ## Author
 **Dias Kaiyrzhan**  
 Android Developer
+
 **Nurislam Tasbolatov**
 Backend Developer
