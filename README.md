@@ -1,6 +1,8 @@
 # Empath
 
-**Empath** is a cross-platform application for job search, resume building, article publishing, and interview preparation — built entirely with Kotlin Multiplatform (KMP). The project is in active development and serves as both a real-world product prototype and an architectural playground.
+**Empath** is a multiplatform application for job search, resume building, article publishing, and interview preparation — built entirely with Kotlin Multiplatform (KMP). The project is in active development and serves as both a real-world product prototype and an architectural playground.
+
+Backend of the project: [Repo](https://github.com/nurislam-td/empath)
 
 ---
 
@@ -165,5 +167,6 @@
 
 ## Author
 **Dias Kaiyrzhan**  
-Android Developer | Kotlin Multiplatform Enthusiast  
-
+Android Developer
+**Nurislam Tasbolatov**
+Backend Developer
