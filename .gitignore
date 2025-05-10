@@ -24,3 +24,5 @@ build/
 .idea/
 !.idea/icon.svg
 *.iml
+/core/utils/src/commonMain/kotlin/kaiyrzhan/de/empath/core/utils/result/BaseUrl.kt
+/empath-app/src/androidMain/res/xml/network_security_config.xml
