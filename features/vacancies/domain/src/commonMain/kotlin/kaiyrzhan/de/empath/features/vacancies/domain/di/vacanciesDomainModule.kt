@@ -5,8 +5,11 @@ package kaiyrzhan.de.empath.features.vacancies.domain.di
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.EmploymentRepository
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.JobRepository
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepository
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.CreateCvUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetCvsUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.ResponseToVacancyUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.UpdateCvUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetCvUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetEmploymentTypesUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetSkillsUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.job.GetVacancyDetailUseCase
@@ -106,6 +109,21 @@ public val vacanciesDomainModule: Module = module {
     }
     factory {
         GetCvsUseCase(
+            repository = get<EmploymentRepository>(),
+        )
+    }
+    factory {
+        GetCvUseCase(
+            repository = get<JobRepository>(),
+        )
+    }
+    factory {
+        CreateCvUseCase(
+            repository = get<EmploymentRepository>(),
+        )
+    }
+    factory {
+        UpdateCvUseCase(
             repository = get<EmploymentRepository>(),
         )
     }

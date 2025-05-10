@@ -8,7 +8,7 @@ public class Cv(
     public val author: Author,
     public val title: String,
     public val salary: Salary,
-    public val cvFileUrl: String?,
+    public val cvUrl: String,
     public val aboutMe: String,
     public val skills: List<String>,
     public val additionalSkills: List<String>,

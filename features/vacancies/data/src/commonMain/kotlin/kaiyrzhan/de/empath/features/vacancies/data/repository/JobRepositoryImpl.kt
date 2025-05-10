@@ -11,6 +11,7 @@ import kaiyrzhan.de.empath.features.vacancies.data.model.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.job.SkillsPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.JobApi
 import kaiyrzhan.de.empath.features.vacancies.domain.model.Skill
+import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Cv
 import kaiyrzhan.de.empath.features.vacancies.domain.model.job.VacancyDetail
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.JobRepository
 import kotlinx.coroutines.flow.Flow
@@ -60,6 +61,13 @@ internal class JobRepositoryImpl(
         return api.getWorkSchedules()
             .toDomain { skills ->
                 skills.map { skill -> skill.toDomain() }
+            }
+    }
+
+    override suspend fun getCv(cvId: String): RequestResult<Cv> {
+        return api.getCv(cvId = cvId)
+            .toDomain { cv ->
+                cv.toDomain()
             }
     }
 }

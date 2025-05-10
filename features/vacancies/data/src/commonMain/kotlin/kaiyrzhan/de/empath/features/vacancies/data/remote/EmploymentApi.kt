@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.vacancies.data.remote
 
 import de.jensklingenberg.ktorfit.http.Body
 import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.PATCH
 import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
@@ -9,6 +10,7 @@ import kaiyrzhan.de.empath.core.network.utils.ApiVersion
 import kaiyrzhan.de.empath.core.utils.pagination.ListResultDTO
 import kaiyrzhan.de.empath.core.utils.pagination.PaginationUtils
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
+import kaiyrzhan.de.empath.features.vacancies.data.model.employment.CreateCvRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.CvDTO
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.ResponseToVacancyRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.VacancyDTO
@@ -59,4 +61,16 @@ internal interface EmploymentApi {
         @Body request: ResponseToVacancyRequest,
     ): RequestResult<Any>
 
+    @POST("api/{version}/job/employment/cv")
+    suspend fun createCv(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Body body: CreateCvRequest,
+    ): RequestResult<Any>
+
+    @PATCH("api/{version}/job/employment/cv/{cv_id}")
+    suspend fun updateCv(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("cv_id") cvId: String,
+        @Body body: CreateCvRequest,
+    ): RequestResult<Any>
 }

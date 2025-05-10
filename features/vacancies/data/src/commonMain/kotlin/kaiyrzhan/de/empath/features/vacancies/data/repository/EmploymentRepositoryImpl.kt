@@ -9,11 +9,13 @@ import kaiyrzhan.de.empath.core.utils.pagination.map
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.ResponseToVacancyRequest
+import kaiyrzhan.de.empath.features.vacancies.data.model.employment.toData
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.employment.ResponsesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.employment.VacanciesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.EmploymentApi
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Cv
+import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.NewCv
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Vacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.EmploymentRepository
 import kotlinx.coroutines.flow.Flow
@@ -103,5 +105,21 @@ internal class EmploymentRepositoryImpl(
             .toDomain { cvs ->
                 cvs.map { cv -> cv.toDomain() }
             }
+    }
+
+    override suspend fun createCv(cv: NewCv): RequestResult<Any> {
+        return api.createCv(
+            body = cv.toData(),
+        )
+    }
+
+    override suspend fun updateCv(
+        cvId: String,
+        cv: NewCv,
+    ): RequestResult<Any> {
+        return api.updateCv(
+            cvId = cvId,
+            body = cv.toData(),
+        )
     }
 }

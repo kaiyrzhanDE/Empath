@@ -9,6 +9,7 @@ import kaiyrzhan.de.empath.core.network.utils.ApiVersion
 import kaiyrzhan.de.empath.core.utils.pagination.ListResultDTO
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.data.model.SkillDTO
+import kaiyrzhan.de.empath.features.vacancies.data.model.job.CvDTO
 import kaiyrzhan.de.empath.features.vacancies.data.model.job.VacancyDetailDTO
 
 internal interface JobApi {
@@ -42,4 +43,9 @@ internal interface JobApi {
         @Query("per_page") pageLimit: Int
     ): RequestResult<ListResultDTO<SkillDTO>>
 
+    @GET("api/{version}/job/cv/{cv_id}")
+    suspend fun getCv(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("cv_id") cvId: String,
+    ): RequestResult<CvDTO>
 }

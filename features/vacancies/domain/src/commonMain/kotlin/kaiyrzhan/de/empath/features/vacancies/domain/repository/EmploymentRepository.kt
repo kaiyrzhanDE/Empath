@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import kaiyrzhan.de.empath.core.utils.pagination.ListResult
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Cv
+import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.NewCv
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Vacancy
 import kotlinx.coroutines.flow.Flow
 
@@ -37,5 +38,14 @@ public interface EmploymentRepository {
     ): RequestResult<Any>
 
     public suspend fun getCvs(): RequestResult<ListResult<Cv>>
+
+    public suspend fun createCv(
+        cv: NewCv,
+    ): RequestResult<Any>
+
+    public suspend fun updateCv(
+        cvId: String,
+        cv: NewCv,
+    ): RequestResult<Any>
 
 }

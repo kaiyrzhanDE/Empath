@@ -1,6 +1,5 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.employment.model
 
-import kaiyrzhan.de.empath.features.vacancies.domain.model.Salary
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Cv
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SalaryUi
@@ -17,7 +16,7 @@ internal data class CvUi(
     val author: AuthorUi,
     val title: String,
     val salary: SalaryUi,
-    val cvFileUrl: String?,
+    val cvUrl: String,
     val aboutMe: String,
     val skills: List<String>,
     val additionalSkills: List<String>,
@@ -38,7 +37,7 @@ internal data class CvUi(
                     to = Random.nextInt(100000, 150000),
                     from = Random.nextInt(100000, 150000),
                 ),
-                cvFileUrl = null,
+                cvUrl = "",
                 aboutMe = "Passionate Android developer with solid experience in building modern, scalable mobile applications using Kotlin, Jetpack Compose, and clean architecture principles. Always eager to learn new technologies and deliver high-quality user experiences.",
                 skills = listOf(
                     "Kotlin",
@@ -77,7 +76,7 @@ internal fun Cv.toUi(): CvUi {
         author = author.toUi(),
         title = title,
         salary = salary.toUi(),
-        cvFileUrl = cvFileUrl,
+        cvUrl = cvUrl,
         aboutMe = aboutMe,
         skills = skills,
         additionalSkills = additionalSkills,
