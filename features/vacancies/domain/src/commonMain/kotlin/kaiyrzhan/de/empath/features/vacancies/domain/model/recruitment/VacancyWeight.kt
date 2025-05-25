@@ -1,7 +1,7 @@
 package kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment
 
-class VacancyWeight(
-    val weight: Double,
-    val name: String,
-    val id: String,
+public class VacancyWeight(
+    public val weight: Double,
+    public val name: String,
+    public val id: String,
 )
