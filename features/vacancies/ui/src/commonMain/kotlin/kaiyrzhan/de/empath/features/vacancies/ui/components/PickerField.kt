@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.component
+package kaiyrzhan.de.empath.features.vacancies.ui.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke

@@ -11,13 +11,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.create_cv
-import empath.core.uikit.generated.resources.ic_arrow_back
-import empath.core.uikit.generated.resources.ic_arrow_back_description
-import empath.core.uikit.generated.resources.vacancy_detail
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.model.CvCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

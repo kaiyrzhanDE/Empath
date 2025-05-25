@@ -56,7 +56,7 @@ import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.core.utils.logger.ifNull
 import kaiyrzhan.de.empath.core.utils.toIntLimited
 import kaiyrzhan.de.empath.features.vacancies.ui.components.FiltersCard
-import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.component.CvPickerField
+import kaiyrzhan.de.empath.features.vacancies.ui.components.CvPickerField
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.component.TopBar
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.component.WorkExperienceCard
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.model.CvEditAction

@@ -28,6 +28,7 @@ import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.modifiers.noRippleClickable
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.dateFormat
+import kaiyrzhan.de.empath.features.vacancies.ui.components.DatePickerField
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.model.CvCreateEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.WorkExperienceUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent

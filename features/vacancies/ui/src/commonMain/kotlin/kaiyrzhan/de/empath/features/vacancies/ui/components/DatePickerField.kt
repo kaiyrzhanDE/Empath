@@ -1,13 +1,11 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.component
+package kaiyrzhan.de.empath.features.vacancies.ui.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import empath.core.uikit.generated.resources.*
 import empath.core.uikit.generated.resources.Res
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
