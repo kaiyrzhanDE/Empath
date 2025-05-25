@@ -22,6 +22,15 @@ import io.github.vinceglb.filekit.name
 import kaiyrzhan.de.empath.core.ui.image.createAuthorizedImageLoader
 import kaiyrzhan.de.empath.core.utils.files.dialogSettings
 
+public enum class FileExtensions(public val type: String) {
+    PDF("pdf"),
+    DOCX("docx"),
+}
+
+internal fun List<FileExtensions>.getTypes(): List<String> {
+    return this.map { it.type }
+}
+
 @Composable
 public fun rememberImagesPicker(
     title: String,
@@ -57,12 +66,14 @@ public fun rememberImagePicker(
 @Composable
 public fun rememberFilesPicker(
     title: String,
-    type: FileKitType = FileKitType.File(),
+    extensions: List<FileExtensions>,
     maxItems: Int,
     onResult: (List<PlatformFile>) -> Unit,
 ): PickerResultLauncher {
     return rememberFilePickerLauncher(
-        type = type,
+        type = FileKitType.File(
+            extensions = extensions.getTypes(),
+        ),
         mode = FileKitMode.Multiple(maxItems = maxItems),
         title = title,
         dialogSettings = dialogSettings,
@@ -75,11 +86,13 @@ public fun rememberFilesPicker(
 @Composable
 public fun rememberFilePicker(
     title: String,
-    type: FileKitType = FileKitType.File(),
+    extensions: List<FileExtensions>,
     onResult: (PlatformFile) -> Unit,
 ): PickerResultLauncher {
     return rememberFilePickerLauncher(
-        type = type,
+        type = FileKitType.File(
+            extensions = extensions.getTypes(),
+        ),
         mode = FileKitMode.Single,
         title = title,
         dialogSettings = dialogSettings,

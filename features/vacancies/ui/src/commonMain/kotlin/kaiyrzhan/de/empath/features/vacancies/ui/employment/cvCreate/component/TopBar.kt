@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.components
+package kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -11,20 +11,21 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import empath.core.uikit.generated.resources.Res
+import empath.core.uikit.generated.resources.create_cv
 import empath.core.uikit.generated.resources.ic_arrow_back
 import empath.core.uikit.generated.resources.ic_arrow_back_description
 import empath.core.uikit.generated.resources.vacancy_detail
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.model.CvCreateEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TopBar(
     modifier: Modifier = Modifier,
-    onEvent: (VacancyDetailEvent) -> Unit,
+    onEvent: (CvCreateEvent) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -32,13 +33,13 @@ internal fun TopBar(
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    text = stringResource(Res.string.vacancy_detail),
+                    text = stringResource(Res.string.create_cv),
                     style = EmpathTheme.typography.titleMedium,
                 )
             },
             navigationIcon = {
                 IconButton(
-                    onClick = { onEvent(VacancyDetailEvent.BackClick) },
+                    onClick = { onEvent(CvCreateEvent.BackClick) },
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow_back),

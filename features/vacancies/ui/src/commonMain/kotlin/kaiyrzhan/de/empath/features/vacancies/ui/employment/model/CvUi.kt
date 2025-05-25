@@ -22,49 +22,6 @@ internal data class CvUi(
     val additionalSkills: List<String>,
     val isSelected: Boolean = false,
 ) {
-    companion object {
-        @OptIn(ExperimentalUuidApi::class)
-        fun sample(
-            isSelected: Boolean = false,
-        ): CvUi {
-            return CvUi(
-                id = Uuid.random().toString(),
-                author = AuthorUi(
-                    name = "Sansyzbaev Dias Ermekuly"
-                ),
-                title = "Senior Android Developer",
-                salary = SalaryUi(
-                    to = Random.nextInt(100000, 150000),
-                    from = Random.nextInt(100000, 150000),
-                ),
-                cvUrl = "",
-                aboutMe = "Passionate Android developer with solid experience in building modern, scalable mobile applications using Kotlin, Jetpack Compose, and clean architecture principles. Always eager to learn new technologies and deliver high-quality user experiences.",
-                skills = listOf(
-                    "Kotlin",
-                    "Java",
-                    "Android",
-                    "Java",
-                    "Android",
-                    "Java",
-                    "Android",
-                    "Java",
-                    "Android"
-                ),
-                additionalSkills = listOf(
-                    "Swift",
-                    "iOS",
-                    "Java",
-                    "Android",
-                    "Java",
-                    "Android",
-                    "Java",
-                    "Android"
-                ),
-                isSelected = isSelected,
-            )
-        }
-    }
-
     fun hasSkills(): Boolean {
         return skills.isNotEmpty() || additionalSkills.isNotEmpty()
     }

@@ -34,11 +34,11 @@ import org.jetbrains.compose.resources.stringResource
 internal fun CvCard(
     modifier: Modifier = Modifier,
     cv: CvUi,
-    onEvent: (CvsEvent) -> Unit,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier
-            .noRippleClickable { onEvent(CvsEvent.CvSelect(cv)) },
+            .noRippleClickable(onClick = onClick),
         shape = EmpathTheme.shapes.small,
         border = BorderStroke(
             width = 1.dp,

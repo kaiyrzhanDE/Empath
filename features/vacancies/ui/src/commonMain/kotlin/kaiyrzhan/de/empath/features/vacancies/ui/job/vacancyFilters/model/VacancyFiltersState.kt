@@ -28,7 +28,6 @@ internal data class VacancyFiltersState(
                 workExperiences.any { workExperience -> workExperience.isSelected } ||
                 workFormats.any { workFormat -> workFormat.isSelected } ||
                 educations.any { education -> education.isSelected }
-
     }
 
     companion object {

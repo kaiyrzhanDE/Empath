@@ -304,7 +304,8 @@ private fun VacancyEditScreen(
                         isSelected = { employmentType -> employmentType in state.editableVacancy.selectedEmploymentTypes },
                         onReload = {
                             onEvent(VacancyEditEvent.LoadEmploymentTypes)
-                        }
+                        },
+                        anySelected = { state.editableVacancy.selectedEmploymentTypes.isNotEmpty() },
                     )
 
                     FiltersCard(
@@ -321,7 +322,8 @@ private fun VacancyEditScreen(
                         isSelected = { workFormats -> workFormats in state.editableVacancy.selectedWorkFormats },
                         onReload = {
                             onEvent(VacancyEditEvent.LoadWorkFormats)
-                        }
+                        },
+                        anySelected = { state.editableVacancy.selectedWorkFormats.isNotEmpty() },
                     )
 
                     FiltersCard(
@@ -339,6 +341,7 @@ private fun VacancyEditScreen(
                         onReload = {
                             onEvent(VacancyEditEvent.LoadWorkSchedules)
                         },
+                        anySelected = { state.editableVacancy.selectedWorkSchedules.isNotEmpty() },
                     )
 
                     FiltersCard<EducationUi>(

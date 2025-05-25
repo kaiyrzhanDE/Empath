@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,7 +18,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,6 +42,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun ColumnScope.Cvs(
     modifier: Modifier = Modifier,
+    isIndicator: Boolean,
     cvs: List<CvUi>,
     onEvent: (CvsEvent) -> Unit,
 ) {
@@ -83,7 +82,7 @@ internal fun ColumnScope.Cvs(
             }
 
             Text(
-                text = stringResource(Res.string.select_cv),
+                text = stringResource(Res.string.cv_files),
                 style = EmpathTheme.typography.bodyLarge,
                 color = EmpathTheme.colors.onSurfaceVariant,
                 maxLines = 1,
@@ -129,7 +128,13 @@ internal fun ColumnScope.Cvs(
                             .fillMaxWidth()
                             .padding(8.dp),
                         cv = cv,
-                        onEvent = onEvent,
+                        onClick = {
+                            if(isIndicator){
+                                onEvent(CvsEvent.OpenCv(cv))
+                            } else{
+                                onEvent(CvsEvent.CvSelect(cv))
+                            }
+                        },
                     )
                 }
             }

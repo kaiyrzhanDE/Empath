@@ -25,6 +25,7 @@ import org.koin.core.component.get
 
 internal class RealCvsDialogComponent(
     componentContext: ComponentContext,
+    private val isIndicator: Boolean,
     private val onDismissClick: () -> Unit,
     private val onSelectCv: (CvUi) -> Unit,
 ) : BaseComponent(componentContext), CvsDialogComponent {
@@ -46,6 +47,7 @@ internal class RealCvsDialogComponent(
             is CvsEvent.DismissClick -> onDismissClick()
             is CvsEvent.CvSelectClick -> selectCvClick()
             is CvsEvent.CvSelect -> selectCv(event.cv)
+            is CvsEvent.OpenCv -> onSelectCv(event.cv)
         }
     }
 
@@ -59,6 +61,7 @@ internal class RealCvsDialogComponent(
                         isSelected = cv.id == selectedCv.id,
                     )
                 },
+                isIndicator = isIndicator,
             )
         }
     }
@@ -78,6 +81,7 @@ internal class RealCvsDialogComponent(
             getCvsUseCase().onSuccess { cvs ->
                 state.update {
                     CvsState.Success(
+                        isIndicator = isIndicator,
                         cvs = cvs.data.map { cv -> cv.toUi() },
                     )
                 }

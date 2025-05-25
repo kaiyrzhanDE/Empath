@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.data.model.employment
 
+import kaiyrzhan.de.empath.core.utils.IsoType
 import kaiyrzhan.de.empath.core.utils.toIso
 import kaiyrzhan.de.empath.features.vacancies.domain.model.job.WorkExperience
 import kotlinx.serialization.SerialName
@@ -20,8 +21,8 @@ internal fun WorkExperience.toData(): WorkExperienceRequest {
         companyName = companyName,
         title = title,
         description = description,
-        startDate = startDate.toIso(),
+        startDate = startDate.toIso(type = IsoType.DATE),
         isRelevant = isRelevant,
-        endDate = endDate.toIso(),
+        endDate = endDate.toIso(type = IsoType.DATE),
     )
 }

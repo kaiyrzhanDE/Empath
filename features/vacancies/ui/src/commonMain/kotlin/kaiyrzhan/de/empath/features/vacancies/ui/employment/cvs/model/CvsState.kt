@@ -18,6 +18,7 @@ internal sealed class CvsState {
 
     @Serializable
     data class Success(
+        val isIndicator: Boolean,
         val cvs: List<CvUi>,
     ) : CvsState()
 

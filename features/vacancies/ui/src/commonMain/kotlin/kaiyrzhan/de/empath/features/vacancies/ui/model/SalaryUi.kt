@@ -15,3 +15,10 @@ internal fun Salary.toUi(): SalaryUi {
         to = to,
     )
 }
+
+internal fun SalaryUi.toDomain(): Salary {
+    return Salary(
+        from = from,
+        to = to,
+    )
+}

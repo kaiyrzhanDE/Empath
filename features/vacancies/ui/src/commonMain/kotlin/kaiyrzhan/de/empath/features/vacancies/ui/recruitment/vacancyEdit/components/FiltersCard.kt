@@ -53,6 +53,7 @@ internal fun ColumnScope.FiltersCard(
     onSelect: (SkillUi) -> Unit,
     isSelected: (SkillUi) -> Boolean,
     onReload: () -> Unit,
+    anySelected: () -> Boolean,
 ) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     val rotateAnimation by animateFloatAsState(
@@ -70,10 +71,10 @@ internal fun ColumnScope.FiltersCard(
                 is VacancyFilterState.Loading -> EmpathTheme.colors.primary
                 is VacancyFilterState.Initial -> EmpathTheme.colors.outlineVariant
                 is VacancyFilterState.Success -> {
-                    if (state.filters.any { it.isSelected } && isExpanded.not()) EmpathTheme.colors.primary
+                    if (anySelected() && isExpanded.not()) EmpathTheme.colors.primary
                     else EmpathTheme.colors.outlineVariant
                 }
-            }
+            },
         ),
         onClick = { isExpanded = !isExpanded },
         colors = CardDefaults.cardColors(

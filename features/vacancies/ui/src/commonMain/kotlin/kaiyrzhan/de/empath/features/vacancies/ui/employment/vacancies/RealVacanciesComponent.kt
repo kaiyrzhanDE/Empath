@@ -24,6 +24,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetRespo
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetVacanciesUseCase
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.CvsDialogComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.RealCvsDialogComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.model.CvsArgs
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.CvUi
 import kaiyrzhan.de.empath.features.vacancies.ui.model.VacancyFiltersUi
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
@@ -45,6 +46,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.builtins.nullable
+import kotlinx.serialization.builtins.serializer
 import org.jetbrains.compose.resources.getString
 import org.koin.core.component.get
 import org.koin.core.component.inject
@@ -53,6 +56,7 @@ internal class RealVacanciesComponent(
     componentContext: ComponentContext,
     private val onVacancyFiltersClick: (filters: VacancyFiltersUi) -> Unit,
     private val onVacancyDetailClick: (vacancyId: String, status: ResponseStatus) -> Unit,
+    private val onCvCreateClick: () -> Unit,
 ) : BaseComponent(componentContext), VacanciesComponent {
 
     private val getVacanciesUseCase: GetVacanciesUseCase = get()
@@ -120,14 +124,13 @@ internal class RealVacanciesComponent(
     private val _action = Channel<VacanciesAction>(capacity = Channel.BUFFERED)
     override val action: Flow<VacanciesAction> = _action.receiveAsFlow()
 
-    private val cvsDialogNavigation = SlotNavigation<VacancyUi>()
+    private val cvsDialogNavigation = SlotNavigation<CvsArgs>()
     override val cvsDialog: Value<ChildSlot<*, CvsDialogComponent>> = childSlot(
         source = cvsDialogNavigation,
         key = CvsDialogComponent.DEFAULT_KEY,
-        serializer = VacancyUi.serializer(),
+        serializer = CvsArgs.serializer(),
         childFactory = ::createCvsDialog,
     )
-
 
     override fun onEvent(event: VacanciesEvent) {
         logger.d(this.className(), "Event: $event")
@@ -142,27 +145,37 @@ internal class RealVacanciesComponent(
                 onVacancyDetailClick(event.vacancy.id, event.vacancy.status)
 
             is VacanciesEvent.ResponseToVacancy -> showCvsDialog(event.vacancy)
-            is VacanciesEvent.CvCreateClick -> Unit// TODO(createCv())
+            is VacanciesEvent.CvsClick -> showCvsDialog()
+            is VacanciesEvent.CvCreateClick -> onCvCreateClick()
 
             is VacanciesEvent.ApplyFilters -> applyFilters(event.vacancyFilters)
         }
     }
 
     private fun createCvsDialog(
-        vacancy: VacancyUi,
+        args: CvsArgs,
         childComponentContext: ComponentContext,
     ): CvsDialogComponent {
         return RealCvsDialogComponent(
+            isIndicator = args.isIndicator,
             componentContext = childComponentContext,
             onDismissClick = cvsDialogNavigation::dismiss,
             onSelectCv = { selectedCv ->
                 cvsDialogNavigation
                     .dismiss()
-                    .also { responseToVacancy(selectedCv, vacancy) }
+                    .also {
+                        when{
+                            args.vacancy != null -> {
+                                responseToVacancy(selectedCv, args.vacancy)
+                            }
+                            args.isIndicator -> {
+
+                            }
+                        }
+                    }
             },
         )
     }
-
 
     private fun changeTab(index: Int) {
         state.update { currentState ->
@@ -211,7 +224,7 @@ internal class RealVacanciesComponent(
         }
     }
 
-    private fun showCvsDialog(vacancy: VacancyUi) {
+    private fun showCvsDialog(vacancy: VacancyUi? = null) {
         coroutineScope.launch {
             getCvsUseCase().onSuccess { cvs ->
                 if (cvs.data.isEmpty()) {
@@ -221,12 +234,16 @@ internal class RealVacanciesComponent(
                         )
                     )
                 } else {
-                    cvsDialogNavigation.activate(vacancy)
+                    cvsDialogNavigation.activate(
+                        configuration = CvsArgs(vacancy),
+                    )
                 }
             }.onFailure { error ->
                 when (error) {
                     is GetCvsUseCaseError.CvsNotFound -> {
-                        cvsDialogNavigation.activate(vacancy)
+                        cvsDialogNavigation.activate(
+                            configuration = CvsArgs(vacancy)
+                        )
                     }
 
                     is Result.Error.DefaultError -> {
@@ -241,7 +258,7 @@ internal class RealVacanciesComponent(
         }
     }
 
-    private fun applyFilters(vacanciesFilters: VacancyFiltersUi){
+    private fun applyFilters(vacanciesFilters: VacancyFiltersUi) {
         state.update { currentState ->
             currentState.copy(
                 vacanciesFilters = vacanciesFilters,

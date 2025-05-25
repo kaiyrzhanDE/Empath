@@ -139,12 +139,18 @@ private fun CvsDialogContent(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Text(
-                        text = stringResource(Res.string.selecting_cv_title),
+                        text = stringResource(
+                            if(state.isIndicator) Res.string.your_cv_files
+                            else Res.string.selecting_cv_title,
+                        ),
                         style = EmpathTheme.typography.titleLarge,
                         color = EmpathTheme.colors.onSurface,
                     )
                     Text(
-                        text = stringResource(Res.string.selecting_cv_description),
+                        text = stringResource(
+                            if(state.isIndicator) Res.string.cv_recommendation
+                            else Res.string.selecting_cv_description,
+                        ),
                         style = EmpathTheme.typography.bodyLarge,
                         color = EmpathTheme.colors.onSurfaceVariant,
                     )
@@ -152,6 +158,7 @@ private fun CvsDialogContent(
                 Cvs(
                     modifier = Modifier.fillMaxWidth(),
                     cvs = state.cvs,
+                    isIndicator = state.isIndicator,
                     onEvent = onEvent,
                 )
                 Row(
@@ -169,20 +176,22 @@ private fun CvsDialogContent(
                             style = EmpathTheme.typography.labelLarge,
                         )
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = { onEvent(CvsEvent.CvSelectClick) },
-                        shape = EmpathTheme.shapes.small,
-                        enabled = state.cvs.any{ it.isSelected },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = EmpathTheme.colors.primary,
-                            contentColor = EmpathTheme.colors.onPrimary,
-                        ),
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.select_cv),
-                            style = EmpathTheme.typography.labelLarge,
-                        )
+                    if (state.isIndicator.not()) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Button(
+                            onClick = { onEvent(CvsEvent.CvSelectClick) },
+                            shape = EmpathTheme.shapes.small,
+                            enabled = state.cvs.any { it.isSelected },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = EmpathTheme.colors.primary,
+                                contentColor = EmpathTheme.colors.onPrimary,
+                            ),
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.select_cv),
+                                style = EmpathTheme.typography.labelLarge,
+                            )
+                        }
                     }
                 }
             }

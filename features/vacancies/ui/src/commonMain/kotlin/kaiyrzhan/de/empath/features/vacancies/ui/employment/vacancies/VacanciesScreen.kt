@@ -37,6 +37,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.ic_stylus
 import empath.core.uikit.generated.resources.ic_tune
+import empath.core.uikit.generated.resources.ic_work_outlined
 import empath.core.uikit.generated.resources.search
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
@@ -206,6 +207,22 @@ private fun VacanciesScreen(
                         modifier = Modifier.size(24.dp),
                         painter = painterResource(Res.drawable.ic_tune),
                         contentDescription = "Vacancies filters",
+                        tint = EmpathTheme.colors.primary,
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(56.dp)
+                        .align(Alignment.Bottom)
+                        .clip(EmpathTheme.shapes.small)
+                        .clickable { onEvent(VacanciesEvent.CvsClick) }
+                        .background(EmpathTheme.colors.surface),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(Res.drawable.ic_work_outlined),
+                        contentDescription = "Cvs",
                         tint = EmpathTheme.colors.primary,
                     )
                 }

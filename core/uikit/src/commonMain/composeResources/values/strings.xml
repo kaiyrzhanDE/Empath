@@ -220,4 +220,16 @@
     <string name="vacancy_edited_successfully">Vacancy edited successfully</string>
     <string name="edit_vacancy">Edit vacancy</string>
 
+    <string name="abort_cv_create_title">Abort creating CV</string>
+    <string name="abort_cv_create_description">Are you sure you want to discard this cv? All unsaved changes will be lost.</string>
+    <string name="cv_created_successfully">CV created successfully</string>
+    <string name="create_cv">Create CV</string>
+    <string name="date_of_employment">Date of employment</string>
+    <string name="add_work_experience">Add work experience</string>
+    <string name="is_relevant">Is relevant</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="cv_files">CV Files</string>
+    <string name="your_cv_files">Your CV files</string>
+    <string name="cv_recommendation">It is recommended to create a separate CV for each position.</string>
 </resources>
