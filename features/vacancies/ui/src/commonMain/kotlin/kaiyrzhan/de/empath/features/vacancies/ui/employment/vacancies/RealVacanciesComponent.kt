@@ -165,16 +165,18 @@ internal class RealVacanciesComponent(
                 cvsDialogNavigation
                     .dismiss()
                     .also {
-                        when{
+                        when {
                             args.vacancy != null -> {
                                 responseToVacancy(selectedCv, args.vacancy)
                             }
+
                             args.isIndicator -> {
                                 onCvEditClick(selectedCv.id)
                             }
                         }
                     }
             },
+            onEditCv = onCvEditClick,
         )
     }
 
@@ -228,17 +230,9 @@ internal class RealVacanciesComponent(
     private fun showCvsDialog(vacancy: VacancyUi? = null) {
         coroutineScope.launch {
             getCvsUseCase().onSuccess { cvs ->
-                if (cvs.data.isEmpty()) {
-                    _action.send(
-                        VacanciesAction.ShowSnackbar(
-                            message = getString(Res.string.under_development),
-                        )
-                    )
-                } else {
-                    cvsDialogNavigation.activate(
-                        configuration = CvsArgs(vacancy),
-                    )
-                }
+                cvsDialogNavigation.activate(
+                    configuration = CvsArgs(vacancy),
+                )
             }.onFailure { error ->
                 when (error) {
                     is GetCvsUseCaseError.CvsNotFound -> {

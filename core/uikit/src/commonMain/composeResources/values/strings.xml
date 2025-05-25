@@ -236,4 +236,5 @@
     <string name="your_cv_files">Your CV files</string>
     <string name="cv_recommendation">It is recommended to create a separate CV for each position.</string>
     <string name="edit_cv">Edit CV</string>
+    <string name="cv_detail">CV detail</string>
 </resources>

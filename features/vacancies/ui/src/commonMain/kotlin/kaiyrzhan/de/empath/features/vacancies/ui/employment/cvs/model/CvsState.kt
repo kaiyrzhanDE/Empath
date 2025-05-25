@@ -20,6 +20,7 @@ internal sealed class CvsState {
     data class Success(
         val isIndicator: Boolean,
         val cvs: List<CvUi>,
+        val errorMessage: String? = null,
     ) : CvsState()
 
     companion object {

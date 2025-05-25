@@ -140,7 +140,7 @@ private fun CvsDialogContent(
                 ) {
                     Text(
                         text = stringResource(
-                            if(state.isIndicator) Res.string.your_cv_files
+                            if (state.isIndicator) Res.string.your_cv_files
                             else Res.string.selecting_cv_title,
                         ),
                         style = EmpathTheme.typography.titleLarge,
@@ -148,11 +148,18 @@ private fun CvsDialogContent(
                     )
                     Text(
                         text = stringResource(
-                            if(state.isIndicator) Res.string.cv_recommendation
+                            if (state.isIndicator) Res.string.cv_recommendation
                             else Res.string.selecting_cv_description,
                         ),
                         style = EmpathTheme.typography.bodyLarge,
                         color = EmpathTheme.colors.onSurfaceVariant,
+                    )
+                }
+                if (state.errorMessage != null) {
+                    Text(
+                        text = state.errorMessage.ifEmpty { stringResource(Res.string.unknown_error) },
+                        style = EmpathTheme.typography.labelSmall,
+                        color = EmpathTheme.colors.error,
                     )
                 }
                 Cvs(

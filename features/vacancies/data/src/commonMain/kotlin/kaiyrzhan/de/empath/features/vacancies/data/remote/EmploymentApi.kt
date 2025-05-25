@@ -1,6 +1,7 @@
 package kaiyrzhan.de.empath.features.vacancies.data.remote
 
 import de.jensklingenberg.ktorfit.http.Body
+import de.jensklingenberg.ktorfit.http.DELETE
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.PATCH
 import de.jensklingenberg.ktorfit.http.POST
@@ -73,5 +74,11 @@ internal interface EmploymentApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("cv_id") cvId: String,
         @Body body: UpdateCvRequest,
+    ): RequestResult<Any>
+
+    @DELETE("api/{version}/job/employment/cv/{cv_id}")
+    suspend fun deleteCv(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("cv_id") cvId: String,
     ): RequestResult<Any>
 }

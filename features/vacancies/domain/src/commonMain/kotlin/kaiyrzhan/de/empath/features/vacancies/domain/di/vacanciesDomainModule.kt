@@ -6,6 +6,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.repository.EmploymentReposi
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.JobRepository
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepository
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.CreateCvUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.DeleteCvUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetCvsUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.ResponseToVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.UpdateCvUseCase
@@ -124,6 +125,11 @@ public val vacanciesDomainModule: Module = module {
     }
     factory {
         UpdateCvUseCase(
+            repository = get<EmploymentRepository>(),
+        )
+    }
+    factory {
+        DeleteCvUseCase(
             repository = get<EmploymentRepository>(),
         )
     }

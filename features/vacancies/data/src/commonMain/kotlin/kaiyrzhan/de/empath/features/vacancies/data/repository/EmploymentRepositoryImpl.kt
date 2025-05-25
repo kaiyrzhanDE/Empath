@@ -123,4 +123,10 @@ internal class EmploymentRepositoryImpl(
             body = cv.toData(),
         )
     }
+
+    override suspend fun deleteCv(cvId: String): RequestResult<Any> {
+        return api.deleteCv(
+            cvId = cvId,
+        )
+    }
 }

@@ -1,7 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.slot.activate
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.cvs_not_found
 import empath.core.uikit.generated.resources.unknown_error
@@ -10,27 +9,30 @@ import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
 import kaiyrzhan.de.empath.core.utils.result.Result
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.DeleteCvUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetCvsUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment.GetCvsUseCaseError
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.model.CvsEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.model.CvsState
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.CvUi
-import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.toUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import org.koin.core.component.get
+import org.koin.core.component.inject
 
 internal class RealCvsDialogComponent(
     componentContext: ComponentContext,
     private val isIndicator: Boolean,
     private val onDismissClick: () -> Unit,
     private val onSelectCv: (CvUi) -> Unit,
+    private val onEditCv: (cvId: String) -> Unit,
 ) : BaseComponent(componentContext), CvsDialogComponent {
 
     private val getCvsUseCase: GetCvsUseCase = get()
+    private val deleteCvUseCase: DeleteCvUseCase by inject()
 
     override val state = MutableStateFlow<CvsState>(
         CvsState.default()
@@ -47,7 +49,9 @@ internal class RealCvsDialogComponent(
             is CvsEvent.DismissClick -> onDismissClick()
             is CvsEvent.CvSelectClick -> selectCvClick()
             is CvsEvent.CvSelect -> selectCv(event.cv)
-            is CvsEvent.OpenCv -> onSelectCv(event.cv)
+            is CvsEvent.CvDetailClick -> onSelectCv(event.cv)
+            is CvsEvent.CvEditClick -> onEditCv(event.cvId)
+            is CvsEvent.CvDeleteClick -> deleteCv(event.cvId)
         }
     }
 
@@ -99,6 +103,30 @@ internal class RealCvsDialogComponent(
                         state.update {
                             CvsState.Error(
                                 message = getString(Res.string.unknown_error),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteCv(cvId: String) {
+        coroutineScope.launch {
+            deleteCvUseCase(cvId).onSuccess {
+                state.update { currentState ->
+                    check(currentState is CvsState.Success)
+                    currentState.copy(
+                        cvs = currentState.cvs.filter { cv -> cv.id != cvId },
+                    )
+                }
+            }.onFailure { error ->
+                when (error) {
+                    is Result.Error.DefaultError -> {
+                        state.update {currentState ->
+                            check(currentState is CvsState.Success)
+                            currentState.copy(
+                                errorMessage = error.toString(),
                             )
                         }
                     }

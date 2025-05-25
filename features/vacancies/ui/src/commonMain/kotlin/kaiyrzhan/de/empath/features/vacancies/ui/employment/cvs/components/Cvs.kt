@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
+import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.model.CvsEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.CvUi
@@ -116,26 +117,27 @@ internal fun ColumnScope.Cvs(
                 contentColor = EmpathTheme.colors.onSurfaceVariant,
             ),
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(scrollState),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                cvs.forEach { cv ->
-                    CvCard(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                        cv = cv,
-                        onClick = {
-                            if(isIndicator){
-                                onEvent(CvsEvent.OpenCv(cv))
-                            } else{
-                                onEvent(CvsEvent.CvSelect(cv))
-                            }
-                        },
-                    )
+            if(cvs.isEmpty()){
+                MessageScreen(
+                    modifier = Modifier.fillMaxSize(),
+                )
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    cvs.forEach { cv ->
+                        CvCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            cv = cv,
+                            isIndicator = isIndicator,
+                            onEvent = onEvent,
+                        )
+                    }
                 }
             }
         }

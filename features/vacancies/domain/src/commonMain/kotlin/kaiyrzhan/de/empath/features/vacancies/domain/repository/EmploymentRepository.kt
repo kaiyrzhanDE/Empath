@@ -49,4 +49,8 @@ public interface EmploymentRepository {
         cv: JobCv,
     ): RequestResult<Any>
 
+    public suspend fun deleteCv(
+        cvId: String,
+    ): RequestResult<Any>
+
 }
