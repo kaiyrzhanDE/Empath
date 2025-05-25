@@ -155,17 +155,9 @@ private fun CvsDialogContent(
                         color = EmpathTheme.colors.onSurfaceVariant,
                     )
                 }
-                if (state.errorMessage != null) {
-                    Text(
-                        text = state.errorMessage.ifEmpty { stringResource(Res.string.unknown_error) },
-                        style = EmpathTheme.typography.labelSmall,
-                        color = EmpathTheme.colors.error,
-                    )
-                }
                 Cvs(
                     modifier = Modifier.fillMaxWidth(),
-                    cvs = state.cvs,
-                    isIndicator = state.isIndicator,
+                    state = state,
                     onEvent = onEvent,
                 )
                 Row(

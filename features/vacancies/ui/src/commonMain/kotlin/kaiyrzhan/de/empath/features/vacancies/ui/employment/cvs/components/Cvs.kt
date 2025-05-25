@@ -35,16 +35,16 @@ import kaiyrzhan.de.empath.core.ui.animations.CollapseAnimatedVisibility
 import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.model.CvsEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.CvUi
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvs.model.CvsState
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import kotlin.text.ifEmpty
 
 
 @Composable
 internal fun ColumnScope.Cvs(
     modifier: Modifier = Modifier,
-    isIndicator: Boolean,
-    cvs: List<CvUi>,
+    state: CvsState.Success,
     onEvent: (CvsEvent) -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -59,7 +59,7 @@ internal fun ColumnScope.Cvs(
         shape = EmpathTheme.shapes.small,
         border = BorderStroke(
             width = 1.dp,
-            color = if (cvs.any { it.isSelected } && isExpanded.not()) EmpathTheme.colors.primary
+            color = if (state.cvs.any { it.isSelected } && isExpanded.not()) EmpathTheme.colors.primary
             else EmpathTheme.colors.outlineVariant,
         ),
         onClick = { isExpanded = !isExpanded },
@@ -105,6 +105,14 @@ internal fun ColumnScope.Cvs(
         }
     }
 
+    if (state.errorMessage != null) {
+        Text(
+            text = state.errorMessage.ifEmpty { stringResource(Res.string.unknown_error) },
+            style = EmpathTheme.typography.labelSmall,
+            color = EmpathTheme.colors.error,
+        )
+    }
+
     CollapseAnimatedVisibility(visible = isExpanded) {
         Card(
             modifier = Modifier
@@ -117,7 +125,7 @@ internal fun ColumnScope.Cvs(
                 contentColor = EmpathTheme.colors.onSurfaceVariant,
             ),
         ) {
-            if(cvs.isEmpty()){
+            if(state.cvs.isEmpty()){
                 MessageScreen(
                     modifier = Modifier.fillMaxSize(),
                 )
@@ -128,13 +136,13 @@ internal fun ColumnScope.Cvs(
                         .verticalScroll(scrollState),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    cvs.forEach { cv ->
+                    state.cvs.forEach { cv ->
                         CvCard(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp),
                             cv = cv,
-                            isIndicator = isIndicator,
+                            isIndicator = state.isIndicator,
                             onEvent = onEvent,
                         )
                     }
