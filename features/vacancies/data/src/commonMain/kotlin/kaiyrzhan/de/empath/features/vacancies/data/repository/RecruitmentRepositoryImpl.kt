@@ -10,6 +10,7 @@ import kaiyrzhan.de.empath.features.vacancies.data.model.job.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.ChangeResponseStatusRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.CreateRecruiterRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.toData
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.ResponsesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.recruitment.VacanciesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.RecruitmentApi
@@ -18,6 +19,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.EditedVac
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.VacancyRecommendations
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.RecruitmentRepository
 import kotlinx.coroutines.flow.Flow
 
@@ -130,5 +132,15 @@ internal class RecruitmentRepositoryImpl(
             .toDomain { author ->
                 author.toDomain()
             }
+    }
+
+    override suspend fun getVacancyRecommendations(
+        vacancyId: String,
+    ): RequestResult<VacancyRecommendations> {
+        return api.getVacancyRecommendations(
+            vacancyId = vacancyId,
+        ).toDomain { recommendations ->
+            recommendations.toDomain()
+        }
     }
 }

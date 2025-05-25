@@ -16,6 +16,7 @@ import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.CreateRecru
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.VacancyDTO
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.VacancyRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.ResponseDTO
+import kaiyrzhan.de.empath.features.vacancies.data.model.recruitment.VacancyRecommendationsDTO
 
 internal interface RecruitmentApi {
 
@@ -77,4 +78,10 @@ internal interface RecruitmentApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Body request: ChangeResponseStatusRequest,
     ): RequestResult<Any>
+
+    @GET("api/{version}/job/recruitment/vacancies/{vacancy_id}/recommendations")
+    suspend fun getVacancyRecommendations(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Query("vacancy_id") vacancyId: String?,
+    ): RequestResult<VacancyRecommendationsDTO>
 }

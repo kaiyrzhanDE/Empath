@@ -8,6 +8,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.EditedVac
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.NewVacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Response
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.VacancyRecommendations
 import kotlinx.coroutines.flow.Flow
 
 public interface RecruitmentRepository {
@@ -52,4 +53,8 @@ public interface RecruitmentRepository {
         status: String,
         vacancyId: String,
     ): RequestResult<Any>
+
+    public suspend fun getVacancyRecommendations(
+        vacancyId: String
+    ): RequestResult<VacancyRecommendations>
 }

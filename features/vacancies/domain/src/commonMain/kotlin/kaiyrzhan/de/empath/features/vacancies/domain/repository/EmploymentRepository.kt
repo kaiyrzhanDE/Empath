@@ -6,6 +6,7 @@ import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.NewCv
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Cv as EmploymentCv
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Vacancy
+import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.VacancyRecommendations
 import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Cv as JobCv
 import kotlinx.coroutines.flow.Flow
 
@@ -52,5 +53,4 @@ public interface EmploymentRepository {
     public suspend fun deleteCv(
         cvId: String,
     ): RequestResult<Any>
-
 }
