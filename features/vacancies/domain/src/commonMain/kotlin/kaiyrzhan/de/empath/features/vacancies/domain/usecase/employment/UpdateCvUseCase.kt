@@ -2,7 +2,7 @@ package kaiyrzhan.de.empath.features.vacancies.domain.usecase.employment
 
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.toResult
-import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.NewCv
+import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Cv
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.EmploymentRepository
 
 public class UpdateCvUseCase(
@@ -10,7 +10,7 @@ public class UpdateCvUseCase(
 ) {
     public suspend operator fun invoke(
         cvId: String,
-        cv: NewCv,
+        cv: Cv,
     ): Result<Any> {
         return repository
             .updateCv(

@@ -12,6 +12,7 @@ import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.RealCvCreateComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.RealCvEditComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.RealVacanciesComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
@@ -44,6 +45,7 @@ public class RealEmploymentRootComponent(
             is Config.VacancyDetail -> createVacancyDetailComponent(componentContext, config)
             is Config.VacancyFilters -> createVacancyFiltersComponent(componentContext, config)
             is Config.CvCreate -> createCvCreateComponent(componentContext)
+            is Config.CvEdit -> createCvEditComponent(componentContext, config)
         }
     }
 
@@ -71,6 +73,9 @@ public class RealEmploymentRootComponent(
                 },
                 onCvCreateClick = {
                     navigation.push(Config.CvCreate)
+                },
+                onCvEditClick = { cvId ->
+                    navigation.push(Config.CvEdit(cvId))
                 }
             )
         )
@@ -121,6 +126,19 @@ public class RealEmploymentRootComponent(
         )
     }
 
+    private fun createCvEditComponent(
+        componentContext: ComponentContext,
+        config: Config.CvEdit,
+    ): EmploymentRootComponent.Child.CvEdit {
+        return EmploymentRootComponent.Child.CvEdit(
+            component = RealCvEditComponent(
+                componentContext = componentContext,
+                cvId = config.cvId,
+                onBackClick = ::onBackClick,
+            )
+        )
+    }
+
     private fun reloadVacancies(filters: VacancyFiltersUi) {
         navigation.pop {
             (stack.active.instance as? EmploymentRootComponent.Child.Vacancies)
@@ -148,6 +166,11 @@ public class RealEmploymentRootComponent(
 
         @Serializable
         data object CvCreate : Config
+
+        @Serializable
+        data class CvEdit(
+            val cvId: String,
+        ) : Config
     }
 
 }

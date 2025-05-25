@@ -222,7 +222,10 @@
 
     <string name="abort_cv_create_title">Abort creating CV</string>
     <string name="abort_cv_create_description">Are you sure you want to discard this cv? All unsaved changes will be lost.</string>
+    <string name="abort_cv_edit_title">Abort editing CV</string>
+    <string name="abort_cv_edit_description">Are you sure you want to discard this cv? All unsaved changes will be lost.</string>
     <string name="cv_created_successfully">CV created successfully</string>
+    <string name="cv_edited_successfully">CV edited successfully</string>
     <string name="create_cv">Create CV</string>
     <string name="date_of_employment">Date of employment</string>
     <string name="add_work_experience">Add work experience</string>
@@ -232,4 +235,5 @@
     <string name="cv_files">CV Files</string>
     <string name="your_cv_files">Your CV files</string>
     <string name="cv_recommendation">It is recommended to create a separate CV for each position.</string>
+    <string name="edit_cv">Edit CV</string>
 </resources>

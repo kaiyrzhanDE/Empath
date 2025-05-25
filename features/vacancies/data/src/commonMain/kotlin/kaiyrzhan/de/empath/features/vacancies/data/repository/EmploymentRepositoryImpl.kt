@@ -14,7 +14,8 @@ import kaiyrzhan.de.empath.features.vacancies.data.model.employment.toDomain
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.employment.ResponsesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.pagingSource.employment.VacanciesPagingSource
 import kaiyrzhan.de.empath.features.vacancies.data.remote.EmploymentApi
-import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Cv
+import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Cv as EmploymentCv
+import kaiyrzhan.de.empath.features.vacancies.domain.model.job.Cv as JobCv
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.NewCv
 import kaiyrzhan.de.empath.features.vacancies.domain.model.employment.Vacancy
 import kaiyrzhan.de.empath.features.vacancies.domain.repository.EmploymentRepository
@@ -100,22 +101,22 @@ internal class EmploymentRepositoryImpl(
         )
     }
 
-    override suspend fun getCvs(): RequestResult<ListResult<Cv>> {
+    override suspend fun getCvs(): RequestResult<ListResult<EmploymentCv>> {
         return api.getCvs()
             .toDomain { cvs ->
                 cvs.map { cv -> cv.toDomain() }
             }
     }
 
-    override suspend fun createCv(cv: NewCv): RequestResult<Any> {
+    override suspend fun createCv(newCv: NewCv): RequestResult<Any> {
         return api.createCv(
-            body = cv.toData(),
+            body = newCv.toData(),
         )
     }
 
     override suspend fun updateCv(
         cvId: String,
-        cv: NewCv,
+        cv: JobCv,
     ): RequestResult<Any> {
         return api.updateCv(
             cvId = cvId,

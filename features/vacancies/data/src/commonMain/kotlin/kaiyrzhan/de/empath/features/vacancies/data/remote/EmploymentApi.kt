@@ -13,6 +13,7 @@ import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.CreateCvRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.CvDTO
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.ResponseToVacancyRequest
+import kaiyrzhan.de.empath.features.vacancies.data.model.employment.UpdateCvRequest
 import kaiyrzhan.de.empath.features.vacancies.data.model.employment.VacancyDTO
 
 internal interface EmploymentApi {
@@ -71,6 +72,6 @@ internal interface EmploymentApi {
     suspend fun updateCv(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("cv_id") cvId: String,
-        @Body body: CreateCvRequest,
+        @Body body: UpdateCvRequest,
     ): RequestResult<Any>
 }

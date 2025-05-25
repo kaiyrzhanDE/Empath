@@ -17,3 +17,9 @@ internal fun Author.toUi(): AuthorUi {
         name = name,
     )
 }
+
+internal fun AuthorUi.toDomain(): Author {
+    return Author(
+        name = name,
+    )
+}

@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.vacancies.data.model.job
 
+import kaiyrzhan.de.empath.core.utils.DatePattern
 import kaiyrzhan.de.empath.core.utils.toInstantOrNull
 import kaiyrzhan.de.empath.features.vacancies.domain.model.job.WorkExperience
 import kotlinx.serialization.SerialName
@@ -20,8 +21,12 @@ internal fun WorkExperienceDTO.toDomain(): WorkExperience {
         companyName = companyName.orEmpty(),
         title = title.orEmpty(),
         description = description.orEmpty(),
-        startDate = startDate.toInstantOrNull(),
+        startDate = startDate.toInstantOrNull(
+            pattern = DatePattern.DATE,
+        ),
         isRelevant = isRelevant == true,
-        endDate = endDate.toInstantOrNull(),
+        endDate = endDate.toInstantOrNull(
+            pattern = DatePattern.DATE,
+        ),
     )
 }
