@@ -3,6 +3,7 @@ package kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -57,6 +58,7 @@ internal fun WorkingCondition(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
+                modifier = Modifier.size(24.dp),
                 painter = painter,
                 contentDescription = skill,
             )

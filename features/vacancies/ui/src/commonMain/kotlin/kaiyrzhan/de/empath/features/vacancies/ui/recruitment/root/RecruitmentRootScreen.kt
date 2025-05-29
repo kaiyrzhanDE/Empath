@@ -17,6 +17,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.VacancyFilte
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.VacancyCreateScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.VacanciesScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.VacancyEditScreen
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendations.VacancyRecommendationsScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -92,6 +93,13 @@ private fun RecruitmentRootScreen(
 
             is RecruitmentRootComponent.Child.VacancyEdit -> {
                 VacancyEditScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is RecruitmentRootComponent.Child.VacancyRecommendations -> {
+                VacancyRecommendationsScreen(
                     component = instance.component,
                     modifier = Modifier.fillMaxSize(),
                 )

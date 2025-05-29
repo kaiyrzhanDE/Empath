@@ -22,6 +22,7 @@ import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.CreateV
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.DeleteVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.EditVacancyUseCase
 import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetRecruiterUseCase
+import kaiyrzhan.de.empath.features.vacancies.domain.usecase.recruitment.GetVacancyRecommendationsUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -131,6 +132,11 @@ public val vacanciesDomainModule: Module = module {
     factory {
         DeleteCvUseCase(
             repository = get<EmploymentRepository>(),
+        )
+    }
+    factory {
+        GetVacancyRecommendationsUseCase(
+            repository = get<RecruitmentRepository>(),
         )
     }
 }

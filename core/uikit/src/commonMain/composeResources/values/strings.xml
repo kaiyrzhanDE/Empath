@@ -237,4 +237,10 @@
     <string name="cv_recommendation">It is recommended to create a separate CV for each position.</string>
     <string name="edit_cv">Edit CV</string>
     <string name="cv_detail">CV detail</string>
+
+    <string name="recommendations">Recommendations</string>
+    <string name="contact_email">Contact email</string>
+    <string name="accordance">Accordance</string>
+    <string name="vacancy_importance">The importance of the vacancy</string>
+
 </resources>

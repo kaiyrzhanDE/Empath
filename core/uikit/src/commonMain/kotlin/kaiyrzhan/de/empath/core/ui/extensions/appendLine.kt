@@ -21,6 +21,7 @@ public fun AnnotatedString.Builder.appendRequiredMarker(): AnnotatedString.Build
 
 
 public fun StringBuilder.appendSpace(): Appendable = append(' ')
+public fun StringBuilder.appendPercent(): Appendable = append('%')
 public fun StringBuilder.append(): Appendable = append(' ')
 public fun StringBuilder.appendDot(): Appendable = append('•')
 public fun StringBuilder.appendSlash(): Appendable = append('/')

@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal class VacancyRecommendationsDTO(
-    @SerialName("weight") val weights: VacancyWeightDTO,
+    @SerialName("weights") val weights: List<VacancyWeightDTO>,
     @SerialName("recommendations") val recommendations: List<CvDTO>,
 )
 
 internal fun VacancyRecommendationsDTO.toDomain(): VacancyRecommendations {
     return VacancyRecommendations(
-        weights = weights.toDomain(),
+        weights = weights.map { weight -> weight.toDomain() },
         recommendations = recommendations.map { cv -> cv.toDomain() },
     )
 }

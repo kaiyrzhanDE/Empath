@@ -82,6 +82,6 @@ internal interface RecruitmentApi {
     @GET("api/{version}/job/recruitment/vacancies/{vacancy_id}/recommendations")
     suspend fun getVacancyRecommendations(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
-        @Query("vacancy_id") vacancyId: String?,
+        @Path("vacancy_id") vacancyId: String,
     ): RequestResult<VacancyRecommendationsDTO>
 }

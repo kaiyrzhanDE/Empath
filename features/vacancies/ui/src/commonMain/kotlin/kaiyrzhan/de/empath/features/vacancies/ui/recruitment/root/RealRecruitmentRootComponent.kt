@@ -21,10 +21,11 @@ import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.RealV
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.RealVacanciesComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancies.model.VacanciesEvent
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyEdit.RealVacancyEditComponent
+import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendations.RealVacancyRecommendationsComponent
 import kotlinx.serialization.Serializable
 
 public class RealRecruitmentRootComponent(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
 ) : BaseComponent(componentContext), RecruitmentRootComponent {
 
     private val navigation = StackNavigation<Config>()
@@ -48,6 +49,8 @@ public class RealRecruitmentRootComponent(
             is Config.VacancyCreate -> createVacancyCreateComponent(componentContext, config)
             is Config.VacancyFilters -> createVacancyFiltersComponent(componentContext, config)
             is Config.VacancyEdit -> createVacancyEditComponent(componentContext, config)
+            is Config.VacancyRecommendations ->
+                createVacancyRecommendations(componentContext, config)
         }
     }
 
@@ -73,7 +76,8 @@ public class RealRecruitmentRootComponent(
                     )
                 },
                 onVacancyDetailClick = { vacancyId ->
-                    navigation.push(Config.VacancyDetail(vacancyId))
+                    navigation.push(Config.VacancyRecommendations("e3b6f036-fe9e-40ee-b560-1c57af682bcb"))
+//                    navigation.push(Config.VacancyDetail(vacancyId))
                 },
                 onCvClick = { id ->
                     //TODO("Not yet implemented")
@@ -161,6 +165,23 @@ public class RealRecruitmentRootComponent(
         )
     }
 
+    @OptIn(DelicateDecomposeApi::class)
+    private fun createVacancyRecommendations(
+        componentContext: ComponentContext,
+        config: Config.VacancyRecommendations,
+    ): RecruitmentRootComponent.Child.VacancyRecommendations {
+        return RecruitmentRootComponent.Child.VacancyRecommendations(
+            component = RealVacancyRecommendationsComponent(
+                componentContext = componentContext,
+                vacancyId = config.vacancyId,
+                onBackClick = ::onBackClick,
+                onVacancyDetailClick = { vacancyId ->
+                    navigation.push(Config.VacancyDetail(vacancyId))
+                },
+            )
+        )
+    }
+
     private fun applyVacanciesFilters(filters: VacancyFiltersUi) {
         navigation.pop {
             (stack.active.instance as? RecruitmentRootComponent.Child.Vacancies)
@@ -205,6 +226,11 @@ public class RealRecruitmentRootComponent(
         data class VacancyEdit(
             val vacancyId: String,
             val from: VacancyEditFrom,
+        ) : Config
+
+        @Serializable
+        data class VacancyRecommendations(
+            val vacancyId: String,
         ) : Config
     }
 
