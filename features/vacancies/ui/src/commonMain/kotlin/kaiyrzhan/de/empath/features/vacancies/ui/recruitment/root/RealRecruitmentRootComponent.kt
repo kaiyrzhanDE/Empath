@@ -79,7 +79,7 @@ public class RealRecruitmentRootComponent(
                     navigation.push(Config.VacancyRecommendations(vacancyId))
                 },
                 onVacancyDetailClick = { vacancyId ->
-                    navigation.push(Config.VacancyDetail(vacancyId))
+                    navigation.push(Config.VacancyDetail(vacancyId, false))
                 },
                 onCvClick = { id ->
                     //TODO("Not yet implemented")
@@ -98,6 +98,7 @@ public class RealRecruitmentRootComponent(
                 componentContext = componentContext,
                 vacancyId = config.vacancyId,
                 onBackClick = ::onBackClick,
+                fromRecommendations = config.fromRecommendations,
                 onVacancyEditClick = { vacancyId ->
                     navigation.push(
                         Config.VacancyEdit(
@@ -178,7 +179,7 @@ public class RealRecruitmentRootComponent(
                 vacancyId = config.vacancyId,
                 onBackClick = ::onBackClick,
                 onVacancyDetailClick = { vacancyId ->
-                    navigation.push(Config.VacancyDetail(vacancyId))
+                    navigation.push(Config.VacancyDetail(vacancyId, true))
                 },
             )
         )
@@ -214,7 +215,10 @@ public class RealRecruitmentRootComponent(
         data object Vacancies : Config
 
         @Serializable
-        data class VacancyDetail(val vacancyId: String) : Config
+        data class VacancyDetail(
+            val vacancyId: String,
+            val fromRecommendations: Boolean,
+        ) : Config
 
         @Serializable
         data class VacancyFilters(

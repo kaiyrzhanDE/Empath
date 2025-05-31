@@ -25,6 +25,7 @@ internal class RealVacancyDetailComponent(
     private val vacancyId: String,
     private val onBackClick: () -> Unit,
     private val responseStatus: ResponseStatus = ResponseStatus.UNKNOWN,
+    private val fromRecommendations: Boolean = false,
     private val onVacancyDeleteClick: ((vacancyId: String) -> Unit)? = null,
     private val onResponseClick: ((vacancyId: String) -> Unit)? = null,
     private val onVacancyEditClick: ((vacancyId: String) -> Unit)? = null,
@@ -65,7 +66,7 @@ internal class RealVacancyDetailComponent(
                         vacancyDetail = detail.toUi(),
                         isEditing = onVacancyEditClick != null,
                         isDeleting = onVacancyDeleteClick != null,
-                        isRecommendations = onVacancyRecommendationsClick != null,
+                        isRecommendationsVisible = onVacancyRecommendationsClick != null && fromRecommendations.not(),
                         isResponding = onResponseClick != null,
                         responseStatus = responseStatus,
                     )

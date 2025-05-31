@@ -47,7 +47,7 @@ internal fun TopBar(
                 }
             },
             actions = {
-                if(state is VacancyDetailState.Success && state.isRecommendations) {
+                if(state is VacancyDetailState.Success && state.isRecommendationsVisible) {
                     IconButton(
                         onClick = { onEvent(VacancyDetailEvent.VacancyRecommendationsClick) },
                     ) {

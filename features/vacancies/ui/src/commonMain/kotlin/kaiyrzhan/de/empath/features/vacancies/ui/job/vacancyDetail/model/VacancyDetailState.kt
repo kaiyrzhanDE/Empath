@@ -10,7 +10,7 @@ internal sealed class VacancyDetailState {
     data class Success(
         val vacancyDetail: VacancyDetailUi,
         val isDeleting: Boolean = false,
-        val isRecommendations: Boolean = false,
+        val isRecommendationsVisible: Boolean = false,
         val isEditing: Boolean = false,
         val isResponding: Boolean = false,
         val responseStatus: ResponseStatus = ResponseStatus.UNKNOWN,
