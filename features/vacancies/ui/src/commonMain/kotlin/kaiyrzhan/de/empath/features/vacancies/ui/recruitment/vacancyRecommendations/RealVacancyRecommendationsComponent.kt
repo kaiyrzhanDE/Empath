@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendat
 
 import com.arkivanov.decompose.ComponentContext
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
+import kaiyrzhan.de.empath.core.utils.AppUtils
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
@@ -11,6 +12,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendati
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendations.model.VacancyRecommendationsState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kaiyrzhan.de.empath.core.utils.result.Result
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.get
@@ -23,6 +25,7 @@ internal class RealVacancyRecommendationsComponent(
 ) : BaseComponent(componentContext), VacancyRecommendationsComponent {
 
     private val getVacancyRecommendationsUseCase: GetVacancyRecommendationsUseCase = get()
+    private val appUtils: AppUtils = get()
 
     override val state = MutableStateFlow(VacancyRecommendationsState.default())
 
@@ -41,8 +44,9 @@ internal class RealVacancyRecommendationsComponent(
     }
 
     private fun loadVacancyRecommendations() {
-        state.update { VacancyRecommendationsState.Loading }
         coroutineScope.launch {
+            state.update { VacancyRecommendationsState.Loading }
+            delay(8000)
             getVacancyRecommendationsUseCase(vacancyId).onSuccess { recommendations ->
                 state.update {
                     VacancyRecommendationsState.Success(
@@ -62,6 +66,7 @@ internal class RealVacancyRecommendationsComponent(
     }
 
     private fun contactEmail(email: String) {
-        TODO("Not yet implemented")
+        val link = "mailto:$email"
+        appUtils.openUrl(link)
     }
 }

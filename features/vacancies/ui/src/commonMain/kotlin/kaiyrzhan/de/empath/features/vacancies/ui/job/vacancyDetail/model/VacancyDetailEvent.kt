@@ -4,6 +4,7 @@ internal sealed interface VacancyDetailEvent {
     data object ReloadVacancyDetail : VacancyDetailEvent
     data object BackClick : VacancyDetailEvent
     data object VacancyDeleteClick : VacancyDetailEvent
+    data object VacancyRecommendationsClick : VacancyDetailEvent
     data object VacancyEditClick : VacancyDetailEvent
     data object ResponseToVacancyClick : VacancyDetailEvent
 }

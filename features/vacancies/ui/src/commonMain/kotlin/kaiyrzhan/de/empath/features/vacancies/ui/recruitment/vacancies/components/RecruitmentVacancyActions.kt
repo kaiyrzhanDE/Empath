@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.edit
-import empath.core.uikit.generated.resources.hide
+import empath.core.uikit.generated.resources.recommendations
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.dateFormat
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyUi
@@ -41,15 +41,15 @@ internal fun RecruitmentVacancyActions(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Button(
-                onClick = { onEvent(VacanciesEvent.VacancyHideClick(vacancy.id)) },
+                onClick = { onEvent(VacanciesEvent.VacancyRecommendationsClick(vacancy.id)) },
                 shape = EmpathTheme.shapes.small,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = EmpathTheme.colors.surfaceContainer,
-                    contentColor = EmpathTheme.colors.onSurface,
+                    containerColor = EmpathTheme.colors.primary,
+                    contentColor = EmpathTheme.colors.onPrimary,
                 ),
             ) {
                 Text(
-                    text = stringResource(Res.string.hide),
+                    text = stringResource(Res.string.recommendations),
                     style = EmpathTheme.typography.labelLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

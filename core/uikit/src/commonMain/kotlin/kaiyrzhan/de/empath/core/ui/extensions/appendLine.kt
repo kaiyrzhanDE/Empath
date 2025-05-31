@@ -8,6 +8,8 @@ import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 
 public fun Appendable.appendSpace(): Appendable = append(' ')
 public fun Appendable.appendColon(): Appendable = append(':')
+public fun Appendable.appendBracketOpen(): Appendable = append('(')
+public fun Appendable.appendBracketClose(): Appendable = append(')')
 public fun Appendable.appendDot(): Appendable = append('•')
 public fun Appendable.appendSlash(): Appendable = append('/')
 
@@ -21,6 +23,7 @@ public fun AnnotatedString.Builder.appendRequiredMarker(): AnnotatedString.Build
 
 
 public fun StringBuilder.appendSpace(): Appendable = append(' ')
+public fun StringBuilder.appendDefis(): Appendable = append('-')
 public fun StringBuilder.appendPercent(): Appendable = append('%')
 public fun StringBuilder.append(): Appendable = append(' ')
 public fun StringBuilder.appendDot(): Appendable = append('•')

@@ -28,6 +28,7 @@ internal class RealVacancyDetailComponent(
     private val onVacancyDeleteClick: ((vacancyId: String) -> Unit)? = null,
     private val onResponseClick: ((vacancyId: String) -> Unit)? = null,
     private val onVacancyEditClick: ((vacancyId: String) -> Unit)? = null,
+    private val onVacancyRecommendationsClick: ((vacancyId: String) -> Unit)? = null,
 ) : BaseComponent(componentContext), VacancyDetailComponent {
 
     private val getVacancyDetailUseCase: GetVacancyDetailUseCase = get()
@@ -51,6 +52,7 @@ internal class RealVacancyDetailComponent(
             is VacancyDetailEvent.VacancyEditClick -> onVacancyEditClick?.invoke(vacancyId)
             is VacancyDetailEvent.ReloadVacancyDetail -> loadVacancy(vacancyId)
             is VacancyDetailEvent.ResponseToVacancyClick -> Unit//TODO(responseToVacancy(vacancyId))
+            is VacancyDetailEvent.VacancyRecommendationsClick -> onVacancyRecommendationsClick?.invoke(vacancyId)
         }
     }
 
@@ -63,6 +65,7 @@ internal class RealVacancyDetailComponent(
                         vacancyDetail = detail.toUi(),
                         isEditing = onVacancyEditClick != null,
                         isDeleting = onVacancyDeleteClick != null,
+                        isRecommendations = onVacancyRecommendationsClick != null,
                         isResponding = onResponseClick != null,
                         responseStatus = responseStatus,
                     )
@@ -80,7 +83,4 @@ internal class RealVacancyDetailComponent(
             }
         }
     }
-
-
-
 }

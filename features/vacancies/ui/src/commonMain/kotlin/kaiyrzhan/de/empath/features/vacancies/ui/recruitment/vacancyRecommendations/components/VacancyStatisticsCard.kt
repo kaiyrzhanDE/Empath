@@ -57,11 +57,14 @@ internal fun VacancyStatisticsCard(
     )
 
     Card(
-        modifier = modifier.animateContentSize(),
+        modifier = modifier,
         shape = EmpathTheme.shapes.small,
         colors = CardDefaults.cardColors(
             containerColor = EmpathTheme.colors.surface,
+            disabledContainerColor = EmpathTheme.colors.surface,
         ),
+        onClick = { isExpanded = isExpanded.not() },
+        enabled = weights.size > 3,
     ) {
         Column(
             modifier = Modifier
@@ -79,30 +82,28 @@ internal fun VacancyStatisticsCard(
                     style = EmpathTheme.typography.headlineMedium,
                     color = EmpathTheme.colors.onSurface,
                 )
-                IconButton(
-                    onClick = { isExpanded = isExpanded.not() },
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .rotate(rotateAnimation),
-                        painter = painterResource(Res.drawable.ic_arrow_forward),
-                        contentDescription = null,
-                        tint = EmpathTheme.colors.onSurfaceVariant,
-                    )
+                if (weights.size > 3) {
+                    IconButton(
+                        onClick = { isExpanded = isExpanded.not() },
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .rotate(rotateAnimation),
+                            painter = painterResource(Res.drawable.ic_arrow_forward),
+                            contentDescription = null,
+                            tint = EmpathTheme.colors.onSurfaceVariant,
+                        )
+                    }
                 }
             }
 
-            Crossfade(
-                targetState = itemsCount.value,
-                animationSpec = tween(400)
-            ) { visibleCount ->
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    weights.take(visibleCount).forEach { vacancyWeight ->
-                        SimpleProgressIndicator(vacancyWeight = vacancyWeight)
-                    }
+            Column(
+                modifier = Modifier.animateContentSize(),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                weights.take(itemsCount.value).forEach { vacancyWeight ->
+                    SimpleProgressIndicator(vacancyWeight = vacancyWeight)
                 }
             }
             Button(

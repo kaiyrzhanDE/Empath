@@ -1,6 +1,5 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendations.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -23,7 +22,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.extensions.appendBracketClose
+import kaiyrzhan.de.empath.core.ui.extensions.appendBracketOpen
 import kaiyrzhan.de.empath.core.ui.extensions.appendColon
+import kaiyrzhan.de.empath.core.ui.extensions.appendDefis
 import kaiyrzhan.de.empath.core.ui.extensions.appendPercent
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -42,6 +44,8 @@ internal fun CvCard(
     cv: CvUi,
     onEvent: (VacancyRecommendationsEvent) -> Unit,
 ) {
+    val clampedWeight = cv.weight.coerceIn(0.0, 1.0)
+
     Card(
         modifier = modifier,
         shape = EmpathTheme.shapes.small,
@@ -80,7 +84,7 @@ internal fun CvCard(
 
             WorkingCondition(
                 title = stringResource(Res.string.email),
-                skill = cv.author.name,
+                skill = cv.author.email,
                 painter = painterResource(Res.drawable.ic_alternate_email),
             )
 
@@ -104,6 +108,17 @@ internal fun CvCard(
                 text = buildString {
                     append(stringResource(Res.string.accordance))
                     appendColon()
+                    appendSpace()
+                    appendBracketOpen()
+                    append(clampedWeight.format())
+                    appendPercent()
+                    appendSpace()
+                    appendDefis()
+                    appendSpace()
+                    append((1.0 - clampedWeight).format())
+                    appendPercent()
+                    appendBracketClose()
+
                 },
                 style = EmpathTheme.typography.labelLarge,
                 color = EmpathTheme.colors.onSurface,
@@ -143,7 +158,7 @@ internal fun CvCard(
 
             Button(
                 modifier = Modifier.align(Alignment.End),
-                onClick = { onEvent(VacancyRecommendationsEvent.ContactEmailClick(cv.author.name)) },
+                onClick = { onEvent(VacancyRecommendationsEvent.ContactEmailClick(cv.author.email)) },
                 shape = EmpathTheme.shapes.small,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = EmpathTheme.colors.primary,

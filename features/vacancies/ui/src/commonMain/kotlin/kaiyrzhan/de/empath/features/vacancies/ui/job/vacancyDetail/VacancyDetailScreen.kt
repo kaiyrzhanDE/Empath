@@ -86,12 +86,12 @@ private fun VacancyDetailScreen(
     state: VacancyDetailState,
     onEvent: (VacancyDetailEvent) -> Unit,
 ) {
-
     val scrollState = rememberScrollState()
     Scaffold(
         modifier = modifier,
         topBar = {
             TopBar(
+                state = state,
                 onEvent = onEvent,
             )
         },

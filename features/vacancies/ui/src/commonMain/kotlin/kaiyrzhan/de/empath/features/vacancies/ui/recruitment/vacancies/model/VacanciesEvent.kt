@@ -8,7 +8,7 @@ internal sealed interface VacanciesEvent {
     data object VacanciesFiltersClick : VacanciesEvent
     data class TabChange(val index: Int) : VacanciesEvent
     data class VacancyEditClick(val id: String) : VacanciesEvent
-    data class VacancyHideClick(val id: String) : VacanciesEvent
+    data class VacancyRecommendationsClick(val id: String) : VacanciesEvent
     data object VacancyCreateClick : VacanciesEvent
     data class VacancyDetailClick(val id: String) : VacanciesEvent
 

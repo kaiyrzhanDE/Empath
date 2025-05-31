@@ -41,7 +41,7 @@ internal fun EmploymentVacancyActions(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Button(
-                onClick = { onEvent(VacanciesEvent.VacancyHideClick(vacancy.id)) },
+                onClick = { onEvent(VacanciesEvent.VacancyRecommendationsClick(vacancy.id)) },
                 shape = EmpathTheme.shapes.small,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = EmpathTheme.colors.surfaceContainer,

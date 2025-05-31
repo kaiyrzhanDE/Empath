@@ -41,6 +41,7 @@ internal fun ProgressIndicator(
     val clampedWeight = weight.coerceIn(0.0, 1.0)
 
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+        val indicatorHeight = 44.dp
         val indicatorWidth = 4.dp
         val spacing = 4.dp
         val usedSpacing = spacing * 2 + indicatorWidth
@@ -55,24 +56,13 @@ internal fun ProgressIndicator(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (clampedWeight > 0.0) {
-                Card(
-                    modifier = Modifier.width(progressWidth),
-                    shape = EmpathTheme.shapes.extraSmall,
-                    colors = CardDefaults.cardColors(
-                        containerColor = EmpathTheme.colors.primary,
-                        contentColor = EmpathTheme.colors.onPrimary,
-                    )
-                ) {
-                    Text(
-                        modifier = Modifier.padding(12.dp),
-                        text = buildString {
-                            append(clampedWeight.format())
-                            appendPercent()
-                        },
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
+                Box(
+                    modifier = Modifier
+                        .width(progressWidth)
+                        .height(indicatorHeight)
+                        .clip(EmpathTheme.shapes.extraSmall)
+                        .background(EmpathTheme.colors.primary),
+                )
             }
 
             if (clampedWeight > 0.0 && clampedWeight < 1.0) {
@@ -86,24 +76,13 @@ internal fun ProgressIndicator(
             }
 
             if (clampedWeight < 1.0) {
-                Card(
-                    modifier = Modifier.width(remainingWidth),
-                    shape = EmpathTheme.shapes.extraSmall,
-                    colors = CardDefaults.cardColors(
-                        containerColor = EmpathTheme.colors.surfaceContainer,
-                        contentColor = EmpathTheme.colors.onSurface,
-                    )
-                ) {
-                    Text(
-                        modifier = Modifier.padding(12.dp),
-                        text = buildString {
-                            append((1.0 - clampedWeight).format())
-                            appendPercent()
-                        },
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
+                Box(
+                    modifier = Modifier
+                        .width(remainingWidth)
+                        .height(indicatorHeight)
+                        .clip(EmpathTheme.shapes.extraSmall)
+                        .background(EmpathTheme.colors.surfaceContainer),
+                )
             }
         }
     }

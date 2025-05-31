@@ -242,5 +242,7 @@
     <string name="contact_email">Contact email</string>
     <string name="accordance">Accordance</string>
     <string name="vacancy_importance">The importance of the vacancy</string>
+    <string name="cvs">CVs</string>
+    <string name="scanning">Scanning</string>
 
 </resources>

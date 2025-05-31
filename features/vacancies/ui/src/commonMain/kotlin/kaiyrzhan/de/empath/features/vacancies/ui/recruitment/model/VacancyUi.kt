@@ -27,34 +27,6 @@ internal data class VacancyUi(
     fun hasSkills(): Boolean {
         return skills.isNotEmpty() || additionalSkills.isNotEmpty()
     }
-
-    companion object {
-        fun sample(): VacancyUi {
-            return VacancyUi(
-                title = "Android Developer",
-                salary = SalaryUi(
-                    to = 100000,
-                    from = null,
-                ),
-                address = "Almaty",
-                author = AuthorUi(
-                    name = "Kaspi.kz"
-                ),
-                workExperience = "1-3 year",
-                workSchedules = listOf("5/2", "4/3"),
-                employmentTypes = listOf("Full-time", "Part-time"),
-                workFormats = listOf("Hybrid", "Remote", "Onsite"),
-                email = "kaiyrzhan.de@gmail.com",
-                skills = listOf(
-                    "Retrofit", "Okhttp", "Dagger",
-                    "Koin", "Okhttp", "Dagger",
-                ),
-                additionalSkills = listOf("Kotlin", "Java", "Android"),
-                id = "1",
-                dateOfCreated = Clock.System.now().toLocalDateTime(currentTimeZone),
-            )
-        }
-    }
 }
 
 internal fun Vacancy.toUi(): VacancyUi {

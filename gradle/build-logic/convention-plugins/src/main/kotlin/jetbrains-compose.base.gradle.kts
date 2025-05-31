@@ -23,6 +23,8 @@ kmpConfig {
 
             implementation(libs.paging.common)
             implementation(libs.paging.compose)
+
+            implementation(libs.compottie)
         }
     }
 }

@@ -60,6 +60,7 @@ internal class RealVacanciesComponent(
     private val onVacanciesFiltersClick: (filters: VacancyFiltersUi) -> Unit,
     private val onVacancyCreateClick: (author: AuthorUi) -> Unit,
     private val onVacancyEditClick: (vacancyId: String) -> Unit,
+    private val onVacancyRecommendationsClick: (vacancyId: String) -> Unit,
     private val onVacancyDetailClick: (vacancyId: String) -> Unit,
     private val onCvClick: (cvId: String) -> Unit,
 ) : BaseComponent(componentContext), VacanciesComponent {
@@ -134,7 +135,7 @@ internal class RealVacanciesComponent(
             is VacanciesEvent.VacanciesFiltersClick -> onVacanciesFiltersClick(state.value.vacancyFilters)
             is VacanciesEvent.VacancyCreateClick -> clickVacancyCreate()
             is VacanciesEvent.VacancyEditClick -> onVacancyEditClick(event.id)
-            is VacanciesEvent.VacancyHideClick -> hideVacancy(event.id)
+            is VacanciesEvent.VacancyRecommendationsClick -> onVacancyRecommendationsClick(event.id)
             is VacanciesEvent.VacancyDetailClick -> onVacancyDetailClick(event.id)
             is VacanciesEvent.ResponseCvClick -> onCvClick(event.response.cvId)
             is VacanciesEvent.ResponseAccept -> acceptResponse(event.response)
@@ -168,17 +169,6 @@ internal class RealVacanciesComponent(
             currentState.copy(
                 vacancyFilters = currentState.vacancyFilters.copy(
                     query = query,
-                )
-            )
-        }
-    }
-
-    private fun hideVacancy(id: String) {
-        //TODO(Not yer implemented)
-        coroutineScope.launch {
-            _action.send(
-                VacanciesAction.ShowSnackbar(
-                    message = getString(Res.string.under_development),
                 )
             )
         }

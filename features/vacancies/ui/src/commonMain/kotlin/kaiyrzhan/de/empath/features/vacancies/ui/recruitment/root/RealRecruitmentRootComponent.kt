@@ -75,9 +75,11 @@ public class RealRecruitmentRootComponent(
                         )
                     )
                 },
+                onVacancyRecommendationsClick = { vacancyId ->
+                    navigation.push(Config.VacancyRecommendations(vacancyId))
+                },
                 onVacancyDetailClick = { vacancyId ->
-                    navigation.push(Config.VacancyRecommendations("e3b6f036-fe9e-40ee-b560-1c57af682bcb"))
-//                    navigation.push(Config.VacancyDetail(vacancyId))
+                    navigation.push(Config.VacancyDetail(vacancyId))
                 },
                 onCvClick = { id ->
                     //TODO("Not yet implemented")
@@ -104,8 +106,8 @@ public class RealRecruitmentRootComponent(
                         )
                     )
                 },
-                onVacancyDeleteClick = {
-                    //TODO("Not yet implemented")
+                onVacancyRecommendationsClick = { vacancyId ->
+                    navigation.push(Config.VacancyRecommendations(vacancyId))
                 },
             )
         )

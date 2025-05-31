@@ -33,6 +33,7 @@ google-ksp = "2.1.10-1.0.31"
 coil = "3.0.4"
 filekit = "0.10.0-beta01"
 paging = "3.3.0-alpha02-0.5.1"
+compottie = "2.0.0-rc04"
 
 [libraries]
 
@@ -99,6 +100,11 @@ arkivanov-essenty-backHandler = { group = "com.arkivanov.essenty", name = "back-
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-android = { group = "io.insert-koin", name = "koin-android" }
+
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
+compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
+compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
 
 gradleplugins-android = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 gradleplugins-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }

@@ -11,11 +11,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.ic_arrow_back
-import empath.core.uikit.generated.resources.ic_arrow_back_description
-import empath.core.uikit.generated.resources.vacancy_detail
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailState
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -24,6 +23,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun TopBar(
     modifier: Modifier = Modifier,
+    state: VacancyDetailState,
     onEvent: (VacancyDetailEvent) -> Unit,
 ) {
     Column(
@@ -44,6 +44,18 @@ internal fun TopBar(
                         painter = painterResource(Res.drawable.ic_arrow_back),
                         contentDescription = stringResource(Res.string.ic_arrow_back_description),
                     )
+                }
+            },
+            actions = {
+                if(state is VacancyDetailState.Success && state.isRecommendations) {
+                    IconButton(
+                        onClick = { onEvent(VacancyDetailEvent.VacancyRecommendationsClick) },
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.ic_find_in_page),
+                            contentDescription = null,
+                        )
+                    }
                 }
             },
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
