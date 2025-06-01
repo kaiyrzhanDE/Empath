@@ -92,4 +92,59 @@ internal interface PostsApi {
         @Path("article_id") postId: String,
         @Body request: CommentRequest,
     ): RequestResult<Any>
+
+    @POST("api/{version}/articles/{article_id}/dislikes")
+    suspend fun dislikePost(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("article_id") postId: String,
+    ): RequestResult<Any>
+
+    @DELETE("api/{version}/articles/{article_id}/dislikes")
+    suspend fun cancelDislikePost(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("article_id") postId: String,
+    ): RequestResult<Any>
+
+    @POST("api/{version}/articles/{article_id}/likes")
+    suspend fun likePost(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("article_id") postId: String,
+    ): RequestResult<Any>
+
+    @POST("api/{version}/articles/{article_id}/views")
+    suspend fun viewPost(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("article_id") postId: String,
+    ): RequestResult<Any>
+
+    @DELETE("api/{version}/articles/{article_id}/likes")
+    suspend fun cancelLikePost(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("article_id") postId: String,
+    ): RequestResult<Any>
+
+    @POST("api/{version}/articles/comments/{comment_id}/dislikes")
+    suspend fun dislikeComment(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("comment_id") commentId: String,
+    ): RequestResult<Any>
+
+    @DELETE("api/{version}/articles/comments/{comment_id}/dislikes")
+    suspend fun cancelDislikeComment(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("comment_id") commentId: String,
+    ): RequestResult<Any>
+
+    @POST("api/{version}/articles/comments/{comment_id}/likes")
+    suspend fun likeComment(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("comment_id") commentId: String,
+    ): RequestResult<Any>
+
+    @DELETE("api/{version}/articles/comments/{comment_id}/likes")
+    suspend fun cancelLikeComment(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Path("comment_id") commentId: String,
+    ): RequestResult<Any>
+
 }

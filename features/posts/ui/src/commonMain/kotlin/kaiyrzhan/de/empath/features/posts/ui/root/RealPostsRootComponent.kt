@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.active
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
@@ -14,6 +15,7 @@ import kaiyrzhan.de.empath.features.posts.ui.postCreate.RealPostCreateComponent
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.RealPostDetailComponent
 import kaiyrzhan.de.empath.features.posts.ui.postEdit.RealPostEditComponent
 import kaiyrzhan.de.empath.features.posts.ui.posts.RealPostsComponent
+import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
 import kotlinx.serialization.Serializable
 
 public class RealPostsRootComponent(
@@ -52,7 +54,10 @@ public class RealPostsRootComponent(
             component = RealPostDetailComponent(
                 componentContext = componentContext,
                 postId = config.postId,
-                onBackClick = ::onBackClick,
+                onBackClick = { isEdited ->
+                    if (isEdited) reloadPosts()
+                    onBackClick()
+                },
                 onPostEditClick = {
                     navigation.push(
                         Config.PostEdit(config.postId)
@@ -106,6 +111,14 @@ public class RealPostsRootComponent(
                 onBackClick = ::onBackClick,
             )
         )
+    }
+
+    private fun reloadPosts() {
+        navigation.pop {
+            (stack.active.instance as? PostsRootComponent.Child.Posts)
+                ?.component
+                ?.onEvent(PostsEvent.ReloadPosts)
+        }
     }
 
 

@@ -3,17 +3,26 @@ package kaiyrzhan.de.empath.features.posts.ui.postDetail
 import com.arkivanov.decompose.ComponentContext
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.extensions.appendColon
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
+import kaiyrzhan.de.empath.core.utils.AppUtils
+import kaiyrzhan.de.empath.core.utils.currentPlatform
 import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
+import kaiyrzhan.de.empath.features.posts.domain.usecase.CancelDislikePostUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.CancelLikePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.CreateCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.DeletePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.DeleteCommentUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.DislikePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.EditCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetPostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetCommentsUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.LikePostUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.ViewPostUseCase
+import kaiyrzhan.de.empath.features.posts.ui.model.Reaction
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostCommentsState
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailAction
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailEvent
@@ -33,7 +42,7 @@ internal class RealPostDetailComponent(
     componentContext: ComponentContext,
     private val postId: String,
     private val onPostEditClick: () -> Unit,
-    private val onBackClick: () -> Unit,
+    private val onBackClick: (isEdited: Boolean) -> Unit,
 ) : BaseComponent(componentContext), PostDetailComponent {
 
     private val getPostUseCase: GetPostUseCase by inject()
@@ -42,6 +51,12 @@ internal class RealPostDetailComponent(
     private val getCommentsUseCase: GetCommentsUseCase by inject()
     private val deleteCommentUseCase: DeleteCommentUseCase by inject()
     private val editCommentUseCase: EditCommentUseCase by inject()
+    private val likePostUseCase: LikePostUseCase by inject()
+    private val cancelLikePostUseCase: CancelLikePostUseCase by inject()
+    private val dislikePostUseCase: DislikePostUseCase by inject()
+    private val cancelDislikePostUseCase: CancelDislikePostUseCase by inject()
+    private val viewPostUseCase: ViewPostUseCase by inject()
+    private val appUtils: AppUtils by inject()
 
     override val state = MutableStateFlow<PostDetailState>(
         PostDetailState.default()
@@ -67,8 +82,9 @@ internal class RealPostDetailComponent(
             is PostDetailEvent.ReloadPost -> loadPostDetail(postId)
             is PostDetailEvent.DeletePost -> deletePost()
             is PostDetailEvent.EditPost -> onPostEditClick()
-            is PostDetailEvent.BackClick -> onBackClick()
+            is PostDetailEvent.BackClick -> backClick()
             is PostDetailEvent.PostShare -> sharePost()
+            is PostDetailEvent.PostView -> viewPost()
 
             is PostDetailEvent.CommentChange -> changeComment(event.comment)
             is PostDetailEvent.CommentDelete -> deleteComment(postId, event.commentId)
@@ -76,6 +92,20 @@ internal class RealPostDetailComponent(
             is PostDetailEvent.CommentEdit -> editComment(postId)
             is PostDetailEvent.CommentCreate -> createComment(postId)
             is PostDetailEvent.ReloadComments -> loadComments(postId)
+        }
+    }
+
+    private fun backClick() {
+        val currentState = state.value
+        when (currentState) {
+            is PostDetailState.Success -> {
+                onBackClick(currentState.changedPost != currentState.originalPost)
+            }
+
+            is PostDetailState.Initial,
+            is PostDetailState.Loading,
+            is PostDetailState.Error -> onBackClick(false)
+
         }
     }
 
@@ -197,8 +227,52 @@ internal class RealPostDetailComponent(
     }
 
     private fun sharePost() {
-        TODO()
+        val currentState = state.value
+        check(currentState is PostDetailState.Success)
+        coroutineScope.launch {
+            appUtils.shareText(
+                title = getString(Res.string.app_name),
+                text = buildString {
+                    append(getString(Res.string.share_description))
+                    appendLine()
+                    append(getString(Res.string.invitation_description))
+                    append(getString(Res.string.title))
+                    appendColon()
+                    appendLine()
+                    append(currentState.originalPost.title)
+                    appendLine()
+                    append(getString(Res.string.description))
+                    appendColon()
+                    appendLine()
+                    append(currentState.originalPost.description)
+                }
+            )
+            if (currentPlatform.type.isDesktop()) {
+                _action.send(
+                    PostDetailAction.ShowSnackbar(
+                        message = getString(Res.string.copy_description),
+                    )
+                )
+            }
+        }
     }
+
+    private fun viewPost() {
+        val currentState = state.value
+        check(currentState is PostDetailState.Success)
+        coroutineScope.launch {
+            viewPostUseCase(postId).onSuccess {
+                state.update {
+                    currentState.copy(
+                        changedPost = currentState.changedPost.copy(
+                            isViewed = true,
+                        )
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun createComment(postId: String) {
         val currentState = commentsState.value
@@ -221,24 +295,114 @@ internal class RealPostDetailComponent(
     }
 
     private fun likePost() {
-        state.update { currentState ->
+        coroutineScope.launch {
+            val currentState = state.value
             check(currentState is PostDetailState.Success)
-            currentState.copy(
-                post = currentState.post.copy(
-                    isLiked = true,
-                )
-            )
+            coroutineScope.launch {
+                if (currentState.changedPost.reaction.isLiked()) {
+                    cancelLikePostUseCase(currentState.changedPost.id).onSuccess {
+                        state.update {
+                            currentState.copy(
+                                changedPost = currentState.changedPost.copy(
+                                    reaction = Reaction.DEFAULT,
+                                    likesCount = currentState.changedPost.likesCount - 1
+                                ),
+                            )
+                        }
+                    }.onFailure { error ->
+                        when (error) {
+                            is Result.Error.DefaultError -> {
+                                _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                            }
+                        }
+                    }
+                } else {
+                    likePostUseCase(currentState.changedPost.id).onSuccess {
+                        state.update {
+                            currentState.copy(
+                                changedPost = when (currentState.changedPost.reaction) {
+                                    Reaction.IS_DISLIKED -> {
+                                        currentState.changedPost.copy(
+                                            reaction = Reaction.IS_LIKED,
+                                            likesCount = currentState.changedPost.likesCount + 1,
+                                            dislikesCount = currentState.changedPost.dislikesCount - 1
+                                        )
+                                    }
+
+                                    else -> {
+                                        currentState.changedPost.copy(
+                                            reaction = Reaction.IS_LIKED,
+                                            likesCount = currentState.changedPost.likesCount + 1
+                                        )
+                                    }
+                                },
+                            )
+                        }
+                    }.onFailure { error ->
+                        when (error) {
+                            is Result.Error.DefaultError -> {
+                                _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     private fun dislikePost() {
-        state.update { currentState ->
+        coroutineScope.launch {
+            val currentState = state.value
             check(currentState is PostDetailState.Success)
-            currentState.copy(
-                post = currentState.post.copy(
-                    isLiked = false,
-                )
-            )
+            coroutineScope.launch {
+                if (currentState.changedPost.reaction.isDisliked()) {
+                    cancelDislikePostUseCase(currentState.changedPost.id).onSuccess {
+                        state.update {
+                            currentState.copy(
+                                changedPost = currentState.changedPost.copy(
+                                    reaction = Reaction.DEFAULT,
+                                    dislikesCount = currentState.changedPost.dislikesCount - 1,
+                                ),
+                            )
+                        }
+                    }.onFailure { error ->
+                        when (error) {
+                            is Result.Error.DefaultError -> {
+                                _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                            }
+                        }
+                    }
+                } else {
+                    dislikePostUseCase(currentState.changedPost.id).onSuccess {
+                        state.update {
+                            currentState.copy(
+                                changedPost = when (currentState.changedPost.reaction) {
+                                    Reaction.IS_LIKED -> {
+                                        currentState.changedPost.copy(
+                                            reaction = Reaction.IS_DISLIKED,
+                                            likesCount = currentState.changedPost.likesCount - 1,
+                                            dislikesCount = currentState.changedPost.dislikesCount + 1
+                                        )
+                                    }
+
+                                    else -> {
+                                        currentState.changedPost.copy(
+                                            reaction = Reaction.IS_DISLIKED,
+                                            dislikesCount = currentState.changedPost.dislikesCount + 1
+                                        )
+                                    }
+                                },
+                            )
+                        }
+                    }.onFailure { error ->
+                        when (error) {
+                            is Result.Error.DefaultError -> {
+                                _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -246,9 +410,11 @@ internal class RealPostDetailComponent(
         state.update { PostDetailState.Loading }
         coroutineScope.launch {
             getPostUseCase(postId).onSuccess { post ->
+                val updatedPost = post.toUi()
                 state.update {
                     PostDetailState.Success(
-                        post = post.toUi(),
+                        changedPost = updatedPost,
+                        originalPost = updatedPost,
                     )
                 }
             }.onFailure { error ->
@@ -289,7 +455,7 @@ internal class RealPostDetailComponent(
                         message = getString(Res.string.post_deleted_successfully),
                     )
                 )
-                onBackClick()
+                onBackClick(true)
             }.onFailure { error ->
                 state.update { currentState }
                 when (error) {

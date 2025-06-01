@@ -16,23 +16,30 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
+import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.components.Header
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.Post
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.PostComments
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.SubPost
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.TopBar
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostCommentsState
+import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailAction
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailEvent
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailState
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostActions
+import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsAction
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun PostDetailScreen(
@@ -41,6 +48,19 @@ internal fun PostDetailScreen(
 ) {
     val state = component.state.collectAsState()
     val commentsState = component.commentsState.collectAsState()
+
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = LocalSnackbarHostState.current
+
+    SingleEventEffect(component.action) { action ->
+        when (action) {
+            is PostDetailAction.ShowSnackbar -> {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(message = action.message)
+                }
+            }
+        }
+    }
 
     PostDetailScreen(
         modifier = modifier,
@@ -71,6 +91,9 @@ private fun PostDetailScreen(
     ) { contentPadding ->
         when (state) {
             is PostDetailState.Success -> {
+                LaunchedEffect(Unit) {
+                    onEvent(PostDetailEvent.PostView)
+                }
                 SelectionContainer {
                     Column(
                         modifier = Modifier
@@ -91,25 +114,19 @@ private fun PostDetailScreen(
                                 modifier = Modifier.fillMaxWidth()
                                     .heightIn(min = 40.dp, max = 100.dp)
                                     .height(maxHeight),
-                                imageUrl = state.post.author.imageUrl,
-                                nickname = state.post.author.nickname,
-                                fullName = state.post.author.fullName,
+                                imageUrl = state.changedPost.author.imageUrl,
+                                nickname = state.changedPost.author.nickname,
+                                fullName = state.changedPost.author.fullName,
                             )
                         }
                         HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
                         Post(
                             modifier = Modifier.fillMaxWidth(),
-                            post = state.post,
+                            post = state.changedPost,
                         )
-                        state.post.subPosts.forEach { subPost ->
-                            SubPost(
-                                modifier = Modifier.fillMaxWidth(),
-                                subPost = subPost,
-                            )
-                        }
                         PostActions(
                             modifier = Modifier.fillMaxWidth(),
-                            post = state.post,
+                            post = state.changedPost,
                             onLikeClick = { onEvent(PostDetailEvent.PostLikeClick) },
                             onDislikeClick = { onEvent(PostDetailEvent.PostDislikeClick) },
                             onShareClick = { onEvent(PostDetailEvent.PostShare) },

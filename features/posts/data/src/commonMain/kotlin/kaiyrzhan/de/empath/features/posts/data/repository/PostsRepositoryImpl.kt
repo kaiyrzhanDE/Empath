@@ -22,22 +22,18 @@ internal class PostsRepositoryImpl(
     private val api: PostsApi,
 ) : PostsRepository {
 
-    override fun getPosts(
+    override suspend fun getPosts(
         query: String?,
-    ): Flow<PagingData<Post>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = PaginationUtils.PAGE_LIMIT_NORMAL,
-                prefetchDistance = 3,
-                enablePlaceholders = true,
-            ),
-            pagingSourceFactory = {
-                PostsPagingSource(
-                    api = api,
-                    query = query,
-                )
+    ): RequestResult<ListResult<Post>> {
+        return api.getPosts(
+            query = query,
+            page = 1,
+            pageLimit = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
+        ).toDomain { posts ->
+            posts.map { post ->
+                post.toDomain()
             }
-        ).flow
+        }
     }
 
     override suspend fun getPost(
@@ -133,6 +129,60 @@ internal class PostsRepositoryImpl(
             request = CommentRequest(
                 text = text,
             )
+        )
+    }
+
+    override suspend fun viewPost(postId: String): RequestResult<Any> {
+        return api.viewPost(
+            postId = postId,
+        )
+    }
+
+    override suspend fun likePost(postId: String): RequestResult<Any> {
+        return api.likePost(
+            postId = postId,
+        )
+    }
+
+    override suspend fun cancelLikePost(postId: String): RequestResult<Any> {
+        return api.cancelLikePost(
+            postId = postId,
+        )
+    }
+
+    override suspend fun dislikePost(postId: String): RequestResult<Any> {
+        return api.dislikePost(
+            postId = postId,
+        )
+    }
+
+    override suspend fun cancelDislikePost(postId: String): RequestResult<Any> {
+        return api.cancelDislikePost(
+            postId = postId,
+        )
+    }
+
+    override suspend fun likeComment(commentId: String): RequestResult<Any> {
+        return api.likeComment(
+            commentId = commentId,
+        )
+    }
+
+    override suspend fun cancelLikeComment(commentId: String): RequestResult<Any> {
+        return api.cancelLikeComment(
+            commentId = commentId,
+        )
+    }
+
+    override suspend fun dislikeComment(commentId: String): RequestResult<Any> {
+        return api.dislikeComment(
+            commentId = commentId,
+        )
+    }
+
+    override suspend fun cancelDislikeComment(commentId: String): RequestResult<Any> {
+        return api.cancelDislikeComment(
+            commentId = commentId,
         )
     }
 }

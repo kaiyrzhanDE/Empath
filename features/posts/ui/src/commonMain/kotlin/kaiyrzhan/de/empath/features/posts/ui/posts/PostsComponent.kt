@@ -1,18 +1,17 @@
 package kaiyrzhan.de.empath.features.posts.ui.posts
 
-import androidx.paging.PagingData
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsAction
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
+import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsFiltersState
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsState
-import kaiyrzhan.de.empath.features.posts.ui.model.PostUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 internal interface PostsComponent {
 
-    val state: StateFlow<PostsState>
+    val filtersState: StateFlow<PostsFiltersState>
 
-    val posts: Flow<PagingData<PostUi>>
+    val state: StateFlow<PostsState>
 
     val action: Flow<PostsAction>
 

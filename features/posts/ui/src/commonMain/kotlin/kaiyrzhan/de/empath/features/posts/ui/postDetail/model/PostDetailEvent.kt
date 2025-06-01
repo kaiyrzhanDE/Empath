@@ -8,6 +8,7 @@ internal sealed interface PostDetailEvent {
     data object ReloadPost : PostDetailEvent
     data object BackClick : PostDetailEvent
     data object PostShare : PostDetailEvent
+    data object PostView : PostDetailEvent
 
     data class CommentDelete(val commentId: String) : PostDetailEvent
     data class CommentEditMode(val commentId: String) : PostDetailEvent

@@ -12,4 +12,5 @@ public class Post(
     public val likesCount: Int,
     public val dislikesCount: Int,
     public val author: Author,
+    public val reaction: String,
 )

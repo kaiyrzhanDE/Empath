@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.Flow
 
 public interface PostsRepository {
 
-    public fun getPosts(
+    public suspend fun getPosts(
         query: String?,
-    ): Flow<PagingData<Post>>
+    ): RequestResult<ListResult<Post>>
 
     public suspend fun getPost(
         id: String,
@@ -53,5 +53,41 @@ public interface PostsRepository {
         commentId: String,
         postId: String,
         text: String,
+    ): RequestResult<Any>
+
+    public suspend fun likePost(
+        postId: String,
+    ): RequestResult<Any>
+
+    public suspend fun cancelLikePost(
+        postId: String,
+    ): RequestResult<Any>
+
+    public suspend fun dislikePost(
+        postId: String,
+    ): RequestResult<Any>
+
+    public suspend fun cancelDislikePost(
+        postId: String,
+    ): RequestResult<Any>
+
+    public suspend fun viewPost(
+        postId: String,
+    ): RequestResult<Any>
+
+    public suspend fun likeComment(
+        commentId: String,
+    ): RequestResult<Any>
+
+    public suspend fun cancelLikeComment(
+        commentId: String,
+    ): RequestResult<Any>
+
+    public suspend fun dislikeComment(
+        commentId: String,
+    ): RequestResult<Any>
+
+    public suspend fun cancelDislikeComment(
+        commentId: String,
     ): RequestResult<Any>
 }

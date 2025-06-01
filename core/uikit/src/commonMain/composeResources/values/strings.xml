@@ -244,5 +244,8 @@
     <string name="vacancy_importance">The importance of the vacancy</string>
     <string name="cvs">CVs</string>
     <string name="scanning">Scanning</string>
+    <string name="share_description">Hi there, I came across this and thought you might find it interesting. Let me know what you think!</string>
+    <string name="invitation_description">Feel free to join me on the Empath app.</string>
+    <string name="copy_description">Content copied.</string>
 
 </resources>

@@ -7,7 +7,8 @@ internal sealed class PostDetailState {
     object Loading : PostDetailState()
     class Error(val message: String) : PostDetailState()
     data class Success(
-        val post: PostUi,
+        val changedPost: PostUi,
+        val originalPost: PostUi,
     ) : PostDetailState()
 
     companion object {

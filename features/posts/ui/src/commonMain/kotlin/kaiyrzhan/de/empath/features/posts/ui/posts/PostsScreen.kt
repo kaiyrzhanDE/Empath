@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,7 +29,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.collectAsLazyPagingItems
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingCard
@@ -45,8 +45,9 @@ import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostCard
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostShimmerCard
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsAction
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
-import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsState
+import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsFiltersState
 import kaiyrzhan.de.empath.features.posts.ui.model.PostUi
+import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -56,8 +57,8 @@ internal fun PostsScreen(
     component: PostsComponent,
     modifier: Modifier = Modifier,
 ) {
-    val posts = component.posts.collectAsLazyPagingItems()
     val state = component.state.collectAsState()
+    val filtersState = component.filtersState.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = LocalSnackbarHostState.current
@@ -75,7 +76,7 @@ internal fun PostsScreen(
     PostsScreen(
         modifier = modifier,
         state = state.value,
-        posts = posts,
+        filtersState = filtersState.value,
         onEvent = component::onEvent,
     )
 }
@@ -84,8 +85,8 @@ internal fun PostsScreen(
 @Composable
 private fun PostsScreen(
     modifier: Modifier = Modifier,
+    filtersState: PostsFiltersState,
     state: PostsState,
-    posts: LazyPagingItems<PostUi>,
     onEvent: (PostsEvent) -> Unit,
 ) {
     val lazyListState = rememberLazyListState()
@@ -114,47 +115,38 @@ private fun PostsScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            when (val refreshState = posts.loadState.refresh) {
-                is LoadState.Error -> {
-                    ErrorScreen(
-                        modifier = Modifier.fillMaxSize(),
-                        message = refreshState.error.message.orEmpty(),
-                        onTryAgainClick = posts::refresh,
+            OutlinedTextField(
+                modifier = Modifier.defaultMaxWidth(),
+                value = filtersState.query.orEmpty(),
+                onValueChange = { query -> onEvent(PostsEvent.PostSearch(query)) },
+                textStyle = EmpathTheme.typography.bodyLarge,
+                shape = EmpathTheme.shapes.small,
+                maxLines = 1,
+                label = {
+                    Text(
+                        text = stringResource(Res.string.search),
+                        style = EmpathTheme.typography.bodyLarge,
                     )
-                }
-
-                else -> {
-                    OutlinedTextField(
-                        modifier = Modifier.defaultMaxWidth(),
-                        value = state.query.orEmpty(),
-                        onValueChange = { query -> onEvent(PostsEvent.PostSearch(query)) },
-                        textStyle = EmpathTheme.typography.bodyLarge,
-                        shape = EmpathTheme.shapes.small,
-                        maxLines = 1,
-                        label = {
-                            Text(
-                                text = stringResource(Res.string.search),
-                                style = EmpathTheme.typography.bodyLarge,
+                },
+                trailingIcon = {
+                    if (state is PostsState.Loading) {
+                        Box(
+                            modifier = Modifier.size(40.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(24.dp),
+                                trackColor = EmpathTheme.colors.secondary,
+                                strokeCap = StrokeCap.Square,
+                                color = EmpathTheme.colors.primary,
                             )
-                        },
-                        trailingIcon = {
-                            if (posts.loadState.refresh is LoadState.Loading) {
-                                Box(
-                                    modifier = Modifier.size(40.dp),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(24.dp),
-                                        trackColor = EmpathTheme.colors.secondary,
-                                        strokeCap = StrokeCap.Square,
-                                        color = EmpathTheme.colors.primary,
-                                    )
-                                }
-                            }
-                        },
-                    )
-
-                    if (posts.itemCount != 0) {
+                        }
+                    }
+                },
+            )
+            when (state) {
+                is PostsState.Success -> {
+                    if (state.posts.isNotEmpty()) {
                         LazyColumn(
                             state = lazyListState,
                             modifier = Modifier.fillMaxSize(),
@@ -162,12 +154,11 @@ private fun PostsScreen(
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            items(posts.itemCount) { index ->
-                                val post = posts[index]
+                            items(state.posts) { post ->
                                 if (post != null) {
                                     PostCard(
                                         post = post,
-                                        userId = state.userId,
+                                        userId = filtersState.userId,
                                         onEvent = onEvent,
                                         modifier = Modifier.fillMaxWidth(),
                                     )
@@ -177,10 +168,6 @@ private fun PostsScreen(
                                     )
                                 }
                             }
-
-                            postsAppendState(
-                                posts = posts,
-                            )
                         }
                     } else {
                         MessageScreen(
@@ -188,35 +175,24 @@ private fun PostsScreen(
                         )
                     }
                 }
+
+                is PostsState.Error -> {
+                    ErrorScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        message = state.message,
+                        onTryAgainClick = { onEvent(PostsEvent.LoadPosts) },
+                    )
+                }
+
+                is PostsState.Loading -> {
+                    CircularLoadingCard(
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
+
+                is PostsState.Initial -> Unit
+
             }
         }
-    }
-}
-
-private fun LazyListScope.postsAppendState(
-    posts: LazyPagingItems<PostUi>,
-) {
-    when (val appendState = posts.loadState.append) {
-        is LoadState.Error -> {
-            item {
-                ErrorCard(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    message = appendState.error.message.orEmpty(),
-                    onTryAgainClick = posts::retry,
-                )
-            }
-        }
-
-        is LoadState.Loading -> {
-            item {
-                CircularLoadingCard(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                )
-            }
-        }
-
-        is LoadState.NotLoading -> Unit
     }
 }

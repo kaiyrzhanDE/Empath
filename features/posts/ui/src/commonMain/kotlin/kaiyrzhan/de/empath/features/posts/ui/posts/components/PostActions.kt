@@ -27,7 +27,6 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 internal fun PostActions(
     modifier: Modifier = Modifier,
-    category: String = "Post", //TODO("Need to add category")
     post: PostUi,
     onLikeClick: () -> Unit,
     onDislikeClick: () -> Unit,
@@ -41,19 +40,23 @@ internal fun PostActions(
         PostAction(
             text = post.likesCount.toGroupedString(),
             painter = painterResource(Res.drawable.ic_sentiment_satisfied),
-            isChecked = post.isLiked,
-            contentDescription = "Post like action",
+            isChecked = post.reaction.isLiked(),
             onClick = onLikeClick,
         )
-
         PostAction(
             text = post.dislikesCount.toGroupedString(),
             painter = painterResource(Res.drawable.ic_sentiment_dissatisfied),
-            isChecked = post.isLiked.not(),
-            contentDescription = "Post dislike action",
+            isChecked = post.reaction.isDisliked(),
             onClick = onDislikeClick,
         )
-
+        PostAction(
+            painter = painterResource(Res.drawable.ic_share),
+            onClick = onShareClick,
+        )
+        HorizontalDivider(
+            modifier = Modifier.weight(1f),
+            color = EmpathTheme.colors.outlineVariant,
+        )
         Row(
             modifier = Modifier
                 .clip(EmpathTheme.shapes.small)
@@ -63,38 +66,16 @@ internal fun PostActions(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(24.dp),
                 painter = painterResource(Res.drawable.ic_visibility_on),
-                contentDescription = "Post views count",
-                colorFilter = ColorFilter.tint(EmpathTheme.colors.onSurface)
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    if (post.isViewed) EmpathTheme.colors.primary
+                    else EmpathTheme.colors.onSurface,
+                )
             )
         }
 
-        PostAction(
-            painter = painterResource(Res.drawable.ic_share),
-            contentDescription = "Post share action",
-            onClick = onShareClick,
-        )
-
-        HorizontalDivider(
-            modifier = Modifier.weight(1f),
-            color = EmpathTheme.colors.outlineVariant,
-        )
-
-        Row(
-            modifier = Modifier
-                .clip(EmpathTheme.shapes.small)
-                .background(EmpathTheme.colors.surfaceContainer)
-                .padding(horizontal = 6.dp, vertical = 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = category,
-                style = EmpathTheme.typography.bodySmall,
-                color = EmpathTheme.colors.onSurface,
-            )
-        }
     }
 }
 
@@ -122,14 +103,14 @@ private fun PostAction(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(24.dp),
             painter = painter,
             contentDescription = contentDescription,
             colorFilter = ColorFilter.tint(animatedIconColor.value)
         )
         Text(
             text = text,
-            style = EmpathTheme.typography.bodySmall,
+            style = EmpathTheme.typography.labelMedium,
             color = EmpathTheme.colors.onSurface,
         )
     }
@@ -152,7 +133,7 @@ private fun PostAction(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(24.dp),
             painter = painter,
             contentDescription = contentDescription,
             colorFilter = ColorFilter.tint(EmpathTheme.colors.onSurface)

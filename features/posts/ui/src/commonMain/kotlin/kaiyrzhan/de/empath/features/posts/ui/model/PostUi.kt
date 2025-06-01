@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.posts.ui.model
 
 import kaiyrzhan.de.empath.core.utils.result.addBaseUrl
 import kaiyrzhan.de.empath.core.utils.result.removeBaseUrl
+import kaiyrzhan.de.empath.core.utils.toEnumSafe
 import kaiyrzhan.de.empath.features.posts.domain.model.Post
 
 internal data class PostUi(
@@ -14,10 +15,10 @@ internal data class PostUi(
     val subPosts: List<SubPostUi>,
     val viewsCount: Int,
     val likesCount: Int,
-    val isViewed: Boolean = false,
-    val isLiked: Boolean = false,
     val dislikesCount: Int,
     val author: AuthorUi,
+    val reaction: Reaction,
+    val isViewed: Boolean = false,
 )
 
 internal fun Post.toUi(): PostUi {
@@ -33,6 +34,9 @@ internal fun Post.toUi(): PostUi {
         dislikesCount = dislikesCount,
         likesCount = likesCount,
         viewsCount = viewsCount,
+        reaction = reaction.toEnumSafe(default = Reaction.DEFAULT) { enum, value ->
+            enum.type.equals(other = value, ignoreCase = true)
+        },
     )
 }
 
@@ -49,6 +53,7 @@ internal fun PostUi.toDomain(): Post {
         dislikesCount = dislikesCount,
         likesCount = likesCount,
         viewsCount = viewsCount,
+        reaction = reaction.toString(),
     )
 }
 
