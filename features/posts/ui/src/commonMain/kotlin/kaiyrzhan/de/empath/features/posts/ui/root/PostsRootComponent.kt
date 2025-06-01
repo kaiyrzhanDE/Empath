@@ -6,6 +6,7 @@ import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.PostCreateComponent
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.PostDetailComponent
 import kaiyrzhan.de.empath.features.posts.ui.postEdit.PostEditComponent
+import kaiyrzhan.de.empath.features.posts.ui.postFilters.PostFiltersComponent
 import kaiyrzhan.de.empath.features.posts.ui.posts.PostsComponent
 
 public interface PostsRootComponent : BackHandlerOwner {
@@ -18,5 +19,6 @@ public interface PostsRootComponent : BackHandlerOwner {
         internal class PostDetail(val component: PostDetailComponent) : Child()
         internal class PostCreate(val component: PostCreateComponent) : Child()
         internal class PostEdit(val component: PostEditComponent) : Child()
+        internal class PostFilters(val component: PostFiltersComponent) : Child()
     }
 }

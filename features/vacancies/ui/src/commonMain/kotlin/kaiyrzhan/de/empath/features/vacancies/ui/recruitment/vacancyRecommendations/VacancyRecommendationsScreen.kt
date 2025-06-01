@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.components.EmptyResultScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
 import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
@@ -68,7 +69,7 @@ private fun VacancyRecommendationsScreen(
         when (state) {
             is VacancyRecommendationsState.Success -> {
                 if (state.recommendations.recommendations.isEmpty()) {
-                    MessageScreen(
+                    EmptyResultScreen(
                         modifier = Modifier.fillMaxSize(),
                     )
                 } else {

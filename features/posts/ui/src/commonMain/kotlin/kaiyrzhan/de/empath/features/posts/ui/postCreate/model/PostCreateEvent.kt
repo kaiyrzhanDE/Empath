@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.posts.ui.postCreate.model
 
 import io.github.vinceglb.filekit.PlatformFile
 import kaiyrzhan.de.empath.features.posts.ui.model.ImageUi
+import kaiyrzhan.de.empath.features.posts.ui.model.SpecializationUi
 import kaiyrzhan.de.empath.features.posts.ui.model.TagUi
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -10,6 +11,9 @@ import kotlin.uuid.Uuid
 internal sealed interface PostCreateEvent {
     data class PostTitleChange(val title: String) : PostCreateEvent
     data class PostDescriptionChange(val description: String) : PostCreateEvent
+    data class SpecializationQueryChange(val query: String) : PostCreateEvent
+    data object SpecializationRemove : PostCreateEvent
+    data class SpecializationSelect(val specialization: SpecializationUi) : PostCreateEvent
     data object TagAddClick : PostCreateEvent
     data class TagsAdded(val tags: List<TagUi>) : PostCreateEvent
     data class TagRemove(val tag: TagUi) : PostCreateEvent

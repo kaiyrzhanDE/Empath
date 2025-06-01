@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingCard
+import kaiyrzhan.de.empath.core.ui.components.EmptyResultScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorCard
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
 import kaiyrzhan.de.empath.core.ui.components.MessageScreen
@@ -80,7 +81,7 @@ internal fun ResponsesTab(
                         )
                     }
                 } else {
-                    MessageScreen(
+                    EmptyResultScreen(
                         modifier = Modifier.fillMaxSize(),
                     )
                 }

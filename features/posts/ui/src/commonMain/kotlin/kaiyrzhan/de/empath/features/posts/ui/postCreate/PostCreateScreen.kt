@@ -48,6 +48,7 @@ import kaiyrzhan.de.empath.features.posts.ui.postCreate.model.PostCreateState
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.components.Post
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.components.Header
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.components.SubPost
+import kaiyrzhan.de.empath.features.posts.ui.postFilters.model.SpecializationsState
 import kaiyrzhan.de.empath.features.posts.ui.tags.TagsDialog
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -62,6 +63,7 @@ internal fun PostCreateScreen(
     val snackbarHostState = LocalSnackbarHostState.current
 
     val state = component.state.collectAsState()
+    val specializationsState = component.specializationsState.collectAsState()
 
     val messageDialogSlot by component.messageDialog.subscribeAsState()
     messageDialogSlot.child?.instance?.also { messageComponent ->
@@ -90,6 +92,7 @@ internal fun PostCreateScreen(
     PostCreateScreen(
         modifier = modifier,
         state = state.value,
+        specializationsState = specializationsState.value,
         onEvent = component::onEvent,
     )
 }
@@ -99,6 +102,7 @@ internal fun PostCreateScreen(
 private fun PostCreateScreen(
     modifier: Modifier = Modifier,
     state: PostCreateState,
+    specializationsState: SpecializationsState,
     onEvent: (PostCreateEvent) -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -141,7 +145,8 @@ private fun PostCreateScreen(
                     }
                     HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
                     Post(
-                        post = state.newPost,
+                        state = state,
+                        specializationsState = specializationsState,
                         onEvent = onEvent,
                     )
                     state.newPost.subPosts.forEachIndexed { position, subPost ->

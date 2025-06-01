@@ -29,6 +29,8 @@ kotlin {
             api(libs.coil.network.ktor)
             api(libs.coil.compose)
 
+            api(libs.compottie)
+
             implementation(projects.core.utils)
             implementation(projects.core.network)
         }

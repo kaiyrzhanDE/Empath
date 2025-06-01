@@ -9,7 +9,6 @@ import kaiyrzhan.de.empath.core.utils.pagination.map
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.core.utils.result.toDomain
 import kaiyrzhan.de.empath.features.posts.data.model.*
-import kaiyrzhan.de.empath.features.posts.data.pagingSource.PostsPagingSource
 import kaiyrzhan.de.empath.features.posts.data.pagingSource.TagsPagingSource
 import kaiyrzhan.de.empath.features.posts.data.remote.PostsApi
 import kaiyrzhan.de.empath.features.posts.domain.model.*
@@ -24,11 +23,23 @@ internal class PostsRepositoryImpl(
 
     override suspend fun getPosts(
         query: String?,
+        excludeWords: List<String>,
+        includeWords: List<String>,
+        isLiked: Boolean,
+        isDisliked: Boolean,
+        specializationsIds: List<String>,
+        isViewed: Boolean,
+        tagsIds: List<String>,
     ): RequestResult<ListResult<Post>> {
         return api.getPosts(
             query = query,
-            page = 1,
-            pageLimit = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
+            excludeWords = excludeWords,
+            includeWords = includeWords,
+            isLiked = isLiked,
+            isDisliked = isDisliked,
+            isViewed = isViewed,
+            specializationsIds = specializationsIds,
+            tagsIds = tagsIds,
         ).toDomain { posts ->
             posts.map { post ->
                 post.toDomain()
@@ -184,5 +195,15 @@ internal class PostsRepositoryImpl(
         return api.cancelDislikeComment(
             commentId = commentId,
         )
+    }
+
+    override suspend fun getSpecializations(query: String?): RequestResult<ListResult<Specialization>> {
+        return api.getSpecializations(
+            query = query,
+        ).toDomain { specializations ->
+            specializations.map { specialization ->
+                specialization.toDomain()
+            }
+        }
     }
 }

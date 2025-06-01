@@ -11,9 +11,11 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
+import kaiyrzhan.de.empath.features.posts.ui.model.PostFiltersUi
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.RealPostCreateComponent
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.RealPostDetailComponent
 import kaiyrzhan.de.empath.features.posts.ui.postEdit.RealPostEditComponent
+import kaiyrzhan.de.empath.features.posts.ui.postFilters.RealPostFiltersComponent
 import kaiyrzhan.de.empath.features.posts.ui.posts.RealPostsComponent
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
 import kotlinx.serialization.Serializable
@@ -42,6 +44,7 @@ public class RealPostsRootComponent(
             is Config.PostDetail -> createPostDetailComponent(componentContext, config)
             is Config.PostCreate -> createPostCreateComponent(componentContext)
             is Config.PostEdit -> createPostEditComponent(componentContext, config)
+            is Config.PostFilters -> createPostFiltersComponent(componentContext, config)
         }
     }
 
@@ -67,7 +70,6 @@ public class RealPostsRootComponent(
         )
     }
 
-
     private fun createPostEditComponent(
         componentContext: ComponentContext,
         config: Config.PostEdit,
@@ -80,7 +82,6 @@ public class RealPostsRootComponent(
             )
         )
     }
-
 
     @OptIn(DelicateDecomposeApi::class)
     private fun createPostsComponent(componentContext: ComponentContext): PostsRootComponent.Child.Posts {
@@ -99,6 +100,11 @@ public class RealPostsRootComponent(
                     navigation.push(
                         Config.PostEdit(postId)
                     )
+                },
+                onPostFiltersClick = { postFilters ->
+                    navigation.push(
+                        Config.PostFilters(postFilters)
+                    )
                 }
             )
         )
@@ -113,11 +119,39 @@ public class RealPostsRootComponent(
         )
     }
 
+    private fun createPostFiltersComponent(
+        componentContext: ComponentContext,
+        config: Config.PostFilters,
+    ): PostsRootComponent.Child.PostFilters {
+        return PostsRootComponent.Child.PostFilters(
+            component = RealPostFiltersComponent(
+                componentContext = componentContext,
+                postFilters = config.postFilters,
+                onBackClick = { isFiltersUpdated, postFilters ->
+                    if (isFiltersUpdated) {
+                        applyPostFilters(postFilters)
+                    } else {
+                        onBackClick()
+                    }
+                },
+            )
+        )
+    }
+
     private fun reloadPosts() {
         navigation.pop {
             (stack.active.instance as? PostsRootComponent.Child.Posts)
                 ?.component
                 ?.onEvent(PostsEvent.ReloadPosts)
+        }
+    }
+
+
+    private fun applyPostFilters(postFilters: PostFiltersUi) {
+        navigation.pop {
+            (stack.active.instance as? PostsRootComponent.Child.Posts)
+                ?.component
+                ?.onEvent(PostsEvent.ApplyPostFilters(postFilters))
         }
     }
 
@@ -136,5 +170,9 @@ public class RealPostsRootComponent(
         @Serializable
         data class PostEdit(val postId: String) : Config
 
+        @Serializable
+        data class PostFilters(
+            val postFilters: PostFiltersUi,
+        ) : Config
     }
 }

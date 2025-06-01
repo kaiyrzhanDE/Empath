@@ -24,6 +24,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import kaiyrzhan.de.empath.core.ui.components.UnderDevelopmentScreen
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
@@ -125,14 +126,9 @@ private fun MainScreen(
             }
 
             is Child.Menu -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(EmpathTheme.colors.surfaceDim),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Menu")
-                }
+                UnderDevelopmentScreen(
+                    modifier = Modifier.fillMaxSize(),
+                )
             }
 
             is Child.Employment -> {

@@ -3,7 +3,6 @@ package kaiyrzhan.de.empath.core.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -21,52 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.empty_description
-import empath.core.uikit.generated.resources.empty_title
-import empath.core.uikit.generated.resources.ic_broken_ice
-import empath.core.uikit.generated.resources.oops_something_went_wrong_description
-import empath.core.uikit.generated.resources.oops_something_went_wrong_title
-import empath.core.uikit.generated.resources.try_again
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-
-@Composable
-public fun MessageScreen(
-    modifier: Modifier = Modifier,
-    title: String = stringResource(Res.string.empty_title),
-    description: String = stringResource(Res.string.empty_description),
-) {
-    Column(
-        modifier = modifier.padding(32.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Image(
-            modifier = Modifier.size(120.dp),
-            painter = painterResource(Res.drawable.ic_broken_ice),
-            contentDescription = null,
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            modifier = Modifier.defaultMaxWidth(),
-            text = title,
-            style = EmpathTheme.typography.titleLarge,
-            color = EmpathTheme.colors.onSurface,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            modifier = Modifier.defaultMaxWidth(),
-            text = description,
-            style = EmpathTheme.typography.labelLarge,
-            color = EmpathTheme.colors.onSurfaceVariant,
-        )
-    }
-}
 
 @Composable
 public fun ErrorScreen(

@@ -206,7 +206,7 @@ private fun VacanciesScreen(
                     Icon(
                         modifier = Modifier.size(24.dp),
                         painter = painterResource(Res.drawable.ic_tune),
-                        contentDescription = "Vacancies filters",
+                        contentDescription = null,
                         tint = EmpathTheme.colors.primary,
                     )
                 }
@@ -222,7 +222,7 @@ private fun VacanciesScreen(
                     Icon(
                         modifier = Modifier.size(24.dp),
                         painter = painterResource(Res.drawable.ic_work_outlined),
-                        contentDescription = "Cvs",
+                        contentDescription = null,
                         tint = EmpathTheme.colors.primary,
                     )
                 }

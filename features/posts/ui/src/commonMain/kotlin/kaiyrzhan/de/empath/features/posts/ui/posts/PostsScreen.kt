@@ -1,16 +1,20 @@
 package kaiyrzhan.de.empath.features.posts.ui.posts
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,28 +29,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
-import app.cash.paging.compose.LazyPagingItems
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
-import kaiyrzhan.de.empath.core.ui.components.CircularLoadingCard
-import kaiyrzhan.de.empath.core.ui.components.ErrorCard
+import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
+import kaiyrzhan.de.empath.core.ui.components.EmptyResultScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
-import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
+import kaiyrzhan.de.empath.features.posts.ui.model.PostReactionType
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostCard
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostShimmerCard
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsAction
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsFiltersState
-import kaiyrzhan.de.empath.features.posts.ui.model.PostUi
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
@@ -115,35 +117,84 @@ private fun PostsScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            OutlinedTextField(
-                modifier = Modifier.defaultMaxWidth(),
-                value = filtersState.query.orEmpty(),
-                onValueChange = { query -> onEvent(PostsEvent.PostSearch(query)) },
-                textStyle = EmpathTheme.typography.bodyLarge,
-                shape = EmpathTheme.shapes.small,
-                maxLines = 1,
-                label = {
-                    Text(
-                        text = stringResource(Res.string.search),
-                        style = EmpathTheme.typography.bodyLarge,
-                    )
-                },
-                trailingIcon = {
-                    if (state is PostsState.Loading) {
-                        Box(
-                            modifier = Modifier.size(40.dp),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(24.dp),
-                                trackColor = EmpathTheme.colors.secondary,
-                                strokeCap = StrokeCap.Square,
-                                color = EmpathTheme.colors.primary,
-                            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .defaultMaxWidth()
+                    .screenHorizontalPadding(PaddingType.MAIN),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                OutlinedTextField(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .weight(1f),
+                    value = filtersState.filters.query,
+                    onValueChange = { query -> onEvent(PostsEvent.PostSearch(query)) },
+                    textStyle = EmpathTheme.typography.bodyLarge,
+                    shape = EmpathTheme.shapes.small,
+                    maxLines = 1,
+                    label = {
+                        Text(
+                            text = stringResource(Res.string.search),
+                            style = EmpathTheme.typography.bodyLarge,
+                        )
+                    },
+                    trailingIcon = {
+                        if (state is PostsState.Loading) {
+                            Box(
+                                modifier = Modifier.size(40.dp),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    trackColor = EmpathTheme.colors.secondary,
+                                    strokeCap = StrokeCap.Square,
+                                    color = EmpathTheme.colors.primary,
+                                )
+                            }
                         }
-                    }
-                },
-            )
+                    },
+                )
+                Box(
+                    modifier = Modifier
+                        .size(56.dp)
+                        .align(Alignment.Bottom)
+                        .clip(EmpathTheme.shapes.small)
+                        .clickable { onEvent(PostsEvent.PostFiltersClick) }
+                        .background(EmpathTheme.colors.surface),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(Res.drawable.ic_tune),
+                        contentDescription = null,
+                        tint = EmpathTheme.colors.primary,
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(56.dp)
+                        .align(Alignment.Bottom)
+                        .clip(EmpathTheme.shapes.small)
+                        .clickable { onEvent(PostsEvent.FavouritePostsClick) }
+                        .background(EmpathTheme.colors.surface),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(
+                            resource = if(filtersState.filters.postReactionType == PostReactionType.LIKED) {
+                                Res.drawable.ic_favourite_filled
+                            } else {
+                                Res.drawable.ic_favourite
+                            }
+                        ),
+                        contentDescription = null,
+                        tint = EmpathTheme.colors.primary,
+                    )
+                }
+            }
             when (state) {
                 is PostsState.Success -> {
                     if (state.posts.isNotEmpty()) {
@@ -170,7 +221,7 @@ private fun PostsScreen(
                             }
                         }
                     } else {
-                        MessageScreen(
+                        EmptyResultScreen(
                             modifier = Modifier.fillMaxSize(),
                         )
                     }
@@ -185,7 +236,7 @@ private fun PostsScreen(
                 }
 
                 is PostsState.Loading -> {
-                    CircularLoadingCard(
+                    CircularLoadingScreen(
                         modifier = Modifier.fillMaxSize(),
                     )
                 }
@@ -193,6 +244,7 @@ private fun PostsScreen(
                 is PostsState.Initial -> Unit
 
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

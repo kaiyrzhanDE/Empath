@@ -40,10 +40,21 @@ import kaiyrzhan.de.empath.features.filestorage.domain.model.FileType
 import kaiyrzhan.de.empath.features.filestorage.domain.model.StorageName
 import kaiyrzhan.de.empath.features.filestorage.domain.usecase.UploadFileUseCase
 import kaiyrzhan.de.empath.features.filestorage.domain.usecase.UploadFileUseCaseError
+import kaiyrzhan.de.empath.features.posts.domain.usecase.GetSpecializationsUseCase
+import kaiyrzhan.de.empath.features.posts.ui.model.SpecializationUi
+import kaiyrzhan.de.empath.features.posts.ui.postFilters.model.SpecializationsState
 import kaiyrzhan.de.empath.features.profile.domain.usecase.GetUserUseCase
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -61,13 +72,25 @@ internal class RealPostCreateComponent(
     private val uploadFileUseCase: UploadFileUseCase by inject()
     private val createPostUseCase: CreatePostUseCase by inject()
     private val getUserUseCase: GetUserUseCase by inject()
+    private val getSpecializationsUseCase: GetSpecializationsUseCase by inject()
 
     override val state = MutableStateFlow<PostCreateState>(
         PostCreateState.default()
     )
 
+    override val specializationsState = MutableStateFlow<SpecializationsState>(
+        SpecializationsState.default()
+    )
+
     private val _action = Channel<PostCreateAction>(capacity = Channel.BUFFERED)
     override val action: Flow<PostCreateAction> = _action.receiveAsFlow()
+
+    @OptIn(FlowPreview::class)
+    private val specializationQuery = state
+        .filterIsInstance<PostCreateState.Success>()
+        .map { state -> state.specializationQuery }
+        .debounce(500)
+        .distinctUntilChanged()
 
     private val messageDialogNavigation = SlotNavigation<MessageDialogState>()
     override val messageDialog: Value<ChildSlot<*, MessageDialogComponent>> = childSlot(
@@ -88,6 +111,7 @@ internal class RealPostCreateComponent(
 
     init {
         loadUser()
+        observeSpecializationQuery()
     }
 
     override fun onEvent(event: PostCreateEvent) {
@@ -106,6 +130,10 @@ internal class RealPostCreateComponent(
             is PostCreateEvent.TagsAdded -> addTags(event.tags)
             is PostCreateEvent.PostClear -> clear()
             is PostCreateEvent.PostCreate -> createPost()
+
+            is PostCreateEvent.SpecializationQueryChange -> changeSpecializationQuery(event.query)
+            is PostCreateEvent.SpecializationSelect -> selectSpecialization(event.specialization)
+            is PostCreateEvent.SpecializationRemove -> removeSpecialization()
 
             is PostCreateEvent.SubPostTitleChange ->
                 changeSubPostTitle(
@@ -193,6 +221,7 @@ internal class RealPostCreateComponent(
                     PostCreateState.Success(
                         user = user.toUi(),
                         newPost = NewPostUi.default(),
+                        specializationQuery = "",
                     )
                 }
             }.onFailure { error ->
@@ -253,6 +282,70 @@ internal class RealPostCreateComponent(
             currentState.copy(
                 newPost = currentState.newPost.copy(
                     description = description,
+                ),
+            )
+        }
+    }
+
+    private fun changeSpecializationQuery(query: String) {
+        state.update { currentState ->
+            check(currentState is PostCreateState.Success)
+            currentState.copy(
+                specializationQuery = query,
+            )
+        }
+    }
+
+    private fun observeSpecializationQuery(){
+        coroutineScope.launch {
+            specializationQuery.collectLatest { query ->
+                loadSpecializations(query)
+            }
+        }
+    }
+
+    private fun loadSpecializations(query: String) {
+        specializationsState.update { SpecializationsState.Loading }
+        coroutineScope.launch {
+            getSpecializationsUseCase(
+                query = query,
+            ).onSuccess { specializations ->
+                specializationsState.update {
+                    SpecializationsState.Success(
+                        specializations = specializations.data.map { specialization -> specialization.toUi() },
+                    )
+                }
+            }.onFailure { error ->
+                when (error) {
+                    is Result.Error.DefaultError -> {
+                        specializationsState.update {
+                            SpecializationsState.Error(
+                                message = error.toString(),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun selectSpecialization(specialization: SpecializationUi) {
+        state.update { currentState ->
+            check(currentState is PostCreateState.Success)
+            currentState.copy(
+                newPost = currentState.newPost.copy(
+                    specialization = specialization,
+                ),
+            )
+        }
+    }
+
+    private fun removeSpecialization() {
+        state.update { currentState ->
+            check(currentState is PostCreateState.Success)
+            currentState.copy(
+                newPost = currentState.newPost.copy(
+                    specialization = null,
                 ),
             )
         }

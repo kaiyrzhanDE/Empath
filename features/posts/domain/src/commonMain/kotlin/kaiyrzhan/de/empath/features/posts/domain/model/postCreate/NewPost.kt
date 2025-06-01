@@ -9,4 +9,5 @@ public class NewPost(
     public val imageUrls: List<String>,
     public val tags: List<Tag>,
     public val subPosts: List<NewSubPost>,
+    public val specializationId: String,
 )

@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingCard
+import kaiyrzhan.de.empath.core.ui.components.EmptyResultScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorCard
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
-import kaiyrzhan.de.empath.core.ui.components.MessageScreen
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
@@ -81,7 +81,7 @@ internal fun VacanciesTab(
                         )
                     }
                 } else {
-                    MessageScreen(
+                    EmptyResultScreen(
                         modifier = Modifier.fillMaxSize(),
                     )
                 }

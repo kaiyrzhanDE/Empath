@@ -27,18 +27,20 @@ import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.extensions.appendRequiredMarker
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.model.PostCreateEvent
-import kaiyrzhan.de.empath.features.posts.ui.model.postCreate.NewPostUi
+import kaiyrzhan.de.empath.features.posts.ui.postCreate.model.PostCreateState
+import kaiyrzhan.de.empath.features.posts.ui.postFilters.model.SpecializationsState
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun ColumnScope.Post(
-    post: NewPostUi,
+    state: PostCreateState.Success,
+    specializationsState: SpecializationsState,
     onEvent: (PostCreateEvent) -> Unit
 ) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        value = post.title,
+        value = state.newPost.title,
         onValueChange = { title ->
             onEvent(PostCreateEvent.PostTitleChange(title))
         },
@@ -57,6 +59,12 @@ internal fun ColumnScope.Post(
             unfocusedBorderColor = EmpathTheme.colors.outlineVariant,
         )
     )
+    Specializations(
+        modifier = Modifier.fillMaxWidth(),
+        state = state,
+        specializationsState = specializationsState,
+        onEvent = onEvent,
+    )
     Text(
         modifier = Modifier.fillMaxWidth(),
         text = buildAnnotatedString {
@@ -65,13 +73,13 @@ internal fun ColumnScope.Post(
         },
         color = EmpathTheme.colors.onSurface,
     )
-    if (post.tags.isNotEmpty()) {
+    if (state.newPost.tags.isNotEmpty()) {
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            post.tags.forEach { tag ->
+            state.newPost.tags.forEach { tag ->
                 Box(
                     modifier = Modifier
                         .clip(EmpathTheme.shapes.small)
@@ -117,7 +125,7 @@ internal fun ColumnScope.Post(
     }
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        value = post.description,
+        value = state.newPost.description,
         shape = EmpathTheme.shapes.small,
         textStyle = EmpathTheme.typography.titleSmall,
         onValueChange = { description ->
@@ -139,7 +147,7 @@ internal fun ColumnScope.Post(
     )
     PostImages(
         modifier = Modifier.heightIn(max = 400.dp),
-        images = post.images,
+        images = state.newPost.images,
         onImagesSelected = { files ->
             onEvent(PostCreateEvent.PostImagesAdd(files))
         },

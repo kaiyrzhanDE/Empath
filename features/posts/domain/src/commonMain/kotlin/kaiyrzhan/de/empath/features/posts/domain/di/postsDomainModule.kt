@@ -16,6 +16,7 @@ import kaiyrzhan.de.empath.features.posts.domain.usecase.EditCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetPostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetPostsUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetCommentsUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.GetSpecializationsUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetTagsUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.LikeCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.LikePostUseCase
@@ -116,6 +117,11 @@ public val postsDomainModule: Module = module {
     }
     factory {
         ViewPostUseCase(
+            repository = get<PostsRepository>(),
+        )
+    }
+    factory {
+        GetSpecializationsUseCase(
             repository = get<PostsRepository>(),
         )
     }

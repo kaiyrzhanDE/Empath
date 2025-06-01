@@ -132,6 +132,7 @@ internal fun Tags(
                                                 verticalAlignment = Alignment.CenterVertically,
                                             ) {
                                                 Text(
+                                                    modifier = Modifier.heightIn(min = 24.dp),
                                                     text = tag.name,
                                                     color = if (isSelected) EmpathTheme.colors.secondary
                                                     else EmpathTheme.colors.onSurface,

@@ -22,14 +22,15 @@ import kaiyrzhan.de.empath.features.posts.domain.usecase.DeletePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.DislikePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetPostsUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.LikePostUseCase
+import kaiyrzhan.de.empath.features.posts.ui.model.PostFiltersUi
+import kaiyrzhan.de.empath.features.posts.ui.model.PostReactionType
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsAction
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsFiltersState
 import kaiyrzhan.de.empath.features.posts.ui.model.PostUi
 import kaiyrzhan.de.empath.features.posts.ui.model.Reaction
+import kaiyrzhan.de.empath.features.posts.ui.model.getIds
 import kaiyrzhan.de.empath.features.posts.ui.model.toUi
-import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailAction
-import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailState
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsState
 import kaiyrzhan.de.empath.features.profile.domain.usecase.GetUserUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,6 +54,7 @@ internal class RealPostsComponent(
     private val onPostClick: (postId: String) -> Unit,
     private val onPostCreateClick: () -> Unit,
     private val onPostEditClick: (postId: String) -> Unit,
+    private val onPostFiltersClick: (postFilters: PostFiltersUi) -> Unit,
 ) : BaseComponent(componentContext), PostsComponent {
 
     private val getUserUseCase: GetUserUseCase = get()
@@ -70,7 +72,7 @@ internal class RealPostsComponent(
 
     @OptIn(FlowPreview::class)
     private val queryFlow = filtersState
-        .map { state -> state.query }
+        .map { state -> state.filters.query }
         .debounce(500)
         .distinctUntilChanged()
 
@@ -96,18 +98,29 @@ internal class RealPostsComponent(
             is PostsEvent.PostSearch -> searchPost(event.query)
             is PostsEvent.PostLike -> likePost(event.post)
             is PostsEvent.LoadPosts -> loadPosts()
+            is PostsEvent.FavouritePostsClick -> showFavouritePosts()
+            is PostsEvent.PostFiltersClick -> onPostFiltersClick(filtersState.value.filters)
             is PostsEvent.ReloadPosts -> reloadPosts()
+            is PostsEvent.ApplyPostFilters -> applyFilters(event.filters)
             is PostsEvent.PostDislike -> dislikePost(event.post)
             is PostsEvent.PostShare -> sharePost(event.post)
             is PostsEvent.PostCreateClick -> onPostCreateClick()
         }
     }
 
-    private fun loadPosts(query: String = filtersState.value.query.orEmpty()) {
+    private fun loadPosts(query: String = filtersState.value.filters.query) {
+        val filtersState = filtersState.value
         state.update { PostsState.Loading }
         coroutineScope.launch {
             getPostsUseCase(
                 query = query,
+                isLiked = filtersState.filters.postReactionType.isLiked(),
+                isDisliked = filtersState.filters.postReactionType.isDisliked(),
+                isViewed = filtersState.filters.postReactionType.isViewed(),
+                includeWords = filtersState.filters.includeWords,
+                excludeWords = filtersState.filters.excludeWords,
+                tagsIds = emptyList(),
+                specializationsIds = filtersState.filters.selectedSpecializations.getIds(),
             ).onSuccess { posts ->
                 state.update {
                     PostsState.Success(
@@ -124,10 +137,18 @@ internal class RealPostsComponent(
         }
     }
 
-    private fun reloadPosts(query: String = filtersState.value.query.orEmpty()) {
+    private fun reloadPosts(query: String = filtersState.value.filters.query) {
+        val filtersState = filtersState.value
         coroutineScope.launch {
             getPostsUseCase(
                 query = query,
+                isLiked = filtersState.filters.postReactionType.isLiked(),
+                isDisliked = filtersState.filters.postReactionType.isDisliked(),
+                isViewed = filtersState.filters.postReactionType.isViewed(),
+                includeWords = filtersState.filters.includeWords,
+                excludeWords = filtersState.filters.excludeWords,
+                tagsIds = emptyList(),
+                specializationsIds = filtersState.filters.selectedSpecializations.getIds(),
             ).onSuccess { posts ->
                 state.update {
                     PostsState.Success(
@@ -159,7 +180,7 @@ internal class RealPostsComponent(
     private fun observeQuery() {
         coroutineScope.launch {
             queryFlow.collectLatest { query ->
-                loadPosts(query.orEmpty())
+                loadPosts(query)
             }
         }
     }
@@ -167,7 +188,9 @@ internal class RealPostsComponent(
     private fun searchPost(query: String) {
         filtersState.update { currentState ->
             currentState.copy(
-                query = query,
+                filters = currentState.filters.copy(
+                    query = query,
+                ),
             )
         }
     }
@@ -230,6 +253,7 @@ internal class RealPostsComponent(
                                                 dislikesCount = post.dislikesCount - 1
                                             )
                                         }
+
                                         else -> {
                                             post.copy(
                                                 reaction = Reaction.IS_LIKED,
@@ -294,6 +318,7 @@ internal class RealPostsComponent(
                                                 dislikesCount = post.dislikesCount + 1
                                             )
                                         }
+
                                         else -> {
                                             post.copy(
                                                 reaction = Reaction.IS_DISLIKED,
@@ -344,6 +369,29 @@ internal class RealPostsComponent(
                     )
                 )
             }
+        }
+    }
+
+    private fun showFavouritePosts() {
+        filtersState.update { state ->
+            state.copy(
+                filters = state.filters.copy(
+                    postReactionType = if (state.filters.postReactionType == PostReactionType.LIKED) {
+                        PostReactionType.NONE
+                    } else {
+                        PostReactionType.LIKED
+                    },
+                ),
+            )
+        }
+        loadPosts()
+    }
+
+    private fun applyFilters(filters: PostFiltersUi) {
+        filtersState.update { state ->
+            state.copy(
+                filters = filters
+            )
         }
     }
 }

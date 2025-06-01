@@ -16,6 +16,7 @@ import kaiyrzhan.de.empath.features.posts.data.model.PostDTO
 import kaiyrzhan.de.empath.features.posts.data.model.PostRequest
 import kaiyrzhan.de.empath.features.posts.data.model.CommentDTO
 import kaiyrzhan.de.empath.features.posts.data.model.CommentRequest
+import kaiyrzhan.de.empath.features.posts.data.model.SpecializationDTO
 import kaiyrzhan.de.empath.features.posts.data.model.TagDTO
 
 internal interface PostsApi {
@@ -23,9 +24,16 @@ internal interface PostsApi {
     @GET("api/{version}/articles")
     suspend fun getPosts(
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
-        @Query("page") page: Int,
-        @Query("per_page") pageLimit: Int,
+        @Query("page") page: Int = 1,
+        @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
         @Query("search") query: String? = null,
+        @Query("exclude_word") excludeWords: List<String>,
+        @Query("include_word") includeWords: List<String>,
+        @Query("specializations_id") specializationsIds: List<String>,
+        @Query("tags_id") tagsIds: List<String>,
+        @Query("liked") isLiked: Boolean,
+        @Query("dislike") isDisliked: Boolean,
+        @Query("viewed") isViewed: Boolean,
     ): RequestResult<ListResultDTO<PostDTO>>
 
     @GET("api/{version}/articles/{article_id}")
@@ -40,7 +48,6 @@ internal interface PostsApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Body request: PostRequest,
     ): RequestResult<Any>
-
 
     @DELETE("api/{version}/articles/{article_id}")
     suspend fun deletePost(
@@ -146,5 +153,13 @@ internal interface PostsApi {
         @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
         @Path("comment_id") commentId: String,
     ): RequestResult<Any>
+
+    @GET("api/{version}/articles/specializations")
+    suspend fun getSpecializations(
+        @Path("version") apiVersion: ApiVersion = ApiVersion.V1,
+        @Query("name") query: String?,
+        @Query("page") page: Int = 1,
+        @Query("per_page") pageLimit: Int = PaginationUtils.PAGE_LIMIT_EXTRA_LARGE,
+    ): RequestResult<ListResultDTO<SpecializationDTO>>
 
 }

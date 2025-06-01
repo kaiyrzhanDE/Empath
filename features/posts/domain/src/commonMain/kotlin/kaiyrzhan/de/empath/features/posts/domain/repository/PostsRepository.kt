@@ -5,6 +5,7 @@ import kaiyrzhan.de.empath.core.utils.pagination.ListResult
 import kaiyrzhan.de.empath.core.utils.result.RequestResult
 import kaiyrzhan.de.empath.features.posts.domain.model.Post
 import kaiyrzhan.de.empath.features.posts.domain.model.Comment
+import kaiyrzhan.de.empath.features.posts.domain.model.Specialization
 import kaiyrzhan.de.empath.features.posts.domain.model.postEdit.EditedPost
 import kaiyrzhan.de.empath.features.posts.domain.model.postCreate.NewPost
 import kaiyrzhan.de.empath.features.posts.domain.model.Tag
@@ -14,6 +15,13 @@ public interface PostsRepository {
 
     public suspend fun getPosts(
         query: String?,
+        excludeWords: List<String>,
+        includeWords: List<String>,
+        isLiked: Boolean,
+        isDisliked: Boolean,
+        specializationsIds: List<String>,
+        isViewed: Boolean,
+        tagsIds: List<String>,
     ): RequestResult<ListResult<Post>>
 
     public suspend fun getPost(
@@ -33,7 +41,7 @@ public interface PostsRepository {
 
     public suspend fun getTags(
         query: String,
-    ):  Flow<PagingData<Tag>>
+    ): Flow<PagingData<Tag>>
 
     public suspend fun getComments(
         postId: String,
@@ -90,4 +98,8 @@ public interface PostsRepository {
     public suspend fun cancelDislikeComment(
         commentId: String,
     ): RequestResult<Any>
+
+    public suspend fun getSpecializations(
+        query: String?,
+    ): RequestResult<ListResult<Specialization>>
 }

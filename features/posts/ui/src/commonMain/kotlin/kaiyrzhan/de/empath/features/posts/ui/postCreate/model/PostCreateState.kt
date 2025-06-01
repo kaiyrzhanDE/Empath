@@ -9,6 +9,7 @@ internal sealed class PostCreateState {
     class Error(val message: String) : PostCreateState()
     data class Success(
         val user: UserUi,
+        val specializationQuery: String,
         val newPost: NewPostUi,
     ) : PostCreateState()
 

@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
 internal class PostRequest(
     @SerialName("title") val title: String?,
     @SerialName("text") val description: String?,
+    @SerialName("specialization_id") val specializationId: String?,
     @SerialName("is_visible") val isVisible: Boolean?,
     @SerialName("imgs") val imageUrls: List<String>?,
     @SerialName("tags") val tags: List<TagRequest?>?,
@@ -24,6 +25,7 @@ internal fun NewPost.toData(): PostRequest {
         description = description,
         isVisible = isVisible,
         imageUrls = imageUrls,
+        specializationId = specializationId,
         tags = tags.map { tag -> tag.toData() },
         subPosts = subPosts.map { subPost -> subPost.toData() },
     )
@@ -38,6 +40,7 @@ internal fun EditedPost.toData(): PostRequest {
         description = description,
         isVisible = isVisible,
         imageUrls = imageUrls,
+        specializationId = null,
         tags = tags.map { tag -> tag.toData() },
         subPosts = subPosts.map { subPost -> subPost.toData() },
     )

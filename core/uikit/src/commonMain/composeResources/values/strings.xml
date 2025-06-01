@@ -247,5 +247,11 @@
     <string name="share_description">Hi there, I came across this and thought you might find it interesting. Let me know what you think!</string>
     <string name="invitation_description">Feel free to join me on the Empath app.</string>
     <string name="copy_description">Content copied.</string>
+    <string name="liked">Liked</string>
+    <string name="disliked">Disliked</string>
+    <string name="viewed">Viewed</string>
+    <string name="default">Default</string>
+    <string name="specialization">Specialization</string>
+    <string name="specializations">Specializations</string>
 
 </resources>

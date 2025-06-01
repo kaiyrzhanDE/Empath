@@ -15,6 +15,7 @@ import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.PostCreateScreen
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.PostDetailScreen
 import kaiyrzhan.de.empath.features.posts.ui.postEdit.PostEditScreen
+import kaiyrzhan.de.empath.features.posts.ui.postFilters.PostFiltersScreen
 import kaiyrzhan.de.empath.features.posts.ui.posts.PostsScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
@@ -83,6 +84,13 @@ private fun PostsRootScreen(
 
             is PostsRootComponent.Child.PostEdit -> {
                 PostEditScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is PostsRootComponent.Child.PostFilters -> {
+                PostFiltersScreen(
                     component = instance.component,
                     modifier = Modifier.fillMaxSize(),
                 )

@@ -7,6 +7,7 @@ import kaiyrzhan.de.empath.core.ui.dialog.message.MessageDialogComponent
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.model.PostCreateAction
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.model.PostCreateEvent
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.model.PostCreateState
+import kaiyrzhan.de.empath.features.posts.ui.postFilters.model.SpecializationsState
 import kaiyrzhan.de.empath.features.posts.ui.tags.TagsDialogComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,8 @@ import kotlinx.coroutines.flow.StateFlow
 internal interface PostCreateComponent: BackHandlerOwner {
 
     val state: StateFlow<PostCreateState>
+
+    val specializationsState: StateFlow<SpecializationsState>
 
     val action: Flow<PostCreateAction>
 
