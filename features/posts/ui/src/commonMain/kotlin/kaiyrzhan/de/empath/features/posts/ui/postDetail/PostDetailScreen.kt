@@ -18,9 +18,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.unit.dp
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
@@ -31,7 +33,6 @@ import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
 import kaiyrzhan.de.empath.features.posts.ui.postCreate.components.Header
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.Post
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.PostComments
-import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.SubPost
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.TopBar
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostCommentsState
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailAction

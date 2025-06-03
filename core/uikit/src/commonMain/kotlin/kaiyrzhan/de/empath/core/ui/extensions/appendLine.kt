@@ -8,6 +8,7 @@ import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 
 public fun Appendable.appendSpace(): Appendable = append(' ')
 public fun Appendable.appendColon(): Appendable = append(':')
+public fun Appendable.appendComma(): Appendable = append(',')
 public fun Appendable.appendBracketOpen(): Appendable = append('(')
 public fun Appendable.appendBracketClose(): Appendable = append(')')
 public fun Appendable.appendDot(): Appendable = append('•')

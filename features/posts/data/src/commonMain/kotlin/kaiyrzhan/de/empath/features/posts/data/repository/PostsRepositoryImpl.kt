@@ -109,12 +109,14 @@ internal class PostsRepositoryImpl(
 
     override suspend fun createComment(
         text: String,
+        commentId: String?,
         postId: String,
     ): RequestResult<Any> {
         return api.createComment(
             postId = postId,
             request = CommentRequest(
                 text = text,
+                commentId = commentId,
             ),
         )
     }
@@ -139,6 +141,7 @@ internal class PostsRepositoryImpl(
             postId = postId,
             request = CommentRequest(
                 text = text,
+                commentId = null,
             )
         )
     }

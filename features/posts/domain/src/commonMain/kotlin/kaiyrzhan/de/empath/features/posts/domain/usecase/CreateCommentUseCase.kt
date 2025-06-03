@@ -9,11 +9,13 @@ public class CreateCommentUseCase(
 ) {
     public suspend operator fun invoke(
         text: String,
+        commentId: String?,
         postId: String,
     ): Result<Any> {
         return repository
             .createComment(
                 text = text,
+                commentId = commentId,
                 postId = postId,
             )
             .toResult()

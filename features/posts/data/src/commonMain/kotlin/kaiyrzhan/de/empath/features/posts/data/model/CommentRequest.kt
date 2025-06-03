@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal class CommentRequest(
     @SerialName("text") val text: String,
+    @SerialName("parent_id") val commentId: String?,
 )

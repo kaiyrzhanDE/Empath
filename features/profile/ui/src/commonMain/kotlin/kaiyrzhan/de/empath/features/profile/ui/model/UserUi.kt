@@ -18,6 +18,7 @@ internal data class UserUi(
     val dateOfBirth: LocalDateTime?,
     val gender: Gender,
     val imageUrl: String?,
+    val rating: Int,
 )
 
 internal fun User.toUi(): UserUi {
@@ -32,6 +33,7 @@ internal fun User.toUi(): UserUi {
         dateOfBirth = dateOfBirth.toLocalDateTime(),
         gender = gender,
         imageUrl = imageUrl.addBaseUrl(),
+        rating = rating,
     )
 }
 
@@ -47,5 +49,6 @@ internal fun UserUi.toDomain(): User {
         dateOfBirth = dateOfBirth.toInstantSafe(),
         gender = gender,
         imageUrl = imageUrl,
+        rating = rating,
     )
 }

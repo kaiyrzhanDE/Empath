@@ -9,6 +9,7 @@ internal data class UserUi(
     val name: String,
     val patronymic: String,
     val imageUrl: String?,
+    val rating: Int,
 ) {
     fun getFullName(): String {
         return listOf(lastname, name, patronymic)
@@ -24,5 +25,6 @@ internal fun User.toUi(): UserUi {
         name = name,
         patronymic = patronymic,
         imageUrl = imageUrl.addBaseUrl(),
+        rating = rating,
     )
 }

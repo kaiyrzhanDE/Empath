@@ -1,9 +1,13 @@
 package kaiyrzhan.de.empath.features.posts.ui.postDetail
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import com.arkivanov.decompose.ComponentContext
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.extensions.appendColon
+import kaiyrzhan.de.empath.core.ui.extensions.appendComma
+import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.AppUtils
 import kaiyrzhan.de.empath.core.utils.currentPlatform
@@ -11,17 +15,23 @@ import kaiyrzhan.de.empath.core.utils.logger.className
 import kaiyrzhan.de.empath.core.utils.result.Result
 import kaiyrzhan.de.empath.core.utils.result.onFailure
 import kaiyrzhan.de.empath.core.utils.result.onSuccess
+import kaiyrzhan.de.empath.features.posts.domain.usecase.CancelDislikeCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.CancelDislikePostUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.CancelLikeCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.CancelLikePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.CreateCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.DeletePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.DeleteCommentUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.DislikeCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.DislikePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.EditCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetPostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.GetCommentsUseCase
+import kaiyrzhan.de.empath.features.posts.domain.usecase.LikeCommentUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.LikePostUseCase
 import kaiyrzhan.de.empath.features.posts.domain.usecase.ViewPostUseCase
+import kaiyrzhan.de.empath.features.posts.ui.model.CommentUi
+import kaiyrzhan.de.empath.features.posts.ui.model.PostReactionType
 import kaiyrzhan.de.empath.features.posts.ui.model.Reaction
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostCommentsState
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailAction
@@ -30,6 +40,7 @@ import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailState
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.CommentMode
 import kaiyrzhan.de.empath.features.posts.ui.model.toUi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -56,6 +67,10 @@ internal class RealPostDetailComponent(
     private val dislikePostUseCase: DislikePostUseCase by inject()
     private val cancelDislikePostUseCase: CancelDislikePostUseCase by inject()
     private val viewPostUseCase: ViewPostUseCase by inject()
+    private val likeCommentUseCase: LikeCommentUseCase by inject()
+    private val cancelLikeCommentUseCase: CancelLikeCommentUseCase by inject()
+    private val dislikeCommentUseCase: DislikeCommentUseCase by inject()
+    private val cancelDislikeCommentUseCase: CancelDislikeCommentUseCase by inject()
     private val appUtils: AppUtils by inject()
 
     override val state = MutableStateFlow<PostDetailState>(
@@ -88,10 +103,13 @@ internal class RealPostDetailComponent(
 
             is PostDetailEvent.CommentChange -> changeComment(event.comment)
             is PostDetailEvent.CommentDelete -> deleteComment(postId, event.commentId)
-            is PostDetailEvent.CommentEditMode -> editCommentMode(event.commentId)
             is PostDetailEvent.CommentEdit -> editComment(postId)
             is PostDetailEvent.CommentCreate -> createComment(postId)
             is PostDetailEvent.ReloadComments -> loadComments(postId)
+            is PostDetailEvent.CommentDislike -> dislikeComment(event.comment)
+            is PostDetailEvent.CommentLike -> likeComment(event.comment)
+            is PostDetailEvent.CommentReply -> replyComment(event.comment)
+            is PostDetailEvent.CommentReplyCancel -> cancelReplyComment()
         }
     }
 
@@ -106,17 +124,6 @@ internal class RealPostDetailComponent(
             is PostDetailState.Loading,
             is PostDetailState.Error -> onBackClick(false)
 
-        }
-    }
-
-    private fun editCommentMode(
-        commentId: String,
-    ) {
-        commentsState.update { currentState ->
-            check(currentState is PostCommentsState.Success)
-            currentState.copy(
-                commentMode = CommentMode.Edit(commentId),
-            )
         }
     }
 
@@ -152,8 +159,9 @@ internal class RealPostDetailComponent(
             ).onSuccess { comments ->
                 commentsState.update {
                     currentState.copy(
+                        repliedComment = null,
                         comments = comments.data.map { comment -> comment.toUi() },
-                        comment = "",
+                        comment = TextFieldValue(),
                     )
                 }
             }.onFailure { error ->
@@ -181,7 +189,7 @@ internal class RealPostDetailComponent(
             editCommentUseCase(
                 postId = postId,
                 commentId = currentState.commentMode.commentId,
-                text = currentState.comment,
+                text = currentState.comment.text,
             ).onSuccess {
                 commentsState.update {
                     currentState.copy(
@@ -189,7 +197,7 @@ internal class RealPostDetailComponent(
                         comments = currentState.comments.map { comment ->
                             if (comment.id == commentId) {
                                 comment.copy(
-                                    text = currentState.comment,
+                                    text = currentState.comment.text,
                                 )
                             } else {
                                 comment
@@ -280,12 +288,14 @@ internal class RealPostDetailComponent(
         coroutineScope.launch {
             createCommentUseCase(
                 postId = postId,
-                text = currentState.comment,
+                commentId = currentState.repliedComment?.id,
+                text = currentState.comment.text,
             ).onSuccess {
                 reloadComments(postId)
                 commentsState.update {
                     currentState.copy(
-                        comment = "",
+                        comment = TextFieldValue(),
+                        repliedComment = null,
                     )
                 }
             }.onFailure { error ->
@@ -406,6 +416,141 @@ internal class RealPostDetailComponent(
         }
     }
 
+    private fun likeComment(selected: CommentUi) {
+        coroutineScope.launch {
+            val currentState = commentsState.value
+            check(currentState is PostCommentsState.Success)
+            coroutineScope.launch {
+                if (selected.reaction.isLiked()) {
+                    cancelLikeCommentUseCase(selected.id).onSuccess {
+                        commentsState.update {
+                            currentState.copy(
+                                comments = currentState.comments.map { comment ->
+                                    if (selected.id == comment.id) {
+                                        comment.copy(
+                                            reaction = Reaction.DEFAULT,
+                                            likesCount = comment.likesCount - 1
+                                        )
+                                    } else {
+                                        comment
+                                    }
+                                },
+                            )
+                        }
+                    }.onFailure { error ->
+                        when (error) {
+                            is Result.Error.DefaultError -> {
+                                _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                            }
+                        }
+                    }
+                } else {
+                    likeCommentUseCase(selected.id).onSuccess {
+                        commentsState.update {
+                            currentState.copy(
+                                comments = currentState.comments.map { comment ->
+                                    if (selected.id == comment.id) {
+                                        when (comment.reaction) {
+                                            Reaction.IS_DISLIKED -> {
+                                                comment.copy(
+                                                    reaction = Reaction.IS_LIKED,
+                                                    likesCount = comment.likesCount + 1,
+                                                    dislikesCount = comment.dislikesCount - 1
+                                                )
+                                            }
+
+                                            else -> {
+                                                comment.copy(
+                                                    reaction = Reaction.IS_LIKED,
+                                                    likesCount = comment.likesCount + 1
+                                                )
+                                            }
+                                        }
+                                    } else {
+                                        comment
+                                    }
+                                }
+                            )
+                        }
+                    }.onFailure { error ->
+                        when (error) {
+                            is Result.Error.DefaultError -> {
+                                _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun dislikeComment(selected: CommentUi) {
+        coroutineScope.launch {
+            val currentState = commentsState.value
+            check(currentState is PostCommentsState.Success)
+            if (selected.reaction.isDisliked()) {
+                cancelDislikeCommentUseCase(selected.id).onSuccess {
+                    commentsState.update {
+                        currentState.copy(
+                            comments = currentState.comments.map { comment ->
+                                if (selected.id == comment.id) {
+                                    comment.copy(
+                                        reaction = Reaction.DEFAULT,
+                                        dislikesCount = comment.dislikesCount - 1,
+                                    )
+                                } else {
+                                    comment
+                                }
+                            }
+                        )
+                    }
+                }.onFailure { error ->
+                    when (error) {
+                        is Result.Error.DefaultError -> {
+                            _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                        }
+                    }
+                }
+            } else {
+                dislikeCommentUseCase(selected.id).onSuccess {
+                    commentsState.update {
+                        currentState.copy(
+                            comments = currentState.comments.map { comment ->
+                                if(selected.id == comment.id) {
+                                    when (selected.reaction) {
+                                        Reaction.IS_LIKED -> {
+                                            comment.copy(
+                                                reaction = Reaction.IS_DISLIKED,
+                                                likesCount = comment.likesCount - 1,
+                                                dislikesCount = comment.dislikesCount + 1
+                                            )
+                                        }
+
+                                        else -> {
+                                            comment.copy(
+                                                reaction = Reaction.IS_DISLIKED,
+                                                dislikesCount = comment.dislikesCount + 1
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    comment
+                                }
+                            }
+                        )
+                    }
+                }.onFailure { error ->
+                    when (error) {
+                        is Result.Error.DefaultError -> {
+                            _action.send(PostDetailAction.ShowSnackbar(error.toString()))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     private fun loadPostDetail(postId: String) {
         state.update { PostDetailState.Loading }
         coroutineScope.launch {
@@ -436,7 +581,7 @@ internal class RealPostDetailComponent(
         }
     }
 
-    private fun changeComment(comment: String) {
+    private fun changeComment(comment: TextFieldValue) {
         commentsState.update { currentState ->
             check(currentState is PostCommentsState.Success)
             currentState.copy(
@@ -468,6 +613,34 @@ internal class RealPostDetailComponent(
                     }
                 }
             }
+        }
+    }
+
+    private fun replyComment(comment: CommentUi) {
+        commentsState.update { currentState ->
+            check(currentState is PostCommentsState.Success)
+            val text = buildString {
+                append(comment.author.fullName)
+                appendComma()
+                appendSpace()
+            }
+            currentState.copy(
+                repliedComment = comment,
+                comment = TextFieldValue(
+                    text = text,
+                    selection = TextRange(text.length)
+                ),
+            )
+        }
+    }
+
+    private fun cancelReplyComment() {
+        commentsState.update { currentState ->
+            check(currentState is PostCommentsState.Success)
+            currentState.copy(
+                repliedComment = null,
+                comment = TextFieldValue(),
+            )
         }
     }
 }

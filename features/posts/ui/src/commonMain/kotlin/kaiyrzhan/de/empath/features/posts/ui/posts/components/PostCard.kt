@@ -61,9 +61,6 @@ internal fun PostCard(
             onShareClick = { onEvent(PostsEvent.PostShare(post)) },
             onDislikeClick = { onEvent(PostsEvent.PostDislike(post)) },
         )
-        PostComment(
-            modifier = Modifier.fillMaxWidth(),
-        )
     }
 }
 

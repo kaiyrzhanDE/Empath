@@ -13,6 +13,7 @@ public data class User(
     val dateOfBirth: Instant?,
     val gender: Gender,
     val imageUrl: String?,
+    val rating: Int,
 ) {
     public enum class Gender(public val value: String) {
         OTHER("Other"),

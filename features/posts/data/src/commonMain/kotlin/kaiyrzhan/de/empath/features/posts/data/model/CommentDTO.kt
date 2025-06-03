@@ -8,15 +8,23 @@ import kotlinx.serialization.Serializable
 internal class CommentDTO(
     @SerialName("id") val id: String,
     @SerialName("article_id") val postId: String,
+    @SerialName("parent_id") val parentId: String?,
     @SerialName("text") val text: String?,
     @SerialName("author") val author: AuthorDTO,
+    @SerialName("likes_cnt") val likesCount: Int?,
+    @SerialName("dislikes_cnt") val dislikesCount: Int?,
+    @SerialName("reaction_status") val reaction: String?,
 )
 
 internal fun CommentDTO.toDomain(): Comment {
     return Comment(
         id = id,
         postId = postId,
+        parentId = parentId.orEmpty(),
         text = text.orEmpty(),
         author = author.toDomain(),
+        likesCount = likesCount ?: 0,
+        dislikesCount = dislikesCount ?: 0,
+        reaction = reaction.orEmpty(),
     )
 }

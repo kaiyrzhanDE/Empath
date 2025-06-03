@@ -49,6 +49,7 @@ public interface PostsRepository {
 
     public suspend fun createComment(
         text: String,
+        commentId: String?,
         postId: String,
     ): RequestResult<Any>
 

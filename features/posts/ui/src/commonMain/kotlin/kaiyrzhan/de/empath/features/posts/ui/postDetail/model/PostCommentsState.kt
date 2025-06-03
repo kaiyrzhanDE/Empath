@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.posts.ui.postDetail.model
 
+import androidx.compose.ui.text.input.TextFieldValue
 import kaiyrzhan.de.empath.features.posts.ui.model.CommentUi
 
 
@@ -9,7 +10,10 @@ internal sealed class PostCommentsState {
     class Error(val message: String) : PostCommentsState()
     data class Success(
         val comments: List<CommentUi> = emptyList(),
-        val comment: String = "",
+        val comment: TextFieldValue = TextFieldValue(
+            text = "",
+        ),
+        val repliedComment: CommentUi? = null,
         val commentMode: CommentMode = CommentMode.Create,
     ) : PostCommentsState()
 

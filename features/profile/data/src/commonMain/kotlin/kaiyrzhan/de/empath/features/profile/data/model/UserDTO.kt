@@ -9,7 +9,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal class UserDTO(
+internal class  UserDTO(
     @SerialName("id") val id: String,
     @SerialName("nickname") val nickname: String?,
     @SerialName("email") val email: String?,
@@ -20,6 +20,7 @@ internal class UserDTO(
     @SerialName("date_birth") val dateOfBirth: String?,
     @SerialName("gender") val gender: String?,
     @SerialName("image") val imageUrl: String?,
+    @SerialName("rating") val rating: Int?,
 )
 
 internal fun UserDTO.toDomain(): User {
@@ -34,5 +35,6 @@ internal fun UserDTO.toDomain(): User {
         dateOfBirth = dateOfBirth.toInstantOrNull(pattern = DatePattern.DATE),
         gender = gender.toEnumSafe(Gender.OTHER),
         imageUrl = imageUrl,
+        rating = rating ?: 0,
     )
 }

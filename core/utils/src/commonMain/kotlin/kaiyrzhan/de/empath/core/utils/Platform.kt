@@ -22,8 +22,12 @@ public enum class PlatformType {
     public fun isDesktop(): Boolean{
         return this == DESKTOP
     }
-    public fun ioIOS(): Boolean{
+    public fun isIOS(): Boolean{
         return this == IOS
+    }
+
+    public fun isMobile(): Boolean{
+        return this == IOS || this == ANDROID
     }
 }
 
