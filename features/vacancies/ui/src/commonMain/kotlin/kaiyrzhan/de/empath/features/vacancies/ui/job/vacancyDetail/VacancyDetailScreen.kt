@@ -139,7 +139,7 @@ private fun VacancyDetailScreen(
                     WorkingCondition(
                         title = stringResource(Res.string.work_experience),
                         painter = painterResource(Res.drawable.ic_work_history),
-                        skill = state.vacancyDetail.workExperience,
+                        skill = stringResource(state.vacancyDetail.workExperience.res),
                     )
                     WorkingConditions(
                         title = stringResource(Res.string.employment_types),
@@ -164,7 +164,7 @@ private fun VacancyDetailScreen(
                     WorkingCondition(
                         title = stringResource(Res.string.education),
                         painter = painterResource(Res.drawable.ic_school),
-                        skill = state.vacancyDetail.education,
+                        skill = stringResource(state.vacancyDetail.education.res),
                     )
 
                     HorizontalDivider(color = EmpathTheme.colors.outlineVariant)
