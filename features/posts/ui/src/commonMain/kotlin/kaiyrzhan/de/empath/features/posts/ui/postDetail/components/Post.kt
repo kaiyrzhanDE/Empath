@@ -32,6 +32,7 @@ internal fun Post(
         )
         SelectedTags(
             modifier = Modifier.fillMaxWidth(),
+            specialization = post.specialization,
             tags = post.tags,
         )
         Text(

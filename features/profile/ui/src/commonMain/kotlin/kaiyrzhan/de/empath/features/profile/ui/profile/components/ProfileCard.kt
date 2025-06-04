@@ -36,7 +36,6 @@ import kaiyrzhan.de.empath.core.ui.files.rememberImagePainter
 import kaiyrzhan.de.empath.core.ui.modifiers.shimmerLoading
 import kaiyrzhan.de.empath.core.ui.modifiers.thenIf
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.core.utils.currentPlatform
 import kaiyrzhan.de.empath.core.utils.toGroupedString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

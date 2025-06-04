@@ -143,8 +143,8 @@
     <string name="edit_post">Редактировать пост</string>
 
     <!-- Feature: Vacancies -->
-    <string name="recruitment">Подбор персонала</string>
-    <string name="employment">Трудоустройство</string>
+    <string name="recruitment">Рекрутинг</string>
+    <string name="employment">Работа</string>
     <string name="vacancies">Вакансии</string>
     <string name="responses">Отклики</string>
     <string name="from">от</string>

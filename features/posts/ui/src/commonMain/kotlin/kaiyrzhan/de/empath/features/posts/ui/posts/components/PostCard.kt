@@ -18,6 +18,7 @@ import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.components.SelectedTags
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
 import kaiyrzhan.de.empath.features.posts.ui.model.PostUi
+import kaiyrzhan.de.empath.features.posts.ui.model.SpecializationUi
 import kaiyrzhan.de.empath.features.posts.ui.model.TagUi
 
 
@@ -48,6 +49,7 @@ internal fun PostCard(
             modifier = Modifier.fillMaxWidth(),
             title = post.title,
             description = post.description,
+            specialization = post.specialization,
             tags = post.tags,
         )
         PostImages(
@@ -69,6 +71,7 @@ private fun PostContent(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
+    specialization: SpecializationUi?,
     tags: List<TagUi>,
 ) {
     Column(
@@ -84,6 +87,7 @@ private fun PostContent(
         )
         SelectedTags(
             modifier = Modifier.fillMaxWidth(),
+            specialization = specialization,
             tags = tags,
         )
         Text(

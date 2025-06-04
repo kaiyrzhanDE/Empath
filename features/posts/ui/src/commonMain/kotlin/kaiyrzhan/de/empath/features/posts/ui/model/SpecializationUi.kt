@@ -19,3 +19,10 @@ internal fun Specialization.toUi(): SpecializationUi {
         name = name,
     )
 }
+
+internal fun SpecializationUi.toDomain(): Specialization {
+    return Specialization(
+        id = id,
+        name = name,
+    )
+}

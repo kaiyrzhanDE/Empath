@@ -12,12 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.features.posts.ui.model.SpecializationUi
 import kaiyrzhan.de.empath.features.posts.ui.model.TagUi
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun SelectedTags(
     modifier: Modifier = Modifier,
+    specialization: SpecializationUi?,
     tags: List<TagUi>,
 ) {
     FlowRow(
@@ -25,6 +27,24 @@ internal fun SelectedTags(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        if (specialization != null) {
+            Card(
+                shape = EmpathTheme.shapes.small,
+                colors = CardDefaults.cardColors(
+                    contentColor = EmpathTheme.colors.onSurface,
+                    containerColor = EmpathTheme.colors.surfaceContainer,
+                ),
+            ) {
+                Text(
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp,
+                        vertical = 6.dp
+                    ),
+                    text = specialization.name,
+                    style = EmpathTheme.typography.labelLarge,
+                )
+            }
+        }
         tags.forEach { tag ->
             Card(
                 shape = EmpathTheme.shapes.small,

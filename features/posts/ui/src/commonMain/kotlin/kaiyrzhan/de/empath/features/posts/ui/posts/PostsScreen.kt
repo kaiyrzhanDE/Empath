@@ -24,11 +24,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,11 +41,15 @@ import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.components.EmptyResultScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
 import kaiyrzhan.de.empath.core.ui.effects.SingleEventEffect
+import kaiyrzhan.de.empath.core.ui.extensions.appendColon
+import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
+import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.core.ui.modifiers.PaddingType
 import kaiyrzhan.de.empath.core.ui.modifiers.defaultMaxWidth
 import kaiyrzhan.de.empath.core.ui.modifiers.screenHorizontalPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.ui.uikit.LocalSnackbarHostState
+import kaiyrzhan.de.empath.core.utils.toGroupedString
 import kaiyrzhan.de.empath.features.posts.ui.model.PostReactionType
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostCard
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostShimmerCard
@@ -96,7 +100,7 @@ private fun PostsScreen(
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
     val lazyListState = rememberLazyListState()
-    val isRefreshing = remember(state) { state is PostsState.Loading }
+    val windowInfo = currentWindowAdaptiveInfo()
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
@@ -123,81 +127,114 @@ private fun PostsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                modifier = Modifier
-                    .defaultMaxWidth()
-                    .screenHorizontalPadding(PaddingType.MAIN),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center,
             ) {
-                OutlinedTextField(
+                Row(
                     modifier = Modifier
-                        .wrapContentHeight()
-                        .weight(1f),
-                    value = filtersState.filters.query,
-                    onValueChange = { query -> onEvent(PostsEvent.PostSearch(query)) },
-                    textStyle = EmpathTheme.typography.bodyLarge,
-                    shape = EmpathTheme.shapes.small,
-                    maxLines = 1,
-                    label = {
-                        Text(
-                            text = stringResource(Res.string.search),
-                            style = EmpathTheme.typography.bodyLarge,
+                        .defaultMaxWidth()
+                        .screenHorizontalPadding(PaddingType.MAIN),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(1f),
+                        value = filtersState.filters.query,
+                        onValueChange = { query -> onEvent(PostsEvent.PostSearch(query)) },
+                        textStyle = EmpathTheme.typography.bodyLarge,
+                        shape = EmpathTheme.shapes.small,
+                        maxLines = 1,
+                        label = {
+                            Text(
+                                text = stringResource(Res.string.search),
+                                style = EmpathTheme.typography.bodyLarge,
+                            )
+                        },
+                        trailingIcon = {
+                            if (state is PostsState.Loading) {
+                                Box(
+                                    modifier = Modifier.size(40.dp),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(24.dp),
+                                        trackColor = EmpathTheme.colors.secondary,
+                                        strokeCap = StrokeCap.Square,
+                                        color = EmpathTheme.colors.primary,
+                                    )
+                                }
+                            }
+                        },
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(56.dp)
+                            .align(Alignment.Bottom)
+                            .clip(EmpathTheme.shapes.small)
+                            .clickable { onEvent(PostsEvent.PostFiltersClick) }
+                            .background(EmpathTheme.colors.surface),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(24.dp),
+                            painter = painterResource(Res.drawable.ic_tune),
+                            contentDescription = null,
+                            tint = EmpathTheme.colors.primary,
                         )
-                    },
-                    trailingIcon = {
-                        if (state is PostsState.Loading) {
-                            Box(
-                                modifier = Modifier.size(40.dp),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(24.dp),
-                                    trackColor = EmpathTheme.colors.secondary,
-                                    strokeCap = StrokeCap.Square,
-                                    color = EmpathTheme.colors.primary,
-                                )
-                            }
-                        }
-                    },
-                )
-                Box(
-                    modifier = Modifier
-                        .size(56.dp)
-                        .align(Alignment.Bottom)
-                        .clip(EmpathTheme.shapes.small)
-                        .clickable { onEvent(PostsEvent.PostFiltersClick) }
-                        .background(EmpathTheme.colors.surface),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        modifier = Modifier.size(24.dp),
-                        painter = painterResource(Res.drawable.ic_tune),
-                        contentDescription = null,
-                        tint = EmpathTheme.colors.primary,
-                    )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .size(56.dp)
+                            .align(Alignment.Bottom)
+                            .clip(EmpathTheme.shapes.small)
+                            .clickable { onEvent(PostsEvent.FavouritePostsClick) }
+                            .background(EmpathTheme.colors.surface),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(24.dp),
+                            painter = painterResource(
+                                resource = if (filtersState.filters.postReactionType == PostReactionType.LIKED) {
+                                    Res.drawable.ic_favourite_filled
+                                } else {
+                                    Res.drawable.ic_favourite
+                                }
+                            ),
+                            contentDescription = null,
+                            tint = EmpathTheme.colors.primary,
+                        )
+                    }
                 }
-                Box(
-                    modifier = Modifier
-                        .size(56.dp)
-                        .align(Alignment.Bottom)
-                        .clip(EmpathTheme.shapes.small)
-                        .clickable { onEvent(PostsEvent.FavouritePostsClick) }
-                        .background(EmpathTheme.colors.surface),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        modifier = Modifier.size(24.dp),
-                        painter = painterResource(
-                            resource = if (filtersState.filters.postReactionType == PostReactionType.LIKED) {
-                                Res.drawable.ic_favourite_filled
-                            } else {
-                                Res.drawable.ic_favourite
-                            }
-                        ),
-                        contentDescription = null,
-                        tint = EmpathTheme.colors.primary,
-                    )
+                if (windowInfo.isPhone().not()) {
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .clip(EmpathTheme.shapes.small)
+                            .background(EmpathTheme.colors.primaryContainer)
+                            .padding(horizontal = 6.dp, vertical = 4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = buildString {
+                                append(stringResource(Res.string.rating))
+                                appendColon()
+                                appendSpace()
+                                append(filtersState.userRating.toGroupedString())
+                            },
+                            style = EmpathTheme.typography.bodyLarge,
+                            color = EmpathTheme.colors.onPrimaryContainer,
+                        )
+                        Icon(
+                            modifier = Modifier.size(24.dp),
+                            painter = painterResource(Res.drawable.ic_ac_unit),
+                            contentDescription = null,
+                            tint = EmpathTheme.colors.onPrimaryContainer,
+                        )
+                    }
                 }
             }
             when (state) {

@@ -61,7 +61,7 @@ internal fun NavigationRail(
                 label = {
                     Text(
                         text = stringResource(Res.string.recruitment),
-                        style = EmpathTheme.typography.labelMedium,
+                        style = EmpathTheme.typography.labelSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -84,7 +84,7 @@ internal fun NavigationRail(
                 label = {
                     Text(
                         text = stringResource(Res.string.employment),
-                        style = EmpathTheme.typography.labelMedium,
+                        style = EmpathTheme.typography.labelSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -104,7 +104,7 @@ internal fun NavigationRail(
                 label = {
                     Text(
                         text = "Menu",
-                        style = EmpathTheme.typography.labelMedium,
+                        style = EmpathTheme.typography.labelSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -127,7 +127,7 @@ internal fun NavigationRail(
                 label = {
                     Text(
                         text = stringResource(Res.string.posts),
-                        style = EmpathTheme.typography.labelMedium,
+                        style = EmpathTheme.typography.labelSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -150,7 +150,7 @@ internal fun NavigationRail(
                 label = {
                     Text(
                         text = stringResource(Res.string.profile),
-                        style = EmpathTheme.typography.labelMedium,
+                        style = EmpathTheme.typography.labelSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )

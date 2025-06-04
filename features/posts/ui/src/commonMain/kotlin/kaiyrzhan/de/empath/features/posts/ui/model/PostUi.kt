@@ -19,6 +19,7 @@ internal data class PostUi(
     val author: AuthorUi,
     val reaction: Reaction,
     val isViewed: Boolean,
+    val specialization: SpecializationUi?,
 )
 
 internal fun Post.toUi(): PostUi {
@@ -38,6 +39,7 @@ internal fun Post.toUi(): PostUi {
             enum.type.equals(other = value, ignoreCase = true)
         },
         isViewed = isViewed,
+        specialization = specialization?.toUi(),
     )
 }
 
@@ -56,6 +58,7 @@ internal fun PostUi.toDomain(): Post {
         viewsCount = viewsCount,
         reaction = reaction.toString(),
         isViewed = isViewed,
+        specialization = specialization?.toDomain(),
     )
 }
 

@@ -1,6 +1,8 @@
 package kaiyrzhan.de.empath.features.posts.data.model
 
+import kaiyrzhan.de.empath.core.utils.logger.ifNull
 import kaiyrzhan.de.empath.features.posts.domain.model.Post
+import kaiyrzhan.de.empath.features.posts.domain.model.Specialization
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,6 +21,7 @@ internal class PostDTO(
     @SerialName("author") val author: AuthorDTO,
     @SerialName("reaction_status") val reaction: String?,
     @SerialName("is_viewed") val isViewed: Boolean?,
+    @SerialName("specializaiton") val specialization: SpecializationDTO?,
 )
 
 internal fun PostDTO.toDomain(): Post {
@@ -41,6 +44,7 @@ internal fun PostDTO.toDomain(): Post {
         dislikesCount = dislikesCount ?: 0,
         author = author.toDomain(),
         reaction = reaction.orEmpty(),
+        specialization = specialization?.toDomain(),
         isViewed = isViewed == true,
     )
 }
