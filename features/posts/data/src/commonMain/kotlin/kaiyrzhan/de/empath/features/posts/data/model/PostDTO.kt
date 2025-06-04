@@ -18,6 +18,7 @@ internal class PostDTO(
     @SerialName("dislikes_cnt") val dislikesCount: Int?,
     @SerialName("author") val author: AuthorDTO,
     @SerialName("reaction_status") val reaction: String?,
+    @SerialName("is_viewed") val isViewed: Boolean?,
 )
 
 internal fun PostDTO.toDomain(): Post {
@@ -40,5 +41,6 @@ internal fun PostDTO.toDomain(): Post {
         dislikesCount = dislikesCount ?: 0,
         author = author.toDomain(),
         reaction = reaction.orEmpty(),
+        isViewed = isViewed == true,
     )
 }

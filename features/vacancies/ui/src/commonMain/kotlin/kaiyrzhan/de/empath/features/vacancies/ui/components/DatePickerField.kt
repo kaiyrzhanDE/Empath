@@ -13,7 +13,7 @@ internal fun DatePickerField(
     modifier: Modifier = Modifier,
     title: String,
     date: String,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
 ) {
     PickerField(
         modifier = modifier,

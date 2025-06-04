@@ -22,6 +22,7 @@ internal class RealVacancyRecommendationsComponent(
     private val vacancyId: String,
     private val onBackClick: () -> Unit,
     private val onVacancyDetailClick: (vacancyId: String) -> Unit,
+    private val onCvClick: (cvId: String) -> Unit,
 ) : BaseComponent(componentContext), VacancyRecommendationsComponent {
 
     private val getVacancyRecommendationsUseCase: GetVacancyRecommendationsUseCase = get()
@@ -35,6 +36,7 @@ internal class RealVacancyRecommendationsComponent(
             is VacancyRecommendationsEvent.BackClick -> onBackClick()
             is VacancyRecommendationsEvent.LoadVacancyRecommendations -> loadVacancyRecommendations()
             is VacancyRecommendationsEvent.VacancyDetailClick -> onVacancyDetailClick(vacancyId)
+            is VacancyRecommendationsEvent.CvDetailClick -> onCvClick(event.cvId)
             is VacancyRecommendationsEvent.ContactEmailClick -> contactEmail(event.email)
         }
     }
@@ -46,7 +48,7 @@ internal class RealVacancyRecommendationsComponent(
     private fun loadVacancyRecommendations() {
         coroutineScope.launch {
             state.update { VacancyRecommendationsState.Loading }
-            delay(8000)
+            delay(4000)
             getVacancyRecommendationsUseCase(vacancyId).onSuccess { recommendations ->
                 state.update {
                     VacancyRecommendationsState.Success(

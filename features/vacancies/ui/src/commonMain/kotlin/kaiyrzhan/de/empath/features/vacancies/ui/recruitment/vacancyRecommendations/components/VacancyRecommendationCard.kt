@@ -1,9 +1,11 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendations.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -155,22 +157,42 @@ internal fun CvCard(
                     }
                 }
             }
-
-            Button(
+            Row(
                 modifier = Modifier.align(Alignment.End),
-                onClick = { onEvent(VacancyRecommendationsEvent.ContactEmailClick(cv.author.email)) },
-                shape = EmpathTheme.shapes.small,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = EmpathTheme.colors.primary,
-                    contentColor = EmpathTheme.colors.onPrimary,
-                ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                Text(
-                    text = stringResource(Res.string.contact_email),
-                    style = EmpathTheme.typography.labelLarge,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                Button(
+                    onClick = { onEvent(VacancyRecommendationsEvent.CvDetailClick(cv.id)) },
+                    shape = EmpathTheme.shapes.small,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = EmpathTheme.colors.primary,
+                        contentColor = EmpathTheme.colors.onPrimary,
+                    ),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.cv_detail),
+                        style = EmpathTheme.typography.labelLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+
+                Button(
+                    onClick = { onEvent(VacancyRecommendationsEvent.ContactEmailClick(cv.author.email)) },
+                    shape = EmpathTheme.shapes.small,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = EmpathTheme.colors.primary,
+                        contentColor = EmpathTheme.colors.onPrimary,
+                    ),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.contact_email),
+                        style = EmpathTheme.typography.labelLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
     }

@@ -58,6 +58,7 @@ internal class RealVacanciesComponent(
     private val onVacancyDetailClick: (vacancyId: String, status: ResponseStatus) -> Unit,
     private val onCvCreateClick: () -> Unit,
     private val onCvEditClick: (cvId: String) -> Unit,
+    private val onCvDetailClick: (cvId: String) -> Unit,
 ) : BaseComponent(componentContext), VacanciesComponent {
 
     private val getVacanciesUseCase: GetVacanciesUseCase = get()
@@ -171,7 +172,7 @@ internal class RealVacanciesComponent(
                             }
 
                             args.isIndicator -> {
-                                onCvEditClick(selectedCv.id)
+                                onCvDetailClick(selectedCv.id)
                             }
                         }
                     }

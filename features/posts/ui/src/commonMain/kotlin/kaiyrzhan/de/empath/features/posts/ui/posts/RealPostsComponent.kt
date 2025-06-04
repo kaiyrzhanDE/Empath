@@ -368,6 +368,8 @@ internal class RealPostsComponent(
                     append(getString(Res.string.share_description))
                     appendLine()
                     append(getString(Res.string.invitation_description))
+                    appendLine()
+                    appendLine()
                     append(getString(Res.string.title))
                     appendColon()
                     appendLine()

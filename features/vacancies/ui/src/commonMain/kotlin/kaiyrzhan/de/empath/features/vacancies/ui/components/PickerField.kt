@@ -32,19 +32,22 @@ internal fun PickerField(
     modifier: Modifier = Modifier,
     title: String,
     selected: String,
-    onClick: () -> Unit,
     leadingPainter: Painter,
     isLoading: Boolean = false,
+    onClick: (() -> Unit)? = null,
     trailingPainter: Painter? = null,
 ) {
     Card(
         modifier = modifier,
         shape = EmpathTheme.shapes.extraSmall,
         border = BorderStroke(width = 1.dp, color = EmpathTheme.colors.outline),
-        onClick = onClick,
+        onClick = { onClick?.invoke() },
+        enabled = onClick != null,
         colors = CardDefaults.cardColors(
             containerColor = EmpathTheme.colors.surface,
             contentColor = EmpathTheme.colors.onSurfaceVariant,
+            disabledContainerColor = EmpathTheme.colors.surface,
+            disabledContentColor = EmpathTheme.colors.onSurfaceVariant,
         ),
     ) {
         Row(
@@ -58,7 +61,7 @@ internal fun PickerField(
                 )
             } else {
                 IconButton(
-                    onClick = onClick,
+                    onClick = { onClick?.invoke() },
                 ) {
                     Icon(
                         modifier = Modifier.size(24.dp),
@@ -120,7 +123,7 @@ internal fun PickerField(
 
             if (trailingPainter != null) {
                 IconButton(
-                    onClick = onClick,
+                    onClick = { onClick?.invoke() },
                 ) {
                     Icon(
                         modifier = Modifier.size(24.dp),

@@ -15,6 +15,7 @@ import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.RealCvCreat
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.RealCvEditComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.RealVacanciesComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.model.VacanciesEvent
+import kaiyrzhan.de.empath.features.vacancies.ui.job.cvDetail.RealCvDetailComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.RealVacancyFiltersComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.model.ResponseStatus
@@ -46,6 +47,7 @@ public class RealEmploymentRootComponent(
             is Config.VacancyFilters -> createVacancyFiltersComponent(componentContext, config)
             is Config.CvCreate -> createCvCreateComponent(componentContext)
             is Config.CvEdit -> createCvEditComponent(componentContext, config)
+            is Config.CvDetail -> createCvDetailComponent(componentContext, config)
         }
     }
 
@@ -76,7 +78,10 @@ public class RealEmploymentRootComponent(
                 },
                 onCvEditClick = { cvId ->
                     navigation.push(Config.CvEdit(cvId))
-                }
+                },
+                onCvDetailClick = { cvId ->
+                    navigation.push(Config.CvDetail(cvId))
+                },
             )
         )
     }
@@ -139,6 +144,19 @@ public class RealEmploymentRootComponent(
         )
     }
 
+    private fun createCvDetailComponent(
+        componentContext: ComponentContext,
+        config: Config.CvDetail,
+    ): EmploymentRootComponent.Child.CvDetail {
+        return EmploymentRootComponent.Child.CvDetail(
+            component = RealCvDetailComponent(
+                componentContext = componentContext,
+                cvId = config.cvId,
+                onBackClick = ::onBackClick,
+            )
+        )
+    }
+
     private fun reloadVacancies(filters: VacancyFiltersUi) {
         navigation.pop {
             (stack.active.instance as? EmploymentRootComponent.Child.Vacancies)
@@ -169,6 +187,11 @@ public class RealEmploymentRootComponent(
 
         @Serializable
         data class CvEdit(
+            val cvId: String,
+        ) : Config
+
+        @Serializable
+        data class CvDetail(
             val cvId: String,
         ) : Config
     }

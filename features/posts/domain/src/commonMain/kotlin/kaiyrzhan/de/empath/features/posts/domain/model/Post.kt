@@ -13,4 +13,5 @@ public class Post(
     public val dislikesCount: Int,
     public val author: Author,
     public val reaction: String,
+    public val isViewed: Boolean,
 )

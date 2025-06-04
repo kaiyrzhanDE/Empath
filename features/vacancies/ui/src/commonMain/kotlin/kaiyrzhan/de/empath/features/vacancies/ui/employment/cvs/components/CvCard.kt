@@ -36,6 +36,7 @@ import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.extensions.appendColon
 import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
+import kaiyrzhan.de.empath.core.ui.modifiers.noRippleClickable
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.core.utils.toGroupedString
 import kaiyrzhan.de.empath.features.vacancies.ui.components.WorkingSkillCard
@@ -54,8 +55,7 @@ internal fun CvCard(
 ) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     Card(
-        modifier = modifier,
-        onClick = {
+        modifier = modifier.noRippleClickable {
             if (isIndicator) {
                 onEvent(CvsEvent.CvDetailClick(cv))
             } else {

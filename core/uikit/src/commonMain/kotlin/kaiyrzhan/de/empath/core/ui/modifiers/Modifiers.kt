@@ -81,10 +81,12 @@ public fun Modifier.screenVerticalPadding(
 
 
 public inline fun Modifier.noRippleClickable(
-    crossinline onClick: () -> Unit
+    enabled: Boolean = true,
+    crossinline onClick: () -> Unit,
 ): Modifier = composed {
     clickable(
         indication = null,
+        enabled = enabled,
         interactionSource = remember { MutableInteractionSource() }) {
         onClick()
     }

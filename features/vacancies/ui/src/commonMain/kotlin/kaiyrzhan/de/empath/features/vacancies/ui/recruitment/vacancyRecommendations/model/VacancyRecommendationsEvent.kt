@@ -4,5 +4,6 @@ internal sealed interface VacancyRecommendationsEvent {
     data object BackClick : VacancyRecommendationsEvent
     data object LoadVacancyRecommendations : VacancyRecommendationsEvent
     data object VacancyDetailClick : VacancyRecommendationsEvent
+    data class CvDetailClick(val cvId: String) : VacancyRecommendationsEvent
     data class ContactEmailClick(val email: String) : VacancyRecommendationsEvent
 }

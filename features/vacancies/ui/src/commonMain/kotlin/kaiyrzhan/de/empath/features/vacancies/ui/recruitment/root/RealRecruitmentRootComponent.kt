@@ -11,6 +11,7 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kaiyrzhan.de.empath.core.ui.navigation.BaseComponent
 import kaiyrzhan.de.empath.core.utils.logger.className
+import kaiyrzhan.de.empath.features.vacancies.ui.job.cvDetail.RealCvDetailComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.model.AuthorUi
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.RealVacancyDetailComponent
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
@@ -49,6 +50,7 @@ public class RealRecruitmentRootComponent(
             is Config.VacancyCreate -> createVacancyCreateComponent(componentContext, config)
             is Config.VacancyFilters -> createVacancyFiltersComponent(componentContext, config)
             is Config.VacancyEdit -> createVacancyEditComponent(componentContext, config)
+            is Config.CvDetail -> createCvDetail(componentContext, config)
             is Config.VacancyRecommendations ->
                 createVacancyRecommendations(componentContext, config)
         }
@@ -82,7 +84,7 @@ public class RealRecruitmentRootComponent(
                     navigation.push(Config.VacancyDetail(vacancyId, false))
                 },
                 onCvClick = { id ->
-                    //TODO("Not yet implemented")
+                    navigation.push(Config.CvDetail(id))
                 },
             )
         )
@@ -181,6 +183,22 @@ public class RealRecruitmentRootComponent(
                 onVacancyDetailClick = { vacancyId ->
                     navigation.push(Config.VacancyDetail(vacancyId, true))
                 },
+                onCvClick = { id ->
+                    navigation.push(Config.CvDetail(id))
+                },
+            )
+        )
+    }
+
+    private fun createCvDetail(
+        componentContext: ComponentContext,
+        config: Config.CvDetail,
+    ): RecruitmentRootComponent.Child.CvDetail {
+        return RecruitmentRootComponent.Child.CvDetail(
+            component = RealCvDetailComponent(
+                componentContext = componentContext,
+                cvId = config.cvId,
+                onBackClick = ::onBackClick,
             )
         )
     }
@@ -237,6 +255,11 @@ public class RealRecruitmentRootComponent(
         @Serializable
         data class VacancyRecommendations(
             val vacancyId: String,
+        ) : Config
+
+        @Serializable
+        data class CvDetail(
+            val cvId: String,
         ) : Config
     }
 

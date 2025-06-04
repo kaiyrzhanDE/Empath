@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.modifiers.noRippleClickable
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model.VacancyWeightUi
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyRecommendations.model.VacancyRecommendationsEvent
@@ -57,14 +58,16 @@ internal fun VacancyStatisticsCard(
     )
 
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .noRippleClickable(
+                enabled = weights.size > 3,
+                onClick = { isExpanded = isExpanded.not() }
+            ),
         shape = EmpathTheme.shapes.small,
         colors = CardDefaults.cardColors(
             containerColor = EmpathTheme.colors.surface,
             disabledContainerColor = EmpathTheme.colors.surface,
         ),
-        onClick = { isExpanded = isExpanded.not() },
-        enabled = weights.size > 3,
     ) {
         Column(
             modifier = Modifier

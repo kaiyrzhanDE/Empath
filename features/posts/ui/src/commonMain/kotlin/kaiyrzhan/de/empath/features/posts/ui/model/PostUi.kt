@@ -18,7 +18,7 @@ internal data class PostUi(
     val dislikesCount: Int,
     val author: AuthorUi,
     val reaction: Reaction,
-    val isViewed: Boolean = false,
+    val isViewed: Boolean,
 )
 
 internal fun Post.toUi(): PostUi {
@@ -37,6 +37,7 @@ internal fun Post.toUi(): PostUi {
         reaction = reaction.toEnumSafe(default = Reaction.DEFAULT) { enum, value ->
             enum.type.equals(other = value, ignoreCase = true)
         },
+        isViewed = isViewed,
     )
 }
 
@@ -54,6 +55,7 @@ internal fun PostUi.toDomain(): Post {
         likesCount = likesCount,
         viewsCount = viewsCount,
         reaction = reaction.toString(),
+        isViewed = isViewed,
     )
 }
 

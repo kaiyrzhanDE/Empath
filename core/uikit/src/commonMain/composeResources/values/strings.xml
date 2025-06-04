@@ -106,15 +106,15 @@
     <string name="file_too_large">Выбранный файл превышает допустимый размер. Пожалуйста, выберите меньший файл.</string>
 
     <!-- Feature: Posts -->
-    <string name="posts">Публикации</string>
+    <string name="posts">Посты</string>
     <string name="search">Поиск</string>
-    <string name="create_post">Создать публикацию</string>
-    <string name="post_detail">Детали публикации</string>
-    <string name="post_created_successfully">Публикация успешно создана</string>
-    <string name="post_deleted_successfully">Публикация успешно удалена</string>
-    <string name="invalid_post_content_error">Некорректное содержимое публикации</string>
+    <string name="create_post">Создать пост</string>
+    <string name="post_detail">Детали пост</string>
+    <string name="post_created_successfully">Пост успешно создан</string>
+    <string name="post_deleted_successfully">Пост успешно удален</string>
+    <string name="invalid_post_content_error">Некорректное содержимое поста</string>
 
-    <string name="abort_post_create_title">Отменить создание публикации</string>
+    <string name="abort_post_create_title">Отменить создание поста</string>
     <string name="abort_post_create_description">Вы уверены, что хотите отменить создание? Несохранённые изменения будут потеряны.</string>
     <string name="title">Заголовок</string>
     <string name="description">Описание</string>
@@ -124,11 +124,11 @@
     <string name="add_tags">Добавить теги</string>
     <string name="selected_tags">Выбранные теги</string>
     <string name="tags">Теги</string>
-    <string name="remove_sub_post">Удалить вложенную публикацию</string>
-    <string name="add_sub_post">Добавить вложенную публикацию</string>
+    <string name="remove_sub_post">Удалить подпост</string>
+    <string name="add_sub_post">Добавить подпост</string>
     <string name="send">Отправить</string>
-    <string name="adding_tags_title">Добавление тегов к публикации</string>
-    <string name="adding_tags_description">Введите теги, которые лучше всего описывают публикацию. Это поможет другим пользователям находить её.</string>
+    <string name="adding_tags_title">Добавление тегов к посту</string>
+    <string name="adding_tags_description">Введите теги, которые лучше всего описывают пост. Это поможет другим пользователям находить её.</string>
     <string name="tag_name">Название тега</string>
     <string name="select_tags">Выбрать теги</string>
     <string name="stay_here">Остаться здесь</string>
@@ -140,7 +140,7 @@
     <string name="send_comment">Отправить комментарий</string>
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
-    <string name="edit_post">Редактировать публикацию</string>
+    <string name="edit_post">Редактировать пост</string>
 
     <!-- Feature: Vacancies -->
     <string name="recruitment">Подбор персонала</string>
@@ -190,7 +190,7 @@
     <string name="work_experience_over_5">Более 5 лет</string>
     <string name="skills">Навыки</string>
     <string name="skill_name">Название навыка</string>
-    <string name="select_skills">Выберите навыки</string>
+    <string name="select_skills">Выбрать навыки</string>
     <string name="add_skill">Добавить навык</string>
     <string name="create_skill">Создать навык</string>
     <string name="skill_not_found">навык не найден</string>
@@ -229,7 +229,7 @@
     <string name="create_cv">Создать резюме</string>
     <string name="date_of_employment">Дата трудоустройства</string>
     <string name="add_work_experience">Добавить опыт работы</string>
-    <string name="is_relevant">Актуально</string>
+    <string name="is_relevant">Релевантный опыт</string>
     <string name="start_date">Дата начала</string>
     <string name="end_date">Дата окончания</string>
     <string name="cv_files">Файлы резюме</string>
@@ -256,6 +256,7 @@
     <string name="specializations">Специализации</string>
     <string name="reply">Ответить</string>
     <string name="rating">Рейтинг</string>
+    <string name="work_experience_description">Описание опыта</string>
     <string name="post_creation_rating_requirement">Создание постов доступно при рейтинге 10 и выше</string>
     <string name="comment_deleted">Данный комментарий скрыт пользователем или модератором приложения.</string>
 </resources>

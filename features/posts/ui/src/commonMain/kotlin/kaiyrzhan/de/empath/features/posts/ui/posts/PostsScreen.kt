@@ -24,8 +24,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -91,7 +94,9 @@ private fun PostsScreen(
     state: PostsState,
     onEvent: (PostsEvent) -> Unit,
 ) {
+    val pullToRefreshState = rememberPullToRefreshState()
     val lazyListState = rememberLazyListState()
+    val isRefreshing = remember(state) { state is PostsState.Loading }
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
@@ -200,7 +205,13 @@ private fun PostsScreen(
                     if (state.posts.isNotEmpty()) {
                         LazyColumn(
                             state = lazyListState,
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .pullToRefresh(
+                                    state = pullToRefreshState,
+                                    isRefreshing = false,
+                                    onRefresh = { onEvent(PostsEvent.LoadPosts) },
+                                ),
                             contentPadding = PaddingValues(vertical = PaddingType.MAIN.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -218,6 +229,19 @@ private fun PostsScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                     )
                                 }
+                            }
+                            item {
+                                PostShimmerCard(
+                                    modifier = Modifier.fillMaxWidth(),
+                                )
+                            }
+                            item {
+                                PostShimmerCard(
+                                    modifier = Modifier.fillMaxWidth(),
+                                )
+                            }
+                            item {
+                                Spacer(modifier = Modifier.height(40.dp))
                             }
                         }
                     } else {

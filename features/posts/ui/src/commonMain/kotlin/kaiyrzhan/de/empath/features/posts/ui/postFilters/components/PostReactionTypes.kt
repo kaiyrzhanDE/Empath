@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.default
@@ -93,8 +95,10 @@ internal fun PostReactionTypes(
                             PostReactionType.NONE -> Res.string.default
                         }
                     ),
-                    style = EmpathTheme.typography.bodyLarge,
+                    style = EmpathTheme.typography.bodySmall,
                     maxLines = 1,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
                     color = color,
                 )
             }

@@ -1,4 +1,4 @@
-package kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.component
+package kaiyrzhan.de.empath.features.vacancies.ui.job.cvDetail.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -11,15 +11,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import empath.core.uikit.generated.resources.Res
-import empath.core.uikit.generated.resources.create_cv
-import empath.core.uikit.generated.resources.edit_cv
-import empath.core.uikit.generated.resources.ic_arrow_back
-import empath.core.uikit.generated.resources.ic_arrow_back_description
-import empath.core.uikit.generated.resources.vacancy_detail
+import empath.core.uikit.generated.resources.*
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
-import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.model.CvCreateEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.model.CvEditEvent
-import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.model.VacancyDetailEvent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -27,7 +20,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun TopBar(
     modifier: Modifier = Modifier,
-    onEvent: (CvEditEvent) -> Unit,
+    onBackClick: () -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -35,13 +28,13 @@ internal fun TopBar(
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    text = stringResource(Res.string.edit_cv),
+                    text = stringResource(Res.string.cv_detail),
                     style = EmpathTheme.typography.titleMedium,
                 )
             },
             navigationIcon = {
                 IconButton(
-                    onClick = { onEvent(CvEditEvent.BackClick) },
+                    onClick = onBackClick,
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow_back),

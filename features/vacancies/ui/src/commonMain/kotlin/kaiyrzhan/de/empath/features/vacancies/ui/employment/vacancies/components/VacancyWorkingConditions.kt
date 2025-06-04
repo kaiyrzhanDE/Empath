@@ -15,6 +15,7 @@ import empath.core.uikit.generated.resources.ic_work_history
 import kaiyrzhan.de.empath.features.vacancies.ui.components.WorkingConditionCard
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.model.VacancyUi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -32,7 +33,7 @@ internal fun VacancyWorkingConditions(
             painter = painterResource(Res.drawable.ic_domain),
         )
         WorkingConditionCard(
-            skill = vacancy.workExperience,
+            skill = stringResource(vacancy.workExperience.res),
             painter = painterResource(Res.drawable.ic_work_history),
         )
         WorkingConditionCard(

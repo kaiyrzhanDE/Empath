@@ -12,6 +12,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import kaiyrzhan.de.empath.core.ui.animations.swipe
 import kaiyrzhan.de.empath.core.ui.extensions.isPhone
+import kaiyrzhan.de.empath.features.vacancies.ui.job.cvDetail.CvDetailScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.VacancyFiltersScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.recruitment.vacancyCreate.VacancyCreateScreen
@@ -100,6 +101,13 @@ private fun RecruitmentRootScreen(
 
             is RecruitmentRootComponent.Child.VacancyRecommendations -> {
                 VacancyRecommendationsScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is RecruitmentRootComponent.Child.CvDetail -> {
+                CvDetailScreen(
                     component = instance.component,
                     modifier = Modifier.fillMaxSize(),
                 )

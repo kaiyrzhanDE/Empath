@@ -264,8 +264,8 @@ internal class RealCvEditComponent(
         when {
             currentState is CvEditState.Success && currentState.cv.isChanged() -> coroutineScope.launch {
                 showMessageDialog(
-                    title = getString(Res.string.abort_vacancy_edit_title),
-                    description = getString(Res.string.abort_vacancy_edit_description),
+                    title = getString(Res.string.abort_cv_edit_title),
+                    description = getString(Res.string.abort_cv_edit_description),
                     dismissActionConfig = DialogActionConfig(
                         text = getString(Res.string.close),
                     ),

@@ -2,6 +2,7 @@ package kaiyrzhan.de.empath.features.posts.ui.postFilters
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -125,7 +126,8 @@ private fun PostFiltersScreen(
 
 
             PostReactionTypes(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 state = state,
                 onEvent = onEvent,
             )

@@ -15,6 +15,7 @@ import kaiyrzhan.de.empath.core.ui.extensions.isPhone
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvCreate.CvCreateScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.cvEdit.CvEditScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.employment.vacancies.VacanciesScreen
+import kaiyrzhan.de.empath.features.vacancies.ui.job.cvDetail.CvDetailScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyDetail.VacancyDetailScreen
 import kaiyrzhan.de.empath.features.vacancies.ui.job.vacancyFilters.VacancyFiltersScreen
 
@@ -92,6 +93,13 @@ private fun EmploymentRootScreen(
 
             is EmploymentRootComponent.Child.CvEdit -> {
                 CvEditScreen(
+                    component = instance.component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            is EmploymentRootComponent.Child.CvDetail -> {
+                CvDetailScreen(
                     component = instance.component,
                     modifier = Modifier.fillMaxSize(),
                 )

@@ -1,9 +1,11 @@
 package kaiyrzhan.de.empath.features.vacancies.ui.recruitment.model
 
 import kaiyrzhan.de.empath.core.utils.currentTimeZone
+import kaiyrzhan.de.empath.core.utils.toEnumSafe
 import kaiyrzhan.de.empath.core.utils.toLocalDateTime
 import kaiyrzhan.de.empath.features.vacancies.domain.model.recruitment.Vacancy
 import kaiyrzhan.de.empath.features.vacancies.ui.model.SalaryUi
+import kaiyrzhan.de.empath.features.vacancies.ui.model.WorkExperience
 import kaiyrzhan.de.empath.features.vacancies.ui.model.toUi
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
@@ -15,7 +17,7 @@ internal data class VacancyUi(
     val salary: SalaryUi,
     val address: String,
     val author: AuthorUi,
-    val workExperience: String,
+    val workExperience: WorkExperience,
     val workSchedules: List<String>,
     val employmentTypes: List<String>,
     val workFormats: List<String>,
@@ -36,7 +38,9 @@ internal fun Vacancy.toUi(): VacancyUi {
         salary = salary.toUi(),
         address = address,
         author = author.toUi(),
-        workExperience = workExperience,
+        workExperience = workExperience.toEnumSafe(WorkExperience.UNKNOWN) { enum, type ->
+            enum.value.equals(type, ignoreCase = true)
+        },
         workSchedules = workSchedules,
         employmentTypes = employmentTypes,
         workFormats = workFormats,
