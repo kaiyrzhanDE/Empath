@@ -14,7 +14,6 @@ internal sealed class PostCommentsState {
             text = "",
         ),
         val repliedComment: CommentUi? = null,
-        val commentMode: CommentMode = CommentMode.Create,
     ) : PostCommentsState()
 
     companion object {

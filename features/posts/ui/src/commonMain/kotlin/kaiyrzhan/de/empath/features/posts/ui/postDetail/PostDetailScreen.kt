@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
@@ -18,11 +19,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.unit.dp
 import kaiyrzhan.de.empath.core.ui.components.CircularLoadingScreen
 import kaiyrzhan.de.empath.core.ui.components.ErrorScreen
@@ -38,8 +37,8 @@ import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostCommentsState
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailAction
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailEvent
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailState
+import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.UserState
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostActions
-import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsAction
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,6 +48,7 @@ internal fun PostDetailScreen(
 ) {
     val state = component.state.collectAsState()
     val commentsState = component.commentsState.collectAsState()
+    val userState = component.userState.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = LocalSnackbarHostState.current
@@ -67,6 +67,7 @@ internal fun PostDetailScreen(
         modifier = modifier,
         state = state.value,
         commentsState = commentsState.value,
+        userState = userState.value,
         onEvent = component::onEvent,
     )
 }
@@ -77,6 +78,7 @@ private fun PostDetailScreen(
     modifier: Modifier,
     state: PostDetailState,
     commentsState: PostCommentsState,
+    userState: UserState,
     onEvent: (PostDetailEvent) -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -115,6 +117,7 @@ private fun PostDetailScreen(
                                 modifier = Modifier.fillMaxWidth()
                                     .heightIn(min = 40.dp, max = 100.dp)
                                     .height(maxHeight),
+                                rating = state.changedPost.author.rating,
                                 imageUrl = state.changedPost.author.imageUrl,
                                 nickname = state.changedPost.author.nickname,
                                 fullName = state.changedPost.author.fullName,
@@ -132,12 +135,16 @@ private fun PostDetailScreen(
                             onDislikeClick = { onEvent(PostDetailEvent.PostDislikeClick) },
                             onShareClick = { onEvent(PostDetailEvent.PostShare) },
                         )
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        PostComments(
-                            modifier = Modifier.fillMaxWidth(),
-                            state = commentsState,
-                            onEvent = onEvent,
-                        )
+                        DisableSelection {
+                            PostComments(
+                                modifier = Modifier.fillMaxWidth(),
+                                state = commentsState,
+                                userState = userState,
+                                onEvent = onEvent,
+                            )
+                        }
                     }
                 }
             }

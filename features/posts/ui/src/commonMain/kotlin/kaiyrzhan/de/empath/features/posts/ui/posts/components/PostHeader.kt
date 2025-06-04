@@ -1,10 +1,12 @@
 package kaiyrzhan.de.empath.features.posts.ui.posts.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -18,10 +20,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import empath.core.uikit.generated.resources.Res
 import empath.core.uikit.generated.resources.*
+import kaiyrzhan.de.empath.core.ui.extensions.appendColon
+import kaiyrzhan.de.empath.core.ui.extensions.appendSpace
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
+import kaiyrzhan.de.empath.core.utils.toGroupedString
 import kaiyrzhan.de.empath.features.posts.ui.posts.model.PostsEvent
 import kaiyrzhan.de.empath.features.posts.ui.model.PostUi
 import org.jetbrains.compose.resources.painterResource
@@ -49,12 +55,42 @@ internal fun PostHeader(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.Start,
         ) {
-            Text(
-                text = post.author.nickname,
-                style = EmpathTheme.typography.titleMedium,
-                color = EmpathTheme.colors.onSurface,
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-            )
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = post.author.nickname,
+                    style = EmpathTheme.typography.titleMedium,
+                    color = EmpathTheme.colors.onSurface,
+                )
+                Row(
+                    modifier = Modifier
+                        .clip(EmpathTheme.shapes.small)
+                        .background(EmpathTheme.colors.primaryContainer)
+                        .padding(horizontal = 6.dp, vertical = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = buildString {
+                            append(stringResource(Res.string.rating))
+                            appendColon()
+                            appendSpace()
+                            append(post.author.rating.toGroupedString())
+                        },
+                        style = EmpathTheme.typography.labelMedium,
+                        color = EmpathTheme.colors.onPrimaryContainer,
+                    )
+                    Icon(
+                        modifier = Modifier.size(16.dp),
+                        painter = painterResource(Res.drawable.ic_ac_unit),
+                        contentDescription = null,
+                        tint = EmpathTheme.colors.onPrimaryContainer,
+                    )
+                }
+            }
             Text(
                 text = post.author.fullName,
                 style = EmpathTheme.typography.labelMedium,
@@ -72,7 +108,7 @@ internal fun PostHeader(
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_more_vert),
-                        contentDescription = "Post more options",
+                        contentDescription = null,
                     )
                 }
                 DropdownMenu(

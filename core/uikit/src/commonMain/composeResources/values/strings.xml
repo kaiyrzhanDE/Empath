@@ -256,5 +256,7 @@
     <string name="specializations">Специализации</string>
     <string name="reply">Ответить</string>
     <string name="rating">Рейтинг</string>
+    <string name="post_creation_rating_requirement">Создание постов доступно при рейтинге 10 и выше</string>
+    <string name="comment_deleted">Данный комментарий скрыт пользователем или модератором приложения.</string>
 </resources>
 

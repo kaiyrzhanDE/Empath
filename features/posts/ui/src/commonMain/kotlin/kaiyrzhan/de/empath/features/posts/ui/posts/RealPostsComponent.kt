@@ -6,6 +6,7 @@ import empath.core.uikit.generated.resources.app_name
 import empath.core.uikit.generated.resources.copy_description
 import empath.core.uikit.generated.resources.description
 import empath.core.uikit.generated.resources.invitation_description
+import empath.core.uikit.generated.resources.post_creation_rating_requirement
 import empath.core.uikit.generated.resources.share_description
 import empath.core.uikit.generated.resources.title
 import kaiyrzhan.de.empath.core.ui.extensions.appendColon
@@ -104,7 +105,7 @@ internal class RealPostsComponent(
             is PostsEvent.ApplyPostFilters -> applyFilters(event.filters)
             is PostsEvent.PostDislike -> dislikePost(event.post)
             is PostsEvent.PostShare -> sharePost(event.post)
-            is PostsEvent.PostCreateClick -> onPostCreateClick()
+            is PostsEvent.PostCreateClick -> createPost()
         }
     }
 
@@ -133,6 +134,21 @@ internal class RealPostsComponent(
                         state.update { PostsState.Error(error.toString()) }
                     }
                 }
+            }
+        }
+    }
+
+    private fun createPost() {
+        coroutineScope.launch {
+            val rating = filtersState.value.userRating
+            if (rating != null && rating >= 10) {
+                onPostCreateClick()
+            } else {
+                _action.send(
+                    PostsAction.ShowSnackbar(
+                        message = getString(Res.string.post_creation_rating_requirement),
+                    )
+                )
             }
         }
     }
@@ -170,7 +186,8 @@ internal class RealPostsComponent(
             getUserUseCase().onSuccess { user ->
                 filtersState.update { currentState ->
                     currentState.copy(
-                        userId = user.id
+                        userId = user.id,
+                        userRating = user.rating,
                     )
                 }
             }

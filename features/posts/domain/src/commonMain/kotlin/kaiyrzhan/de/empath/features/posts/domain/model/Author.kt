@@ -5,4 +5,5 @@ public class Author(
     public val nickname: String,
     public val imageUrl: String?,
     public val fullName: String,
+    public val rating: Int,
 )

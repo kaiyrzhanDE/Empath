@@ -41,23 +41,34 @@ public fun String?.toInstantOrNull(
     pattern: DatePattern = DatePattern.DATE_TIME,
 ): Instant? {
     return try {
-        this?.takeIf { dateTime -> dateTime.isNotBlank() }
-            ?.let { dateTime ->
-                when (pattern) {
-                    DatePattern.DATE_TIME -> {
-                        Instant.parse(dateTime)
+        this?.takeIf { it.isNotBlank() }?.let { dateTime ->
+            when (pattern) {
+                DatePattern.DATE_TIME -> {
+                    val dotIndex = dateTime.indexOf('.')
+                    val cleaned = if (dotIndex != -1) {
+                        val prefix = dateTime.substring(0, dotIndex)
+                        val fraction = dateTime.substring(dotIndex + 1)
+                            .take(3)
+                            .padEnd(3, '0')
+                        "$prefix.$fraction" + "Z"
+                    } else {
+                        dateTime + "Z"
                     }
 
-                    DatePattern.DATE -> {
-                        val localDate = LocalDate.parse(dateTime)
-                        localDate.atStartOfDayIn(TimeZone.UTC)
-                    }
+                    Instant.parse(cleaned)
+                }
+
+                DatePattern.DATE -> {
+                    val localDate = LocalDate.parse(dateTime)
+                    localDate.atStartOfDayIn(TimeZone.UTC)
                 }
             }
+        }
     } catch (_: Exception) {
         null
     }
 }
+
 
 public fun Long.toInstant(): Instant? {
     return try {

@@ -104,7 +104,7 @@ private fun PostsScreen(
                 Icon(
                     modifier = Modifier.size(24.dp),
                     painter = painterResource(Res.drawable.ic_stylus),
-                    contentDescription = "Create post action",
+                    contentDescription = null,
                 )
             }
         }
@@ -184,7 +184,7 @@ private fun PostsScreen(
                     Icon(
                         modifier = Modifier.size(24.dp),
                         painter = painterResource(
-                            resource = if(filtersState.filters.postReactionType == PostReactionType.LIKED) {
+                            resource = if (filtersState.filters.postReactionType == PostReactionType.LIKED) {
                                 Res.drawable.ic_favourite_filled
                             } else {
                                 Res.drawable.ic_favourite

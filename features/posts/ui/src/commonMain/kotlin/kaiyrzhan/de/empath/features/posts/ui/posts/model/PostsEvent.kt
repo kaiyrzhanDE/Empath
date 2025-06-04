@@ -1,5 +1,6 @@
 package kaiyrzhan.de.empath.features.posts.ui.posts.model
 
+import kaiyrzhan.de.empath.features.posts.ui.model.CommentUi
 import kaiyrzhan.de.empath.features.posts.ui.model.PostFiltersUi
 import kaiyrzhan.de.empath.features.posts.ui.model.PostUi
 

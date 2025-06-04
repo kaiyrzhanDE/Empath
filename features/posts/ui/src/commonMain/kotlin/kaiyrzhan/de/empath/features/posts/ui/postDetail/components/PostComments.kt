@@ -21,9 +21,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -40,16 +38,17 @@ import kaiyrzhan.de.empath.core.ui.modifiers.screenPadding
 import kaiyrzhan.de.empath.core.ui.uikit.EmpathTheme
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostCommentsState
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.PostDetailEvent
+import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.UserState
 import kaiyrzhan.de.empath.features.posts.ui.postDetail.model.buildCommentTree
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.PostComment
 import kaiyrzhan.de.empath.features.posts.ui.posts.components.RenderCommentTree
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ColumnScope.PostComments(
     modifier: Modifier = Modifier,
+    userState: UserState,
     state: PostCommentsState,
     onEvent: (PostDetailEvent) -> Unit,
 ) {
@@ -70,7 +69,7 @@ internal fun ColumnScope.PostComments(
             modifier = Modifier
                 .fillMaxWidth()
                 .screenPadding(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
                 modifier = Modifier
@@ -99,6 +98,9 @@ internal fun ColumnScope.PostComments(
                                     modifier = Modifier
                                         .bringIntoViewRequester(bringIntoViewRequester)
                                         .fillMaxWidth(),
+                                    userEmail = "",
+                                    userId = "",
+                                    onHideClick = {},
                                     comment = state.repliedComment,
                                     onLikeClick = {},
                                     onDislikeClick = {},
@@ -124,7 +126,9 @@ internal fun ColumnScope.PostComments(
                                 imeAction = ImeAction.Send,
                             ),
                             keyboardActions = KeyboardActions(
-                                onSend = { onEvent(PostDetailEvent.CommentCreate) },
+                                onSend = {
+                                    onEvent(PostDetailEvent.CommentCreate)
+                                },
                             ),
                             textStyle = EmpathTheme.typography.bodyLarge,
                             shape = EmpathTheme.shapes.small,
@@ -149,7 +153,9 @@ internal fun ColumnScope.PostComments(
                                 Spacer(modifier = Modifier.width(10.dp))
                             }
                             Button(
-                                onClick = { onEvent(PostDetailEvent.CommentCreate) },
+                                onClick = {
+                                    onEvent(PostDetailEvent.CommentCreate)
+                                },
                                 enabled = state.comment.text.isNotBlank(),
                             ) {
                                 Text(
@@ -167,8 +173,11 @@ internal fun ColumnScope.PostComments(
                             onEvent(PostDetailEvent.CommentReply(comment))
                             focusRequester.requestFocus()
                         },
+                        userEmail = userState.userEmail,
+                        userId = userState.userId,
+                        onHideClick = { comment -> onEvent(PostDetailEvent.CommentHide(comment.id)) },
                         onLikeClick = { onEvent(PostDetailEvent.CommentLike(it)) },
-                        onDislikeClick = { onEvent(PostDetailEvent.CommentDislike(it)) }
+                        onDislikeClick = { onEvent(PostDetailEvent.CommentDislike(it)) },
                     )
                 }
 

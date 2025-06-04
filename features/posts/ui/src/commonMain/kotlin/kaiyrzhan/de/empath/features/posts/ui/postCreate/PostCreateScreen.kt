@@ -139,6 +139,7 @@ private fun PostCreateScreen(
                                 .heightIn(min = 40.dp, max = 100.dp)
                                 .height(maxHeight),
                             fullName = state.user.getFullName(),
+                            rating = state.user.rating,
                             imageUrl = state.user.imageUrl,
                             nickname = state.user.nickname,
                         )

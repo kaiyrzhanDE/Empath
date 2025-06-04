@@ -13,8 +13,7 @@ internal sealed interface PostDetailEvent {
     data object PostShare : PostDetailEvent
     data object PostView : PostDetailEvent
 
-    data class CommentDelete(val commentId: String) : PostDetailEvent
-    data object CommentEdit : PostDetailEvent
+    data class CommentHide(val commentId: String) : PostDetailEvent
     data object CommentCreate : PostDetailEvent
     data class CommentLike(val comment: CommentUi) : PostDetailEvent
     data class CommentReply(val comment: CommentUi) : PostDetailEvent

@@ -8,6 +8,7 @@ internal data class AuthorUi(
     val nickname: String,
     val imageUrl: String?,
     val fullName: String,
+    val rating: Int,
 )
 
 internal fun Author.toUi(): AuthorUi {
@@ -16,6 +17,7 @@ internal fun Author.toUi(): AuthorUi {
         nickname = nickname,
         imageUrl = imageUrl.addBaseUrl(),
         fullName = fullName,
+        rating = rating,
     )
 }
 
@@ -25,5 +27,6 @@ internal fun AuthorUi.toDomain(): Author {
         nickname = nickname,
         imageUrl = imageUrl.addBaseUrl(),
         fullName = fullName,
+        rating = rating,
     )
 }
