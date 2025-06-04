@@ -53,12 +53,12 @@ internal data class NewVacancyUi(
                 responsibilities.isNotBlank() &&
                 requirements.isNotBlank() &&
                 email.isNotBlank() &&
-                selectedEmploymentTypes.isChanged() &&
-                selectedWorkSchedules.isChanged() &&
-                selectedWorkFormats.isChanged() &&
+                selectedEmploymentTypes.isNotEmpty() &&
+                selectedWorkSchedules.isNotEmpty() &&
+                selectedWorkFormats.isNotEmpty() &&
                 educations.isChanged() &&
-                workExperiences.isChanged() &&
-                skills.isChanged()
+                workExperiences.isNotEmpty() &&
+                skills.isNotEmpty()
     }
 
     companion object {
