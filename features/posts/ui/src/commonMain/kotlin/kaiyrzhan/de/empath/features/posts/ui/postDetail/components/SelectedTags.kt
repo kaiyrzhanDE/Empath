@@ -31,8 +31,8 @@ internal fun SelectedTags(
             Card(
                 shape = EmpathTheme.shapes.small,
                 colors = CardDefaults.cardColors(
-                    contentColor = EmpathTheme.colors.onSurface,
-                    containerColor = EmpathTheme.colors.surfaceContainer,
+                    contentColor = EmpathTheme.colors.onSecondaryContainer,
+                    containerColor = EmpathTheme.colors.secondaryContainer,
                 ),
             ) {
                 Text(

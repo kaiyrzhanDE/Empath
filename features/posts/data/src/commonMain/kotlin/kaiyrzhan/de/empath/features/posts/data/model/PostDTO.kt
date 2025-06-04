@@ -21,10 +21,12 @@ internal class PostDTO(
     @SerialName("author") val author: AuthorDTO,
     @SerialName("reaction_status") val reaction: String?,
     @SerialName("is_viewed") val isViewed: Boolean?,
-    @SerialName("specializaiton") val specialization: SpecializationDTO?,
+    @SerialName("specialization") val specialization: SpecializationDTO?,
 )
 
 internal fun PostDTO.toDomain(): Post {
+    println(id)
+    println(imageUrls)
     return Post(
         id = id,
         title = title.orEmpty(),

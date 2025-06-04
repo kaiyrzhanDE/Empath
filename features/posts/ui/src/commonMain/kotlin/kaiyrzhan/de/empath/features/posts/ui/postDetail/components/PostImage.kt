@@ -60,7 +60,6 @@ internal fun PostImage(
                     Modifier.clickable { postImagePainter.restart() }
                 },
             painter = postImagePainter,
-            contentScale = ContentScale.Crop,
             contentDescription = "Post Image",
         )
         if (countOfImages > 1) {

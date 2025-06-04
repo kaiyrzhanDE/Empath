@@ -1,5 +1,7 @@
 package kaiyrzhan.de.empath.features.posts.ui.model
 
+import kaiyrzhan.de.empath.core.utils.result.addBaseUrl
+import kaiyrzhan.de.empath.core.utils.result.removeBaseUrl
 import kaiyrzhan.de.empath.features.posts.domain.model.SubPost
 import kotlin.uuid.ExperimentalUuidApi
 
@@ -16,7 +18,7 @@ internal fun SubPost.toUi(): SubPostUi {
         id = id,
         title = title,
         description = description,
-        imageUrls = imageUrls,
+        imageUrls = imageUrls.mapNotNull { url -> url.addBaseUrl() },
     )
 }
 
@@ -26,6 +28,6 @@ internal fun SubPostUi.toDomain(): SubPost {
         id = id,
         title = title,
         description = description,
-        imageUrls = imageUrls,
+        imageUrls = imageUrls.mapNotNull { url -> url.removeBaseUrl() },
     )
 }

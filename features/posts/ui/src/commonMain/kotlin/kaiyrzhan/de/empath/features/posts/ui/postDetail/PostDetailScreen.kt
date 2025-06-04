@@ -94,8 +94,10 @@ private fun PostDetailScreen(
     ) { contentPadding ->
         when (state) {
             is PostDetailState.Success -> {
-                LaunchedEffect(Unit) {
-                    onEvent(PostDetailEvent.PostView)
+                LaunchedEffect(state.changedPost.isViewed) {
+                    if(state.changedPost.isViewed.not()) {
+                        onEvent(PostDetailEvent.PostView)
+                    }
                 }
                 SelectionContainer {
                     Column(

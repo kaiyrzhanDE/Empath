@@ -109,7 +109,7 @@
     <string name="posts">Посты</string>
     <string name="search">Поиск</string>
     <string name="create_post">Создать пост</string>
-    <string name="post_detail">Детали пост</string>
+    <string name="post_detail">Детали поста</string>
     <string name="post_created_successfully">Пост успешно создан</string>
     <string name="post_deleted_successfully">Пост успешно удален</string>
     <string name="invalid_post_content_error">Некорректное содержимое поста</string>

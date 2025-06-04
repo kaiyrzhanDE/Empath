@@ -257,7 +257,6 @@ internal fun PostComment(
                 text = comment.text,
                 style = EmpathTheme.typography.bodyLarge,
                 color = EmpathTheme.colors.onSurface,
-                maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
             )
             if (onReplyClick != null) {

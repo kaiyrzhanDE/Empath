@@ -41,7 +41,6 @@ internal fun PostImages(
                 .horizontalScroll(scrollState),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-
             imageUrls.forEachIndexed { index, imageUrl ->
                 val postImagePainter = rememberImagePainter(
                     model = imageUrl,
@@ -59,7 +58,7 @@ internal fun PostImages(
                         modifier = Modifier.wideRatio(),
                         painter = postImagePainter,
                         contentScale = ContentScale.Crop,
-                        contentDescription = "Post Image",
+                        contentDescription = null,
                     )
                     Card(
                         modifier = Modifier

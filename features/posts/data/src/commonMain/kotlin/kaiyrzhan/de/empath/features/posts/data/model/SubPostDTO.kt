@@ -9,7 +9,7 @@ internal class SubPostDTO(
     @SerialName("id") val id: String,
     @SerialName("title") val title: String?,
     @SerialName("text") val description: String?,
-    @SerialName("imageUrls") val imageUrls: List<String?>?,
+    @SerialName("imgs") val imageUrls: List<String?>?,
 )
 
 internal fun SubPostDTO.toDomain(): SubPost {

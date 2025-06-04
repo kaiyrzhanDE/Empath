@@ -1,7 +1,7 @@
 package kaiyrzhan.de.empath.features.posts.ui.model
 
 import kaiyrzhan.de.empath.core.utils.result.addBaseUrl
-import kaiyrzhan.de.empath.core.utils.result.removeBaseUrl
+import kaiyrzhan.de.empath.core.utils.result.removeBase
 import kaiyrzhan.de.empath.core.utils.toEnumSafe
 import kaiyrzhan.de.empath.features.posts.domain.model.Post
 
@@ -49,7 +49,7 @@ internal fun PostUi.toDomain(): Post {
         title = title,
         description = description,
         isVisible = isVisible,
-        imageUrls = imageUrls.mapNotNull { url -> url.removeBaseUrl() },
+        imageUrls = imageUrls.map { url -> url.removeBase() },
         tags = tags.map { tag -> tag.toDomain() },
         subPosts = subPosts.map { subPost -> subPost.toDomain() },
         author = author.toDomain(),
