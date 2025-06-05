@@ -273,11 +273,6 @@ private fun PostsScreen(
                                 )
                             }
                             item {
-                                PostShimmerCard(
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-                            item {
                                 Spacer(modifier = Modifier.height(40.dp))
                             }
                         }

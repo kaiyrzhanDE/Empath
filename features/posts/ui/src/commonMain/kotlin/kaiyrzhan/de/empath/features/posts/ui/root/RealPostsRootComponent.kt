@@ -128,11 +128,7 @@ public class RealPostsRootComponent(
                 componentContext = componentContext,
                 postFilters = config.postFilters,
                 onBackClick = { isFiltersUpdated, postFilters ->
-                    if (isFiltersUpdated) {
-                        applyPostFilters(postFilters)
-                    } else {
-                        onBackClick()
-                    }
+                    applyPostFilters(postFilters)
                 },
             )
         )

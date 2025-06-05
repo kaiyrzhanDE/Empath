@@ -75,6 +75,14 @@ internal class RealPostFiltersComponent(
     }
 
     private fun backClick() {
+        val currentState = state.value
+        val postFilters = PostFiltersUi(
+            query = currentState.query,
+            excludeWords = currentState.excludeWords,
+            includeWords = currentState.includeWords,
+            postReactionType = currentState.reactionType,
+            selectedSpecializations = currentState.selectedSpecializations,
+        )
         onBackClick(false, postFilters)
     }
 
@@ -121,6 +129,8 @@ internal class RealPostFiltersComponent(
         val currentState = state.value
         val postFilters = PostFiltersUi(
             query = currentState.query,
+            excludeWords = currentState.excludeWords,
+            includeWords = currentState.includeWords,
             postReactionType = currentState.reactionType,
             selectedSpecializations = currentState.selectedSpecializations,
         )

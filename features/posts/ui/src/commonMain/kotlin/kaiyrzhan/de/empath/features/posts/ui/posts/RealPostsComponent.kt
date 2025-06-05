@@ -412,5 +412,6 @@ internal class RealPostsComponent(
                 filters = filters
             )
         }
+        loadPosts()
     }
 }
