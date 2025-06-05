@@ -43,26 +43,6 @@ internal fun EmploymentActions(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            if (vacancy.status.canBeCanceled()) {
-                Button(
-                    onClick = {
-                        //TODO(cancel response)
-                    },
-                    shape = EmpathTheme.shapes.small,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = EmpathTheme.colors.primary,
-                        contentColor = EmpathTheme.colors.onPrimary,
-                    ),
-                ) {
-                    Text(
-                        text = stringResource(Res.string.cancel),
-                        style = EmpathTheme.typography.labelLarge,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-            }
-
             Button(
                 onClick = {
                     onEvent(VacanciesEvent.ResponseToVacancy(vacancy))

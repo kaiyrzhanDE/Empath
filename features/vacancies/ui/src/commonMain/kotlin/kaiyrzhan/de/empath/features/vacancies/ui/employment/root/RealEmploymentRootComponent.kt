@@ -110,11 +110,7 @@ public class RealEmploymentRootComponent(
                 componentContext = componentContext,
                 vacancyFilters = config.filters,
                 onBackClick = { isFiltersUpdated, filters ->
-                    if (isFiltersUpdated) {
-                        reloadVacancies(filters)
-                    } else {
-                        onBackClick()
-                    }
+                    reloadVacancies(filters)
                 },
             )
         )

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 public class GetResponsesUseCase(
     private val repository: EmploymentRepository,
 ) {
+    private val whiteSpaceRegex = Regex("\\s+")
     public suspend operator fun invoke(
         query: String?,
         salaryFrom: Int?,
@@ -26,8 +27,14 @@ public class GetResponsesUseCase(
                 workExperiences = workExperiences,
                 educations = educations,
                 workFormats = workFormats,
-                excludeWords = excludeWords.split(' '),
-                includeWords = includeWords.split(' '), //TODO(remove spaces)
+                excludeWords = excludeWords
+                    .replace(whiteSpaceRegex, "")
+                    .split(",")
+                    .filter { word -> word.isNotBlank() },
+                includeWords = includeWords
+                    .replace(whiteSpaceRegex, "")
+                    .split(",")
+                    .filter { word -> word.isNotBlank() },
             )
     }
 }

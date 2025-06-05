@@ -43,6 +43,17 @@ internal class RealVacancyFiltersComponent(
     }
 
     private fun backClick() {
+        val currentState = state.value
+        val vacancyFilters = VacancyFiltersUi(
+            query = currentState.query,
+            salaryTo = currentState.salaryTo,
+            salaryFrom = currentState.salaryFrom,
+            excludeWords = currentState.excludeWords,
+            includeWords = currentState.includeWords,
+            selectedEducationTypes = currentState.educations.getSelectedTypes(),
+            selectedWorkFormatTypes = currentState.workFormats.getSelectedTypes(),
+            selectedWorkExperienceTypes = currentState.workExperiences.getSelectedTypes(),
+        )
         onBackClick(false, vacancyFilters)
     }
 

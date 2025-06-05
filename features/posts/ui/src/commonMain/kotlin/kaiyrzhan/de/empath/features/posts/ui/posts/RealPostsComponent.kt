@@ -413,5 +413,6 @@ internal class RealPostsComponent(
             )
         }
         loadPosts()
+        loadUser()
     }
 }

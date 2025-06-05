@@ -140,11 +140,7 @@ public class RealRecruitmentRootComponent(
                 componentContext = componentContext,
                 vacancyFilters = config.filters,
                 onBackClick = { isFiltersUpdated, filters ->
-                    if (isFiltersUpdated) {
-                        applyVacanciesFilters(filters)
-                    } else {
-                        onBackClick()
-                    }
+                    applyVacanciesFilters(filters)
                 },
             )
         )
